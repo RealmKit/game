@@ -1,4 +1,4 @@
 dependencies {
-    implementation(project(":sloth:sloth-test-utils"))
-    implementation(project(":envy:envy-domain"))
+    api(project(":sloth:sloth-test-utils"))
+    api(project(":envy:envy-domain"))
 }
