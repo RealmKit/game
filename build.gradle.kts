@@ -59,5 +59,6 @@ subprojects {
 configure(subprojects) {
     testSets {
         val archTest by creating
+        val itest by creating
     }
 }

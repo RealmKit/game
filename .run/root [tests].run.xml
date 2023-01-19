@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="root [test]" type="GradleRunConfiguration" factoryName="Gradle">
+    <configuration default="false" name="root [tests]" type="GradleRunConfiguration" factoryName="Gradle">
         <ExternalSystemSettings>
             <option name="executionName"/>
             <option name="externalProjectPath" value="$PROJECT_DIR$"/>
@@ -12,6 +12,7 @@
                 <list>
                     <option value="archTest"/>
                     <option value="test"/>
+                    <option value="itest"/>
                 </list>
             </option>
             <option name="vmOptions"/>
