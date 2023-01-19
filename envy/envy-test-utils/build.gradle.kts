@@ -1,4 +1,6 @@
 dependencies {
-    api(project(":sloth:sloth-test-utils"))
-    api(project(":envy:envy-domain"))
+    implementation(project(":sloth:sloth-test-utils"))
+    implementation(project(":envy:envy-domain")) {
+        exclude("org.springframework.boot")
+    }
 }
