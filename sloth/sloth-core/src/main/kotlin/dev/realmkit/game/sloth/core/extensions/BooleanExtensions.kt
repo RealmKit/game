@@ -18,19 +18,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.game.sloth.core.extensions
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
-
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+infix fun <T> Boolean?.ifTrue(block: () -> T): T? =
+    this.takeIf { this == true }?.let { block() }

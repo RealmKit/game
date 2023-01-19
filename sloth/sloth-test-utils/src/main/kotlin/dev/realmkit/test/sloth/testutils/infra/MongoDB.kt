@@ -18,19 +18,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.test.sloth.testutils.infra
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import com.mongodb.client.MongoClients
+import dev.realmkit.game.sloth.core.extensions.ifTrue
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.testcontainers.containers.MongoDBContainer
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+object MongoDB {
+    private val mongo = MongoDBContainer("mongo:latest")
+        .apply { portBindings = listOf("27018:27017") }
+
+    private val mongoTemplate by lazy {
+        MongoTemplate(MongoClients.create("mongodb://localhost:27018"), "test")
+    }
+
+    val start
+        get() = mongo.takeUnless { it.isRunning }?.start()
+
+    val stop
+        get() = mongo.takeIf { it.isRunning }?.stop()
+
+    val clear
+        get() = mongo.isRunning.ifTrue { mongoTemplate.db.drop() }
+}

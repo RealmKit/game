@@ -18,19 +18,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.test.sloth.testutils.specs
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import io.kotest.core.spec.style.ExpectSpec
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+open class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
+    init {
+        body()
+    }
+}

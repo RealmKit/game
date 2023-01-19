@@ -18,19 +18,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.game.envy.domain.player.repository
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import dev.realmkit.game.envy.domain.player.document.Player
+import org.bson.types.ObjectId
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.stereotype.Repository
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+@Repository
+interface PlayerRepository : MongoRepository<Player, ObjectId>

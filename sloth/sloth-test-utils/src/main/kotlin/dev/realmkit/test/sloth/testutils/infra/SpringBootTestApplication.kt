@@ -18,19 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.test.sloth.testutils.infra
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import io.kotest.core.extensions.ApplyExtension
+import io.kotest.extensions.spring.SpringTestExtension
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.ContextConfiguration
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+@SpringBootApplication
+@EnableMongoRepositories("dev.realmkit.game.envy.domain")
+class SpringBootTestApplication
+
+@DataMongoTest
+@ActiveProfiles("itest")
+@ApplyExtension(SpringTestExtension::class)
+@ContextConfiguration(classes = [SpringBootTestApplication::class])
+annotation class ITestContext

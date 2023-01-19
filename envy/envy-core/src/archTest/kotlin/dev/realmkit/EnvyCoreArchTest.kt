@@ -18,19 +18,10 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import com.tngtech.archunit.junit.AnalyzeClasses
+import dev.realmkit.test.sloth.testutils.specs.ArchTestSpec
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+@AnalyzeClasses(packages = ["dev.realmkit.game"])
+class EnvyCoreArchTest : ArchTestSpec()

@@ -18,19 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.game.sloth.core.extensions
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import dev.realmkit.test.sloth.testutils.specs.TestSpec
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+class BooleanExtensionsKtTest : TestSpec({
+    expect("that Boolean.ifTrue should call a function") {
+        true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
+    }
+
+    expect("that Boolean.ifTrue should not call a function") {
+        false.ifTrue { true }.shouldBeNull()
+    }
+})

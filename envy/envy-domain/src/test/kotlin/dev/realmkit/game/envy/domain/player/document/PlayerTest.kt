@@ -18,19 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.game.envy.domain.player.document
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import dev.realmkit.test.envy.testutils.fixture.player.fixture
+import dev.realmkit.test.sloth.testutils.specs.TestSpec
+import io.kotest.assertions.asClue
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+class PlayerTest : TestSpec({
+    expect("to create a new plain Player") {
+        Player.fixture
+            .shouldNotBeNull()
+            .asClue { player ->
+                player.name.shouldNotBeNull()
+            }
+    }
+})

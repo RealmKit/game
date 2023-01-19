@@ -18,19 +18,17 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.test.sloth.testutils.fixture.player
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import dev.realmkit.game.envy.domain.player.document.Player
+import dev.realmkit.test.sloth.testutils.extensions.fake
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+val Player.Companion.fixture: Player
+    get() = Player(
+        name = fake.superhero.name()
+    )
+
+val Player.Companion.arbitrary: Arb<Player>
+    get() = arbitrary { Player.fixture }

@@ -18,19 +18,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+dependencies {
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+    testImplementation(project(":sloth:sloth-test-utils"))
+    testImplementation(project(":envy:envy-test-utils"))
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+    testImplementation("org.testcontainers:mongodb:1.17.6")
+}

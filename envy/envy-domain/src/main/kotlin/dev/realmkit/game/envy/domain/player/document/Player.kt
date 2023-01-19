@@ -18,19 +18,16 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit.game.envy.domain.player.document
 
-/**
- * SLOTH
- */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
+import org.springframework.data.mongodb.core.mapping.Document
 
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
+@Document
+class Player(
+    val name: String,
+//    val stat: Stat = Stat(),
+//    val currency: Currency = Currency(),
+//    val equipmentSlot: EquipmentSlot = EquipmentSlot(),
+) /*: BaseDocument()*/ {
+    companion object
+}
