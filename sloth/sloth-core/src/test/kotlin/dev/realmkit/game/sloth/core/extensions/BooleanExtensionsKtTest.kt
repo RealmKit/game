@@ -1,5 +1,6 @@
 package dev.realmkit.game.envy.core.extensions
 
+import dev.realmkit.game.sloth.core.extensions.ifTrue
 import dev.realmkit.test.sloth.testutils.specs.TestSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull

@@ -1,4 +1,5 @@
 dependencies {
+    implementation(project(":sloth:sloth-core"))
     implementation(project(":envy:envy-domain"))
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")

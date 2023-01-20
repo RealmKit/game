@@ -1,6 +1,7 @@
 package dev.realmkit.test.sloth.testutils.infra
 
 import com.mongodb.client.MongoClients
+import dev.realmkit.game.sloth.core.extensions.ifTrue
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.testcontainers.containers.MongoDBContainer
 
@@ -19,5 +20,5 @@ object MongoDB {
         get() = mongo.takeIf { it.isRunning }?.stop()
 
     val clear
-        get() = mongo.takeIf { it.isRunning }?.let { mongoTemplate.db.drop() }
+        get() = mongo.isRunning.ifTrue { mongoTemplate.db.drop() }
 }
