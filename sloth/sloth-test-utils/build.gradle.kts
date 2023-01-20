@@ -1,4 +1,5 @@
 dependencies {
+    implementation(project(":envy:envy-domain"))
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
