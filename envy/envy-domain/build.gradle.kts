@@ -1,10 +1,3 @@
-import org.springframework.boot.gradle.tasks.bundling.BootJar
-
-plugins {
-    kotlin("plugin.spring")
-    id("org.springframework.boot")
-}
-
 dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -17,6 +10,3 @@ dependencies {
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
     testImplementation("org.testcontainers:mongodb:1.17.6")
 }
-
-val bootJar: BootJar by tasks
-bootJar.enabled = false

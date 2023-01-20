@@ -1,43 +1,49 @@
 package dev.realmkit.game.envy.domain.player.repository
 
-import dev.realmkit.test.sloth.testutils.specs.TestSpec
-import io.kotest.core.extensions.ApplyExtension
-import io.kotest.extensions.spring.SpringTestExtension
+import dev.realmkit.test.sloth.testutils.infra.ITestContext
+import dev.realmkit.test.sloth.testutils.specs.ITestSpec
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
-import org.testcontainers.containers.MongoDBContainer
 
-@DataMongoTest
-@ActiveProfiles("itest")
-@ApplyExtension(SpringTestExtension::class)
-@ContextConfiguration(classes = [TestApplication::class])
+@ITestContext
 class PlayerRepositoryITest(
     private val playerRepository: PlayerRepository,
-) : TestSpec({
-    MongoDBContainer("mongo:latest")
-        .apply { portBindings = listOf("27018:27017") }
-        .start()
-
-//    val mongoTemplate by lazy {
-//        MongoTemplate(MongoClients.create("mongodb://localhost:27018"), "test")
-//    }
-
+) : ITestSpec({
     expect("all beans to be inject") {
         playerRepository.shouldNotBeNull()
     }
 
     expect("it should be empty") {
-        withContext(Dispatchers.IO) {
+        context {
             playerRepository.count().shouldBeZero()
         }
     }
-})
 
-@SpringBootApplication
-class TestApplication
+    expect("it should create a new Player") {
+        context {
+            playerRepository.count().shouldBeZero()
+        }
+
+//        check(Player.arbitrary) { player ->
+//            playerRepository.save(player).shouldNotBeNull()
+//            playerRepository.findById(player.id).asClue { find ->
+//                find.shouldBePresent()
+//                    .asClue {
+//                        it.id shouldBe player.id
+//                        it.createdDate.shouldNotBeNull()
+//                        it.updatedDate.shouldNotBeNull()
+//                        it.name shouldBe player.name
+//                        it.stat.shouldBePositive()
+//                        it.currency.gold.shouldNotBeNull()
+//                        it.currency.gem.shouldNotBeNull()
+//                        it.equipmentSlot.weapon.shouldNotBeNull()
+//                            .stat.shouldBePositive()
+//                        it.equipmentSlot.armor.shouldNotBeNull()
+//                            .stat.shouldBePositive()
+//                        it.equipmentSlot.ring.shouldNotBeNull()
+//                            .stat.shouldBePositive()
+//                    }
+//            }
+//        }
+    }
+})

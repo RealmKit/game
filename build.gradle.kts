@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.dsl.testSets
 
 buildscript {
@@ -42,6 +43,8 @@ allprojects {
 
 subprojects {
     apply {
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
         plugin("org.unbroken-dome.test-sets")
     }
@@ -61,4 +64,7 @@ configure(subprojects) {
         val archTest by creating
         val itest by creating
     }
+
+    val bootJar: BootJar by tasks
+    bootJar.enabled = false
 }
