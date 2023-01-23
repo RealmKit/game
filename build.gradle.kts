@@ -33,7 +33,6 @@ plugins {
     jacoco
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0" apply false
-    id("org.sonarqube") version "3.5.0.2730"
     id("org.springframework.boot") version "3.0.1" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("org.unbroken-dome.test-sets") version "4.0.0"
@@ -63,7 +62,6 @@ subprojects {
     apply {
         plugin("idea")
         plugin("jacoco")
-        plugin("org.sonarqube")
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
