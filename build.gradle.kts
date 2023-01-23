@@ -33,6 +33,7 @@ plugins {
     jacoco
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0" apply false
+    id("org.sonarqube") version "3.5.0.2730"
     id("org.springframework.boot") version "3.0.1" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("org.unbroken-dome.test-sets") version "4.0.0"
@@ -42,6 +43,7 @@ plugins {
 allprojects {
     apply {
         plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.sonarqube")
     }
 
     repositories {
@@ -54,6 +56,12 @@ allprojects {
                 freeCompilerArgs = listOf("-Xjsr305=strict")
                 jvmTarget = "18"
             }
+        }
+    }
+
+    sonarqube {
+        properties {
+            property("sonar.jacoco.reportPaths", file("$buildDir/reports/jacoco/report.exec"))
         }
     }
 }
@@ -86,32 +94,65 @@ subprojects {
         val itest by creating
     }
 
-    tasks {
-        withType<Test> {
-            useJUnitPlatform()
-            finalizedBy(
-                "detekt",
-                "jacocoTestReport",
-            )
-        }
-    }
-
     detekt {
         buildUponDefaultConfig = true
         allRules = true
     }
 
-    tasks.withType<Detekt>().configureEach {
-        jvmTarget = "18"
-        reports {
-            html.required.set(true)
-            xml.required.set(true)
-            txt.required.set(true)
-            sarif.required.set(true)
-            md.required.set(true)
+    tasks {
+        withType<Test> {
+            useJUnitPlatform()
+            finalizedBy("jacocoTestReport")
+        }
+
+        withType<Detekt>().configureEach {
+            jvmTarget = "18"
+            reports {
+                html.required.set(true)
+                xml.required.set(true)
+                txt.required.set(true)
+                sarif.required.set(true)
+                md.required.set(true)
+            }
+        }
+
+        jacocoTestReport {
+            dependsOn(allprojects.map { it.tasks.withType<Test>() })
+            reports {
+                html.required.set(true)
+                html.outputLocation.set(File("${buildDir}/reports/jacoco/report.html"))
+                xml.required.set(true)
+                xml.outputLocation.set(File("${buildDir}/reports/jacoco/report.xml"))
+            }
         }
     }
 
     val bootJar: BootJar by tasks
     bootJar.enabled = false
+}
+
+tasks {
+    register<JacocoMerge>("coverageMerge") {
+        mustRunAfter("coverage")
+        destinationFile = file("$buildDir/reports/jacoco/report.exec")
+        executionData = project.fileTree(".") {
+            include("**/*.exec")
+            exclude("**/report.exec")
+        }
+    }
+
+    register<JacocoReport>("coverage") {
+        group = "coverage"
+        description = "Test Coverage Aggregator"
+        dependsOn(":clean", ":build", ":detekt", allprojects.map { it.tasks.withType<Test>() })
+
+        executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+        sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
+        reports {
+            html.required.set(true)
+            html.outputLocation.set(File("${buildDir}/reports/jacoco/report.html"))
+            xml.required.set(true)
+            xml.outputLocation.set(File("${buildDir}/reports/jacoco/report.xml"))
+        }
+    }
 }
