@@ -31,7 +31,6 @@
             <option name="taskNames">
                 <list>
                     <option value="coverage"/>
-                    <option value="coverageMerge"/>
                 </list>
             </option>
             <option name="vmOptions"/>

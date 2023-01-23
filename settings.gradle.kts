@@ -19,14 +19,12 @@
  */
 
 rootProject.name = "game"
-
 /**
  * SLOTH
  */
 include("sloth")
 include("sloth:sloth-core")
 include("sloth:sloth-test-utils")
-
 /**
  * ENVY
  */

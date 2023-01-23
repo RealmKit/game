@@ -18,16 +18,16 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.player
+package dev.realmkit.game.envy.domain.gear.document
 
-import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.envy.domain.gear.document.slot.ArmorGear
+import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
+import dev.realmkit.game.envy.domain.gear.document.slot.WeaponGear
 
-val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name()
-    )
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+class EquipmentSlot(
+    var weapon: WeaponGear? = null,
+    var armor: ArmorGear? = null,
+    var ring: RingGear? = null,
+) {
+    companion object
+}
