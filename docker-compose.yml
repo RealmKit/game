@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  envy_mongo:
+    image: mongo:latest
+    container_name: envy_mongo
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /tmp/dev/realmkit/mongodb:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - envy_network
+    restart: unless-stopped
+
+  envy_sonar:
+    image: sonarqube:latest
+    container_name: envy_sonar
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    networks:
+      - envy_network
+    restart: unless-stopped
+
+networks:
+  envy_network:
+    driver: bridge
