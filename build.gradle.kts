@@ -58,12 +58,6 @@ allprojects {
             }
         }
     }
-
-    sonarqube {
-        properties {
-            property("sonar.jacoco.reportPaths", file("$buildDir/reports/jacoco/report.exec"))
-        }
-    }
 }
 
 subprojects {
@@ -132,19 +126,11 @@ subprojects {
 }
 
 tasks {
-    register<JacocoMerge>("coverageMerge") {
-        mustRunAfter("coverage")
-        destinationFile = file("$buildDir/reports/jacoco/report.exec")
-        executionData = project.fileTree(".") {
-            include("**/*.exec")
-            exclude("**/report.exec")
-        }
-    }
-
     register<JacocoReport>("coverage") {
         group = "coverage"
-        description = "Test Coverage Aggregator"
-        dependsOn(":clean", ":build", ":detekt", allprojects.map { it.tasks.withType<Test>() })
+        description = "Test Coverage"
+        dependsOn(allprojects.map { it.tasks.withType<Test>() })
+        finalizedBy("coverageMerge")
 
         executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
         sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
@@ -154,5 +140,24 @@ tasks {
             xml.required.set(true)
             xml.outputLocation.set(File("${buildDir}/reports/jacoco/report.xml"))
         }
+    }
+
+    register<JacocoMerge>("coverageMerge") {
+        group = "coverage"
+        description = "Test Coverage Aggregator"
+        dependsOn(":coverage")
+        finalizedBy("sonar")
+
+        destinationFile = file("$buildDir/reports/jacoco/report.exec")
+        executionData = project.fileTree(".") {
+            include("**/*.exec")
+            exclude("**/report.exec")
+        }
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.jacoco.reportPaths", file("$buildDir/reports/jacoco/report.exec"))
     }
 }
