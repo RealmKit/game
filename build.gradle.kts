@@ -121,6 +121,12 @@ subprojects {
         }
     }
 
+    sonarqube {
+        properties {
+            property("sonar.jacoco.reportPaths", file("$buildDir/reports/jacoco/report.exec"))
+        }
+    }
+
     val bootJar: BootJar by tasks
     bootJar.enabled = false
 }
@@ -153,11 +159,5 @@ tasks {
             include("**/*.exec")
             exclude("**/report.exec")
         }
-    }
-}
-
-sonarqube {
-    properties {
-        property("sonar.jacoco.reportPaths", file("$buildDir/reports/jacoco/report.exec"))
     }
 }

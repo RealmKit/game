@@ -35,9 +35,7 @@
             </option>
             <option name="taskNames">
                 <list>
-                    <option value="archTest"/>
-                    <option value="test"/>
-                    <option value="itest"/>
+                    <option value="coverage"/>
                     <option value="sonar"/>
                 </list>
             </option>
