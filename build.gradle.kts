@@ -19,7 +19,6 @@
  */
 
 import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.dsl.testSets
@@ -31,13 +30,14 @@ buildscript {
 }
 
 plugins {
+    jacoco
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0" apply false
+    id("org.sonarqube") version "3.5.0.2730"
     id("org.springframework.boot") version "3.0.1" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("org.unbroken-dome.test-sets") version "4.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
-    id("org.sonarqube") version "3.4.0.2513"
 }
 
 allprojects {
@@ -63,6 +63,7 @@ subprojects {
     apply {
         plugin("idea")
         plugin("jacoco")
+        plugin("org.sonarqube")
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
@@ -90,13 +91,10 @@ subprojects {
     tasks {
         withType<Test> {
             useJUnitPlatform()
-            finalizedBy("jacocoTestReport")
-        }
-    }
-
-    sonarqube {
-        properties {
-            property("sonar.sources", "src")
+            finalizedBy(
+                "detekt",
+                "jacocoTestReport",
+            )
         }
     }
 
@@ -106,7 +104,7 @@ subprojects {
     }
 
     tasks.withType<Detekt>().configureEach {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
         reports {
             html.required.set(true)
             xml.required.set(true)
@@ -114,10 +112,6 @@ subprojects {
             sarif.required.set(true)
             md.required.set(true)
         }
-    }
-
-    tasks.withType<DetektCreateBaselineTask>().configureEach {
-        jvmTarget = "1.8"
     }
 
     val bootJar: BootJar by tasks
