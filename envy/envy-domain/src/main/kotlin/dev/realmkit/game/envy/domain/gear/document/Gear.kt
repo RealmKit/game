@@ -18,16 +18,11 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.player
+package dev.realmkit.game.envy.domain.gear.document
 
-import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.envy.domain.gear.enums.GearType
+import dev.realmkit.game.envy.domain.item.document.Item
 
-val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name()
-    )
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+interface Gear : Item {
+    val type: GearType
+}

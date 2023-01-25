@@ -18,16 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.player
+package dev.realmkit.game.envy.domain.stat.document
 
-import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.envy.domain.stat.document.value.StatBase
+import dev.realmkit.game.envy.domain.stat.document.value.StatChance
+import dev.realmkit.game.envy.domain.stat.document.value.StatMultiplier
+import dev.realmkit.game.envy.domain.stat.document.value.StatProgression
 
-val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name()
-    )
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+class Stat(
+    val progression: StatProgression = StatProgression(),
+    val base: StatBase = StatBase(),
+    val multiplier: StatMultiplier = StatMultiplier(),
+    val chance: StatChance = StatChance(),
+) {
+    companion object {
+        val zero: Stat
+            get() = Stat(
+                progression = StatProgression.zero,
+                base = StatBase.zero,
+                multiplier = StatMultiplier.zero,
+                chance = StatChance.zero,
+            )
+    }
+}

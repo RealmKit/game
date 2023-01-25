@@ -18,16 +18,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.player
+package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
+import org.springframework.data.mongodb.core.mapping.Document
 
-val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name()
-    )
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+@Document
+data class StatBase(
+    var health: StatValue = StatValue(max = initialStatus.health),
+    var mana: StatValue = StatValue(max = initialStatus.mana),
+    var stamina: StatValue = StatValue(max = initialStatus.stamina),
+    var attack: Long = initialStatus.attack,
+    var speed: Long = initialStatus.speed,
+) {
+    companion object {
+        val zero: StatBase
+            get() = StatBase(
+                health = StatValue.zero,
+                mana = StatValue.zero,
+                stamina = StatValue.zero,
+                attack = 0,
+                speed = 0,
+            )
+    }
+}
