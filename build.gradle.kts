@@ -133,10 +133,13 @@ subprojects {
 }
 
 tasks {
+    val tasksTestJacoco = allprojects.map { it.tasks.withType<Test>() + it.tasks.withType<JacocoReport>() }
+
     register<JacocoReport>("coverage") {
         group = "coverage"
         description = "Test Coverage"
-        dependsOn(allprojects.map { it.tasks.withType<Test>() })
+        dependsOn(tasksTestJacoco)
+
         executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
         sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
         reports {
@@ -151,11 +154,13 @@ tasks {
     register<JacocoMerge>("coverageMerge") {
         group = "coverage"
         description = "Test Coverage Aggregator"
-        dependsOn("coverage")
+        dependsOn(tasksTestJacoco)
+
         destinationFile = file("$buildDir/reports/jacoco/report.exec")
         executionData = project.fileTree(".") {
             include("**/*.exec")
             exclude("**/report.exec")
         }
+        finalizedBy("sonar")
     }
 }

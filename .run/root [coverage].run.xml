@@ -21,6 +21,11 @@
 <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="root [coverage]" type="GradleRunConfiguration" factoryName="Gradle">
         <ExternalSystemSettings>
+            <option name="env">
+                <map>
+                    <entry key="SONAR_TOKEN" value="12e0614cd4475dc5f3f0a97e1d90df837632dc7d"/>
+                </map>
+            </option>
             <option name="executionName"/>
             <option name="externalProjectPath" value="$PROJECT_DIR$"/>
             <option name="externalSystemIdString" value="GRADLE"/>
