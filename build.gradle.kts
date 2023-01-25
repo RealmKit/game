@@ -35,7 +35,6 @@ plugins {
     kotlin("plugin.spring") version "1.8.0" apply false
     id("org.sonarqube") version "3.5.0.2730"
     id("org.springframework.boot") version "3.0.2" apply false
-    id("org.springframework.boot") version "3.0.1" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("org.unbroken-dome.test-sets") version "4.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
@@ -75,7 +74,7 @@ subprojects {
     dependencies {
         detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
         detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors:1.22.0")
-        detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.0.2")
+        detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.0.4")
 
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
