@@ -19,7 +19,7 @@
   -->
 
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="game [sonar]" type="GradleRunConfiguration" factoryName="Gradle">
+    <configuration default="false" name="root [sonar]" type="GradleRunConfiguration" factoryName="Gradle">
         <ExternalSystemSettings>
             <option name="env">
                 <map>

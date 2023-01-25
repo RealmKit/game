@@ -74,6 +74,7 @@ subprojects {
     dependencies {
         detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
         detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors:1.22.0")
+        detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.0.2")
 
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
@@ -84,8 +85,8 @@ subprojects {
     }
 
     testSets {
-        val archTest by creating
-        val itest by creating
+        create("archTest")
+        create("itest")
     }
 
     detekt {
@@ -96,7 +97,7 @@ subprojects {
     tasks {
         withType<Test> {
             useJUnitPlatform()
-            finalizedBy("jacocoTestReport")
+            finalizedBy("detekt", "jacocoTestReport")
         }
 
         withType<Detekt>().configureEach {
@@ -114,16 +115,16 @@ subprojects {
             dependsOn(allprojects.map { it.tasks.withType<Test>() })
             reports {
                 html.required.set(true)
-                html.outputLocation.set(File("${buildDir}/reports/jacoco/report.html"))
+                html.outputLocation.set(File("$buildDir/reports/jacoco/report.html"))
                 xml.required.set(true)
-                xml.outputLocation.set(File("${buildDir}/reports/jacoco/report.xml"))
+                xml.outputLocation.set(File("$buildDir/reports/jacoco/report.xml"))
             }
         }
     }
 
     sonarqube {
         properties {
-            property("sonar.jacoco.reportPaths", file("$buildDir/reports/jacoco/report.exec"))
+            property("sonar.jacoco.reportPaths", "$buildDir/reports/jacoco/report.exec")
         }
     }
 
@@ -136,24 +137,21 @@ tasks {
         group = "coverage"
         description = "Test Coverage"
         dependsOn(allprojects.map { it.tasks.withType<Test>() })
-        finalizedBy("coverageMerge")
-
         executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
         sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
         reports {
             html.required.set(true)
-            html.outputLocation.set(File("${buildDir}/reports/jacoco/report.html"))
+            html.outputLocation.set(File("$buildDir/reports/jacoco/report.html"))
             xml.required.set(true)
-            xml.outputLocation.set(File("${buildDir}/reports/jacoco/report.xml"))
+            xml.outputLocation.set(File("$buildDir/reports/jacoco/report.xml"))
         }
+        finalizedBy("coverageMerge")
     }
 
     register<JacocoMerge>("coverageMerge") {
         group = "coverage"
         description = "Test Coverage Aggregator"
-        dependsOn(":coverage")
-        finalizedBy("sonar")
-
+        dependsOn("coverage")
         destinationFile = file("$buildDir/reports/jacoco/report.exec")
         executionData = project.fileTree(".") {
             include("**/*.exec")

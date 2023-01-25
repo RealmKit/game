@@ -18,16 +18,17 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.player
+package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-
-val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name()
-    )
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+class StatValue(
+    var max: Long,
+    var current: Long = max,
+) {
+    companion object {
+        val zero: StatValue
+            get() = StatValue(
+                max = 0,
+                current = 0,
+            )
+    }
+}

@@ -18,16 +18,33 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.player
+package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
+import jakarta.annotation.PostConstruct
+import org.springframework.boot.context.properties.ConfigurationProperties
 
-val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name()
-    )
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+@ConfigurationProperties("application.initial.stats")
+data class StatProperties(
+    val level: Long = 0,
+    val experience: Long = 0,
+    val health: Long = 0,
+    val mana: Long = 0,
+    val stamina: Long = 0,
+    val attack: Long = 0,
+    val speed: Long = 0,
+    val experienceMultiplier: Double = 0.0,
+    val dropMultiplier: Double = 0.0,
+    val criticalMultiplier: Double = 0.0,
+    val criticalChance: Double = 0.0,
+    val evadeChance: Double = 0.0,
+) {
+    object InitialStatusProperties {
+        var initialStatus: StatProperties = StatProperties()
+    }
+
+    @PostConstruct
+    fun initialize() {
+        initialStatus = this
+    }
+}
