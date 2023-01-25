@@ -74,7 +74,7 @@ subprojects {
     dependencies {
         detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
         detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors:1.22.0")
-        detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.0.2")
+        detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.0.4")
 
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
