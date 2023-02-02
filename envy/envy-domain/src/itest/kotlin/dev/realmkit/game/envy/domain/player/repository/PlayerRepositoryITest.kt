@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.envy.domain.player.repository
 
+import dev.realmkit.game.envy.domain.player.document.Player
 import dev.realmkit.test.sloth.testutils.fixture.player.arbitrary
 import dev.realmkit.test.sloth.testutils.infra.ITestContext
 import dev.realmkit.test.sloth.testutils.specs.ITestSpec

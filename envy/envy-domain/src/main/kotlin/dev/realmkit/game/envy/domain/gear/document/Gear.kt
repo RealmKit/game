@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.envy.domain.gear.document
 
-import dev.realmkit.envy.domain.gears.enums.GearType
+import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.item.document.Item
 
 interface Gear : Item {

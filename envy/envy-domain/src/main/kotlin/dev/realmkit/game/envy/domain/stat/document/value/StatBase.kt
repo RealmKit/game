@@ -20,7 +20,6 @@
 
 package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.envy.domain.stats.documents.values.StatValue
 import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
 import org.springframework.data.mongodb.core.mapping.Document
 

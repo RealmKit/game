@@ -20,10 +20,10 @@
 
 package dev.realmkit.game.envy.domain.player.document
 
-import dev.realmkit.game.envy.domain.stat.document.Stat
 import dev.realmkit.game.envy.domain.base.document.BaseDocument
 import dev.realmkit.game.envy.domain.currency.document.Currency
 import dev.realmkit.game.envy.domain.gear.document.EquipmentSlot
+import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document

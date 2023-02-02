@@ -18,7 +18,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.envy.domain.gears.enums
+package dev.realmkit.game.envy.domain.gear.enums
 
 enum class GearType {
     WEAPON,

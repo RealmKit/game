@@ -133,10 +133,17 @@ subprojects {
 }
 
 tasks {
+    check {
+        dependsOn(
+            "detekt",
+            allprojects.map { it.tasks.withType<Test>() }
+        )
+    }
+
     register<JacocoReport>("coverage") {
         group = "coverage"
         description = "Test Coverage"
-        dependsOn(allprojects.map { it.tasks.withType<Test>() })
+        dependsOn(check)
         executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
         sourceSets(project.extensions.getByType(SourceSetContainer::class.java).getByName("main"))
         reports {
