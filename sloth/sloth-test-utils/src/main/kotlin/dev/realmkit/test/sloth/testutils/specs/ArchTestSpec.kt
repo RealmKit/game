@@ -29,6 +29,9 @@ import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JAV
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JODATIME
 import com.tngtech.archunit.library.GeneralCodingRules.testClassesShouldResideInTheSamePackageAsImplementation
 
+/**
+ * A [ArchTestSpec] extends [TestSpec] with all default Arch Test suite case
+ */
 abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
     init {
         body()

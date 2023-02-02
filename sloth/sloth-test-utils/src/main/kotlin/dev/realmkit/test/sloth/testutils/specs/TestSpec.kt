@@ -22,6 +22,19 @@ package dev.realmkit.test.sloth.testutils.specs
 
 import io.kotest.core.spec.style.ExpectSpec
 
+/**
+ * [TestSpec]
+ *
+ * This class wraps a few extra things on top of [Kotest ExpectSpec][ExpectSpec]
+ *
+ * @author @tihlok
+ * @see ExpectSpec
+ * @sample ```class BooleanExtensionsKtTest : TestSpec({
+ *     expect("that Boolean.ifTrue should call a function") {
+ *         true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
+ *     }
+ * ```
+ */
 open class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
     init {
         body()

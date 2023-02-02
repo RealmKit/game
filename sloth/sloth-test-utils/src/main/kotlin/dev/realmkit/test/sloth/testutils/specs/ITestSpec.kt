@@ -28,23 +28,44 @@ import io.kotest.property.Arb
 import io.kotest.property.checkAll
 import kotlinx.coroutines.coroutineScope
 
+/**
+ * [ITestSpec]
+ *
+ * This class wraps a few extra things on top of [Kotest ExpectSpec][TestSpec]
+ * Use it for Integration Tests purpose, as it will start the database and
+ * everything else needed by the main application to start
+ */
 abstract class ITestSpec(body: ITestSpec.() -> Unit = {}) : TestSpec() {
     init {
         body()
     }
 
+    /**
+     * Before starting the tests spec
+     *
+     * @param
+     */
     override suspend fun beforeSpec(spec: Spec) {
         MongoDB.start
     }
 
+    /**
+     * After finishing the tests spec
+     */
     override fun afterSpec(f: suspend (Spec) -> Unit) {
         MongoDB.stop
     }
 
+    /**
+     * After each test on the spec
+     */
     override suspend fun afterEach(testCase: TestCase, result: TestResult) {
         MongoDB.clear
     }
 
+    /**
+     *
+     */
     suspend fun context(function: () -> Unit) =
         coroutineScope { function() }
 

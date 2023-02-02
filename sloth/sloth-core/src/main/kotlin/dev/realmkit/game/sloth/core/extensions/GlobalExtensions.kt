@@ -22,5 +22,8 @@ package dev.realmkit.game.sloth.core.extensions
 
 import java.time.Instant
 
+/**
+ * Returns the [Instant].`now` value
+ */
 fun now(): Instant =
     Instant.now()

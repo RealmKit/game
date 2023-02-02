@@ -23,5 +23,8 @@ package dev.realmkit
 import com.tngtech.archunit.junit.AnalyzeClasses
 import dev.realmkit.test.sloth.testutils.specs.ArchTestSpec
 
+/**
+ * A [EnvyTestUtilsArchTest] extends [ArchTestSpec] to execute all default Arch tests on this module
+ */
 @AnalyzeClasses(packages = ["dev.realmkit.game"])
 class EnvyTestUtilsArchTest : ArchTestSpec()

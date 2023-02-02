@@ -22,6 +22,11 @@ package dev.realmkit
 
 import com.tngtech.archunit.junit.AnalyzeClasses
 import dev.realmkit.test.sloth.testutils.specs.ArchTestSpec
+import dev.realmkit.test.sloth.testutils.specs.TestSpec
+import io.kotest.core.spec.style.ExpectSpec
 
+/**
+ * A [TestSpec] extends [ExpectSpec] just to wrap things together to all tests
+ */
 @AnalyzeClasses(packages = ["dev.realmkit.game"])
 class EnvyDomainArchTest : ArchTestSpec()
