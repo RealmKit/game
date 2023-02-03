@@ -35,6 +35,7 @@ import org.unbrokendome.gradle.plugins.testsets.dsl.testSets
 
 buildscript {
     repositories {
+        gradlePluginPortal()
         mavenCentral()
     }
 }
@@ -120,17 +121,14 @@ subprojects {
     apply<TestSetsPlugin>()
 
     dependencies {
-        testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
-        testImplementation("io.kotest:kotest-assertions-core:5.5.4")
-        testImplementation("io.kotest:kotest-property:5.5.4")
-        testImplementation("io.github.serpro69:kotlin-faker:1.13.0")
-        testImplementation("com.tngtech.archunit:archunit:1.0.1")
-        testImplementation("com.tngtech.archunit:archunit-junit5:1.0.1")
+        testImplementation(rootProject.libs.bundles.test.kotest)
+        testImplementation(rootProject.libs.bundles.test.archunit)
+        testImplementation(rootProject.libs.test.faker)
     }
 
     testSets {
-        val archTest by creating
-        val itest by creating
+        create("archTest")
+        create("itest")
     }
 
     tasks {
@@ -179,6 +177,7 @@ tasks {
         finalizedBy("coverageMerge")
     }
 
+    @Suppress("DEPRECATION")
     register<JacocoMerge>("coverageMerge") {
         group = "coverage"
         description = "Test Coverage Aggregator"

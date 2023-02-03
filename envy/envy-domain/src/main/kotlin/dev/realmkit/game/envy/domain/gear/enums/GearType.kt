@@ -28,5 +28,4 @@ enum class GearType {
     WEAPON,
     ARMOR,
     RING,
-    ;
 }

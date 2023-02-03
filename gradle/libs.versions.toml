@@ -3,6 +3,11 @@ kotlin = "1.8.10"
 spring-boot = "3.0.1"
 spring-dependency = "1.1.0"
 test-sets = "4.0.0"
+test-kotest = "5.5.4"
+test-kotest-spring = "1.1.2"
+test-archunit = "1.0.1"
+test-faker = "1.13.0"
+test-testcontainers-mongodb = "1.17.6"
 code-quality-sonarqube = "3.5.0.2730"
 code-quality-dokka = "1.7.20"
 code-quality-spotless = "6.14.0"
@@ -20,3 +25,20 @@ code-quality-dokka = { id = "org.jetbrains.dokka", version.ref = "code-quality-d
 code-quality-spotless = { id = "com.diffplug.spotless", version.ref = "code-quality-spotless" }
 code-quality-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "code-quality-detekt" }
 code-quality-diktat = { id = "org.cqfn.diktat.diktat-gradle-plugin", version.ref = "code-quality-diktat" }
+
+[libraries]
+spring-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
+spring-data-mongodb = { group = "org.springframework.boot", name = "spring-boot-starter-data-mongodb" }
+test-spring-boot = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
+test-kotest-junit = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "test-kotest" }
+test-kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "test-kotest" }
+test-kotest-property = { group = "io.kotest", name = "kotest-property", version.ref = "test-kotest" }
+test-kotest-spring = { group = "io.kotest.extensions", name = "kotest-extensions-spring", version.ref = "test-kotest-spring" }
+test-archunit-core = { group = "com.tngtech.archunit", name = "archunit", version.ref = "test-archunit" }
+test-archunit-junit5 = { group = "com.tngtech.archunit", name = "archunit-junit5", version.ref = "test-archunit" }
+test-faker = { group = "io.github.serpro69", name = "kotlin-faker", version.ref = "test-faker" }
+test-testcontainers-mongodb = { group = "org.testcontainers", name = "mongodb", version.ref = "test-testcontainers-mongodb" }
+
+[bundles]
+test-kotest = ["test-kotest-junit", "test-kotest-assertions", "test-kotest-property"]
+test-archunit = ["test-archunit-core", "test-archunit-junit5"]
