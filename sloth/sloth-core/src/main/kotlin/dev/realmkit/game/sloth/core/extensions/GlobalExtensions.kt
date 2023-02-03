@@ -24,6 +24,8 @@ import java.time.Instant
 
 /**
  * Returns the [Instant].`now` value
+ *
+ * @return now
  */
 fun now(): Instant =
     Instant.now()

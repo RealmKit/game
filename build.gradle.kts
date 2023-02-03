@@ -20,7 +20,10 @@
 
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin
+import org.cqfn.diktat.plugin.gradle.DiktatGradlePlugin
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -29,7 +32,6 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.unbrokendome.gradle.plugins.testsets.TestSetsPlugin
 import org.unbrokendome.gradle.plugins.testsets.dsl.testSets
-import java.util.Calendar.YEAR
 
 buildscript {
     repositories {
@@ -42,20 +44,52 @@ plugins {
     jacoco
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.test.sets)
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.spotless)
-    alias(libs.plugins.sonarqube)
-    alias(libs.plugins.spring).apply(false)
+    alias(libs.plugins.code.quality.sonarqube)
+    alias(libs.plugins.code.quality.dokka)
+    alias(libs.plugins.code.quality.spotless)
+    alias(libs.plugins.code.quality.detekt)
+    alias(libs.plugins.code.quality.diktat)
+    alias(libs.plugins.spring.boot).apply(false)
     alias(libs.plugins.spring.dependency).apply(false)
-    alias(libs.plugins.kotlin.plugin.spring).apply(false)
+    alias(libs.plugins.kotlin.spring).apply(false)
 }
 
 allprojects {
     apply<KotlinPlatformJvmPlugin>()
     apply<SonarQubePlugin>()
+    apply<DokkaPlugin>()
+    apply<SpotlessPlugin>()
+    apply<DetektPlugin>()
+    apply<DiktatGradlePlugin>()
 
     repositories {
         mavenCentral()
+    }
+
+    configure<SpotlessExtension> {
+        kotlin {
+            target("**/*.kt")
+            ktfmt()
+            ktlint()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint()
+        }
+        format("misc") {
+            target("*.md", "*.yml", "*.properties", ".gitignore")
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
+        }
+    }
+
+    sonarqube {
+        properties {
+            property("sonar.jacoco.reportPaths", "$buildDir/reports/jacoco/report.exec")
+        }
     }
 
     tasks {
@@ -65,17 +99,25 @@ allprojects {
                 jvmTarget = "18"
             }
         }
+
+        withType<Detekt> {
+            reports {
+                xml.required.set(true)
+                html.required.set(true)
+                txt.required.set(true)
+                sarif.required.set(true)
+                md.required.set(true)
+            }
+        }
     }
 }
 
 subprojects {
     apply<IdeaPlugin>()
     apply<JacocoPlugin>()
-    apply<DokkaPlugin>()
     apply<SpringBootPlugin>()
     apply<DependencyManagementPlugin>()
     apply<TestSetsPlugin>()
-    apply<SpotlessPlugin>()
 
     dependencies {
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
@@ -108,25 +150,6 @@ subprojects {
         }
     }
 
-    sonarqube {
-        properties {
-            property("sonar.jacoco.reportPaths", "$buildDir/reports/jacoco/report.exec")
-        }
-    }
-
-    configure<SpotlessExtension> {
-        kotlin {
-            ktfmt()
-            ktlint()
-            diktat()
-            licenseHeader("/* (C)$YEAR */")
-        }
-        kotlinGradle {
-            target("*.gradle.kts")
-            ktlint()
-        }
-    }
-
     val bootJar: BootJar by tasks
     bootJar.enabled = false
 }
@@ -134,7 +157,9 @@ subprojects {
 tasks {
     check {
         dependsOn(
-            "spotlessCheck",
+            allprojects.map { it.tasks.named("detekt") },
+            allprojects.map { it.tasks.named("diktatFix") },
+            allprojects.map { it.tasks.named("spotlessApply") },
             allprojects.map { it.tasks.withType<Test>() },
         )
     }

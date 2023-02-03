@@ -22,6 +22,9 @@ package dev.realmkit.game.sloth.core.extensions
 
 /**
  * If it is `true` then the block will be applied
+ *
+ * @param block
+ * @return the block result
  */
 infix fun <T> Boolean?.ifTrue(block: () -> T): T? =
     this.takeIf { this == true }?.let { block() }

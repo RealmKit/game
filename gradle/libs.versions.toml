@@ -1,21 +1,22 @@
 [versions]
 kotlin = "1.8.10"
-dokka = "1.7.20"
-sonarqube = "3.5.0.2730"
-spring = "3.0.1"
+spring-boot = "3.0.1"
 spring-dependency = "1.1.0"
 test-sets = "4.0.0"
-spotless = "6.14.0"
+code-quality-sonarqube = "3.5.0.2730"
+code-quality-dokka = "1.7.20"
+code-quality-spotless = "6.14.0"
+code-quality-detekt = "1.22.0"
+code-quality-diktat = "1.2.4.2"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
-spring = { id = "org.springframework.boot", version.ref = "spring" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
 test-sets = { id = "org.unbroken-dome.test-sets", version.ref = "test-sets" }
-spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-
-[bundles]
-kotest = []
+code-quality-sonarqube = { id = "org.sonarqube", version.ref = "code-quality-sonarqube" }
+code-quality-dokka = { id = "org.jetbrains.dokka", version.ref = "code-quality-dokka" }
+code-quality-spotless = { id = "com.diffplug.spotless", version.ref = "code-quality-spotless" }
+code-quality-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "code-quality-detekt" }
+code-quality-diktat = { id = "org.cqfn.diktat.diktat-gradle-plugin", version.ref = "code-quality-diktat" }

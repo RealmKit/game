@@ -28,12 +28,22 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 
+/**
+ * [SpringBootTestApplication]
+ * Test SpringBoot class, also [enables Mongo Repositories][EnableMongoRepositories] over `.domain.*` package
+ *
+ * @see SpringBootApplication
+ */
 @SpringBootApplication
 @EnableMongoRepositories("dev.realmkit.game.envy.domain")
-class SpringBootTestApplication
+open class SpringBootTestApplication
 
+/**
+ * [IntegrationTestContext]
+ * Wraps all annotations needed to start an Integration Test
+ */
 @DataMongoTest
 @ActiveProfiles("itest")
 @ApplyExtension(SpringTestExtension::class)
 @ContextConfiguration(classes = [SpringBootTestApplication::class])
-annotation class ITestContext
+annotation class IntegrationTestContext

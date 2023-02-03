@@ -25,8 +25,13 @@ import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
 import dev.realmkit.game.envy.domain.gear.document.slot.WeaponGear
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property weapon
+ * @property armor
+ * @property ring
+ */
 @Document
-class EquipmentSlot(
+data class EquipmentSlot(
     var weapon: WeaponGear? = null,
     var armor: ArmorGear? = null,
     var ring: RingGear? = null,

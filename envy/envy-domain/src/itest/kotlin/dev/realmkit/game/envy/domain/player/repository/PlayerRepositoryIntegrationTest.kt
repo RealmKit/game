@@ -22,17 +22,17 @@ package dev.realmkit.game.envy.domain.player.repository
 
 import dev.realmkit.game.envy.domain.player.document.Player
 import dev.realmkit.test.sloth.testutils.fixture.player.arbitrary
-import dev.realmkit.test.sloth.testutils.infra.ITestContext
-import dev.realmkit.test.sloth.testutils.specs.ITestSpec
+import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
+import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
-@ITestContext
-class PlayerRepositoryITest(
+@IntegrationTestContext
+class PlayerRepositoryIntegrationTest(
     private val playerRepository: PlayerRepository,
-) : ITestSpec({
+) : IntegrationTestSpec({
     expect("all beans to be inject") {
         playerRepository.shouldNotBeNull()
     }
@@ -51,23 +51,23 @@ class PlayerRepositoryITest(
         check(Player.arbitrary) { player ->
             playerRepository.save(player).shouldNotBeNull()
                 .asClue {
-//            playerRepository.findById(player.id).asClue { find ->
-//                    find.shouldBePresent()
-//                        .asClue {
-//                            it.id shouldBe player.id
-//                            it.createdDate.shouldNotBeNull()
-//                            it.updatedDate.shouldNotBeNull()
+                    // playerRepository.findById(player.id).asClue { find ->
+                    // find.shouldBePresent()
+                    // .asClue {
+                    // it.id shouldBe player.id
+                    // it.createdDate.shouldNotBeNull()
+                    // it.updatedDate.shouldNotBeNull()
                     it.name shouldBe player.name
-//                            it.stat.shouldBePositive()
-//                            it.currency.gold.shouldNotBeNull()
-//                            it.currency.gem.shouldNotBeNull()
-//                            it.equipmentSlot.weapon.shouldNotBeNull()
-//                                .stat.shouldBePositive()
-//                            it.equipmentSlot.armor.shouldNotBeNull()
-//                                .stat.shouldBePositive()
-//                            it.equipmentSlot.ring.shouldNotBeNull()
-//                                .stat.shouldBePositive()
-//                        }
+                    // it.stat.shouldBePositive()
+                    // it.currency.gold.shouldNotBeNull()
+                    // it.currency.gem.shouldNotBeNull()
+                    // it.equipmentSlot.weapon.shouldNotBeNull()
+                    // .stat.shouldBePositive()
+                    // it.equipmentSlot.armor.shouldNotBeNull()
+                    // .stat.shouldBePositive()
+                    // it.equipmentSlot.ring.shouldNotBeNull()
+                    // .stat.shouldBePositive()
+                    // }
                 }
         }
     }

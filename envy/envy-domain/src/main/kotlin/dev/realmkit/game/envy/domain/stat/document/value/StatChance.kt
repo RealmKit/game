@@ -23,6 +23,10 @@ package dev.realmkit.game.envy.domain.stat.document.value
 import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property critical
+ * @property evade
+ */
 @Document
 data class StatChance(
     var critical: Double = initialStatus.criticalChance,

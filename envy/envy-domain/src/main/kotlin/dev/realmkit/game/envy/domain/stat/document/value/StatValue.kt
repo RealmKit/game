@@ -22,6 +22,10 @@ package dev.realmkit.game.envy.domain.stat.document.value
 
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property max
+ * @property current
+ */
 @Document
 data class StatValue(
     var max: Long,

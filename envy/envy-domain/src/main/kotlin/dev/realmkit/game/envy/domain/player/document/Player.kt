@@ -26,6 +26,12 @@ import dev.realmkit.game.envy.domain.gear.document.EquipmentSlot
 import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property name
+ * @property stat
+ * @property currency
+ * @property equipmentSlot
+ */
 @Document
 class Player(
     val name: String,

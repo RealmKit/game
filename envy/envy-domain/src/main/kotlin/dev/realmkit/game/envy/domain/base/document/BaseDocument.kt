@@ -25,9 +25,24 @@ import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import java.time.Instant
 
+/**
+ * [BaseDocument]
+ * Setts the default fields that a Document class should have
+ */
 open class BaseDocument {
+    /**
+     * Document creation time
+     */
+    var createdDate: Instant = now()
+
+    /**
+     * Document update time
+     */
+    var updatedDate: Instant = now()
+
+    /**
+     * Document id
+     */
     @Id
     lateinit var id: ObjectId
-    var createdDate: Instant = now()
-    var updatedDate: Instant = now()
 }

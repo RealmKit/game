@@ -24,6 +24,23 @@ import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusP
 import jakarta.annotation.PostConstruct
 import org.springframework.boot.context.properties.ConfigurationProperties
 
+/**
+ * [StatProperties]
+ * Defines all stats belonging to an item, player, skill, or whatever could have stats
+ *
+ * @property level the `thing` level
+ * @property experience the `thing` experience to level
+ * @property health the `thing` health modifier attribute
+ * @property mana the `thing` mana modifier attribute
+ * @property stamina the `thing` stamina modifier attribute
+ * @property attack the `thing` attack modifier attribute
+ * @property speed the `thing` speed modifier attribute
+ * @property experienceMultiplier the `thing` experience modifier multiplier
+ * @property dropMultiplier the `thing` drop rate modifier multiplier
+ * @property criticalMultiplier the `thing` critical modifier multiplier
+ * @property criticalChance the `thing` critical chance modifier multiplier
+ * @property evadeChance the `thing` evade chance modifier multiplier
+ */
 @ConfigurationProperties("application.initial.stats")
 data class StatProperties(
     val level: Long = 0,
@@ -43,6 +60,9 @@ data class StatProperties(
         var initialStatus: StatProperties = StatProperties()
     }
 
+    /**
+     * Loads the default values from `application.properties` globally
+     */
     @PostConstruct
     fun initialize() {
         initialStatus = this

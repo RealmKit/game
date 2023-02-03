@@ -22,7 +22,20 @@ package dev.realmkit.game.envy.domain.item.document
 
 import dev.realmkit.game.envy.domain.stat.document.Stat
 
+/**
+ * [Item]
+ * All items should have a nome and stats
+ *
+ * @see Stat
+ */
 interface Item {
+    /**
+     * the [Item] `name`
+     */
     val name: String
+
+    /**
+     * the [Item] `stats`
+     */
     val stat: Stat
 }

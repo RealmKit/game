@@ -23,6 +23,13 @@ package dev.realmkit.game.envy.domain.stat.document.value
 import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property health
+ * @property mana
+ * @property stamina
+ * @property attack
+ * @property speed
+ */
 @Document
 data class StatBase(
     var health: StatValue = StatValue(max = initialStatus.health),

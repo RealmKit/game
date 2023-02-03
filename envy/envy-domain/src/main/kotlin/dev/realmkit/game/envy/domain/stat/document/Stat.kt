@@ -26,6 +26,12 @@ import dev.realmkit.game.envy.domain.stat.document.value.StatMultiplier
 import dev.realmkit.game.envy.domain.stat.document.value.StatProgression
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property progression
+ * @property base
+ * @property multiplier
+ * @property chance
+ */
 @Document
 data class Stat(
     val progression: StatProgression = StatProgression(),

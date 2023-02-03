@@ -22,8 +22,12 @@ package dev.realmkit.game.envy.domain.currency.document
 
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property gold
+ * @property gem
+ */
 @Document
-class Currency(
+data class Currency(
     var gold: Long = 0,
     var gem: Long = 0,
 ) {

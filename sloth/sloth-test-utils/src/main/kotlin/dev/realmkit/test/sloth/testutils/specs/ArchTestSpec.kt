@@ -33,34 +33,55 @@ import com.tngtech.archunit.library.GeneralCodingRules.testClassesShouldResideIn
  * A [ArchTestSpec] extends [TestSpec] with all default Arch Test suite case
  */
 abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
-    init {
-        body()
-    }
-
+    /**
+     * Certify that no Classes throws any kind of generic `Exceptions`
+     */
     @ArchTest
     val noClassesShouldThrowGenericExceptions: ArchRule =
         NO_CLASSES_SHOULD_THROW_GENERIC_EXCEPTIONS
 
+    /**
+     * Certify that no Classes uses generic java logging
+     */
     @ArchTest
     val noClassesShouldUseJavaUtilLogging: ArchRule =
         NO_CLASSES_SHOULD_USE_JAVA_UTIL_LOGGING
 
+    /**
+     * Certify that no Classes use `org.joda.time`
+     */
     @ArchTest
     val noClassesShouldUseJodaTime: ArchRule =
         NO_CLASSES_SHOULD_USE_JODATIME
 
+    /**
+     * Certify that no Classes use field injection, it should use constructor injection
+     */
     @ArchTest
     val noClassesShouldUseFieldInjectionAnnotation: ArchRule =
         NO_CLASSES_SHOULD_USE_FIELD_INJECTION
 
+    /**
+     * Certify that all tests are in the same package as their classes
+     */
     @ArchTest
     val testClassesShouldResideInTheSamePackageAsImplementation: ArchRule =
         testClassesShouldResideInTheSamePackageAsImplementation()
 
+    /**
+     * Certify that methods returns raw types
+     */
     @ArchTest
     val noMethodsShouldHaveRawReturnType: ArchRule =
         noMethods()
-            .should().haveRawReturnType(List::class.java)
-            .orShould().haveRawReturnType(Set::class.java)
-            .orShould().haveRawReturnType(Map::class.java)
+            .should()
+            .haveRawReturnType(List::class.java)
+            .orShould()
+            .haveRawReturnType(Set::class.java)
+            .orShould()
+            .haveRawReturnType(Map::class.java)
+
+    init {
+        body()
+    }
 }

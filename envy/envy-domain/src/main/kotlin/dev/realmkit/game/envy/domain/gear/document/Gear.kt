@@ -23,6 +23,16 @@ package dev.realmkit.game.envy.domain.gear.document
 import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.item.document.Item
 
+/**
+ * [Gear]
+ * Extends from [Item] and adds particular properties to [Gear type items][Gear]
+ *
+ * @see Item
+ */
 interface Gear : Item {
+    /**
+     * Gear type
+     * @see [GearType]
+     */
     val type: GearType
 }

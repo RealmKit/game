@@ -27,7 +27,7 @@ import io.kotest.property.arbitrary.arbitrary
 
 val Player.Companion.fixture: Player
     get() = Player(
-        name = fake.superhero.name()
+        name = fake.superhero.name(),
     )
 
 val Player.Companion.arbitrary: Arb<Player>

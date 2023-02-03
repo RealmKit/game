@@ -25,6 +25,15 @@ import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * [RingGear]
+ * Extends from [Gear] and sets the type as [GearType.RING]
+ *
+ * @see GearType
+ * @property type
+ * @property stat
+ * @property name
+ */
 @Document
 class RingGear(
     override val type: GearType = GearType.RING,

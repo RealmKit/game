@@ -23,6 +23,11 @@ package dev.realmkit.game.envy.domain.stat.document.value
 import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
 import org.springframework.data.mongodb.core.mapping.Document
 
+/**
+ * @property experience
+ * @property drop
+ * @property critical
+ */
 @Document
 data class StatMultiplier(
     var experience: Double = initialStatus.experienceMultiplier,

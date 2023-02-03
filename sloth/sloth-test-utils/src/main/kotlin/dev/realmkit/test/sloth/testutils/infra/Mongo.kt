@@ -25,20 +25,19 @@ import dev.realmkit.game.sloth.core.extensions.ifTrue
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.testcontainers.containers.MongoDBContainer
 
-object MongoDB {
-    private val mongo = MongoDBContainer("mongo:latest")
+object Mongo {
+    private val container = MongoDBContainer("mongo:latest")
         .apply { portBindings = listOf("27018:27017") }
-
     private val mongoTemplate by lazy {
         MongoTemplate(MongoClients.create("mongodb://localhost:27018"), "test")
     }
 
     val start
-        get() = mongo.takeUnless { it.isRunning }?.start()
+        get() = container.takeUnless { it.isRunning }?.start()
 
     val stop
-        get() = mongo.takeIf { it.isRunning }?.stop()
+        get() = container.takeIf { it.isRunning }?.stop()
 
     val clear
-        get() = mongo.isRunning.ifTrue { mongoTemplate.db.drop() }
+        get() = container.isRunning.ifTrue { mongoTemplate.db.drop() }
 }

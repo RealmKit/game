@@ -1,0 +1,29 @@
+# Common configuration
+- name: DIKTAT_COMMON
+  enabled: true
+  configuration:
+    domainName: dev.realmkit
+    kotlinVersion: 1.8.10
+    srcDirectories: main
+    testDirs: test, itest, archTest
+# Checks trailing comma
+- name: TRAILING_COMMA
+  enabled: true
+  configuration:
+    indices: false
+    typeArgument: false
+    typeParameter: false
+    valueArgument: false
+    valueParameter: false
+    whenConditions: false
+    collectionLiteral: false
+    destructuringDeclaration: false
+# Disabling silly rules
+- name: HEADER_MISSING_IN_NON_SINGLE_CLASS_FILE
+  enabled: false
+- name: CUSTOM_GETTERS_SETTERS
+  enabled: false
+- name: IDENTIFIER_LENGTH
+  enabled: false
+- name: EMPTY_BLOCK_STRUCTURE_ERROR
+  enabled: false

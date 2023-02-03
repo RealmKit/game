@@ -25,5 +25,11 @@ import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
+/**
+ * [PlayerRepository]
+ * [Player Mongo Repository][PlayerRepository] for dealing with [Player documents][Player]
+ *
+ * @see MongoRepository
+ */
 @Repository
 interface PlayerRepository : MongoRepository<Player, ObjectId>
