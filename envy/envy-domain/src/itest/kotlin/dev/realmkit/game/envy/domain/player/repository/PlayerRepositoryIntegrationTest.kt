@@ -26,7 +26,9 @@ import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
 import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.longs.shouldBeZero
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
 
 @IntegrationTestContext
@@ -50,24 +52,28 @@ class PlayerRepositoryIntegrationTest(
 
         check(Player.arbitrary) { player ->
             playerRepository.save(player).shouldNotBeNull()
+            playerRepository.findById(player.id)
+                .shouldBePresent()
                 .asClue {
-                    // playerRepository.findById(player.id).asClue { find ->
-                    // find.shouldBePresent()
-                    // .asClue {
-                    // it.id shouldBe player.id
-                    // it.createdDate.shouldNotBeNull()
-                    // it.updatedDate.shouldNotBeNull()
+                    it.id shouldBe player.id
+                    it.createdDate.shouldNotBeNull()
+                    it.updatedDate.shouldNotBeNull()
                     it.name shouldBe player.name
-                    // it.stat.shouldBePositive()
-                    // it.currency.gold.shouldNotBeNull()
-                    // it.currency.gem.shouldNotBeNull()
-                    // it.equipmentSlot.weapon.shouldNotBeNull()
-                    // .stat.shouldBePositive()
-                    // it.equipmentSlot.armor.shouldNotBeNull()
-                    // .stat.shouldBePositive()
-                    // it.equipmentSlot.ring.shouldNotBeNull()
-                    // .stat.shouldBePositive()
-                    // }
+                    it.stat.progression.experience.shouldBeZero()
+                    it.stat.progression.level.shouldBeZero()
+                    it.stat.base.attack.shouldBeZero()
+                    it.stat.base.speed.shouldBeZero()
+                    it.stat.base.health.current.shouldBeZero()
+                    it.stat.base.health.max.shouldBeZero()
+                    it.stat.base.mana.current.shouldBeZero()
+                    it.stat.base.mana.max.shouldBeZero()
+                    it.stat.base.stamina.current.shouldBeZero()
+                    it.stat.base.stamina.max.shouldBeZero()
+                    it.currency.gold.shouldBeZero()
+                    it.currency.gem.shouldBeZero()
+                    it.equipmentSlot.weapon.shouldBeNull()
+                    it.equipmentSlot.armor.shouldBeNull()
+                    it.equipmentSlot.ring.shouldBeNull()
                 }
         }
     }
