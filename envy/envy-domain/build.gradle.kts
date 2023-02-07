@@ -19,11 +19,21 @@
  */
 
 dependencies {
+    /**
+     * MAIN: ANNOTATIONS
+     */
     annotationProcessor(rootProject.libs.spring.processor)
 
-    implementation(project(":sloth:sloth-core"))
-    implementation(rootProject.libs.spring.data.mongodb)
+    /**
+     * MAIN: IMPLEMENTATION
+     */
+    api(project(":sloth:sloth-core"))
+    api(rootProject.libs.test.spring.boot)
+    api(rootProject.libs.spring.data.mongodb)
 
+    /**
+     * TEST: IMPLEMENTATION
+     */
     testImplementation(project(":sloth:sloth-test-utils"))
     testImplementation(project(":envy:envy-test-utils"))
     testImplementation(rootProject.libs.test.spring.boot)

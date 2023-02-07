@@ -18,24 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-dependencies {
-    /**
-     * MAIN: ANNOTATIONS
-     */
-    annotationProcessor(rootProject.libs.spring.processor)
+package dev.realmkit.game.wrath
 
-    /**
-     * MAIN: RUNTIME
-     */
-    runtimeOnly(rootProject.libs.kotlin.reflect)
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.boot.runApplication
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
-    /**
-     * MAIN: IMPLEMENTATION
-     */
-    implementation(project(":envy:envy-domain"))
+/**
+ * [App]
+ * [Spring Boot][App] main class
+ * enables [Mongo repositories][EnableMongoRepositories]
+ * enables [configuration properties][ConfigurationPropertiesScan]
+ *
+ * @see SpringBootApplication
+ */
+@SpringBootApplication
+@ConfigurationPropertiesScan
+@EnableMongoRepositories("dev.realmkit.game.envy.domain")
+open class App
 
-    /**
-     * TEST: IMPLEMENTATION
-     */
-    testImplementation(project(":sloth:sloth-test-utils"))
+/**
+ * Starts the [SpringBoot application][App]
+ */
+fun main() {
+    runApplication<App>()
 }

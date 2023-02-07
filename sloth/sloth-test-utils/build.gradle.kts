@@ -19,12 +19,16 @@
  */
 
 dependencies {
+    /**
+     * MAIN: IMPLEMENTATION
+     */
     implementation(project(":sloth:sloth-core"))
     implementation(project(":envy:envy-domain"))
     implementation(rootProject.libs.test.spring.boot)
     implementation(rootProject.libs.spring.data.mongodb)
     implementation(rootProject.libs.test.kotest.spring)
     implementation(rootProject.libs.test.testcontainers.mongodb)
+
     api(rootProject.libs.bundles.test.kotest)
     api(rootProject.libs.bundles.test.archunit)
     api(rootProject.libs.test.faker)
