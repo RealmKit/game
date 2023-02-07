@@ -24,20 +24,23 @@ import com.mongodb.client.MongoClients
 import dev.realmkit.game.sloth.core.extensions.ifTrue
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.testcontainers.containers.MongoDBContainer
+import org.testcontainers.junit.jupiter.Container
 
 object Mongo {
+    @JvmStatic
+    @Container
     private val container = MongoDBContainer("mongo:latest")
-        .apply { portBindings = listOf("27018:27017") }
     private val mongoTemplate by lazy {
-        MongoTemplate(MongoClients.create("mongodb://localhost:27018"), "test")
+        MongoTemplate(MongoClients.create(container.replicaSetUrl), "realmkit-game")
     }
 
     /**
      * Starts the [MongoDB container][MongoDBContainer]
      *
+     * @return [MongoDBContainer] after started
      * @see MongoDBContainer
      */
-    fun start() = container.takeUnless { it.isRunning }?.start()
+    fun start() = container.takeUnless { it.isRunning }?.start().let { container }
 
     /**
      * Stops the [MongoDB container][MongoDBContainer]

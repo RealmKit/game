@@ -18,25 +18,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-dependencies {
-    /**
-     * MAIN: ANNOTATIONS
-     */
-    annotationProcessor(rootProject.libs.spring.processor)
+package dev.realmkit.game.wrath.app
 
-    /**
-     * MAIN: IMPLEMENTATION
-     */
-    api(project(":sloth:sloth-core"))
-    api(rootProject.libs.test.spring.boot)
-    api(rootProject.libs.spring.data.mongodb)
+import dev.realmkit.game.envy.domain.player.repository.PlayerRepository
+import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
+import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
+import io.kotest.matchers.longs.shouldBeZero
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-    /**
-     * TEST: IMPLEMENTATION
-     */
-    testImplementation(project(":sloth:sloth-test-utils"))
-    testImplementation(project(":envy:envy-test-utils"))
-    testImplementation(rootProject.libs.test.spring.boot)
-    testImplementation(rootProject.libs.spring.data.mongodb)
-    testImplementation(rootProject.libs.test.kotest.spring)
-}
+@IntegrationTestContext
+class AppIntegrationTest(
+    private val playerRepository: PlayerRepository,
+) : IntegrationTestSpec({
+    context("integration testing the App") {
+        expect("all beans to be inject") {
+            playerRepository.shouldNotBeNull()
+        }
+
+        expect("it should be empty") {
+            context {
+                playerRepository.count().shouldBeZero()
+            }
+        }
+    }
+})

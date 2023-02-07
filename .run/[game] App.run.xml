@@ -22,7 +22,7 @@
     <configuration default="false" name="[game] App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
         <option name="ACTIVE_PROFILES" value="dev"/>
         <module name="game.wrath.wrath-app.main"/>
-        <option name="SPRING_BOOT_MAIN_CLASS" value="dev.realmkit.game.wrath.App"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="dev.realmkit.game.wrath.app.App"/>
         <extension name="coverage">
             <pattern>
                 <option name="PATTERN" value="dev.realmkit.game.wrath.*"/>

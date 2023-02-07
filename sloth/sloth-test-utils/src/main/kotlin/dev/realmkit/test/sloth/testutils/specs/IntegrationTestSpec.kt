@@ -24,6 +24,9 @@ import dev.realmkit.test.sloth.testutils.infra.Mongo
 import io.kotest.core.spec.Spec
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.junit.jupiter.Testcontainers
 
 /**
  * [IntegrationTestSpec]
@@ -32,8 +35,10 @@ import io.kotest.core.test.TestResult
  * Use it for Integration Tests purpose, as it will start the database and
  * everything else needed by the main application to start
  */
+@Testcontainers
 abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : TestSpec() {
     init {
+        @Suppress("UNUSED_EXPRESSION")
         body()
     }
 
@@ -50,10 +55,10 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
     /**
      * After finishing the tests spec
      *
-     * @param f The test spec itself
+     * @param spec The test spec itself
      * @see TestSpec.afterSpec
      */
-    override fun afterSpec(f: suspend (Spec) -> Unit) {
+    override suspend fun afterSpec(spec: Spec) {
         Mongo.stop()
     }
 
@@ -66,5 +71,17 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
      */
     override suspend fun afterEach(testCase: TestCase, result: TestResult) {
         Mongo.clear()
+    }
+
+    companion object {
+        /**
+         * @param registry
+         */
+        @JvmStatic
+        @DynamicPropertySource
+        fun dynamicPropertySource(registry: DynamicPropertyRegistry) {
+            val container = Mongo.start()
+            registry.add("spring.data.mongodb.uri") { container.replicaSetUrl }
+        }
     }
 }

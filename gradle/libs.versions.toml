@@ -8,7 +8,7 @@ test-kotest = "5.5.5"
 test-kotest-spring = "1.1.2"
 test-archunit = "1.0.1"
 test-faker = "1.13.0"
-test-testcontainers-mongodb = "1.17.6"
+test-testcontainers = "1.17.6"
 code-quality-sonarqube = "3.5.0.2730"
 code-quality-dokka = "1.7.20"
 code-quality-spotless = "6.14.1"
@@ -39,8 +39,10 @@ test-kotest-spring = { group = "io.kotest.extensions", name = "kotest-extensions
 test-archunit-core = { group = "com.tngtech.archunit", name = "archunit", version.ref = "test-archunit" }
 test-archunit-junit5 = { group = "com.tngtech.archunit", name = "archunit-junit5", version.ref = "test-archunit" }
 test-faker = { group = "io.github.serpro69", name = "kotlin-faker", version.ref = "test-faker" }
-test-testcontainers-mongodb = { group = "org.testcontainers", name = "mongodb", version.ref = "test-testcontainers-mongodb" }
+test-testcontainers-junit = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "test-testcontainers" }
+test-testcontainers-mongodb = { group = "org.testcontainers", name = "mongodb", version.ref = "test-testcontainers" }
 
 [bundles]
 test-kotest = ["test-kotest-junit", "test-kotest-assertions", "test-kotest-property"]
 test-archunit = ["test-archunit-core", "test-archunit-junit5"]
+test-testcontainers = ["test-testcontainers-junit", "test-testcontainers-mongodb"]
