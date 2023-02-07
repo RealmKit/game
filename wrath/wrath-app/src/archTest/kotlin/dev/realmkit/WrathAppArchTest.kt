@@ -18,25 +18,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-rootProject.name = "game"
+package dev.realmkit
+
+import com.tngtech.archunit.junit.AnalyzeClasses
+import dev.realmkit.test.sloth.testutils.specs.ArchTestSpec
+import dev.realmkit.test.sloth.testutils.specs.TestSpec
+import io.kotest.core.spec.style.ExpectSpec
 
 /**
- * SLOTH
+ * A [TestSpec] extends [ExpectSpec] just to wrap things together to all tests
  */
-include("sloth")
-include("sloth:sloth-core")
-include("sloth:sloth-test-utils")
-
-/**
- * ENVY
- */
-include("envy")
-include("envy:envy-core")
-include("envy:envy-domain")
-include("envy:envy-test-utils")
-
-/**
- * WRATH
- */
-include("wrath")
-include("wrath:wrath-app")
+@AnalyzeClasses(packages = ["dev.realmkit.game"])
+class WrathAppArchTest : ArchTestSpec()
