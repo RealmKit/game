@@ -35,32 +35,34 @@ import io.kotest.matchers.shouldBe
 class PlayerRepositoryIntegrationTest(
     private val playerRepository: PlayerRepository,
 ) : IntegrationTestSpec({
-    expect("all beans to be inject") {
-        playerRepository.shouldNotBeNull()
-    }
-
-    expect("it should be empty") {
-        context {
-            playerRepository.count().shouldBeZero()
-        }
-    }
-
-    expect("it should create a new Player") {
-        context {
-            playerRepository.count().shouldBeZero()
+    context("integration testing Player Repository") {
+        expect("all beans to be inject") {
+            playerRepository.shouldNotBeNull()
         }
 
-        check(Player.arbitrary) { player ->
-            playerRepository.save(player).shouldNotBeNull()
-            playerRepository.findById(player.id)
-                .shouldBePresent()
-                .asClue {
-                    it.id shouldBe player.id
-                    it.createdDate.shouldNotBeNull()
-                    it.updatedDate.shouldNotBeNull()
-                    it.name shouldBe player.name
-                    it.specialization.stat shouldBe NewbieStatsProperties.stat
-                }
+        expect("it should be empty") {
+            context {
+                playerRepository.count().shouldBeZero()
+            }
+        }
+
+        expect("it should create a new Player") {
+            context {
+                playerRepository.count().shouldBeZero()
+            }
+
+            check(Player.arbitrary) { player ->
+                playerRepository.save(player).shouldNotBeNull()
+                playerRepository.findById(player.id)
+                    .shouldBePresent()
+                    .asClue {
+                        it.id shouldBe player.id
+                        it.createdDate.shouldNotBeNull()
+                        it.updatedDate.shouldNotBeNull()
+                        it.name shouldBe player.name
+                        it.specialization.stat shouldBe NewbieStatsProperties.stat
+                    }
+            }
         }
     }
 })

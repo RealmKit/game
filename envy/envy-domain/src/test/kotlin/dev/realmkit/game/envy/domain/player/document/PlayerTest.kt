@@ -26,11 +26,13 @@ import io.kotest.assertions.asClue
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 class PlayerTest : TestSpec({
-    expect("to create a new plain Player") {
-        Player.fixture
-            .shouldNotBeNull()
-            .asClue { player ->
-                player.name.shouldNotBeNull()
-            }
+    context("unit testing Player") {
+        expect("to create a new plain Player") {
+            Player.fixture
+                .shouldNotBeNull()
+                .asClue { player ->
+                    player.name.shouldNotBeNull()
+                }
+        }
     }
 })

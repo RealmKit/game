@@ -24,10 +24,6 @@ import dev.realmkit.test.sloth.testutils.infra.Mongo
 import io.kotest.core.spec.Spec
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
-import io.kotest.property.Arb
-import io.kotest.property.checkAll
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 
 /**
  * [IntegrationTestSpec]
@@ -48,7 +44,7 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
      * @see TestSpec.beforeSpec
      */
     override suspend fun beforeSpec(spec: Spec) {
-        Mongo.start
+        Mongo.start()
     }
 
     /**
@@ -58,7 +54,7 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
      * @see TestSpec.afterSpec
      */
     override fun afterSpec(f: suspend (Spec) -> Unit) {
-        Mongo.stop
+        Mongo.stop()
     }
 
     /**
@@ -69,32 +65,6 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
      * @see TestSpec.afterEach
      */
     override suspend fun afterEach(testCase: TestCase, result: TestResult) {
-        Mongo.clear
-    }
-
-    /**
-     * Wraps a [coroutine scope][CoroutineScope]
-     *
-     * @param block the block of code
-     * @return the function result
-     * @see CoroutineScope
-     */
-    suspend fun context(block: () -> Unit) =
-        coroutineScope { block() }
-
-    /**
-     * Execute a checkAll arbitrary from Kotest
-     * This will iterate hundreds of times over the same test
-     *
-     * @param arbitrary the arbitrary class
-     * @param block the block of tests
-     * @see Arb
-     */
-    suspend fun <T> check(arbitrary: Arb<T>, block: (T) -> Unit) {
-        checkAll(arbitrary) { arb ->
-            context {
-                block(arb)
-            }
-        }
+        Mongo.clear()
     }
 }

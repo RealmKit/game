@@ -18,21 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.sloth.core.extensions
+package dev.realmkit.game.envy.domain.gear.enums
 
 import dev.realmkit.test.sloth.testutils.specs.TestSpec
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.nulls.shouldNotBeNull
 
-class BooleanExtensionsKtTest : TestSpec({
-    context("unit testing BooleanExtensions") {
-        expect("that Boolean.ifTrue should call a function") {
-            true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
-        }
-
-        expect("that Boolean.ifTrue should not call a function") {
-            false.ifTrue { true }.shouldBeNull()
+class GearTypeTest : TestSpec({
+    context("unit testing GearType") {
+        expect("GearType to have all types") {
+            GearType.values()
+                .shouldNotBeNull()
+                .map { it.name }
+                .shouldContainInOrder(
+                    "ARMOR",
+                    "RING",
+                    "WEAPON",
+                )
         }
     }
 })

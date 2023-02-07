@@ -18,21 +18,10 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.sloth.core.extensions
+package dev.realmkit.test.sloth.testutils.fixture.gear.slot
 
-import dev.realmkit.test.sloth.testutils.specs.TestSpec
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
+import dev.realmkit.test.sloth.testutils.extensions.fake
 
-class BooleanExtensionsKtTest : TestSpec({
-    context("unit testing BooleanExtensions") {
-        expect("that Boolean.ifTrue should call a function") {
-            true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
-        }
-
-        expect("that Boolean.ifTrue should not call a function") {
-            false.ifTrue { true }.shouldBeNull()
-        }
-    }
-})
+val RingGear.Companion.fixture: RingGear
+    get() = RingGear(name = fake.dota.item())

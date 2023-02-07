@@ -21,7 +21,13 @@
 package dev.realmkit.test.sloth.testutils.extensions
 
 import io.github.serpro69.kfaker.Faker
+import io.github.serpro69.kfaker.RandomService
 import io.github.serpro69.kfaker.faker
+import kotlin.random.Random
+import kotlin.random.nextLong
 
 val fake: Faker
     get() = faker {}
+
+val RandomService.positiveLong: Long
+    get() = Random.nextLong(1L..Long.MAX_VALUE)

@@ -25,7 +25,7 @@ package dev.realmkit.game.envy.domain.gear.enums
  * Defines the type of the equipment
  */
 enum class GearType {
-    WEAPON,
     ARMOR,
     RING,
+    WEAPON,
 }

@@ -18,21 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.sloth.core.extensions
+package dev.realmkit.test.sloth.testutils.fixture.gear
 
-import dev.realmkit.test.sloth.testutils.specs.TestSpec
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.envy.domain.gear.document.EquipmentSlot
+import dev.realmkit.game.envy.domain.gear.document.slot.ArmorGear
+import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
+import dev.realmkit.game.envy.domain.gear.document.slot.WeaponGear
+import dev.realmkit.test.sloth.testutils.fixture.gear.slot.fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
-class BooleanExtensionsKtTest : TestSpec({
-    context("unit testing BooleanExtensions") {
-        expect("that Boolean.ifTrue should call a function") {
-            true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
-        }
+val EquipmentSlot.Companion.fixture: EquipmentSlot
+    get() = EquipmentSlot(
+        armor = ArmorGear.fixture,
+        ring = RingGear.fixture,
+        weapon = WeaponGear.fixture,
+    )
 
-        expect("that Boolean.ifTrue should not call a function") {
-            false.ifTrue { true }.shouldBeNull()
-        }
-    }
-})
+val EquipmentSlot.Companion.arbitrary: Arb<EquipmentSlot>
+    get() = arbitrary { EquipmentSlot.fixture }

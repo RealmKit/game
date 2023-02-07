@@ -32,9 +32,9 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 data class EquipmentSlot(
-    var weapon: WeaponGear? = null,
     var armor: ArmorGear? = null,
     var ring: RingGear? = null,
+    var weapon: WeaponGear? = null,
 ) {
     companion object
 }

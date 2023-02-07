@@ -18,21 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.sloth.core.extensions
+package dev.realmkit.test.sloth.testutils.fixture.stat
 
-import dev.realmkit.test.sloth.testutils.specs.TestSpec
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.envy.domain.stat.document.value.StatValue
+import dev.realmkit.test.sloth.testutils.extensions.fake
+import dev.realmkit.test.sloth.testutils.extensions.positiveLong
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
-class BooleanExtensionsKtTest : TestSpec({
-    context("unit testing BooleanExtensions") {
-        expect("that Boolean.ifTrue should call a function") {
-            true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
-        }
+val StatValue.Companion.fixture: StatValue
+    get() = StatValue(
+        max = fake.random.positiveLong,
+    )
 
-        expect("that Boolean.ifTrue should not call a function") {
-            false.ifTrue { true }.shouldBeNull()
-        }
-    }
-})
+val StatValue.Companion.arbitrary: Arb<StatValue>
+    get() = arbitrary { StatValue.fixture }

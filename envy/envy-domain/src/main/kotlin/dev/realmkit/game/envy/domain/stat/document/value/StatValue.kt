@@ -31,11 +31,5 @@ data class StatValue(
     var max: Long,
     var current: Long = max,
 ) {
-    companion object {
-        val zero: StatValue
-            get() = StatValue(
-                max = 0,
-                current = 0,
-            )
-    }
+    companion object
 }

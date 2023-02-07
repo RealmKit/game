@@ -21,6 +21,10 @@
 package dev.realmkit.test.sloth.testutils.specs
 
 import io.kotest.core.spec.style.ExpectSpec
+import io.kotest.property.Arb
+import io.kotest.property.checkAll
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 
 /**
  * [TestSpec]
@@ -31,5 +35,31 @@ import io.kotest.core.spec.style.ExpectSpec
 open class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
     init {
         body()
+    }
+
+    /**
+     * Wraps a [coroutine scope][CoroutineScope]
+     *
+     * @param block the block of code
+     * @return the function result
+     * @see CoroutineScope
+     */
+    suspend fun context(block: () -> Unit) =
+        coroutineScope { block() }
+
+    /**
+     * Execute a checkAll arbitrary from Kotest
+     * This will iterate hundreds of times over the same test
+     *
+     * @param arbitrary the arbitrary class
+     * @param block the block of tests
+     * @see Arb
+     */
+    suspend fun <T> check(arbitrary: Arb<T>, block: (T) -> Unit) {
+        checkAll(arbitrary) { arb ->
+            context {
+                block(arb)
+            }
+        }
     }
 }

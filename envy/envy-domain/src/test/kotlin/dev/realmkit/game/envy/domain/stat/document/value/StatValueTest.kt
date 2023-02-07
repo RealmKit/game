@@ -18,21 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.sloth.core.extensions
+package dev.realmkit.game.envy.domain.stat.document.value
 
+import dev.realmkit.test.sloth.testutils.fixture.stat.arbitrary
 import dev.realmkit.test.sloth.testutils.specs.TestSpec
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 
-class BooleanExtensionsKtTest : TestSpec({
-    context("unit testing BooleanExtensions") {
-        expect("that Boolean.ifTrue should call a function") {
-            true.ifTrue { true }.shouldNotBeNull().shouldBeTrue()
-        }
-
-        expect("that Boolean.ifTrue should not call a function") {
-            false.ifTrue { true }.shouldBeNull()
+class StatValueTest : TestSpec({
+    context("unit testing StatValue") {
+        expect("to create a new StatValue") {
+            check(StatValue.arbitrary) { statValue ->
+                statValue.shouldNotBeNull()
+                statValue.max.shouldBePositive()
+                statValue.current.shouldBePositive()
+            }
         }
     }
 })

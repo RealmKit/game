@@ -32,12 +32,25 @@ object Mongo {
         MongoTemplate(MongoClients.create("mongodb://localhost:27018"), "test")
     }
 
-    val start
-        get() = container.takeUnless { it.isRunning }?.start()
+    /**
+     * Starts the [MongoDB container][MongoDBContainer]
+     *
+     * @see MongoDBContainer
+     */
+    fun start() = container.takeUnless { it.isRunning }?.start()
 
-    val stop
-        get() = container.takeIf { it.isRunning }?.stop()
+    /**
+     * Stops the [MongoDB container][MongoDBContainer]
+     *
+     * @see MongoDBContainer
+     */
+    fun stop() = container.takeIf { it.isRunning }?.stop()
 
-    val clear
-        get() = container.isRunning.ifTrue { mongoTemplate.db.drop() }
+    /**
+     * Clears the [MongoDB][MongoTemplate] collections
+     *
+     * @return nothing
+     * @see MongoTemplate
+     */
+    fun clear() = container.isRunning.ifTrue { mongoTemplate.db.drop() }
 }
