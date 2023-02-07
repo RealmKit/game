@@ -21,12 +21,12 @@
 package dev.realmkit.game.envy.domain.player.repository
 
 import dev.realmkit.game.envy.domain.player.document.Player
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
 import dev.realmkit.test.sloth.testutils.fixture.player.arbitrary
 import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
 import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.longs.shouldBeZero
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
@@ -59,21 +59,7 @@ class PlayerRepositoryIntegrationTest(
                     it.createdDate.shouldNotBeNull()
                     it.updatedDate.shouldNotBeNull()
                     it.name shouldBe player.name
-                    it.stat.progression.experience.shouldBeZero()
-                    it.stat.progression.level.shouldBeZero()
-                    it.stat.base.attack.shouldBeZero()
-                    it.stat.base.speed.shouldBeZero()
-                    it.stat.base.health.current.shouldBeZero()
-                    it.stat.base.health.max.shouldBeZero()
-                    it.stat.base.mana.current.shouldBeZero()
-                    it.stat.base.mana.max.shouldBeZero()
-                    it.stat.base.stamina.current.shouldBeZero()
-                    it.stat.base.stamina.max.shouldBeZero()
-                    it.currency.gold.shouldBeZero()
-                    it.currency.gem.shouldBeZero()
-                    it.equipmentSlot.weapon.shouldBeNull()
-                    it.equipmentSlot.armor.shouldBeNull()
-                    it.equipmentSlot.ring.shouldBeNull()
+                    it.specialization.stat shouldBe NewbieStatProperties.stat
                 }
         }
     }

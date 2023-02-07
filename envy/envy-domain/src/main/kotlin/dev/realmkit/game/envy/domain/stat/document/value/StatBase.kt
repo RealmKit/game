@@ -20,32 +20,27 @@
 
 package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
+import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @property health
- * @property mana
- * @property stamina
- * @property attack
- * @property speed
+ * [StatBase]
+ * Defines values base stats
+ *
+ * @property health the `health` base value
+ * @property mana the `mana` base value
+ * @property stamina the `stamina` base value
+ * @property attack the `attack` base value
+ * @property speed the `speed` base value
+ * @property defense the `defense` base value
+ * @see Stat
  */
 @Document
 data class StatBase(
-    var health: StatValue = StatValue(max = initialStatus.health),
-    var mana: StatValue = StatValue(max = initialStatus.mana),
-    var stamina: StatValue = StatValue(max = initialStatus.stamina),
-    var attack: Long = initialStatus.attack,
-    var speed: Long = initialStatus.speed,
-) {
-    companion object {
-        val zero: StatBase
-            get() = StatBase(
-                health = StatValue.zero,
-                mana = StatValue.zero,
-                stamina = StatValue.zero,
-                attack = 0,
-                speed = 0,
-            )
-    }
-}
+    var health: StatValue,
+    var mana: StatValue,
+    var stamina: StatValue,
+    var attack: Long,
+    var speed: Long,
+    var defense: Long,
+)

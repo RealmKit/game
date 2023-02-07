@@ -20,23 +20,19 @@
 
 package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
+import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @property level
- * @property experience
+ * [StatProgression]
+ * Defines values for progression stats
+ *
+ * @property level the `level` progression tracker
+ * @property experience the `experience` to level
+ * @see Stat
  */
 @Document
 data class StatProgression(
-    var level: Long = initialStatus.level,
-    var experience: Long = initialStatus.experience,
-) {
-    companion object {
-        val zero: StatProgression
-            get() = StatProgression(
-                level = 1,
-                experience = 0,
-            )
-    }
-}
+    var level: Long,
+    var experience: Long,
+)

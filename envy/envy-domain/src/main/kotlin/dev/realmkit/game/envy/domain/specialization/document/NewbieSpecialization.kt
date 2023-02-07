@@ -18,14 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.gear.enums
+package dev.realmkit.game.envy.domain.specialization.document
+
+import dev.realmkit.game.envy.domain.stat.document.Stat
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
+import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * [GearType]
- * Defines the type of the equipment
+ * [NewbieSpecialization]
+ * Extends from [Specialization] and sets particularities for a [Newbie specialization][NewbieSpecialization]
+ *
+ * @see Specialization
+ * @property stat
  */
-enum class GearType {
-    WEAPON,
-    ARMOR,
-    RING,
+@Document
+data class NewbieSpecialization(
+    override val stat: Stat = NewbieStatProperties.stat,
+) : Specialization {
+    companion object
 }

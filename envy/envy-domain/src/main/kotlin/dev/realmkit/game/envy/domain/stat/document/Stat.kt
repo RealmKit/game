@@ -27,25 +27,18 @@ import dev.realmkit.game.envy.domain.stat.document.value.StatProgression
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @property progression
- * @property base
- * @property multiplier
- * @property chance
+ * [Stat]
+ * Defines the stats for a Player, Item, Magic, anything that could have some stats
+ *
+ * @property progression tracks level and experience
+ * @property base defines stats for base attributes
+ * @property multiplier defines the multipliers
+ * @property chance defines the chances
  */
 @Document
 data class Stat(
-    val progression: StatProgression = StatProgression(),
-    val base: StatBase = StatBase(),
-    val multiplier: StatMultiplier = StatMultiplier(),
-    val chance: StatChance = StatChance(),
-) {
-    companion object {
-        val zero: Stat
-            get() = Stat(
-                progression = StatProgression.zero,
-                base = StatBase.zero,
-                multiplier = StatMultiplier.zero,
-                chance = StatChance.zero,
-            )
-    }
-}
+    val progression: StatProgression,
+    val base: StatBase,
+    val multiplier: StatMultiplier,
+    val chance: StatChance,
+)

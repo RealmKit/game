@@ -20,26 +20,21 @@
 
 package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
+import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @property experience
- * @property drop
- * @property critical
+ * [StatMultiplier]
+ * Tracks the multiplier for the actions
+ *
+ * @property experience the `experience` multiplier factor
+ * @property drop the `drop` multiplier factor
+ * @property critical the `critical` multiplier factor
+ * @see Stat
  */
 @Document
 data class StatMultiplier(
-    var experience: Double = initialStatus.experienceMultiplier,
-    var drop: Double = initialStatus.dropMultiplier,
-    var critical: Double = initialStatus.criticalMultiplier,
-) {
-    companion object {
-        val zero: StatMultiplier
-            get() = StatMultiplier(
-                experience = 0.0,
-                drop = 0.0,
-                critical = 0.0,
-            )
-    }
-}
+    var experience: Double,
+    var drop: Double,
+    var critical: Double,
+)

@@ -23,6 +23,7 @@ package dev.realmkit.game.envy.domain.gear.document.slot
 import dev.realmkit.game.envy.domain.gear.document.Gear
 import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.stat.document.Stat
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -37,7 +38,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document
 class ArmorGear(
     override val type: GearType = GearType.ARMOR,
-    override val stat: Stat = Stat.zero,
+    override val stat: Stat = ZeroStatProperties.stat,
     override val name: String,
 ) : Gear {
     companion object

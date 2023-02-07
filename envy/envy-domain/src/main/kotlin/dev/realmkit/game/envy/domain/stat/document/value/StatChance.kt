@@ -20,23 +20,19 @@
 
 package dev.realmkit.game.envy.domain.stat.document.value
 
-import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
+import dev.realmkit.game.envy.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @property critical
- * @property evade
+ * [StatChance]
+ * Tracks the chances to trigger an action
+ *
+ * @property critical the `critical` chance
+ * @property evade the `evade` chance
+ * @see Stat
  */
 @Document
 data class StatChance(
-    var critical: Double = initialStatus.criticalChance,
-    var evade: Double = initialStatus.evadeChance,
-) {
-    companion object {
-        val zero: StatChance
-            get() = StatChance(
-                critical = 0.0,
-                evade = 0.0,
-            )
-    }
-}
+    var critical: Double,
+    var evade: Double,
+)

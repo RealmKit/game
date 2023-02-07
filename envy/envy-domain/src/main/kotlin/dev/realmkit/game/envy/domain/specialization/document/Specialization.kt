@@ -18,14 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.gear.enums
+package dev.realmkit.game.envy.domain.specialization.document
+
+import dev.realmkit.game.envy.domain.player.document.Player
+import dev.realmkit.game.envy.domain.stat.document.Stat
 
 /**
- * [GearType]
- * Defines the type of the equipment
+ * [Specialization]
+ * Defines the [Player]
+ *
+ * @see Player
  */
-enum class GearType {
-    WEAPON,
-    ARMOR,
-    RING,
+interface Specialization {
+    /**
+     * [Specialization] specific [stat][Stat] for it
+     *
+     * @see Stat
+     */
+    val stat: Stat
 }

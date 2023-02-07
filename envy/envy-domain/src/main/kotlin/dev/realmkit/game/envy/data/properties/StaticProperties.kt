@@ -18,14 +18,34 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.gear.enums
+package dev.realmkit.game.envy.data.properties
+
+import dev.realmkit.game.envy.domain.stat.property.StatsProperties
 
 /**
- * [GearType]
- * Defines the type of the equipment
+ * [StaticProperties]
+ * Defines some static values
+ *
+ * @see StatsProperties
  */
-enum class GearType {
-    WEAPON,
-    ARMOR,
-    RING,
+object StaticProperties {
+    /**
+     * [NewbieStaticProperties]
+     * Defines some static values for Newbie Spec
+     *
+     * @see StaticProperties
+     */
+    object ZeroStaticProperties {
+        const val BASE_STATIC_LEVEL = 0L
+        const val BASE_STATIC_ZERO_VALUE = 0L
+        const val BASE_STATIC_ZERO_MULTIPLIER = 0.0
+    }
+
+    object NewbieStaticProperties {
+        const val BASE_NEWBIE_HEALTH = 10L
+        const val BASE_NEWBIE_STAMINA = 10L
+        const val BASE_NEWBIE_ATTACK = 1L
+        const val BASE_NEWBIE_SPEED = 1L
+        const val BASE_NEWBIE_DEFENSE = 1L
+    }
 }

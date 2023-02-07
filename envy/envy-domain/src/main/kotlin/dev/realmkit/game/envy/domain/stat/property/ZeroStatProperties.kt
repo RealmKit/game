@@ -20,12 +20,21 @@
 
 package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.domain.stat.property.StatProperties.InitialStatusProperties.initialStatus
-import jakarta.annotation.PostConstruct
-import org.springframework.boot.context.properties.ConfigurationProperties
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.attack
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.criticalChance
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.criticalMultiplier
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.dropMultiplier
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.evadeChance
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.experience
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.experienceMultiplier
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.health
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.level
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.mana
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.speed
+import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.stamina
 
 /**
- * [StatProperties]
+ * [ZeroStatProperties]
  * Defines all stats belonging to an item, player, skill, or whatever could have stats
  *
  * @property level the `thing` level
@@ -41,30 +50,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  * @property criticalChance the `thing` critical chance modifier multiplier
  * @property evadeChance the `thing` evade chance modifier multiplier
  */
-@ConfigurationProperties("application.initial.stats")
-data class StatProperties(
-    val level: Long = 0,
-    val experience: Long = 0,
-    val health: Long = 0,
-    val mana: Long = 0,
-    val stamina: Long = 0,
-    val attack: Long = 0,
-    val speed: Long = 0,
-    val experienceMultiplier: Double = 0.0,
-    val dropMultiplier: Double = 0.0,
-    val criticalMultiplier: Double = 0.0,
-    val criticalChance: Double = 0.0,
-    val evadeChance: Double = 0.0,
-) {
-    object InitialStatusProperties {
-        var initialStatus: StatProperties = StatProperties()
-    }
-
-    /**
-     * Loads the default values from `application.properties` globally
-     */
-    @PostConstruct
-    fun initialize() {
-        initialStatus = this
-    }
-}
+object ZeroStatProperties : StatsProperties()

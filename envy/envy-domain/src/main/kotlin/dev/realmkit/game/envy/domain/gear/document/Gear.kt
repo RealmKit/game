@@ -32,6 +32,7 @@ import dev.realmkit.game.envy.domain.item.document.Item
 interface Gear : Item {
     /**
      * Gear type
+     *
      * @see [GearType]
      */
     val type: GearType
