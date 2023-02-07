@@ -30,7 +30,6 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 /**
  * [IntegrationTestSpec]
- *
  * This class wraps a few extra things on top of [Kotest ExpectSpec][TestSpec]
  * Use it for Integration Tests purpose, as it will start the database and
  * everything else needed by the main application to start
@@ -76,12 +75,11 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
     companion object {
         /**
          * @param registry
+         * @return
          */
         @JvmStatic
         @DynamicPropertySource
-        fun dynamicPropertySource(registry: DynamicPropertyRegistry) {
-            val container = Mongo.start()
-            registry.add("spring.data.mongodb.uri") { container.replicaSetUrl }
-        }
+        fun dynamicPropertySource(registry: DynamicPropertyRegistry) =
+            registry.add("spring.data.mongodb.uri") { Mongo.container.replicaSetUrl }
     }
 }
