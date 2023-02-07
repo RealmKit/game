@@ -20,21 +20,21 @@
 
 package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.attack
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.criticalChance
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.criticalMultiplier
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.dropMultiplier
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.evadeChance
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.experience
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.experienceMultiplier
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.health
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.level
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.mana
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.speed
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.stamina
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.attack
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.criticalChance
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.criticalMultiplier
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.dropMultiplier
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.evadeChance
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.experience
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.experienceMultiplier
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.health
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.level
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.mana
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.speed
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties.stamina
 
 /**
- * [ZeroStatProperties]
+ * [BaseStatsProperties]
  * Defines all stats belonging to an item, player, skill, or whatever could have stats
  *
  * @property level the `thing` level
@@ -50,4 +50,4 @@ import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties.stamina
  * @property criticalChance the `thing` critical chance modifier multiplier
  * @property evadeChance the `thing` evade chance modifier multiplier
  */
-object ZeroStatProperties : StatsProperties()
+object BaseStatsProperties : StatsProperties()

@@ -25,21 +25,21 @@ import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticPrope
 import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_HEALTH
 import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_SPEED
 import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_STAMINA
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.attack
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.criticalChance
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.criticalMultiplier
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.dropMultiplier
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.evadeChance
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.experience
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.experienceMultiplier
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.health
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.level
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.mana
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.speed
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.stamina
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.attack
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.criticalChance
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.criticalMultiplier
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.dropMultiplier
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.evadeChance
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.experience
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.experienceMultiplier
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.health
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.level
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.mana
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.speed
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.stamina
 
 /**
- * [NewbieStatProperties]
+ * [NewbieStatsProperties]
  * Defines all stats belonging to an item, player, skill, or whatever could have stats
  *
  * @property level the `thing` level
@@ -55,7 +55,7 @@ import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.stamina
  * @property criticalChance the `thing` critical chance modifier multiplier
  * @property evadeChance the `thing` evade chance modifier multiplier
  */
-object NewbieStatProperties : StatsProperties() {
+object NewbieStatsProperties : StatsProperties() {
     override var health: Long = BASE_NEWBIE_HEALTH
     override var stamina: Long = BASE_NEWBIE_STAMINA
     override var attack: Long = BASE_NEWBIE_ATTACK

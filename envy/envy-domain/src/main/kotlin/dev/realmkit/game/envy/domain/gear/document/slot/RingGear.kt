@@ -23,7 +23,7 @@ package dev.realmkit.game.envy.domain.gear.document.slot
 import dev.realmkit.game.envy.domain.gear.document.Gear
 import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.property.ZeroStatProperties
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -38,7 +38,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document
 class RingGear(
     override val type: GearType = GearType.RING,
-    override val stat: Stat = ZeroStatProperties.stat,
+    override val stat: Stat = BaseStatsProperties.stat,
     override val name: String,
 ) : Gear {
     companion object

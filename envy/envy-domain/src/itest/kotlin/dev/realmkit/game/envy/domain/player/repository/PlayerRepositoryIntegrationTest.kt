@@ -21,7 +21,7 @@
 package dev.realmkit.game.envy.domain.player.repository
 
 import dev.realmkit.game.envy.domain.player.document.Player
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties
 import dev.realmkit.test.sloth.testutils.fixture.player.arbitrary
 import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
 import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
@@ -59,7 +59,7 @@ class PlayerRepositoryIntegrationTest(
                     it.createdDate.shouldNotBeNull()
                     it.updatedDate.shouldNotBeNull()
                     it.name shouldBe player.name
-                    it.specialization.stat shouldBe NewbieStatProperties.stat
+                    it.specialization.stat shouldBe NewbieStatsProperties.stat
                 }
         }
     }

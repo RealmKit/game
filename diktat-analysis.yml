@@ -27,3 +27,7 @@
   enabled: false
 - name: EMPTY_BLOCK_STRUCTURE_ERROR
   enabled: false
+- name: FILE_UNORDERED_IMPORTS
+  enabled: false
+- name: ENUMS_SEPARATED
+  enabled: false

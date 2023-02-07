@@ -21,6 +21,7 @@
 package dev.realmkit.game.envy.domain.specialization.document
 
 import dev.realmkit.game.envy.domain.player.document.Player
+import dev.realmkit.game.envy.domain.specialization.enums.SpecializationType
 import dev.realmkit.game.envy.domain.stat.document.Stat
 
 /**
@@ -36,4 +37,9 @@ interface Specialization {
      * @see Stat
      */
     val stat: Stat
+
+    /**
+     * the [Specialization] [type][SpecializationType]
+     */
+    val type: SpecializationType
 }

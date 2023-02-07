@@ -66,6 +66,11 @@ sealed class StatsProperties {
     open var attack: Long = BASE_STATIC_ZERO_VALUE
 
     /**
+     * the attack attribute
+     */
+    open var magic: Long = BASE_STATIC_ZERO_VALUE
+
+    /**
      * the speed attribute
      */
     open var speed: Long = BASE_STATIC_ZERO_VALUE
@@ -114,6 +119,7 @@ sealed class StatsProperties {
                 mana = StatValue(max = mana),
                 stamina = StatValue(max = stamina),
                 attack = attack,
+                magic = magic,
                 speed = speed,
                 defense = defense,
             ),

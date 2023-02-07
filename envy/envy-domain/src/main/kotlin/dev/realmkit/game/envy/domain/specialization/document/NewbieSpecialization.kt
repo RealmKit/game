@@ -20,8 +20,9 @@
 
 package dev.realmkit.game.envy.domain.specialization.document
 
+import dev.realmkit.game.envy.domain.specialization.enums.SpecializationType
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -30,10 +31,12 @@ import org.springframework.data.mongodb.core.mapping.Document
  *
  * @see Specialization
  * @property stat
+ * @property type
  */
 @Document
 data class NewbieSpecialization(
-    override val stat: Stat = NewbieStatProperties.stat,
+    override val stat: Stat = NewbieStatsProperties.stat,
+    override val type: SpecializationType = SpecializationType.NEWBIE,
 ) : Specialization {
     companion object
 }

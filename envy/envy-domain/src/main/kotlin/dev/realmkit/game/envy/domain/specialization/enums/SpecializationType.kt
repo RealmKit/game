@@ -18,28 +18,16 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.gear.document.slot
+package dev.realmkit.game.envy.domain.specialization.enums
 
-import dev.realmkit.game.envy.domain.gear.document.Gear
-import dev.realmkit.game.envy.domain.gear.enums.GearType
-import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
-import org.springframework.data.mongodb.core.mapping.Document
+import dev.realmkit.game.envy.domain.specialization.document.Specialization
 
 /**
- * [ArmorGear]
- * Extends from [Gear] and sets the type as [GearType.ARMOR]
+ * [SpecializationType]
+ * Defines the type of the [Specialization]
  *
- * @see GearType
- * @property type
- * @property stat
- * @property name
+ * @see Specialization
  */
-@Document
-class ArmorGear(
-    override val type: GearType = GearType.ARMOR,
-    override val stat: Stat = BaseStatsProperties.stat,
-    override val name: String,
-) : Gear {
-    companion object
+enum class SpecializationType {
+    NEWBIE,
 }

@@ -34,6 +34,7 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @property speed the `speed` base value
  * @property defense the `defense` base value
  * @see Stat
+ * @property magic
  */
 @Document
 data class StatBase(
@@ -41,6 +42,7 @@ data class StatBase(
     var mana: StatValue,
     var stamina: StatValue,
     var attack: Long,
+    var magic: Long,
     var speed: Long,
     var defense: Long,
 )
