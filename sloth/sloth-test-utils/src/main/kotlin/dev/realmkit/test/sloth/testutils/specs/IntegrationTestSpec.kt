@@ -74,12 +74,15 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
 
     companion object {
         /**
-         * @param registry
-         * @return
+         * Sets the [Mongo container][Mongo] url on the properties registry
+         *
+         * @param registry the properties registry
+         * @see DynamicPropertyRegistry
          */
         @JvmStatic
         @DynamicPropertySource
-        fun dynamicPropertySource(registry: DynamicPropertyRegistry) =
+        fun dynamicPropertySource(registry: DynamicPropertyRegistry) {
             registry.add("spring.data.mongodb.uri") { Mongo.container.replicaSetUrl }
+        }
     }
 }
