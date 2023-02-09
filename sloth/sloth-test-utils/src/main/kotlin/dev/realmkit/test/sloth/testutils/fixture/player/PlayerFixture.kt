@@ -20,15 +20,43 @@
 
 package dev.realmkit.test.sloth.testutils.fixture.player
 
+import dev.realmkit.game.envy.domain.currency.document.Currency
+import dev.realmkit.game.envy.domain.gear.document.EquipmentSlot
 import dev.realmkit.game.envy.domain.player.document.Player
+import dev.realmkit.game.envy.domain.specialization.document.NewbieSpecialization
+import dev.realmkit.game.envy.domain.specialization.document.Specialization
 import dev.realmkit.test.sloth.testutils.extensions.fake
+import dev.realmkit.test.sloth.testutils.fixture.gear.arbitrary
+import dev.realmkit.test.sloth.testutils.fixture.gear.fixture
+import dev.realmkit.test.sloth.testutils.fixture.specialization.arbitrary
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 val Player.Companion.fixture: Player
-    get() = Player(
-        name = fake.superhero.name(),
-    )
+    get() = fixture()
 
 val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { Player.fixture }
+    get() = arbitrary {
+        fixture(
+            specialization = Specialization.arbitrary.bind(),
+            equipmentSlot = EquipmentSlot.arbitrary.bind(),
+        )
+    }
+
+/**
+ * @param name
+ * @param specialization
+ * @param currency
+ * @param equipmentSlot
+ */
+fun Player.Companion.fixture(
+    name: String = fake.superhero.name(),
+    specialization: Specialization = NewbieSpecialization(),
+    currency: Currency = Currency(),
+    equipmentSlot: EquipmentSlot = EquipmentSlot.fixture,
+): Player = Player(
+    name = name,
+    specialization = specialization,
+    currency = currency,
+    equipmentSlot = equipmentSlot,
+)

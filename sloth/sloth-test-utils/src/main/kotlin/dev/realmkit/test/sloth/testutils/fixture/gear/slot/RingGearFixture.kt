@@ -21,7 +21,33 @@
 package dev.realmkit.test.sloth.testutils.fixture.gear.slot
 
 import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
+import dev.realmkit.game.envy.domain.stat.document.Stat
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
+import dev.realmkit.game.envy.domain.stat.property.StatsProperties
 import dev.realmkit.test.sloth.testutils.extensions.fake
+import dev.realmkit.test.sloth.testutils.fixture.stat.arbitrary
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 val RingGear.Companion.fixture: RingGear
-    get() = RingGear(name = fake.dota.item())
+    get() = fixture()
+
+val RingGear.Companion.arbitrary: Arb<RingGear>
+    get() = arbitrary {
+        fixture(
+            stat = StatsProperties.arbitrary.bind(),
+        )
+    }
+
+/**
+ * @param name
+ * @param stat
+ * @return
+ */
+fun RingGear.Companion.fixture(
+    name: String = fake.dota.item(),
+    stat: Stat = BaseStatsProperties.stat,
+): RingGear = RingGear(
+    name = name,
+    stat = stat,
+)

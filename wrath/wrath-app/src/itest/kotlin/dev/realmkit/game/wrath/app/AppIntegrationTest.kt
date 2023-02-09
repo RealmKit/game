@@ -20,10 +20,12 @@
 
 package dev.realmkit.game.wrath.app
 
+import dev.realmkit.game.envy.domain.player.document.Player
 import dev.realmkit.game.envy.domain.player.repository.PlayerRepository
+import dev.realmkit.test.sloth.testutils.fixture.player.arbitrary
 import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
 import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
-import io.kotest.matchers.longs.shouldBeZero
+import io.kotest.assertions.asClue
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 @IntegrationTestContext
@@ -35,10 +37,28 @@ class AppIntegrationTest(
             playerRepository.shouldNotBeNull()
         }
 
-        expect("it should be empty") {
-            context {
-                playerRepository.count().shouldBeZero()
+        expect("it should play a game") {
+            check(Player.arbitrary) { player ->
+                collect(player.specialization.type)
+
+                playerRepository.save(player)
+                player.shouldNotBeNull()
+                    .asClue {
+                        it.id.shouldNotBeNull()
+                        it.name.shouldNotBeNull()
+                    }
             }
+
+            /**
+             * 1. create a player
+             *    - spec
+             *    - name
+             * 2. player fighting enemy
+             *    - player deals damage to enemy
+             *    - enemy deals damage to player
+             *    - enemy dies
+             *    - player loots and levels
+             */
         }
     }
 })

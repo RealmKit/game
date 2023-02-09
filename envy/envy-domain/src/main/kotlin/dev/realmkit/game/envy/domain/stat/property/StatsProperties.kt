@@ -133,4 +133,5 @@ sealed class StatsProperties {
                 evade = evadeChance,
             ),
         )
+    companion object
 }

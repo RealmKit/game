@@ -30,16 +30,20 @@ import org.springframework.data.mongodb.core.mapping.Document
  * [ArmorGear]
  * Extends from [Gear] and sets the type as [GearType.ARMOR]
  *
- * @see GearType
- * @property type
- * @property stat
- * @property name
+ * @property type the gear type
+ * @property stat the gear stats
+ * @property name the gear name
+ * @see Gear
  */
 @Document
 class ArmorGear(
-    override val type: GearType = GearType.ARMOR,
-    override val stat: Stat = BaseStatsProperties.stat,
-    override val name: String,
-) : Gear {
+    type: GearType = GearType.ARMOR,
+    stat: Stat = BaseStatsProperties.stat,
+    name: String,
+) : Gear(
+    type = GearType.ARMOR,
+    stat = stat,
+    name = name
+) {
     companion object
 }

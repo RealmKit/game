@@ -24,16 +24,34 @@ import dev.realmkit.game.envy.domain.gear.document.EquipmentSlot
 import dev.realmkit.game.envy.domain.gear.document.slot.ArmorGear
 import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
 import dev.realmkit.game.envy.domain.gear.document.slot.WeaponGear
+import dev.realmkit.test.sloth.testutils.fixture.gear.slot.arbitrary
 import dev.realmkit.test.sloth.testutils.fixture.gear.slot.fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 val EquipmentSlot.Companion.fixture: EquipmentSlot
-    get() = EquipmentSlot(
-        armor = ArmorGear.fixture,
-        ring = RingGear.fixture,
-        weapon = WeaponGear.fixture,
-    )
+    get() = fixture()
 
 val EquipmentSlot.Companion.arbitrary: Arb<EquipmentSlot>
-    get() = arbitrary { EquipmentSlot.fixture }
+    get() = arbitrary {
+        fixture(
+            armor = ArmorGear.arbitrary.bind(),
+            ring = RingGear.arbitrary.bind(),
+            weapon = WeaponGear.arbitrary.bind(),
+        )
+    }
+
+/**
+ * @param armor
+ * @param ring
+ * @param weapon
+ */
+fun EquipmentSlot.Companion.fixture(
+    armor: ArmorGear = ArmorGear.fixture,
+    ring: RingGear = RingGear.fixture,
+    weapon: WeaponGear = WeaponGear.fixture,
+): EquipmentSlot = EquipmentSlot(
+    armor = armor,
+    ring = ring,
+    weapon = weapon,
+)

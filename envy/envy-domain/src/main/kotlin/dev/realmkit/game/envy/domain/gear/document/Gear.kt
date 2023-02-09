@@ -22,18 +22,22 @@ package dev.realmkit.game.envy.domain.gear.document
 
 import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.item.document.Item
+import dev.realmkit.game.envy.domain.stat.document.Stat
 
 /**
  * [Gear]
  * Extends from [Item] and adds particular properties to [Gear type items][Gear]
  *
+ * @property type the gear type
+ * @property stat the gear stats
+ * @property name the gear name
  * @see Item
  */
-interface Gear : Item {
-    /**
-     * Gear type
-     *
-     * @see [GearType]
-     */
-    val type: GearType
-}
+open class Gear(
+    val type: GearType,
+    stat: Stat,
+    name: String,
+) : Item(
+    stat = stat,
+    name = name,
+)

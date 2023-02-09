@@ -18,36 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.gear.slot
+package dev.realmkit.game.envy.domain.specialization.document
 
-import dev.realmkit.game.envy.domain.gear.document.slot.ArmorGear
+import dev.realmkit.game.envy.domain.specialization.enums.SpecializationType
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
-import dev.realmkit.game.envy.domain.stat.property.StatsProperties
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import dev.realmkit.test.sloth.testutils.fixture.stat.arbitrary
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-
-val ArmorGear.Companion.fixture: ArmorGear
-    get() = fixture()
-
-val ArmorGear.Companion.arbitrary: Arb<ArmorGear>
-    get() = arbitrary {
-        fixture(
-            stat = StatsProperties.arbitrary.bind(),
-        )
-    }
+import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties
+import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @param name
- * @param stat
- * @return
+ * [FighterSpecialization]
+ * Extends from [Specialization] and sets particularities for a [Newbie specialization][FighterSpecialization]
+ *
+ * @see Specialization
+ * @property stat
+ * @property type
  */
-fun ArmorGear.Companion.fixture(
-    name: String = fake.dota.item(),
-    stat: Stat = BaseStatsProperties.stat,
-): ArmorGear = ArmorGear(
-    name = name,
-    stat = stat,
-)
+@Document
+data class FighterSpecialization(
+    override val stat: Stat = FighterStatsProperties.stat,
+    override val type: SpecializationType = SpecializationType.FIGHTER,
+) : Specialization {
+    companion object
+}

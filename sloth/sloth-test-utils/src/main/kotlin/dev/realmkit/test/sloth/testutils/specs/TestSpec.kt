@@ -22,6 +22,7 @@ package dev.realmkit.test.sloth.testutils.specs
 
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.property.Arb
+import io.kotest.property.PropertyContext
 import io.kotest.property.checkAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
@@ -55,7 +56,7 @@ open class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
      * @param block the block of tests
      * @see Arb
      */
-    suspend fun <T> check(arbitrary: Arb<T>, block: (T) -> Unit) {
+    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit) {
         checkAll(arbitrary) { arb ->
             context {
                 block(arb)

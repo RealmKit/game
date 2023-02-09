@@ -42,4 +42,5 @@ interface Specialization {
      * the [Specialization] [type][SpecializationType]
      */
     val type: SpecializationType
+    companion object
 }

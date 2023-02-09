@@ -21,7 +21,6 @@
 package dev.realmkit.game.envy.domain.gear.document
 
 import dev.realmkit.game.envy.domain.gear.enums.GearType
-import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
 import dev.realmkit.test.sloth.testutils.fixture.gear.arbitrary
 import dev.realmkit.test.sloth.testutils.specs.TestSpec
 import io.kotest.assertions.asClue
@@ -44,19 +43,19 @@ class EquipmentSlotTest : TestSpec({
                     .asClue {
                         it.name.shouldNotBeNull()
                         it.type shouldBe GearType.ARMOR
-                        it.stat shouldBe BaseStatsProperties.stat
+                        it.stat.shouldNotBeNull()
                     }
                 equipmentsSlot.ring.shouldNotBeNull()
                     .asClue {
                         it.name.shouldNotBeNull()
                         it.type shouldBe GearType.RING
-                        it.stat shouldBe BaseStatsProperties.stat
+                        it.stat.shouldNotBeNull()
                     }
                 equipmentsSlot.weapon.shouldNotBeNull()
                     .asClue {
                         it.name.shouldNotBeNull()
                         it.type shouldBe GearType.WEAPON
-                        it.stat shouldBe BaseStatsProperties.stat
+                        it.stat.shouldNotBeNull()
                     }
             }
         }

@@ -48,4 +48,12 @@ object StaticProperties {
         const val BASE_NEWBIE_SPEED = 1L
         const val BASE_NEWBIE_DEFENSE = 1L
     }
+
+    object FighterStaticProperties {
+        const val BASE_FIGHTER_HEALTH = 20L
+        const val BASE_FIGHTER_STAMINA = 10L
+        const val BASE_FIGHTER_ATTACK = 5L
+        const val BASE_FIGHTER_SPEED = 3L
+        const val BASE_FIGHTER_DEFENSE = 5L
+    }
 }

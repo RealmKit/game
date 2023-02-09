@@ -18,36 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.test.sloth.testutils.fixture.gear.slot
+package dev.realmkit.test.sloth.testutils.fixture.stat
 
-import dev.realmkit.game.envy.domain.gear.document.slot.ArmorGear
 import dev.realmkit.game.envy.domain.stat.document.Stat
 import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
+import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties
 import dev.realmkit.game.envy.domain.stat.property.StatsProperties
-import dev.realmkit.test.sloth.testutils.extensions.fake
-import dev.realmkit.test.sloth.testutils.fixture.stat.arbitrary
 import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.exhaustive.exhaustive
 
-val ArmorGear.Companion.fixture: ArmorGear
-    get() = fixture()
-
-val ArmorGear.Companion.arbitrary: Arb<ArmorGear>
-    get() = arbitrary {
-        fixture(
-            stat = StatsProperties.arbitrary.bind(),
-        )
-    }
-
-/**
- * @param name
- * @param stat
- * @return
- */
-fun ArmorGear.Companion.fixture(
-    name: String = fake.dota.item(),
-    stat: Stat = BaseStatsProperties.stat,
-): ArmorGear = ArmorGear(
-    name = name,
-    stat = stat,
-)
+val StatsProperties.Companion.arbitrary: Arb<Stat>
+    get() = listOf(
+        BaseStatsProperties.stat,
+        NewbieStatsProperties.stat,
+        FighterStatsProperties.stat,
+    ).exhaustive().toArb()

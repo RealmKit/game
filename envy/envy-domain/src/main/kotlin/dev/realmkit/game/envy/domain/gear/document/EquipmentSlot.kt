@@ -26,9 +26,13 @@ import dev.realmkit.game.envy.domain.gear.document.slot.WeaponGear
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * @property weapon
- * @property armor
- * @property ring
+ * [EquipmentSlot]
+ * Stores the equipment gears
+ *
+ * @property weapon the `weapon`
+ * @property armor the `armor`
+ * @property ring the `ring`
+ * @see Gear
  */
 @Document
 data class EquipmentSlot(

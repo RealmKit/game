@@ -30,4 +30,5 @@ import dev.realmkit.game.envy.domain.specialization.document.Specialization
  */
 enum class SpecializationType {
     NEWBIE,
+    FIGHTER,
 }
