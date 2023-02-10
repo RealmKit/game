@@ -29,7 +29,27 @@ import dev.realmkit.game.envy.domain.stat.document.Stat
  * @property stat the item stats
  * @property name the item name
  */
-open class Item(
-    val stat: Stat,
-    val name: String,
-)
+interface Item {
+    val name: String
+    val stat: Stat
+}
+
+interface ItemV2 {
+    val name: String
+    val stat: Stat
+}
+
+interface Equipable : ItemV2 {
+    val slot: SlotType
+}
+
+enum class SlotType {
+    ARMOR,
+    RING,
+}
+
+class Necklace(
+    override val name: String,
+    override val stat: Stat,
+    override val slot: SlotType = SlotType.ARMOR,
+) : Equipable

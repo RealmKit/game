@@ -22,7 +22,6 @@ package dev.realmkit.game.envy.domain.gear.document
 
 import dev.realmkit.game.envy.domain.gear.enums.GearType
 import dev.realmkit.game.envy.domain.item.document.Item
-import dev.realmkit.game.envy.domain.stat.document.Stat
 
 /**
  * [Gear]
@@ -33,11 +32,6 @@ import dev.realmkit.game.envy.domain.stat.document.Stat
  * @property name the gear name
  * @see Item
  */
-open class Gear(
-    val type: GearType,
-    stat: Stat,
-    name: String,
-) : Item(
-    stat = stat,
-    name = name,
-)
+interface Gear : Item {
+    val type: GearType
+}

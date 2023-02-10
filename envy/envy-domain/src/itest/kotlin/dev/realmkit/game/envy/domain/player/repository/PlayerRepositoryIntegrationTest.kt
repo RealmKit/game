@@ -46,11 +46,9 @@ class PlayerRepositoryIntegrationTest(
         }
 
         expect("it should create a new Player") {
-            context {
-                playerRepository.count().shouldBeZero()
-            }
-
             check(Player.arbitrary) { player ->
+                collect(player.specialization.type)
+
                 playerRepository.save(player).shouldNotBeNull()
                 playerRepository.findById(player.id)
                     .shouldBePresent()
@@ -59,12 +57,12 @@ class PlayerRepositoryIntegrationTest(
                         it.createdDate.shouldNotBeNull()
                         it.updatedDate.shouldNotBeNull()
                         it.name shouldBe player.name
-                        // it.specialization.stat shouldBe NewbieStatsProperties.stat
-                        // it.currency.gold.shouldBeZero()
-                        // it.currency.gem.shouldBeZero()
-                        // it.equipmentSlot.armor.shouldBeNull()
-                        // it.equipmentSlot.ring.shouldBeNull()
-                        // it.equipmentSlot.weapon.shouldBeNull()
+                        it.specialization shouldBe player.specialization
+                        it.currency.gold.shouldBeZero()
+                        it.currency.gem.shouldBeZero()
+                        it.equipmentSlot.armor.shouldNotBeNull()
+                        it.equipmentSlot.ring.shouldNotBeNull()
+                        it.equipmentSlot.weapon.shouldNotBeNull()
                     }
             }
         }

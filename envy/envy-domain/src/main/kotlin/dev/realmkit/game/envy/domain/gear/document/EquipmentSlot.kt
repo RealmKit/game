@@ -23,6 +23,9 @@ package dev.realmkit.game.envy.domain.gear.document
 import dev.realmkit.game.envy.domain.gear.document.slot.ArmorGear
 import dev.realmkit.game.envy.domain.gear.document.slot.RingGear
 import dev.realmkit.game.envy.domain.gear.document.slot.WeaponGear
+import dev.realmkit.game.envy.domain.item.document.Necklace
+import dev.realmkit.game.envy.domain.item.document.SlotType
+import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -33,12 +36,18 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @property armor the `armor`
  * @property ring the `ring`
  * @see Gear
+ * @property necklace
  */
 @Document
 data class EquipmentSlot(
     var armor: ArmorGear? = null,
     var ring: RingGear? = null,
     var weapon: WeaponGear? = null,
+    var necklace: Necklace? = Necklace(
+        name = "NECKLACE",
+        stat = BaseStatsProperties.stat,
+        slot = SlotType.RING,
+    ),
 ) {
     companion object
 }

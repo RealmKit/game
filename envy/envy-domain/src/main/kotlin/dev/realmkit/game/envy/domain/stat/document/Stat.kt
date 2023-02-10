@@ -37,8 +37,8 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 data class Stat(
-    val progression: StatProgression,
     val base: StatBase,
     val multiplier: StatMultiplier,
     val chance: StatChance,
+    val progression: StatProgression,
 )

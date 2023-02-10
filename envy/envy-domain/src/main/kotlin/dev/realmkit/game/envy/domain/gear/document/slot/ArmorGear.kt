@@ -37,13 +37,9 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 class ArmorGear(
-    type: GearType = GearType.ARMOR,
-    stat: Stat = BaseStatsProperties.stat,
-    name: String,
-) : Gear(
-    type = GearType.ARMOR,
-    stat = stat,
-    name = name
-) {
+    override val type: GearType = GearType.ARMOR,
+    override val stat: Stat = BaseStatsProperties.stat,
+    override val name: String,
+) : Gear {
     companion object
 }
