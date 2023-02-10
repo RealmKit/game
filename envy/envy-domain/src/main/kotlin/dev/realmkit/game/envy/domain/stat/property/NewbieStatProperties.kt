@@ -20,26 +20,26 @@
 
 package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_ATTACK
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_DEFENSE
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_HEALTH
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_SPEED
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_STAMINA
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.attack
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.criticalChance
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.criticalMultiplier
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.dropMultiplier
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.evadeChance
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.experience
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.experienceMultiplier
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.health
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.level
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.mana
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.speed
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.stamina
+import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_ATTACK
+import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_DEFENSE
+import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_HEALTH
+import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_SPEED
+import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_STAMINA
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.attack
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.criticalChance
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.criticalMultiplier
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.dropMultiplier
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.evadeChance
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.experience
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.experienceMultiplier
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.health
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.level
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.mana
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.speed
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.stamina
 
 /**
- * [FighterStatsProperties]
+ * [NewbieStatProperties]
  * Defines all stats belonging to an item, player, skill, or whatever could have stats
  *
  * @property level the `thing` level
@@ -55,10 +55,10 @@ import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties.stamin
  * @property criticalChance the `thing` critical chance modifier multiplier
  * @property evadeChance the `thing` evade chance modifier multiplier
  */
-object FighterStatsProperties : StatsProperties() {
-    override val health: Long = BASE_FIGHTER_HEALTH
-    override val stamina: Long = BASE_FIGHTER_STAMINA
-    override val attack: Long = BASE_FIGHTER_ATTACK
-    override val speed: Long = BASE_FIGHTER_SPEED
-    override val defense: Long = BASE_FIGHTER_DEFENSE
+object NewbieStatProperties : StatProperties() {
+    override val health: Long = BASE_NEWBIE_HEALTH
+    override val stamina: Long = BASE_NEWBIE_STAMINA
+    override val attack: Long = BASE_NEWBIE_ATTACK
+    override val speed: Long = BASE_NEWBIE_SPEED
+    override val defense: Long = BASE_NEWBIE_DEFENSE
 }

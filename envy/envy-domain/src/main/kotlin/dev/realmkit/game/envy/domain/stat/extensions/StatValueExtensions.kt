@@ -18,24 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.player.document
+package dev.realmkit.game.envy.domain.stat.extensions
 
-import dev.realmkit.game.envy.domain.base.document.BaseDocument
-import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
-import org.springframework.data.mongodb.core.mapping.Document
+import dev.realmkit.game.envy.domain.stat.document.value.StatValue
 
-/**
- * [Player]
- * The [Player] entity, stores the name, attributes, currencies and equipments
- *
- * @property name
- * @property stat
- */
-@Document
-data class Player(
-    val name: String,
-    val stat: Stat = NewbieStatProperties.stat,
-) : BaseDocument() {
-    companion object
-}
+operator fun StatValue.plus(value: Int): StatValue =
+    copy(
+        max = max + value,
+        current = current + value,
+    )
+
+operator fun StatValue.minus(value: Int): StatValue =
+    copy(
+        max = max - value,
+        current = current - value,
+    )

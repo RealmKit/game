@@ -31,10 +31,10 @@ import dev.realmkit.game.envy.domain.stat.document.value.StatProgression
 import dev.realmkit.game.envy.domain.stat.document.value.StatValue
 
 /**
- * [StatsProperties]
+ * [StatProperties]
  * Defines all stats belonging to an item, player, skill, or whatever could have stats
  */
-sealed class StatsProperties {
+sealed class StatProperties {
     /**
      * the level attribute
      */

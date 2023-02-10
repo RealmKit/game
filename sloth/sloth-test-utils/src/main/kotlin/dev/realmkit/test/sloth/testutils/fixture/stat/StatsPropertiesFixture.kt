@@ -21,16 +21,16 @@
 package dev.realmkit.test.sloth.testutils.fixture.stat
 
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.property.BaseStatsProperties
-import dev.realmkit.game.envy.domain.stat.property.FighterStatsProperties
-import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties
-import dev.realmkit.game.envy.domain.stat.property.StatsProperties
+import dev.realmkit.game.envy.domain.stat.property.BaseStatProperties
+import dev.realmkit.game.envy.domain.stat.property.FighterStatProperties
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
+import dev.realmkit.game.envy.domain.stat.property.StatProperties
 import io.kotest.property.Arb
 import io.kotest.property.exhaustive.exhaustive
 
-val StatsProperties.Companion.arbitrary: Arb<Stat>
+val StatProperties.Companion.arbitrary: Arb<Stat>
     get() = listOf(
-        BaseStatsProperties.stat,
-        NewbieStatsProperties.stat,
-        FighterStatsProperties.stat,
+        BaseStatProperties.stat,
+        NewbieStatProperties.stat,
+        FighterStatProperties.stat,
     ).exhaustive().toArb()

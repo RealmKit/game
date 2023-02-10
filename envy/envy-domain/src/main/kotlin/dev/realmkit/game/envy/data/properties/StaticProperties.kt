@@ -20,13 +20,13 @@
 
 package dev.realmkit.game.envy.data.properties
 
-import dev.realmkit.game.envy.domain.stat.property.StatsProperties
+import dev.realmkit.game.envy.domain.stat.property.StatProperties
 
 /**
  * [StaticProperties]
  * Defines some static values
  *
- * @see StatsProperties
+ * @see StatProperties
  */
 object StaticProperties {
     /**
