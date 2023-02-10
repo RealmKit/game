@@ -24,7 +24,6 @@ import dev.realmkit.game.envy.domain.stat.document.value.StatBase
 import dev.realmkit.game.envy.domain.stat.document.value.StatChance
 import dev.realmkit.game.envy.domain.stat.document.value.StatMultiplier
 import dev.realmkit.game.envy.domain.stat.document.value.StatProgression
-import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * [Stat]
@@ -35,7 +34,6 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @property multiplier defines the multipliers
  * @property chance defines the chances
  */
-@Document
 data class Stat(
     val base: StatBase,
     val multiplier: StatMultiplier,

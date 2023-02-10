@@ -21,7 +21,6 @@
 package dev.realmkit.game.envy.domain.stat.document.value
 
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * [StatProgression]
@@ -31,7 +30,6 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @property experience the `experience` to level
  * @see Stat
  */
-@Document
 data class StatProgression(
     var level: Long,
     var experience: Long,

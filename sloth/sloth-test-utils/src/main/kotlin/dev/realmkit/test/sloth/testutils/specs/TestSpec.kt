@@ -35,7 +35,7 @@ import kotlinx.coroutines.coroutineScope
  */
 open class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
     init {
-        body()
+        this.body()
     }
 
     /**

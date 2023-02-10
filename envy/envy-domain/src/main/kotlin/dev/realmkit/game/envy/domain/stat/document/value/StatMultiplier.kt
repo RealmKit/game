@@ -21,7 +21,6 @@
 package dev.realmkit.game.envy.domain.stat.document.value
 
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * [StatMultiplier]
@@ -32,7 +31,6 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @property critical the `critical` multiplier factor
  * @see Stat
  */
-@Document
 data class StatMultiplier(
     var experience: Double,
     var drop: Double,

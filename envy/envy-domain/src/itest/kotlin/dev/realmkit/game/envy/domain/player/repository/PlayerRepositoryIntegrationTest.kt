@@ -21,6 +21,7 @@
 package dev.realmkit.game.envy.domain.player.repository
 
 import dev.realmkit.game.envy.domain.player.document.Player
+import dev.realmkit.test.sloth.testutils.extensions.shouldBeValid
 import dev.realmkit.test.sloth.testutils.fixture.player.arbitrary
 import dev.realmkit.test.sloth.testutils.infra.IntegrationTestContext
 import dev.realmkit.test.sloth.testutils.specs.IntegrationTestSpec
@@ -47,23 +48,16 @@ class PlayerRepositoryIntegrationTest(
 
         expect("it should create a new Player") {
             check(Player.arbitrary) { player ->
-                collect(player.specialization.type)
+                // collect(player.specialization.type)
 
                 playerRepository.save(player).shouldNotBeNull()
-                playerRepository.findById(player.id)
-                    .shouldBePresent()
-                    .asClue {
-                        it.id.shouldNotBeNull()
-                        it.createdDate.shouldNotBeNull()
-                        it.updatedDate.shouldNotBeNull()
-                        it.name shouldBe player.name
-                        it.specialization shouldBe player.specialization
-                        it.currency.gold.shouldBeZero()
-                        it.currency.gem.shouldBeZero()
-                        it.equipmentSlot.armor.shouldNotBeNull()
-                        it.equipmentSlot.ring.shouldNotBeNull()
-                        it.equipmentSlot.weapon.shouldNotBeNull()
-                    }
+                playerRepository.findById(player.id).shouldBePresent().asClue { find ->
+                    find.id.shouldNotBeNull()
+                    find.createdDate.shouldNotBeNull()
+                    find.updatedDate.shouldNotBeNull()
+                    find.name shouldBe player.name
+                    find.stat.shouldBeValid()
+                }
             }
         }
     }

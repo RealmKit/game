@@ -38,72 +38,72 @@ sealed class StatsProperties {
     /**
      * the level attribute
      */
-    open var level: Long = BASE_STATIC_LEVEL
+    open val level: Long = BASE_STATIC_LEVEL
 
     /**
      * the experience attribute
      */
-    open var experience: Long = BASE_STATIC_ZERO_VALUE
+    open val experience: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the health attribute
      */
-    open var health: Long = BASE_STATIC_ZERO_VALUE
+    open val health: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the mana attribute
      */
-    open var mana: Long = BASE_STATIC_ZERO_VALUE
+    open val mana: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the stamina attribute
      */
-    open var stamina: Long = BASE_STATIC_ZERO_VALUE
+    open val stamina: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the attack attribute
      */
-    open var attack: Long = BASE_STATIC_ZERO_VALUE
+    open val attack: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the attack attribute
      */
-    open var magic: Long = BASE_STATIC_ZERO_VALUE
+    open val magic: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the speed attribute
      */
-    open var speed: Long = BASE_STATIC_ZERO_VALUE
+    open val speed: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the defense attribute
      */
-    open var defense: Long = BASE_STATIC_ZERO_VALUE
+    open val defense: Long = BASE_STATIC_ZERO_VALUE
 
     /**
      * the experienceMultiplier attribute
      */
-    open var experienceMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val experienceMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
 
     /**
      * the dropMultiplier attribute
      */
-    open var dropMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val dropMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
 
     /**
      * the criticalMultiplier attribute
      */
-    open var criticalMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val criticalMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
 
     /**
      * the criticalChance attribute
      */
-    open var criticalChance: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val criticalChance: Double = BASE_STATIC_ZERO_MULTIPLIER
 
     /**
      * the evadeChance attribute
      */
-    open var evadeChance: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val evadeChance: Double = BASE_STATIC_ZERO_MULTIPLIER
 
     /**
      * Generate a [Stat] from the properties
@@ -133,5 +133,6 @@ sealed class StatsProperties {
                 evade = evadeChance,
             ),
         )
+
     companion object
 }

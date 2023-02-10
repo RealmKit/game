@@ -82,6 +82,6 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .haveRawReturnType(Map::class.java)
 
     init {
-        body()
+        this.body()
     }
 }

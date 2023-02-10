@@ -37,19 +37,9 @@ class AppIntegrationTest(
             playerRepository.shouldNotBeNull()
         }
 
-        /**
-         * 1. create a player
-         *    - spec
-         *    - name
-         * 2. player fighting enemy
-         *    - player deals damage to enemy
-         *    - enemy deals damage to player
-         *    - enemy dies
-         *    - player loots and levels
-         */
         expect("it should play a game") {
             check(Player.arbitrary) { player ->
-                collect(player.specialization.type)
+                // collect(player.specialization.type)
 
                 playerRepository.save(player)
                 player.shouldNotBeNull()

@@ -18,38 +18,28 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.item.document
+package dev.realmkit.test.sloth.testutils.extensions
 
-import dev.realmkit.game.envy.domain.stat.document.Stat
+import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.longs.shouldBeGreaterThanOrEqual
+
+private const val ZERO_LONG = 0L
+private const val ZERO_DOUBLE = 0.0
 
 /**
- * [Item]
- * All items should have a nome and stats
+ * Extends [shouldBeGreaterThanOrEqual] with default zero value
  *
- * @property stat the item stats
- * @property name the item name
+ * @return the [Long] itself
+ * @see [shouldBeGreaterThanOrEqual]
  */
-interface Item {
-    val name: String
-    val stat: Stat
-}
+fun Long.shouldBeGreaterThanOrEqualZero(): Long =
+    shouldBeGreaterThanOrEqual(ZERO_LONG)
 
-interface ItemV2 {
-    val name: String
-    val stat: Stat
-}
-
-interface Equipable : ItemV2 {
-    val slot: SlotType
-}
-
-enum class SlotType {
-    ARMOR,
-    RING,
-}
-
-class Necklace(
-    override val name: String,
-    override val stat: Stat,
-    override val slot: SlotType = SlotType.ARMOR,
-) : Equipable
+/**
+ * Extends [shouldBeGreaterThanOrEqual] with default zero value
+ *
+ * @return the [Double] itself
+ * @see [shouldBeGreaterThanOrEqual]
+ */
+fun Double.shouldBeGreaterThanOrEqualZero(): Double =
+    shouldBeGreaterThanOrEqual(ZERO_DOUBLE)

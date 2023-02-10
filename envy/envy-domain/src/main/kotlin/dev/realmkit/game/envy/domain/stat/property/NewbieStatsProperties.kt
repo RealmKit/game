@@ -56,9 +56,9 @@ import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties.stamina
  * @property evadeChance the `thing` evade chance modifier multiplier
  */
 object NewbieStatsProperties : StatsProperties() {
-    override var health: Long = BASE_NEWBIE_HEALTH
-    override var stamina: Long = BASE_NEWBIE_STAMINA
-    override var attack: Long = BASE_NEWBIE_ATTACK
-    override var speed: Long = BASE_NEWBIE_SPEED
-    override var defense: Long = BASE_NEWBIE_DEFENSE
+    override val health: Long = BASE_NEWBIE_HEALTH
+    override val stamina: Long = BASE_NEWBIE_STAMINA
+    override val attack: Long = BASE_NEWBIE_ATTACK
+    override val speed: Long = BASE_NEWBIE_SPEED
+    override val defense: Long = BASE_NEWBIE_DEFENSE
 }

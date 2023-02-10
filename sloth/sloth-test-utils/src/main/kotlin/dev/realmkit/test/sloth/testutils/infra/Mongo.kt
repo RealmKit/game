@@ -23,16 +23,19 @@ package dev.realmkit.test.sloth.testutils.infra
 import com.mongodb.client.MongoClients
 import dev.realmkit.game.sloth.core.extensions.ifTrue
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.test.context.DynamicPropertyRegistry
 import org.testcontainers.containers.MongoDBContainer
 
 object Mongo {
-    val container by lazy {
-        val mongo = MongoDBContainer("mongo:latest")
-        mongo.start()
-        mongo
+    private const val MONGO_DOCKER_IMAGE = "mongo:latest"
+    private const val MONGO_DATABASE_NAME = "realmkit-game"
+    private val container by lazy {
+        MongoDBContainer(MONGO_DOCKER_IMAGE).apply {
+            start()
+        }
     }
     private val mongoTemplate by lazy {
-        MongoTemplate(MongoClients.create(container.replicaSetUrl), "realmkit-game")
+        MongoTemplate(MongoClients.create(container.replicaSetUrl), MONGO_DATABASE_NAME)
     }
 
     /**
@@ -41,14 +44,16 @@ object Mongo {
      * @return [MongoDBContainer] after started
      * @see MongoDBContainer
      */
-    fun start() = container.takeUnless { it.isRunning }?.start().let { container }
+    fun start() =
+        container.takeUnless { it.isRunning }?.start().let { container }
 
     /**
      * Stops the [MongoDB container][MongoDBContainer]
      *
      * @see MongoDBContainer
      */
-    fun stop() = container.takeIf { it.isRunning }?.stop()
+    fun stop() =
+        container.takeIf { it.isRunning }?.stop()
 
     /**
      * Clears the [MongoDB][MongoTemplate] collections
@@ -56,5 +61,16 @@ object Mongo {
      * @return nothing
      * @see MongoTemplate
      */
-    fun clear() = container.isRunning.ifTrue { mongoTemplate.db.drop() }
+    fun clear() =
+        container.isRunning.ifTrue { mongoTemplate.db.drop() }
+
+    /**
+     * Clears the [MongoDB][MongoTemplate] collections
+     *
+     * @param registry the [property registry][DynamicPropertyRegistry]
+     * @return nothing
+     * @see DynamicPropertyRegistry
+     */
+    fun registry(registry: DynamicPropertyRegistry) =
+        registry.add("spring.data.mongodb.uri") { container.replicaSetUrl }
 }

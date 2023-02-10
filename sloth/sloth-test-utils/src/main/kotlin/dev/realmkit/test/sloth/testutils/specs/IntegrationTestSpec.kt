@@ -37,8 +37,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @Testcontainers
 abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : TestSpec() {
     init {
-        @Suppress("UNUSED_EXPRESSION")
-        body()
+        this.body()
     }
 
     /**
@@ -82,7 +81,7 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
         @JvmStatic
         @DynamicPropertySource
         fun dynamicPropertySource(registry: DynamicPropertyRegistry) {
-            registry.add("spring.data.mongodb.uri") { Mongo.container.replicaSetUrl }
+            Mongo.registry(registry)
         }
     }
 }

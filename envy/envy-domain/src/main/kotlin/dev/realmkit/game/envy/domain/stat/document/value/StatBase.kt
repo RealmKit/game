@@ -21,7 +21,6 @@
 package dev.realmkit.game.envy.domain.stat.document.value
 
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * [StatBase]
@@ -36,7 +35,6 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @see Stat
  * @property magic
  */
-@Document
 data class StatBase(
     var health: StatValue,
     var mana: StatValue,

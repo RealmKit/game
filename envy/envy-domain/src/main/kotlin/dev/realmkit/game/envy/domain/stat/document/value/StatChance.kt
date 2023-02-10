@@ -21,7 +21,6 @@
 package dev.realmkit.game.envy.domain.stat.document.value
 
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * [StatChance]
@@ -31,7 +30,6 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @property evade the `evade` chance
  * @see Stat
  */
-@Document
 data class StatChance(
     var critical: Double,
     var evade: Double,

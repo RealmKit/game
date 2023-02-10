@@ -21,10 +21,8 @@
 package dev.realmkit.game.envy.domain.player.document
 
 import dev.realmkit.game.envy.domain.base.document.BaseDocument
-import dev.realmkit.game.envy.domain.currency.document.Currency
-import dev.realmkit.game.envy.domain.gear.document.EquipmentSlot
-import dev.realmkit.game.envy.domain.specialization.document.NewbieSpecialization
-import dev.realmkit.game.envy.domain.specialization.document.Specialization
+import dev.realmkit.game.envy.domain.stat.document.Stat
+import dev.realmkit.game.envy.domain.stat.property.NewbieStatsProperties
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -32,16 +30,12 @@ import org.springframework.data.mongodb.core.mapping.Document
  * The [Player] entity, stores the name, attributes, currencies and equipments
  *
  * @property name
- * @property currency
- * @property equipmentSlot
- * @property specialization
+ * @property stat
  */
 @Document
-class Player(
+data class Player(
     val name: String,
-    val specialization: Specialization = NewbieSpecialization(),
-    val currency: Currency = Currency(),
-    val equipmentSlot: EquipmentSlot = EquipmentSlot(),
+    val stat: Stat = NewbieStatsProperties.stat,
 ) : BaseDocument() {
     companion object
 }
