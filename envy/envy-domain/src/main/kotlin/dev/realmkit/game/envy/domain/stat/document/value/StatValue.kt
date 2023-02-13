@@ -20,9 +20,15 @@
 
 package dev.realmkit.game.envy.domain.stat.document.value
 
+import dev.realmkit.game.envy.domain.stat.document.Stat
+
 /**
- * @property max
- * @property current
+ * [StatValue]
+ * Defines values for progression stats
+ *
+ * @property max the `max` value that a [Stat] could reach
+ * @property current the `current` value of that stat, should not be greater than max
+ * @see Stat
  */
 data class StatValue(
     var max: Long,

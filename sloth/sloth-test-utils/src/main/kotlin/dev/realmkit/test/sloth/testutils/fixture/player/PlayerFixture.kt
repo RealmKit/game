@@ -22,8 +22,8 @@ package dev.realmkit.test.sloth.testutils.fixture.player
 
 import dev.realmkit.game.envy.domain.player.document.Player
 import dev.realmkit.game.envy.domain.stat.document.Stat
-import dev.realmkit.game.envy.domain.stat.extensions.minus
-import dev.realmkit.game.envy.domain.stat.extensions.plus
+import dev.realmkit.game.envy.domain.stat.extension.minus
+import dev.realmkit.game.envy.domain.stat.extension.plus
 import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties
 import dev.realmkit.game.envy.domain.stat.property.StatProperties
 import dev.realmkit.test.sloth.testutils.extensions.fake
@@ -53,8 +53,8 @@ val Player.Companion.shrinker: Shrinker<Player>
 /**
  * Creates a [Player] with random data
  *
- * @param name the [Player] name
- * @param stat the [Player.stat] attributes
+ * @param name the [Player] `name`
+ * @param stat the [Player.stat] `attributes`
  * @return the [Player]
  */
 fun Player.Companion.fixture(

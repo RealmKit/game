@@ -18,28 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.stat.extensions
+package dev.realmkit.game.envy.domain.stat.extension
 
-import dev.realmkit.game.envy.domain.stat.document.value.StatBase
+import dev.realmkit.game.envy.domain.stat.document.Stat
+import dev.realmkit.game.envy.domain.stat.extension.value.minus
+import dev.realmkit.game.envy.domain.stat.extension.value.plus
 
-operator fun StatBase.plus(value: Int): StatBase =
+/**
+ * Adds the `value` to the [Stat]
+ *
+ * @param value the `value` to sum
+ * @return the [Stat] after adding the `value`
+ */
+operator fun Stat.plus(value: Int): Stat =
     copy(
-        health = health + value,
-        mana = mana + value,
-        stamina = stamina + value,
-        attack = attack + value,
-        magic = magic + value,
-        speed = speed + value,
-        defense = defense + value,
+        base = base + value,
+        multiplier = multiplier + value,
+        chance = chance + value,
+        progression = progression + value,
     )
 
-operator fun StatBase.minus(value: Int): StatBase =
+/**
+ * Subtracts the `value` from the [Stat]
+ *
+ * @param value the `value` to subtracts
+ * @return the [Stat] after subtracting the `value`
+ */
+operator fun Stat.minus(value: Int): Stat =
     copy(
-        health = health - value,
-        mana = mana - value,
-        stamina = stamina - value,
-        attack = attack - value,
-        magic = magic - value,
-        speed = speed - value,
-        defense = defense - value,
+        base = base - value,
+        multiplier = multiplier - value,
+        chance = chance - value,
+        progression = progression - value,
     )

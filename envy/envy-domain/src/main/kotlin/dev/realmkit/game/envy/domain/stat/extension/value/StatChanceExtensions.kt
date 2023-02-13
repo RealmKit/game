@@ -18,18 +18,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.stat.extensions
+package dev.realmkit.game.envy.domain.stat.extension.value
 
-import dev.realmkit.game.envy.domain.stat.document.value.StatValue
+import dev.realmkit.game.envy.domain.stat.document.value.StatChance
 
-operator fun StatValue.plus(value: Int): StatValue =
+/**
+ * Adds the `value` to the [StatChance]
+ *
+ * @param value the `value` to sum
+ * @return the [StatChance] after adding the `value`
+ */
+operator fun StatChance.plus(value: Int): StatChance =
     copy(
-        max = max + value,
-        current = current + value,
+        critical = critical + value,
+        evade = evade + value,
     )
 
-operator fun StatValue.minus(value: Int): StatValue =
+/**
+ * Subtracts the `value` from the [StatChance]
+ *
+ * @param value the `value` to subtracts
+ * @return the [StatChance] after subtracting the `value`
+ */
+operator fun StatChance.minus(value: Int): StatChance =
     copy(
-        max = max - value,
-        current = current - value,
+        critical = critical - value,
+        evade = evade - value,
     )

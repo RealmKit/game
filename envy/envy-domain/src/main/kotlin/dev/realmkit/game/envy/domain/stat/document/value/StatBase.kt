@@ -30,10 +30,10 @@ import dev.realmkit.game.envy.domain.stat.document.Stat
  * @property mana the `mana` base value
  * @property stamina the `stamina` base value
  * @property attack the `attack` base value
+ * @property magic the `magic` base value
  * @property speed the `speed` base value
  * @property defense the `defense` base value
  * @see Stat
- * @property magic
  */
 data class StatBase(
     var health: StatValue,

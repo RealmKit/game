@@ -20,9 +20,9 @@
 
 package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.data.properties.StaticProperties.ZeroStaticProperties.BASE_STATIC_LEVEL
-import dev.realmkit.game.envy.data.properties.StaticProperties.ZeroStaticProperties.BASE_STATIC_ZERO_MULTIPLIER
-import dev.realmkit.game.envy.data.properties.StaticProperties.ZeroStaticProperties.BASE_STATIC_ZERO_VALUE
+import dev.realmkit.game.envy.data.property.StaticProperty.ZeroStaticProperties.BASE_ZERO_LEVEL
+import dev.realmkit.game.envy.data.property.StaticProperty.ZeroStaticProperties.BASE_ZERO_MULTIPLIER
+import dev.realmkit.game.envy.data.property.StaticProperty.ZeroStaticProperties.BASE_ZERO_VALUE
 import dev.realmkit.game.envy.domain.stat.document.Stat
 import dev.realmkit.game.envy.domain.stat.document.value.StatBase
 import dev.realmkit.game.envy.domain.stat.document.value.StatChance
@@ -38,72 +38,72 @@ sealed class StatProperties {
     /**
      * the level attribute
      */
-    open val level: Long = BASE_STATIC_LEVEL
+    open val level: Long = BASE_ZERO_LEVEL
 
     /**
      * the experience attribute
      */
-    open val experience: Long = BASE_STATIC_ZERO_VALUE
+    open val experience: Long = BASE_ZERO_VALUE
 
     /**
      * the health attribute
      */
-    open val health: Long = BASE_STATIC_ZERO_VALUE
+    open val health: Long = BASE_ZERO_VALUE
 
     /**
      * the mana attribute
      */
-    open val mana: Long = BASE_STATIC_ZERO_VALUE
+    open val mana: Long = BASE_ZERO_VALUE
 
     /**
      * the stamina attribute
      */
-    open val stamina: Long = BASE_STATIC_ZERO_VALUE
+    open val stamina: Long = BASE_ZERO_VALUE
 
     /**
      * the attack attribute
      */
-    open val attack: Long = BASE_STATIC_ZERO_VALUE
+    open val attack: Long = BASE_ZERO_VALUE
 
     /**
      * the attack attribute
      */
-    open val magic: Long = BASE_STATIC_ZERO_VALUE
+    open val magic: Long = BASE_ZERO_VALUE
 
     /**
      * the speed attribute
      */
-    open val speed: Long = BASE_STATIC_ZERO_VALUE
+    open val speed: Long = BASE_ZERO_VALUE
 
     /**
      * the defense attribute
      */
-    open val defense: Long = BASE_STATIC_ZERO_VALUE
+    open val defense: Long = BASE_ZERO_VALUE
 
     /**
      * the experienceMultiplier attribute
      */
-    open val experienceMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val experienceMultiplier: Double = BASE_ZERO_MULTIPLIER
 
     /**
      * the dropMultiplier attribute
      */
-    open val dropMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val dropMultiplier: Double = BASE_ZERO_MULTIPLIER
 
     /**
      * the criticalMultiplier attribute
      */
-    open val criticalMultiplier: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val criticalMultiplier: Double = BASE_ZERO_MULTIPLIER
 
     /**
      * the criticalChance attribute
      */
-    open val criticalChance: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val criticalChance: Double = BASE_ZERO_MULTIPLIER
 
     /**
      * the evadeChance attribute
      */
-    open val evadeChance: Double = BASE_STATIC_ZERO_MULTIPLIER
+    open val evadeChance: Double = BASE_ZERO_MULTIPLIER
 
     /**
      * Generate a [Stat] from the properties

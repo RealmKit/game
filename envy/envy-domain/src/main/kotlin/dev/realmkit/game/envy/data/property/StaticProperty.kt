@@ -18,29 +18,35 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.data.properties
+package dev.realmkit.game.envy.data.property
 
 import dev.realmkit.game.envy.domain.stat.property.StatProperties
 
 /**
- * [StaticProperties]
+ * [StaticProperty]
  * Defines some static values
  *
  * @see StatProperties
  */
-object StaticProperties {
+object StaticProperty {
+    /**
+     * [ZeroStaticProperties]
+     * Defines some zero values
+     *
+     * @see StaticProperty
+     */
+    object ZeroStaticProperties {
+        const val BASE_ZERO_LEVEL = 1L
+        const val BASE_ZERO_VALUE = 0L
+        const val BASE_ZERO_MULTIPLIER = 0.0
+    }
+
     /**
      * [NewbieStaticProperties]
      * Defines some static values for Newbie Spec
      *
-     * @see StaticProperties
+     * @see StaticProperty
      */
-    object ZeroStaticProperties {
-        const val BASE_STATIC_LEVEL = 0L
-        const val BASE_STATIC_ZERO_VALUE = 0L
-        const val BASE_STATIC_ZERO_MULTIPLIER = 0.0
-    }
-
     object NewbieStaticProperties {
         const val BASE_NEWBIE_HEALTH = 10L
         const val BASE_NEWBIE_STAMINA = 10L
@@ -49,6 +55,12 @@ object StaticProperties {
         const val BASE_NEWBIE_DEFENSE = 1L
     }
 
+    /**
+     * [FighterStaticProperties]
+     * Defines some static values for Fighter Spec
+     *
+     * @see StaticProperty
+     */
     object FighterStaticProperties {
         const val BASE_FIGHTER_HEALTH = 20L
         const val BASE_FIGHTER_STAMINA = 10L

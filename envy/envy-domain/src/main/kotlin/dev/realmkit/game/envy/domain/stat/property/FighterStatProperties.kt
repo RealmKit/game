@@ -20,11 +20,11 @@
 
 package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_ATTACK
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_DEFENSE
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_HEALTH
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_SPEED
-import dev.realmkit.game.envy.data.properties.StaticProperties.FighterStaticProperties.BASE_FIGHTER_STAMINA
+import dev.realmkit.game.envy.data.property.StaticProperty.FighterStaticProperties.BASE_FIGHTER_ATTACK
+import dev.realmkit.game.envy.data.property.StaticProperty.FighterStaticProperties.BASE_FIGHTER_DEFENSE
+import dev.realmkit.game.envy.data.property.StaticProperty.FighterStaticProperties.BASE_FIGHTER_HEALTH
+import dev.realmkit.game.envy.data.property.StaticProperty.FighterStaticProperties.BASE_FIGHTER_SPEED
+import dev.realmkit.game.envy.data.property.StaticProperty.FighterStaticProperties.BASE_FIGHTER_STAMINA
 import dev.realmkit.game.envy.domain.stat.property.FighterStatProperties.attack
 import dev.realmkit.game.envy.domain.stat.property.FighterStatProperties.criticalChance
 import dev.realmkit.game.envy.domain.stat.property.FighterStatProperties.criticalMultiplier

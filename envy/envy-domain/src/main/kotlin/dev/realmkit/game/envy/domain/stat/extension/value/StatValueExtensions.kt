@@ -18,20 +18,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.envy.domain.stat.extensions
+package dev.realmkit.game.envy.domain.stat.extension.value
 
-import dev.realmkit.game.envy.domain.stat.document.value.StatMultiplier
+import dev.realmkit.game.envy.domain.stat.document.value.StatValue
 
-operator fun StatMultiplier.plus(value: Int): StatMultiplier =
+/**
+ * Adds the `value` to the [StatValue]
+ *
+ * @param value the `value` to sum
+ * @return the [StatValue] after adding the `value`
+ */
+operator fun StatValue.plus(value: Int): StatValue =
     copy(
-        experience = experience + value,
-        drop = drop + value,
-        critical = critical + value,
+        max = max + value,
+        current = current + value,
     )
 
-operator fun StatMultiplier.minus(value: Int): StatMultiplier =
+/**
+ * Subtracts the `value` from the [StatValue]
+ *
+ * @param value the `value` to subtracts
+ * @return the [StatValue] after subtracting the `value`
+ */
+operator fun StatValue.minus(value: Int): StatValue =
     copy(
-        experience = experience - value,
-        drop = drop - value,
-        critical = critical - value,
+        max = max - value,
+        current = current - value,
     )

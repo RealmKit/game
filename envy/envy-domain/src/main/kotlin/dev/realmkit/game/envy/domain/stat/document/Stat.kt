@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.envy.domain.stat.document
 
+import dev.realmkit.game.envy.domain.player.document.Player
 import dev.realmkit.game.envy.domain.stat.document.value.StatBase
 import dev.realmkit.game.envy.domain.stat.document.value.StatChance
 import dev.realmkit.game.envy.domain.stat.document.value.StatMultiplier
@@ -27,12 +28,12 @@ import dev.realmkit.game.envy.domain.stat.document.value.StatProgression
 
 /**
  * [Stat]
- * Defines the stats for a Player, Item, Magic, anything that could have some stats
+ * Defines the stats for a [Player], Item, Magic, anything that could have some stats
  *
- * @property progression tracks level and experience
- * @property base defines stats for base attributes
- * @property multiplier defines the multipliers
- * @property chance defines the chances
+ * @property base defines stats for [base attributes][StatBase]
+ * @property multiplier defines the [multipliers][StatMultiplier]
+ * @property chance defines the [chances][StatChance]
+ * @property progression tracks [level and experience][StatProgression]
  */
 data class Stat(
     val base: StatBase,

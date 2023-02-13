@@ -20,11 +20,11 @@
 
 package dev.realmkit.game.envy.domain.stat.property
 
-import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_ATTACK
-import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_DEFENSE
-import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_HEALTH
-import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_SPEED
-import dev.realmkit.game.envy.data.properties.StaticProperties.NewbieStaticProperties.BASE_NEWBIE_STAMINA
+import dev.realmkit.game.envy.data.property.StaticProperty.NewbieStaticProperties.BASE_NEWBIE_ATTACK
+import dev.realmkit.game.envy.data.property.StaticProperty.NewbieStaticProperties.BASE_NEWBIE_DEFENSE
+import dev.realmkit.game.envy.data.property.StaticProperty.NewbieStaticProperties.BASE_NEWBIE_HEALTH
+import dev.realmkit.game.envy.data.property.StaticProperty.NewbieStaticProperties.BASE_NEWBIE_SPEED
+import dev.realmkit.game.envy.data.property.StaticProperty.NewbieStaticProperties.BASE_NEWBIE_STAMINA
 import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.attack
 import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.criticalChance
 import dev.realmkit.game.envy.domain.stat.property.NewbieStatProperties.criticalMultiplier
