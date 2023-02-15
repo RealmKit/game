@@ -30,6 +30,9 @@ plugins {
     // Kotlin
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
+    // Code Quality
+    alias(libs.plugins.quality.versions)
+    alias(libs.plugins.quality.catalog)
     // Spring
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency)
@@ -53,7 +56,6 @@ dependencies {
     runtimeOnly(libs.kotlin.reflect)
 
     // Code Dependencies
-    implementation(libs.kotlin.stdlib.jkd8)
     implementation(libs.spring.boot.starter)
 }
 

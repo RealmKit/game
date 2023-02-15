@@ -1,17 +1,19 @@
 [versions]
-kotlin = "1.8.10"
-kotlin-reflect = "1.2.41"
+kotlin = "1.8.20-Beta"
+quality-catalog = "0.7.0"
+quality-versions = "0.45.0"
 spring-boot = "3.0.2"
 spring-dependency = "1.1.0"
+
+[libraries]
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+spring-boot-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+quality-catalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "quality-catalog" }
+quality-versions = { id = "com.github.ben-manes.versions", version.ref = "quality-versions" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
-
-[libraries]
-kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect" }
-kotlin-stdlib-jkd8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8" }
-spring-boot-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
-spring-boot-starter = { group = "org.springframework.boot", name = "spring-boot-starter" }
