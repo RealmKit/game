@@ -1,0 +1,8 @@
+# Common configuration
+- name: DIKTAT_COMMON
+  enabled: true
+  configuration:
+    domainName: dev.realmkit
+    kotlinVersion: 1.8.10
+    srcDirectories: main
+    testDirs: test, itest, archTest
