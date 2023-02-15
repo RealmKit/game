@@ -18,6 +18,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import com.diffplug.gradle.spotless.SpotlessExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val sourceCompatibility: String by project
@@ -33,6 +34,7 @@ plugins {
     // Code Quality
     alias(libs.plugins.quality.versions)
     alias(libs.plugins.quality.catalog)
+    alias(libs.plugins.quality.spotless)
     // Spring
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency)
@@ -60,6 +62,30 @@ dependencies {
 }
 
 /**
+ * Configuration
+ */
+configure<SpotlessExtension> {
+    kotlin {
+        target("**/*.kt")
+        ktfmt()
+        ktlint()
+        diktat()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint()
+    }
+    format("misc") {
+        target("*.md", "*.yml", "*.properties", ".gitignore")
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
+
+/**
  * Tasks
  */
 tasks {
@@ -72,5 +98,9 @@ tasks {
 
     withType<Test> {
         useJUnitPlatform()
+    }
+
+    check {
+        finalizedBy(":versionCatalogUpdate")
     }
 }

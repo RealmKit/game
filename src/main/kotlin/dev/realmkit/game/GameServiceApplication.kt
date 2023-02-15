@@ -23,9 +23,20 @@ package dev.realmkit.game
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
+/**
+ * [GameServiceApplication]
+ * Service main class
+ *
+ * @see SpringBootApplication
+ */
 @SpringBootApplication
 class GameServiceApplication
 
+/**
+ * Starts the [GameServiceApplication] application
+ *
+ * @param args the application command line args
+ */
 fun main(args: Array<String>) {
     runApplication<GameServiceApplication>(*args)
 }
