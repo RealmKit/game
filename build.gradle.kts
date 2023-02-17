@@ -56,11 +56,13 @@ dependencies {
     runtimeOnly(libs.kotlin.reflect)
 
     // Code Dependencies
-    implementation(libs.spring.boot.starter)
+    implementation(libs.bundles.spring.boot)
 
     // Test Dependencies
+    testImplementation(libs.bundles.test.spring.boot)
     testImplementation(libs.bundles.test.kotest)
     testImplementation(libs.bundles.test.archunit)
+    testImplementation(libs.bundles.test.testcontainers)
     testImplementation(libs.test.faker)
 }
 

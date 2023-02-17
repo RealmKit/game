@@ -18,39 +18,31 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.spec
+package dev.realmkit.game.domain.base.document
 
-import io.kotest.core.spec.style.ExpectSpec
-import io.kotest.property.Arb
-import io.kotest.property.PropertyContext
-import io.kotest.property.checkAll
+import dev.realmkit.game.core.extension.now
+import org.bson.types.ObjectId
+import org.springframework.data.annotation.Id
+import java.time.Instant
 
 /**
- * [TestSpec]
- * This class wraps a few extra things on top of [Kotest ExpectSpec][ExpectSpec]
- *
- * @see ExpectSpec
+ * [BaseDocument]
+ * Setts the default fields that a Document class should have
  */
-abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
-    init {
-        this.body()
-    }
+open class BaseDocument {
+    /**
+     * Document creation time
+     */
+    var createdAt: Instant = now
 
     /**
-     * Execute a checkAll arbitrary from Kotest
-     * This will iterate hundreds of times over the same test
-     *
-     * @param arbitrary the arbitrary class
-     * @param block the block of tests
-     * @return the [PropertyContext]
-     * @see Arb
+     * Document update time
      */
-    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): PropertyContext =
-        checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
-            block(arb)
-        }
+    var updatedAt: Instant = now
 
-    companion object {
-        const val CHECK_ITERATIONS = 1_000
-    }
+    /**
+     * Document id
+     */
+    @Id
+    lateinit var id: ObjectId
 }

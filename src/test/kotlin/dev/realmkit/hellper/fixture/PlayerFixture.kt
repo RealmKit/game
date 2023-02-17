@@ -18,39 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.spec
+package dev.realmkit.hellper.fixture
 
-import io.kotest.core.spec.style.ExpectSpec
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.extension.fake
 import io.kotest.property.Arb
-import io.kotest.property.PropertyContext
-import io.kotest.property.checkAll
+import io.kotest.property.arbitrary.arbitrary
+
+val Player.Companion.fixture: Player
+    get() = fixture()
+
+val Player.Companion.arbitrary: Arb<Player>
+    get() = arbitrary {
+        fixture()
+    }
 
 /**
- * [TestSpec]
- * This class wraps a few extra things on top of [Kotest ExpectSpec][ExpectSpec]
+ * Creates a [Player] with random data
  *
- * @see ExpectSpec
+ * @param name the [Player] `name`
+ * @return the [Player]
  */
-abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
-    init {
-        this.body()
-    }
-
-    /**
-     * Execute a checkAll arbitrary from Kotest
-     * This will iterate hundreds of times over the same test
-     *
-     * @param arbitrary the arbitrary class
-     * @param block the block of tests
-     * @return the [PropertyContext]
-     * @see Arb
-     */
-    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): PropertyContext =
-        checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
-            block(arb)
-        }
-
-    companion object {
-        const val CHECK_ITERATIONS = 1_000
-    }
-}
+fun Player.Companion.fixture(
+    name: String = fake.superhero.name(),
+): Player = Player(
+    name = name,
+)

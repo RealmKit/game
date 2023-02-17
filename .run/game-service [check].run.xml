@@ -37,6 +37,20 @@
         </ExternalSystemSettings>
         <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
         <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+        <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
+            <extension name="coverage" runner="jacoco">
+                <pattern>
+                    <option name="PATTERN" value="dev.realmkit.game.app.GameServiceApplication"/>
+                    <option name="ENABLED" value="true"/>
+                    <option name="INCLUDE" value="false"/>
+                </pattern>
+                <pattern>
+                    <option name="PATTERN" value="dev.realmkit.game.app.GameServiceApplicationKt"/>
+                    <option name="ENABLED" value="true"/>
+                    <option name="INCLUDE" value="false"/>
+                </pattern>
+            </extension>
+        </EXTENSION>
         <DebugAllEnabled>false</DebugAllEnabled>
         <method v="2"/>
     </configuration>

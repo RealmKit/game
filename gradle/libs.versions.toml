@@ -11,9 +11,11 @@ test-archunit = "1.0.1"
 test-faker = "1.14.0-rc.0"
 test-kotest = "5.5.5"
 test-kotest-spring = "1.1.2"
+test-testcontainers = "1.17.6"
 
 [libraries]
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+spring-boot-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb" }
 spring-boot-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
 test-archunit-core = { module = "com.tngtech.archunit:archunit", version.ref = "test-archunit" }
@@ -23,8 +25,15 @@ test-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.
 test-kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "test-kotest" }
 test-kotest-property = { module = "io.kotest:kotest-property", version.ref = "test-kotest" }
 test-kotest-spring = { module = "io.kotest.extensions:kotest-extensions-spring", version.ref = "test-kotest-spring" }
+test-spring-boot = { module = "org.springframework.boot:spring-boot-starter-test" }
+test-testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "test-testcontainers" }
+test-testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "test-testcontainers" }
 
 [bundles]
+spring-boot = [
+    "spring-boot-data-mongodb",
+    "spring-boot-starter",
+]
 test-archunit = [
     "test-archunit-core",
     "test-archunit-junit5",
@@ -34,6 +43,13 @@ test-kotest = [
     "test-kotest-junit",
     "test-kotest-property",
     "test-kotest-spring",
+]
+test-spring-boot = [
+    "test-spring-boot",
+]
+test-testcontainers = [
+    "test-testcontainers-junit",
+    "test-testcontainers-mongodb",
 ]
 
 [plugins]

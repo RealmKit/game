@@ -19,22 +19,14 @@
   -->
 
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="game-service" type="SpringBootApplicationConfigurationType"
-                   factoryName="Spring Boot">
-        <option name="ACTIVE_PROFILES" value="dev"/>
-        <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources"/>
-        <module name="game-service.main"/>
-        <option name="SPRING_BOOT_MAIN_CLASS" value="dev.realmkit.game.app.GameServiceApplication"/>
-        <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources"/>
-        <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
-            <option name="credential"/>
-            <option name="region"/>
-            <option name="useCurrentConnection" value="false"/>
-        </extension>
-        <method v="2">
-            <option name="Make" enabled="true"/>
-            <option name="RunConfigurationTask" enabled="true" run_configuration_name="docker-compose"
-                    run_configuration_type="docker-deploy"/>
-        </method>
+    <configuration default="false" name="docker-compose" type="docker-deploy" factoryName="docker-compose.yml"
+                   server-name="Docker">
+        <deployment type="docker-compose.yml">
+            <settings>
+                <option name="envFilePath" value=""/>
+                <option name="sourceFilePath" value="docker-compose.yml"/>
+            </settings>
+        </deployment>
+        <method v="2"/>
     </configuration>
 </component>

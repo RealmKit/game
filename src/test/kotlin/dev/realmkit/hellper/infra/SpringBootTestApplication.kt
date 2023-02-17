@@ -18,39 +18,32 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.spec
+package dev.realmkit.hellper.infra
 
-import io.kotest.core.spec.style.ExpectSpec
-import io.kotest.property.Arb
-import io.kotest.property.PropertyContext
-import io.kotest.property.checkAll
+import io.kotest.core.extensions.ApplyExtension
+import io.kotest.extensions.spring.SpringTestExtension
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.ContextConfiguration
 
 /**
- * [TestSpec]
- * This class wraps a few extra things on top of [Kotest ExpectSpec][ExpectSpec]
+ * [SpringBootTestApplication]
+ * Test SpringBoot class, also [enables Mongo Repositories][EnableMongoRepositories] over `.domain.*` package
  *
- * @see ExpectSpec
+ * @see SpringBootApplication
  */
-abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
-    init {
-        this.body()
-    }
+@SpringBootApplication
+@EnableMongoRepositories("dev.realmkit.game.domain")
+class SpringBootTestApplication
 
-    /**
-     * Execute a checkAll arbitrary from Kotest
-     * This will iterate hundreds of times over the same test
-     *
-     * @param arbitrary the arbitrary class
-     * @param block the block of tests
-     * @return the [PropertyContext]
-     * @see Arb
-     */
-    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): PropertyContext =
-        checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
-            block(arb)
-        }
-
-    companion object {
-        const val CHECK_ITERATIONS = 1_000
-    }
-}
+/**
+ * [IntegrationTestContext]
+ * Wraps all annotations needed to start an Integration Test
+ */
+@DataMongoTest
+@ActiveProfiles("itest")
+@ApplyExtension(SpringTestExtension::class)
+@ContextConfiguration(classes = [SpringBootTestApplication::class])
+annotation class IntegrationTestContext

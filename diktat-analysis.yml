@@ -14,3 +14,7 @@
   enabled: false
 - name: FILE_UNORDERED_IMPORTS
   enabled: false
+- name: HEADER_MISSING_IN_NON_SINGLE_CLASS_FILE
+  enabled: false
+- name: CUSTOM_GETTERS_SETTERS
+  enabled: false
