@@ -30,77 +30,78 @@ val sourceCompatibility: String by project
 plugins {
     // Kotlin
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.spring)
     // Code Quality
     alias(libs.plugins.quality.versions)
     alias(libs.plugins.quality.catalog)
     alias(libs.plugins.quality.spotless)
     // Spring
-    alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency)
+    alias(libs.plugins.spring.boot).apply(false)
+    alias(libs.plugins.kotlin.spring).apply(false)
 }
 
 /**
- * Repositories
+ * All Projects
  */
-repositories {
-    mavenCentral()
-}
+allprojects {
+    // Plugins
+    apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.quality.spotless.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.spring.dependency.get().pluginId)
 
-/**
- * Dependencies
- */
-dependencies {
-    // Annotations Processors
-    annotationProcessor(libs.spring.boot.processor)
-
-    // Runtime Dependencies
-    runtimeOnly(libs.kotlin.reflect)
-
-    // Code Dependencies
-    implementation(libs.spring.boot.starter)
-}
-
-/**
- * Configuration
- */
-configure<SpotlessExtension> {
-    kotlin {
-        target("**/*.kt")
-        ktfmt()
-        ktlint()
-        diktat()
-        trimTrailingWhitespace()
-        endWithNewline()
+    // Repositories
+    repositories {
+        mavenCentral()
     }
-    kotlinGradle {
-        target("*.gradle.kts")
-        ktlint()
-    }
-    format("misc") {
-        target("*.md", "*.yml", "*.properties", ".gitignore")
-        trimTrailingWhitespace()
-        indentWithSpaces()
-        endWithNewline()
-    }
-}
 
-/**
- * Tasks
- */
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = sourceCompatibility
+    // Dependencies
+    dependencies {
+        // Runtime Dependencies
+        runtimeOnly(rootProject.libs.kotlin.reflect)
+    }
+
+    // Configuration
+    configure<SpotlessExtension> {
+        kotlin {
+            target("**/*.kt")
+            ktfmt()
+            ktlint()
+            diktat()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint()
+        }
+        format("misc") {
+            target("*.md", "*.yml", "*.properties", ".gitignore")
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
         }
     }
 
-    withType<Test> {
-        useJUnitPlatform()
-    }
+    // Tasks
+    tasks {
+        withType<KotlinCompile> {
+            kotlinOptions {
+                freeCompilerArgs = listOf("-Xjsr305=strict")
+                jvmTarget = sourceCompatibility
+            }
+        }
 
-    check {
-        finalizedBy(":versionCatalogUpdate")
+        withType<Test> {
+            useJUnitPlatform()
+        }
+
+        check {
+            finalizedBy(":versionCatalogUpdate")
+        }
     }
 }
+
+/**
+ * Sub Projects Only
+ */
+subprojects {}
