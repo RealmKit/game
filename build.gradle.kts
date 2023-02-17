@@ -23,9 +23,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val sourceCompatibility: String by project
 
-/**
- * Plugins
- */
+// Plugins
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     // Kotlin
@@ -34,24 +32,28 @@ plugins {
     alias(libs.plugins.quality.versions)
     alias(libs.plugins.quality.catalog)
     alias(libs.plugins.quality.spotless)
+    alias(libs.plugins.quality.dokka)
+    alias(libs.plugins.quality.detekt)
     // Spring
     alias(libs.plugins.spring.dependency)
     alias(libs.plugins.spring.boot).apply(false)
     alias(libs.plugins.kotlin.spring).apply(false)
 }
 
-/**
- * All Projects
- */
+// Sub Projects
 allprojects {
     // Plugins
     apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.quality.versions.get().pluginId)
     apply(plugin = rootProject.libs.plugins.quality.spotless.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.quality.dokka.get().pluginId)
+    apply(plugin = rootProject.libs.plugins.quality.detekt.get().pluginId)
     apply(plugin = rootProject.libs.plugins.spring.dependency.get().pluginId)
 
     // Repositories
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
 
     // Dependencies
@@ -96,12 +98,12 @@ allprojects {
         }
 
         check {
+            dependsOn(
+                allprojects.map { it.tasks.named("detekt") },
+                allprojects.map { it.tasks.named("spotlessCheck") },
+                allprojects.map { it.tasks.withType<Test>() },
+            )
             finalizedBy(":versionCatalogUpdate")
         }
     }
 }
-
-/**
- * Sub Projects Only
- */
-subprojects {}

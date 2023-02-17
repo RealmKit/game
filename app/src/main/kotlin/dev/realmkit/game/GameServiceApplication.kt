@@ -34,9 +34,7 @@ class GameServiceApplication
 
 /**
  * Starts the [GameServiceApplication] application
- *
- * @param args the application command line args
  */
-fun main(args: Array<String>) {
-    runApplication<GameServiceApplication>(*args)
+fun main() {
+    runApplication<GameServiceApplication>()
 }
