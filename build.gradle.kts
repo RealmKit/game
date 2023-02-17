@@ -57,6 +57,11 @@ dependencies {
 
     // Code Dependencies
     implementation(libs.spring.boot.starter)
+
+    // Test Dependencies
+    testImplementation(libs.bundles.test.kotest)
+    testImplementation(libs.bundles.test.archunit)
+    testImplementation(libs.test.faker)
 }
 
 // Configuration
@@ -65,7 +70,7 @@ configure<SpotlessExtension> {
         target("**/*.kt")
         ktfmt()
         ktlint()
-        diktat()
+        diktat().configFile("diktat-analysis.yml")
         trimTrailingWhitespace()
         endWithNewline()
     }
@@ -101,8 +106,13 @@ tasks {
     }
 
     check {
-        dependsOn("detekt")
-        dependsOn("spotlessCheck")
-        finalizedBy("versionCatalogUpdate")
+        dependsOn(
+            "detekt",
+            "spotlessCheck",
+            "test",
+        )
+        finalizedBy(
+            "dependencyUpdates",
+        )
     }
 }

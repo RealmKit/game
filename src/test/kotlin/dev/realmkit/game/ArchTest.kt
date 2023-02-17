@@ -18,25 +18,10 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import com.tngtech.archunit.junit.AnalyzeClasses
+import dev.realmkit.hellper.spec.ArchTestSpec
 
-/**
- * [GameServiceApplication]
- * Service main class
- *
- * @see SpringBootApplication
- */
-@SpringBootApplication
-class GameServiceApplication
-
-/**
- * Starts the [GameServiceApplication] application
- *
- * @see GameServiceApplication
- */
-fun main() {
-    runApplication<GameServiceApplication>()
-}
+@AnalyzeClasses(packages = ["dev.realmkit.game"])
+class ArchTest : ArchTestSpec()

@@ -12,3 +12,5 @@
 # Weird
 - name: INLINE_CLASS_CAN_BE_USED
   enabled: false
+- name: FILE_UNORDERED_IMPORTS
+  enabled: false
