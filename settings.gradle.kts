@@ -19,5 +19,3 @@
  */
 
 rootProject.name = "game-service"
-
-include("app")

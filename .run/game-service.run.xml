@@ -22,7 +22,7 @@
     <configuration default="false" name="game-service" type="SpringBootApplicationConfigurationType"
                    factoryName="Spring Boot">
         <module name="game-service.app.main"/>
-        <option name="SPRING_BOOT_MAIN_CLASS" value="dev.realmkit.game.GameServiceApplication"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="GameServiceApplication"/>
         <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
             <option name="credential"/>
             <option name="region"/>

@@ -19,6 +19,7 @@
  */
 
 import com.diffplug.gradle.spotless.SpotlessExtension
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val sourceCompatibility: String by project
@@ -36,74 +37,72 @@ plugins {
     alias(libs.plugins.quality.detekt)
     // Spring
     alias(libs.plugins.spring.dependency)
-    alias(libs.plugins.spring.boot).apply(false)
-    alias(libs.plugins.kotlin.spring).apply(false)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.kotlin.spring)
 }
 
-// Sub Projects
-allprojects {
-    // Plugins
-    apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.quality.versions.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.quality.spotless.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.quality.dokka.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.quality.detekt.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.spring.dependency.get().pluginId)
+// Repositories
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
 
-    // Repositories
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
+// Dependencies
+dependencies {
+    // Annotations Processors
+    annotationProcessor(libs.spring.boot.processor)
+
+    // Runtime Dependencies
+    runtimeOnly(libs.kotlin.reflect)
+
+    // Code Dependencies
+    implementation(libs.spring.boot.starter)
+}
+
+// Configuration
+configure<SpotlessExtension> {
+    kotlin {
+        target("**/*.kt")
+        ktfmt()
+        ktlint()
+        diktat()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint()
+    }
+    format("misc") {
+        target("*.md", "*.yml", "*.properties", ".gitignore")
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
+
+// Tasks
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = sourceCompatibility
+        }
     }
 
-    // Dependencies
-    dependencies {
-        // Runtime Dependencies
-        runtimeOnly(rootProject.libs.kotlin.reflect)
+    withType<Test> {
+        useJUnitPlatform()
     }
 
-    // Configuration
-    configure<SpotlessExtension> {
-        kotlin {
-            target("**/*.kt")
-            ktfmt()
-            ktlint()
-            diktat()
-            trimTrailingWhitespace()
-            endWithNewline()
-        }
-        kotlinGradle {
-            target("*.gradle.kts")
-            ktlint()
-        }
-        format("misc") {
-            target("*.md", "*.yml", "*.properties", ".gitignore")
-            trimTrailingWhitespace()
-            indentWithSpaces()
-            endWithNewline()
+    withType<Detekt> {
+        reports {
+            sarif.required.set(true)
         }
     }
 
-    // Tasks
-    tasks {
-        withType<KotlinCompile> {
-            kotlinOptions {
-                freeCompilerArgs = listOf("-Xjsr305=strict")
-                jvmTarget = sourceCompatibility
-            }
-        }
-
-        withType<Test> {
-            useJUnitPlatform()
-        }
-
-        check {
-            dependsOn(
-                allprojects.map { it.tasks.named("detekt") },
-                allprojects.map { it.tasks.named("spotlessCheck") },
-                allprojects.map { it.tasks.withType<Test>() },
-            )
-            finalizedBy(":versionCatalogUpdate")
-        }
+    check {
+        dependsOn("detekt")
+        dependsOn("spotlessCheck")
+        finalizedBy("versionCatalogUpdate")
     }
 }

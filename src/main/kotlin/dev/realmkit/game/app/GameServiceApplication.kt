@@ -18,22 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Configurations
- */
-configurations {
-    // Plugins
-    apply(plugin = rootProject.libs.plugins.spring.boot.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
-}
+package dev.realmkit.game.app
+
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 
 /**
- * Dependencies
+ * [GameServiceApplication]
+ * Service main class
+ *
+ * @see SpringBootApplication
  */
-dependencies {
-    // Annotations Processors
-    annotationProcessor(rootProject.libs.spring.boot.processor)
+@SpringBootApplication
+class GameServiceApplication
 
-    // Code Dependencies
-    implementation(rootProject.libs.spring.boot.starter)
+/**
+ * Starts the [GameServiceApplication] application
+ */
+fun main() {
+    runApplication<GameServiceApplication>()
 }
