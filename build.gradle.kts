@@ -28,13 +28,16 @@ val sourceCompatibility: String by project
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     // Kotlin
+    idea
     alias(libs.plugins.kotlin.jvm)
     // Code Quality
+    jacoco
     alias(libs.plugins.quality.versions)
     alias(libs.plugins.quality.catalog)
     alias(libs.plugins.quality.spotless)
     alias(libs.plugins.quality.dokka)
     alias(libs.plugins.quality.detekt)
+    alias(libs.plugins.quality.sonarqube)
     // Spring
     alias(libs.plugins.spring.dependency)
     alias(libs.plugins.spring.boot)
@@ -109,12 +112,24 @@ tasks {
 
     check {
         dependsOn(
-            "detekt",
-            "spotlessCheck",
-            "test",
+            detekt,
+            spotlessCheck,
+            test,
         )
         finalizedBy(
-            "dependencyUpdates",
+            dependencyUpdates,
         )
+    }
+
+    test {
+        finalizedBy(
+            jacocoTestReport,
+        )
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required.set(true)
+        }
     }
 }

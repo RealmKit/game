@@ -3,6 +3,7 @@ kotlin = "1.8.20-Beta"
 quality-catalog = "0.7.0"
 quality-detekt = "1.22.0"
 quality-dokka = "1.7.20"
+quality-sonarqube = "4.0.0.2929"
 quality-spotless = "6.15.0"
 quality-versions = "0.45.0"
 spring-boot = "3.0.2"
@@ -58,6 +59,7 @@ kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotl
 quality-catalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "quality-catalog" }
 quality-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "quality-detekt" }
 quality-dokka = { id = "org.jetbrains.dokka", version.ref = "quality-dokka" }
+quality-sonarqube = { id = "org.sonarqube", version.ref = "quality-sonarqube" }
 quality-spotless = { id = "com.diffplug.spotless", version.ref = "quality-spotless" }
 quality-versions = { id = "com.github.ben-manes.versions", version.ref = "quality-versions" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
