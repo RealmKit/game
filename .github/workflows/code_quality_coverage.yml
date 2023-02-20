@@ -11,23 +11,18 @@ on:
 
 jobs:
   build:
-    name: Build and Analyze
+    name: 'COVERAGE'
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
     steps:
       #      CHECKOUT
       - name: 'Checkout Project'
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      #      QODANA
-      - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@main
-        env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-      - uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
 
       #      SETUP
       - name: 'Set up JDK 19'
