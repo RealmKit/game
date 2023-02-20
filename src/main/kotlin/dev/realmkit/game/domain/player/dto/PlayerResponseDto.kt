@@ -18,29 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.player.dto
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-
-/**
- * [GameServiceApplication]
- * Service main class
- *
- * @see SpringBootApplication
- */
-@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
-@ConfigurationPropertiesScan
-class GameServiceApplication
+import dev.realmkit.game.domain.base.dto.BaseDto
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.stat.dto.StatResponseDto
+import org.bson.types.ObjectId
 
 /**
- * Starts the [GameServiceApplication] application
+ * [PlayerResponseDto]
+ * The [Player] [response dto representation][PlayerResponseDto]
  *
- * @see GameServiceApplication
+ * @property id `the player` id
+ * @property name `the player` name
+ * @property stat `the player` stat
  */
-fun main() {
-    runApplication<GameServiceApplication>()
-}
+data class PlayerResponseDto(
+    val id: ObjectId,
+    val name: String,
+    val stat: StatResponseDto,
+) : BaseDto<Player>()

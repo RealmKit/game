@@ -18,29 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
-
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+package dev.realmkit.game.domain.stat.document
 
 /**
- * [GameServiceApplication]
- * Service main class
+ * [StatProgression]
+ * The [StatProgression] entity
  *
- * @see SpringBootApplication
+ * @property level `the progression` level
+ * @property experience `the progression` experience
  */
-@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
-@ConfigurationPropertiesScan
-class GameServiceApplication
-
-/**
- * Starts the [GameServiceApplication] application
- *
- * @see GameServiceApplication
- */
-fun main() {
-    runApplication<GameServiceApplication>()
+data class StatProgression(
+    val level: Long = 1,
+    val experience: Long = 0,
+) {
+    companion object
 }

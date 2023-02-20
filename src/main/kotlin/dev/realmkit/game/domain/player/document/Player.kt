@@ -21,17 +21,20 @@
 package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
+import dev.realmkit.game.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * [Player]
  * The [Player] entity, stores the name, attributes, currencies and equipments
  *
- * @property name
+ * @property name `the player` name
+ * @property stat `the player` stat
  */
 @Document
 data class Player(
     val name: String,
+    val stat: Stat = Stat(),
 ) : BaseDocument() {
     companion object
 }

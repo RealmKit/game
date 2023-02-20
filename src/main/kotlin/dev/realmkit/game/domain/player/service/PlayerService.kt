@@ -18,29 +18,34 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.player.service
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-
-/**
- * [GameServiceApplication]
- * Service main class
- *
- * @see SpringBootApplication
- */
-@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
-@ConfigurationPropertiesScan
-class GameServiceApplication
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.dto.PlayerResponseDto
+import dev.realmkit.game.domain.player.extension.toResponse
+import dev.realmkit.game.domain.player.repository.PlayerRepository
+import org.springframework.stereotype.Service
 
 /**
- * Starts the [GameServiceApplication] application
+ * [PlayerService]
+ * [Player Service][PlayerService] executes all logics for [Player] document
  *
- * @see GameServiceApplication
+ * @see Service
  */
-fun main() {
-    runApplication<GameServiceApplication>()
+@Service
+class PlayerService(
+    private val playerRepository: PlayerRepository,
+) {
+    /**
+     * Creates a new [Player] within provided fields and persist it to DB
+     *
+     * @param name the player name
+     * @return the DTO from the persisted entity
+     * @see Player
+     */
+    fun new(name: String): PlayerResponseDto {
+        val player = Player(name = name)
+        playerRepository.save(player)
+        return player.toResponse
+    }
 }

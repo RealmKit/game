@@ -20,15 +20,31 @@
 
 package dev.realmkit.game.app
 
+import dev.realmkit.game.domain.player.dto.PlayerResponseDto
+import dev.realmkit.game.domain.player.service.PlayerService
+import dev.realmkit.hellper.extension.fake
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldNotBeEmpty
 
 @IntegrationTestContext
-class GameTest : IntegrationTestSpec({
-    context("integration testing Player Repository") {
+class GameTest(
+    private val playerService: PlayerService,
+) : IntegrationTestSpec({
+    context("integration testing Game Application") {
         expect("all beans to be inject") {
-            1 shouldBe 1
+            playerService.shouldNotBeNull()
+        }
+
+        expect("the game to run normally") {
+            val player: PlayerResponseDto = playerService.new(name = fake.superhero.name())
+                .shouldNotBeNull()
+            player.id.shouldNotBeNull()
+            player.name.shouldNotBeNull().shouldNotBeEmpty()
+            player.stat.progression.level shouldBe 1
+            player.stat.progression.experience shouldBe 0
         }
     }
 })

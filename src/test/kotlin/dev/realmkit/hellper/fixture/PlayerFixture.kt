@@ -25,13 +25,11 @@ import dev.realmkit.hellper.extension.fake
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
+val Player.Companion.arbitrary: Arb<Player>
+    get() = arbitrary { fixture }
+
 val Player.Companion.fixture: Player
     get() = fixture()
-
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary {
-        fixture()
-    }
 
 /**
  * Creates a [Player] with random data

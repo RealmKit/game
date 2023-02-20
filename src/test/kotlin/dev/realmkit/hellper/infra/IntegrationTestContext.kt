@@ -18,29 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.hellper.infra
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-
-/**
- * [GameServiceApplication]
- * Service main class
- *
- * @see SpringBootApplication
- */
-@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
-@ConfigurationPropertiesScan
-class GameServiceApplication
+import dev.realmkit.game.app.GameServiceApplication
+import io.kotest.core.extensions.ApplyExtension
+import io.kotest.extensions.spring.SpringTestExtension
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 
 /**
- * Starts the [GameServiceApplication] application
- *
- * @see GameServiceApplication
+ * [IntegrationTestContext]
+ * Wraps all annotations needed to start an Integration Test
  */
-fun main() {
-    runApplication<GameServiceApplication>()
-}
+@ActiveProfiles("itest")
+@SpringBootTest(classes = [GameServiceApplication::class])
+@ApplyExtension(SpringTestExtension::class)
+annotation class IntegrationTestContext

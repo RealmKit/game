@@ -18,29 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.player.extension
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-
-/**
- * [GameServiceApplication]
- * Service main class
- *
- * @see SpringBootApplication
- */
-@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
-@ConfigurationPropertiesScan
-class GameServiceApplication
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.dto.PlayerResponseDto
+import dev.realmkit.game.domain.stat.dto.StatProgressionResponseDto
+import dev.realmkit.game.domain.stat.dto.StatResponseDto
 
 /**
- * Starts the [GameServiceApplication] application
- *
- * @see GameServiceApplication
+ * [Player] -> [PlayerResponseDto]
  */
-fun main() {
-    runApplication<GameServiceApplication>()
-}
+val Player.toResponse: PlayerResponseDto
+    get() = PlayerResponseDto(
+        id = id,
+        name = name,
+        stat = StatResponseDto(
+            progression = StatProgressionResponseDto(
+                level = stat.progression.level,
+                experience = stat.progression.experience,
+            ),
+        ),
+    )

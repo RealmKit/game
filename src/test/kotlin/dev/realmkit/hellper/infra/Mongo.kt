@@ -27,7 +27,7 @@ import org.testcontainers.containers.MongoDBContainer
 
 object Mongo {
     private const val MONGO_DOCKER_IMAGE = "mongo:latest"
-    private const val MONGO_DATABASE_NAME = "realmkit-game"
+    private const val MONGO_DATABASE_NAME = "test"
     private val container by lazy {
         MongoDBContainer(MONGO_DOCKER_IMAGE).apply {
             start()

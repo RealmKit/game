@@ -18,32 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.infra
+package dev.realmkit.game.domain.stat.dto
 
-import io.kotest.core.extensions.ApplyExtension
-import io.kotest.extensions.spring.SpringTestExtension
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
+import dev.realmkit.game.domain.stat.document.StatProgression
 
 /**
- * [SpringBootTestApplication]
- * Test SpringBoot class, also [enables Mongo Repositories][EnableMongoRepositories] over `.domain.*` package
+ * [StatProgressionResponseDto]
+ * The [StatProgression] [response dto representation][StatProgressionResponseDto]
  *
- * @see SpringBootApplication
+ * @property level `the progression` level
+ * @property experience `the progression` experience
  */
-@SpringBootApplication
-@EnableMongoRepositories("dev.realmkit.game.domain")
-class SpringBootTestApplication
-
-/**
- * [IntegrationTestContext]
- * Wraps all annotations needed to start an Integration Test
- */
-@DataMongoTest
-@ActiveProfiles("itest")
-@ApplyExtension(SpringTestExtension::class)
-@ContextConfiguration(classes = [SpringBootTestApplication::class])
-annotation class IntegrationTestContext
+data class StatProgressionResponseDto(
+    val level: Long,
+    val experience: Long,
+)

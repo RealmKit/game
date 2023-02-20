@@ -18,29 +18,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.base.dto
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import dev.realmkit.game.domain.base.document.BaseDocument
 
 /**
- * [GameServiceApplication]
- * Service main class
- *
- * @see SpringBootApplication
+ * [BaseDto]
+ * The [BaseDto] representation for [BaseDocument] documents
  */
-@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
-@ConfigurationPropertiesScan
-class GameServiceApplication
-
-/**
- * Starts the [GameServiceApplication] application
- *
- * @see GameServiceApplication
- */
-fun main() {
-    runApplication<GameServiceApplication>()
-}
+open class BaseDto<T : BaseDocument>
