@@ -13,5 +13,4 @@
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-%E2%9D%A4-FF4081)](https://kotlinlang.org/)
 [![spotless](https://img.shields.io/badge/Spotless-%E2%9D%A4-FF4081)](https://github.com/diffplug/spotless)
-
 </div>
