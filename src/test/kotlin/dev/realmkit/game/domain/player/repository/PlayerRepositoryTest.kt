@@ -45,7 +45,6 @@ class PlayerRepositoryTest(
 
         expect("it should create $CHECK_ITERATIONS Players") {
             playerRepository.run { count().shouldBeZero() }
-
             check(Player.arbitrary) { player ->
                 playerRepository.save(player).shouldNotBeNull()
                 playerRepository.findById(player.id).shouldBePresent().asClue { find ->
@@ -55,7 +54,6 @@ class PlayerRepositoryTest(
                     find.name shouldBe player.name
                 }
             }
-
             playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }
         }
     }

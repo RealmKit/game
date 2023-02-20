@@ -20,20 +20,21 @@
 
 package dev.realmkit.game.domain.player.document
 
-import dev.realmkit.hellper.fixture.fixture
+import dev.realmkit.hellper.fixture.arbitrary
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.assertions.asClue
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
 
 class PlayerTest : TestSpec({
     context("unit testing Player") {
         expect("to create a new plain Player") {
-            Player.fixture
-                .shouldNotBeNull()
-                .asClue { player ->
-                    player.name.shouldNotBeNull().shouldNotBeEmpty()
-                }
+            check(Player.arbitrary) { player ->
+                player.shouldNotBeNull()
+                player.id.shouldNotBeNull()
+                player.createdAt.shouldNotBeNull()
+                player.updatedAt.shouldNotBeNull()
+                player.name.shouldNotBeNull().shouldNotBeEmpty()
+            }
         }
     }
 })
