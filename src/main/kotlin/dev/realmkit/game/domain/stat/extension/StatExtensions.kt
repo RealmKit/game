@@ -18,32 +18,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.hellper.extension.fake
-import dev.realmkit.hellper.infra.IntegrationTestContext
-import dev.realmkit.hellper.spec.IntegrationTestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldNotBeEmpty
+import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.dto.StatResponseDto
 
-@IntegrationTestContext
-class GameTest(
-    private val playerService: PlayerService,
-) : IntegrationTestSpec({
-    context("integration testing Game Application") {
-        expect("all beans to be inject") {
-            playerService.shouldNotBeNull()
-        }
-
-        expect("the game to run normally") {
-            val player = playerService.new(name = fake.superhero.name())
-                .shouldNotBeNull()
-            player.id.shouldNotBeNull()
-            player.name.shouldNotBeNull().shouldNotBeEmpty()
-            player.stat.progression.level shouldBe 1
-            player.stat.progression.experience shouldBe 0
-        }
-    }
-})
+/**
+ * [Stat] -> [StatResponseDto]
+ */
+val Stat.toResponseDto: StatResponseDto
+    get() = StatResponseDto(
+        progression = progression.toResponseDto,
+    )

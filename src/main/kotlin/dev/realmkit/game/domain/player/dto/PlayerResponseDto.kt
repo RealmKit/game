@@ -23,7 +23,6 @@ package dev.realmkit.game.domain.player.dto
 import dev.realmkit.game.domain.base.dto.BaseDto
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.stat.dto.StatResponseDto
-import org.bson.types.ObjectId
 
 /**
  * [PlayerResponseDto]
@@ -34,7 +33,7 @@ import org.bson.types.ObjectId
  * @property stat `the player` stat
  */
 data class PlayerResponseDto(
-    val id: ObjectId,
+    val id: String,
     val name: String,
     val stat: StatResponseDto,
 ) : BaseDto<Player>()

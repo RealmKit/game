@@ -22,7 +22,7 @@ package dev.realmkit.game.domain.player.service
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.dto.PlayerResponseDto
-import dev.realmkit.game.domain.player.extension.toResponse
+import dev.realmkit.game.domain.player.extension.toResponseDto
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import org.springframework.stereotype.Service
 
@@ -45,7 +45,6 @@ class PlayerService(
      */
     fun new(name: String): PlayerResponseDto {
         val player = Player(name = name)
-        playerRepository.save(player)
-        return player.toResponse
+        return playerRepository.save(player).toResponseDto
     }
 }

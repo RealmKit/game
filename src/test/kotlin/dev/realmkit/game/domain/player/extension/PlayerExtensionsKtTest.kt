@@ -18,32 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.player.extension
 
-import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.hellper.extension.fake
-import dev.realmkit.hellper.infra.IntegrationTestContext
-import dev.realmkit.hellper.spec.IntegrationTestSpec
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.fixture.arbitrary
+import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldNotBeEmpty
 
-@IntegrationTestContext
-class GameTest(
-    private val playerService: PlayerService,
-) : IntegrationTestSpec({
-    context("integration testing Game Application") {
-        expect("all beans to be inject") {
-            playerService.shouldNotBeNull()
-        }
-
-        expect("the game to run normally") {
-            val player = playerService.new(name = fake.superhero.name())
-                .shouldNotBeNull()
-            player.id.shouldNotBeNull()
-            player.name.shouldNotBeNull().shouldNotBeEmpty()
-            player.stat.progression.level shouldBe 1
-            player.stat.progression.experience shouldBe 0
+class PlayerExtensionsKtTest : TestSpec({
+    context("unit testing Player extensions") {
+        expect("mapping to Response DTO") {
+            check(Player.arbitrary) { player ->
+                val dto = player.toResponseDto
+                    .shouldNotBeNull()
+                dto.id shouldBe player.id.toHexString()
+                dto.name shouldBe player.name
+                dto.stat.progression.level shouldBe player.stat.progression.level
+                dto.stat.progression.experience shouldBe player.stat.progression.experience
+            }
         }
     }
 })

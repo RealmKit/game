@@ -22,20 +22,14 @@ package dev.realmkit.game.domain.player.extension
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.dto.PlayerResponseDto
-import dev.realmkit.game.domain.stat.dto.StatProgressionResponseDto
-import dev.realmkit.game.domain.stat.dto.StatResponseDto
+import dev.realmkit.game.domain.stat.extension.toResponseDto
 
 /**
  * [Player] -> [PlayerResponseDto]
  */
-val Player.toResponse: PlayerResponseDto
+val Player.toResponseDto: PlayerResponseDto
     get() = PlayerResponseDto(
-        id = id,
+        id = id.toHexString(),
         name = name,
-        stat = StatResponseDto(
-            progression = StatProgressionResponseDto(
-                level = stat.progression.level,
-                experience = stat.progression.experience,
-            ),
-        ),
+        stat = stat.toResponseDto,
     )
