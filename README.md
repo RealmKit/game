@@ -1,6 +1,6 @@
 <div align="center">
 
-[![Code Quality](https://github.com/RealmKit/game/actions/workflows/code_quality_qodana.yml/badge.svg)](https://github.com/RealmKit/game/actions/workflows/code_quality_qodana.yml)
+[![Code Quality](https://github.com/RealmKit/game/actions/workflows/code_quality.yml/badge.svg)](https://github.com/RealmKit/game/actions/workflows/code_quality.yml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=RealmKit_game&metric=alert_status&token=f29095e9f4032a6972b42bcfedc2ed46d4715715)](https://sonarcloud.io/summary/new_code?id=RealmKit_game)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=RealmKit_game&metric=coverage&token=f29095e9f4032a6972b42bcfedc2ed46d4715715)](https://sonarcloud.io/summary/new_code?id=RealmKit_game)
