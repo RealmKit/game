@@ -44,5 +44,5 @@ open class BaseDocument {
      * Document id
      */
     @Id
-    lateinit var id: ObjectId
+    var id: ObjectId = ObjectId.get()
 }
