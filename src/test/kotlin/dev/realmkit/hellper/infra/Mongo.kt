@@ -38,30 +38,13 @@ object Mongo {
     }
 
     /**
-     * Starts the [MongoDB container][MongoDBContainer]
-     *
-     * @return [MongoDBContainer] after started
-     * @see MongoDBContainer
-     */
-    fun start() =
-        container.takeUnless { it.isRunning }?.start().let { container }
-
-    /**
-     * Stops the [MongoDB container][MongoDBContainer]
-     *
-     * @see MongoDBContainer
-     */
-    fun stop() =
-        container.takeIf { it.isRunning }?.stop()
-
-    /**
      * Clears the [MongoDB][MongoTemplate] collections
      *
      * @return nothing
      * @see MongoTemplate
      */
     fun clear() =
-        container.takeIf { container.isRunning }?.also { mongoTemplate.db.drop() }
+        container.takeIf { container.isRunning }?.run { mongoTemplate.db.drop() }
 
     /**
      * Clears the [MongoDB][MongoTemplate] collections
