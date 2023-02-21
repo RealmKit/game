@@ -18,25 +18,17 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.dto
+package dev.realmkit.game.domain.base.extension
 
-import dev.realmkit.game.domain.base.dto.BaseDto
-import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.stat.dto.StatResponseDto
+import dev.realmkit.game.domain.base.document.BaseDocument
+import org.bson.types.ObjectId
+import org.springframework.data.mongodb.repository.MongoRepository
 
 /**
- * # [PlayerResponseDto]
+ * Persists a `Document` and transforms it to a `*ResponseDto`
  *
- * The [Player] [response dto representation][PlayerResponseDto]
- *
- * @property id `the player` id
- * @property name `the player` name
- * @property stat `the player` stat
- *
- * @see BaseDto
+ * @param block creates the `Document`
+ * @return the DTO response after persisted on database
  */
-data class PlayerResponseDto(
-    val id: String,
-    val name: String,
-    val stat: StatResponseDto,
-) : BaseDto<Player>
+fun <T : BaseDocument> MongoRepository<T, ObjectId>.persist(block: () -> T): T =
+    save(block())

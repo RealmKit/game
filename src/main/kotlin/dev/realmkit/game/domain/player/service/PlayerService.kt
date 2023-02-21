@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.player.service
 
+import dev.realmkit.game.domain.base.extension.persist
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.dto.PlayerResponseDto
 import dev.realmkit.game.domain.player.extension.toResponseDto
@@ -39,7 +40,7 @@ class PlayerService(
     private val playerRepository: PlayerRepository,
 ) {
     /**
-     * Creates a new [Player] within provided fields and persist it to DB
+     * Creates a new [Player] within provided fields, persist it to DB and parse to a response dto
      *
      * ```kotlin
      * import dev.realmkit.game.domain.player.service.PlayerService
@@ -49,16 +50,16 @@ class PlayerService(
      *     private val playerService: PlayerService,
      * ) {
      *     fun create(): PlayerResponseDto =
-     *         playerRepository.new( "Player Number One" )
+     *         playerService.new( "Player Number One" )
      * }
      * ```
      *
      * @param name the player name
-     * @return the DTO from the persisted entity
+     * @return the dto from the persisted entity
      * @see Player
      */
-    fun new(name: String): PlayerResponseDto {
-        val player = Player(name = name)
-        return playerRepository.save(player).toResponseDto
-    }
+    fun new(name: String): PlayerResponseDto =
+        playerRepository.persist {
+            Player(name = name)
+        }.toResponseDto
 }
