@@ -20,11 +20,16 @@
 
 package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.game.domain.base.document.BaseDocument
+
 /**
- * [Stat]
- * The [Stat] entity
+ * # [Stat]
+ *
+ * The Stat document.
  *
  * @property progression `the stat` progression
+ *
+ * @see BaseDocument
  */
 data class Stat(
     val progression: StatProgression = StatProgression(),

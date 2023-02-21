@@ -26,7 +26,8 @@ import org.springframework.boot.runApplication
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
 /**
- * [GameServiceApplication]
+ * # [GameServiceApplication]
+ *
  * Service main class
  *
  * @see SpringBootApplication
@@ -37,7 +38,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 class GameServiceApplication
 
 /**
- * Starts the [GameServiceApplication] application
+ * ## Starts the [GameServiceApplication] application.
  *
  * @see GameServiceApplication
  */

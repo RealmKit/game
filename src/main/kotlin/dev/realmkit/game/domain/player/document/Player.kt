@@ -25,11 +25,14 @@ import dev.realmkit.game.domain.stat.document.Stat
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * [Player]
- * The [Player] entity, stores the name, attributes, currencies and equipments
+ * # [Player]
+ *
+ * The Player document.
  *
  * @property name `the player` name
  * @property stat `the player` stat
+ *
+ * @see BaseDocument
  */
 @Document
 data class Player(

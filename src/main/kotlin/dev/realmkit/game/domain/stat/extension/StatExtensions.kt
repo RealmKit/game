@@ -24,7 +24,16 @@ import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.dto.StatResponseDto
 
 /**
- * [Stat] -> [StatResponseDto]
+ * ## [Stat] -> [StatResponseDto]
+ *
+ * ```kotlin
+ * import dev.realmkit.game.domain.stat.extension.toResponseDto
+ *
+ * val stat: Stat = Stat(progression = StatProgression())
+ * val dto: StatResponseDto = stat.toResponseDto
+ * ```
+ *
+ * @see StatResponseDto
  */
 val Stat.toResponseDto: StatResponseDto
     get() = StatResponseDto(

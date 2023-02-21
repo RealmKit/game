@@ -23,7 +23,8 @@ package dev.realmkit.game.domain.base.dto
 import dev.realmkit.game.domain.base.document.BaseDocument
 
 /**
- * [BaseDto]
- * The [BaseDto] representation for [BaseDocument] documents
+ * # [BaseDto]
+ *
+ * The DTO representation for [documents][BaseDocument]
  */
 open class BaseDto<T : BaseDocument>

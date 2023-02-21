@@ -25,7 +25,16 @@ import dev.realmkit.game.domain.player.dto.PlayerResponseDto
 import dev.realmkit.game.domain.stat.extension.toResponseDto
 
 /**
- * [Player] -> [PlayerResponseDto]
+ * ## [Player] -> [PlayerResponseDto]
+ *
+ * ```kotlin
+ * import dev.realmkit.game.domain.player.extension.toResponseDto
+ *
+ * val player: Player = Player(name = "Player #1")
+ * val dto: PlayerResponseDto = player.toResponseDto
+ * ```
+ *
+ * @see PlayerResponseDto
  */
 val Player.toResponseDto: PlayerResponseDto
     get() = PlayerResponseDto(

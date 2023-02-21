@@ -20,14 +20,18 @@
 
 package dev.realmkit.game.domain.stat.dto
 
+import dev.realmkit.game.domain.base.dto.BaseDto
 import dev.realmkit.game.domain.stat.document.StatProgression
 
 /**
- * [StatProgressionResponseDto]
+ * # [StatProgressionResponseDto]
+ *
  * The [StatProgression] [response dto representation][StatProgressionResponseDto]
  *
  * @property level `the progression` level
  * @property experience `the progression` experience
+ *
+ * @see BaseDto
  */
 data class StatProgressionResponseDto(
     val level: Long,

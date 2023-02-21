@@ -27,9 +27,11 @@ import dev.realmkit.game.domain.player.repository.PlayerRepository
 import org.springframework.stereotype.Service
 
 /**
- * [PlayerService]
- * [Player Service][PlayerService] executes all logics for [Player] document
+ * # [PlayerService]
  *
+ * Executes all logics for [Player] document
+ *
+ * @property playerRepository the player document repository
  * @see Service
  */
 @Service
@@ -38,6 +40,18 @@ class PlayerService(
 ) {
     /**
      * Creates a new [Player] within provided fields and persist it to DB
+     *
+     * ```kotlin
+     * import dev.realmkit.game.domain.player.service.PlayerService
+     *
+     * class SomeController(
+     *     // Inject the Service
+     *     private val playerService: PlayerService,
+     * ) {
+     *     fun create(): PlayerResponseDto =
+     *         playerRepository.new( "Player Number One" )
+     * }
+     * ```
      *
      * @param name the player name
      * @return the DTO from the persisted entity

@@ -20,12 +20,17 @@
 
 package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.game.domain.base.document.BaseDocument
+
 /**
- * [StatProgression]
- * The [StatProgression] entity
+ * # [StatProgression]
+ *
+ * The StatProgression document.
  *
  * @property level `the progression` level
  * @property experience `the progression` experience
+ *
+ * @see BaseDocument
  */
 data class StatProgression(
     val level: Long = 1,

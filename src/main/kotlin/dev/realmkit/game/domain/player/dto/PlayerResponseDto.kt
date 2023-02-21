@@ -25,12 +25,15 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.stat.dto.StatResponseDto
 
 /**
- * [PlayerResponseDto]
+ * # [PlayerResponseDto]
+ *
  * The [Player] [response dto representation][PlayerResponseDto]
  *
  * @property id `the player` id
  * @property name `the player` name
  * @property stat `the player` stat
+ *
+ * @see BaseDto
  */
 data class PlayerResponseDto(
     val id: String,
