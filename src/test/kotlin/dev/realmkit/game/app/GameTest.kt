@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.app
 
+import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
 import dev.realmkit.game.domain.player.service.PlayerService
 import dev.realmkit.hellper.extension.fake
 import dev.realmkit.hellper.infra.IntegrationTestContext
@@ -38,8 +39,7 @@ class GameTest(
         }
 
         expect("the game to run normally") {
-            val player = playerService.new(name = fake.superhero.name())
-                .shouldNotBeNull()
+            val player = playerService new PlayerCreateRequestDto(name = fake.superhero.name())
             player.id.shouldNotBeNull()
             player.name.shouldNotBeNull().shouldNotBeEmpty()
             player.stat.progression.level shouldBe 1

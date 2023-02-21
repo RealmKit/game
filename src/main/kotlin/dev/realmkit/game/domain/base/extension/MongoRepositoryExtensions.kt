@@ -21,14 +21,13 @@
 package dev.realmkit.game.domain.base.extension
 
 import dev.realmkit.game.domain.base.document.BaseDocument
-import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
 /**
  * Persists a `Document` and transforms it to a `*ResponseDto`
  *
- * @param block creates the `Document`
+ * @param document the `Document` to persist
  * @return the DTO response after persisted on database
  */
-fun <T : BaseDocument> MongoRepository<T, ObjectId>.persist(block: () -> T): T =
-    save(block())
+infix fun <T : BaseDocument> MongoRepository<T, String>.persist(document: T): T =
+    save(document)

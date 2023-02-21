@@ -18,30 +18,31 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.hellper.fixture.stat
 
-import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatProgression
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
- * # [PlayerRepository]
- *
- * Mongo Repository for dealing with [Player documents][Player]
- *
- * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
- *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
- * ```
- *
- * @see MongoRepository
+ * Creates a [Stat] [Arb] with random bind data
  */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+val Stat.Companion.arbitrary: Arb<Stat>
+    get() = arbitrary {
+        fixture(
+            progression = StatProgression.arbitrary.bind(),
+        )
+    }
+
+/**
+ * Creates a [Stat] with random data
+ *
+ * @param progression the stat progression
+ * @return the Stat
+ */
+fun Stat.Companion.fixture(
+    progression: StatProgression = StatProgression.fixture(),
+): Stat = Stat(
+    progression = progression,
+)

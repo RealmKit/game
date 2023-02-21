@@ -21,21 +21,38 @@
 package dev.realmkit.game.domain.player.extension
 
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.hellper.fixture.arbitrary
+import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
+import dev.realmkit.hellper.extension.fakeArb
+import dev.realmkit.hellper.fixture.player.arbitrary
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 class PlayerExtensionsKtTest : TestSpec({
     context("unit testing Player extensions") {
-        expect("mapping to Response DTO") {
+        expect("mapping to Response dto") {
             check(Player.arbitrary) { player ->
                 val dto = player.toResponseDto
                     .shouldNotBeNull()
-                dto.id shouldBe player.id.toHexString()
+                dto.id shouldBe player.id
                 dto.name shouldBe player.name
                 dto.stat.progression.level shouldBe player.stat.progression.level
                 dto.stat.progression.experience shouldBe player.stat.progression.experience
+            }
+        }
+
+        expect("mapping to Document") {
+            check(fakeArb.name) { name ->
+                val player = PlayerCreateRequestDto(name = name).toDocument
+                    .shouldNotBeNull()
+                player.id.shouldNotBeNull()
+                player.createdAt.shouldNotBeNull()
+                player.updatedAt.shouldNotBeNull()
+                player.name shouldBe name
+                player.stat.shouldNotBeNull()
+                player.stat.progression.shouldNotBeNull()
+                player.stat.progression.level shouldBe 1
+                player.stat.progression.experience shouldBe 0
             }
         }
     }

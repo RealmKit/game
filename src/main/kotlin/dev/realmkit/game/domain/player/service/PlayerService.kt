@@ -22,7 +22,9 @@ package dev.realmkit.game.domain.player.service
 
 import dev.realmkit.game.domain.base.extension.persist
 import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
 import dev.realmkit.game.domain.player.dto.PlayerResponseDto
+import dev.realmkit.game.domain.player.extension.toDocument
 import dev.realmkit.game.domain.player.extension.toResponseDto
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import org.springframework.stereotype.Service
@@ -54,12 +56,10 @@ class PlayerService(
      * }
      * ```
      *
-     * @param name the player name
+     * @param request the player create request dto
      * @return the dto from the persisted entity
      * @see Player
      */
-    fun new(name: String): PlayerResponseDto =
-        playerRepository.persist {
-            Player(name = name)
-        }.toResponseDto
+    infix fun new(request: PlayerCreateRequestDto): PlayerResponseDto =
+        (playerRepository persist request.toDocument).toResponseDto
 }

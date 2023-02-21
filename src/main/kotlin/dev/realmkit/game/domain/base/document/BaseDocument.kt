@@ -60,5 +60,5 @@ open class BaseDocument {
      * ID property used to query the document.
      */
     @Id
-    var id: ObjectId = ObjectId.get()
+    var id: String = ObjectId.get().toHexString()
 }

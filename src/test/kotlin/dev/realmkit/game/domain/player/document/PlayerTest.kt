@@ -20,8 +20,9 @@
 
 package dev.realmkit.game.domain.player.document
 
-import dev.realmkit.hellper.fixture.arbitrary
+import dev.realmkit.hellper.fixture.player.arbitrary
 import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
 
@@ -34,6 +35,10 @@ class PlayerTest : TestSpec({
                 player.createdAt.shouldNotBeNull()
                 player.updatedAt.shouldNotBeNull()
                 player.name.shouldNotBeNull().shouldNotBeEmpty()
+                player.stat.shouldNotBeNull()
+                player.stat.progression.shouldNotBeNull()
+                player.stat.progression.level.shouldBeGreaterThan(0)
+                player.stat.progression.experience.shouldBeGreaterThan(0)
             }
         }
     }

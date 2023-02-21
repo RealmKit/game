@@ -18,27 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture
+package dev.realmkit.game.domain.player.dto
 
-import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.extension.toDocument
 import dev.realmkit.hellper.extension.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { fixture }
+class PlayerCreateRequestDtoTest : TestSpec({
+    context("unit testing PlayerCreateRequestDto") {
+        expect("to create a new plain PlayerCreateRequestDto") {
+            val request = PlayerCreateRequestDto(name = fake.superhero.name())
+                .shouldNotBeNull()
+            request.name.shouldNotBeNull()
+        }
 
-val Player.Companion.fixture: Player
-    get() = fixture()
+        expect("to parse a PlayerCreateRequestDto to Player") {
+            val request = PlayerCreateRequestDto(name = fake.superhero.name())
+                .shouldNotBeNull()
+            request.name.shouldNotBeNull()
 
-/**
- * Creates a [Player] with random data
- *
- * @param name the [Player] `name`
- * @return the [Player]
- */
-fun Player.Companion.fixture(
-    name: String = fake.superhero.name(),
-): Player = Player(
-    name = name,
-)
+            val player = request.toDocument
+            player.name shouldBe request.name
+        }
+    }
+})

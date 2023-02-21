@@ -21,6 +21,7 @@
 package dev.realmkit.game.domain.player.extension
 
 import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
 import dev.realmkit.game.domain.player.dto.PlayerResponseDto
 import dev.realmkit.game.domain.stat.extension.toResponseDto
 
@@ -38,7 +39,24 @@ import dev.realmkit.game.domain.stat.extension.toResponseDto
  */
 val Player.toResponseDto: PlayerResponseDto
     get() = PlayerResponseDto(
-        id = id.toHexString(),
+        id = id,
         name = name,
         stat = stat.toResponseDto,
+    )
+
+/**
+ * ## [PlayerCreateRequestDto] -> [Player]
+ *
+ * ```kotlin
+ * import dev.realmkit.game.domain.player.extension.toDocument
+ *
+ * val dto: PlayerCreateRequestDto = PlayerCreateRequestDto(name = "Player #1")
+ * val player: Player = dto.toDocument
+ * ```
+ *
+ * @see PlayerResponseDto
+ */
+val PlayerCreateRequestDto.toDocument: Player
+    get() = Player(
+        name = name,
     )

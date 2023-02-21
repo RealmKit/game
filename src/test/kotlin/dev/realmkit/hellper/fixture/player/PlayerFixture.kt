@@ -18,30 +18,39 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.hellper.fixture.player
 
 import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.hellper.extension.fake
+import dev.realmkit.hellper.extension.fakeArb
+import dev.realmkit.hellper.fixture.stat.arbitrary
+import dev.realmkit.hellper.fixture.stat.fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
- * # [PlayerRepository]
- *
- * Mongo Repository for dealing with [Player documents][Player]
- *
- * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
- *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
- * ```
- *
- * @see MongoRepository
+ * Creates a [Player] [Arb] with random bind data
  */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+val Player.Companion.arbitrary: Arb<Player>
+    get() = arbitrary {
+        fixture(
+            name = fakeArb.name.bind(),
+            stat = Stat.arbitrary.bind(),
+        )
+    }
+
+/**
+ * Creates a [Player] with random data
+ *
+ * @param name the player name
+ * @param stat the player stat
+ * @return the Player
+ */
+fun Player.Companion.fixture(
+    name: String = fake.superhero.name(),
+    stat: Stat = Stat.fixture(),
+): Player = Player(
+    name = name,
+    stat = stat,
+)
