@@ -18,30 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.game.domain.stat.document
 
-import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.base.document.BaseDocument
 
 /**
- * # [PlayerRepository]
+ * # [Stat]
  *
- * Mongo Repository for dealing with [Player documents][Player]
+ * The Stat document.
  *
- * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
+ * @property progression `the stat` progression
  *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
- * ```
- *
- * @see MongoRepository
+ * @see BaseDocument
  */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+data class Stat(
+    val progression: StatProgression = StatProgression(),
+) {
+    companion object
+}

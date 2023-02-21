@@ -18,30 +18,45 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.game.domain.player.extension
 
 import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
+import dev.realmkit.game.domain.player.dto.PlayerResponseDto
+import dev.realmkit.game.domain.stat.extension.toResponseDto
 
 /**
- * # [PlayerRepository]
- *
- * Mongo Repository for dealing with [Player documents][Player]
+ * ## [Player] -> [PlayerResponseDto]
  *
  * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
+ * import dev.realmkit.game.domain.player.extension.toResponseDto
  *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
+ * val player: Player = Player(name = "Player #1")
+ * val dto: PlayerResponseDto = player.toResponseDto
  * ```
  *
- * @see MongoRepository
+ * @see PlayerResponseDto
  */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+val Player.toResponseDto: PlayerResponseDto
+    get() = PlayerResponseDto(
+        id = id,
+        name = name,
+        stat = stat.toResponseDto,
+    )
+
+/**
+ * ## [PlayerCreateRequestDto] -> [Player]
+ *
+ * ```kotlin
+ * import dev.realmkit.game.domain.player.extension.toDocument
+ *
+ * val dto: PlayerCreateRequestDto = PlayerCreateRequestDto(name = "Player #1")
+ * val player: Player = dto.toDocument
+ * ```
+ *
+ * @see PlayerResponseDto
+ */
+val PlayerCreateRequestDto.toDocument: Player
+    get() = Player(
+        name = name,
+    )

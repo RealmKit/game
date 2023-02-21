@@ -21,19 +21,24 @@
 package dev.realmkit.game.app
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
 /**
- * [GameServiceApplication]
+ * # [GameServiceApplication]
+ *
  * Service main class
  *
  * @see SpringBootApplication
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
+@EnableMongoRepositories("dev.realmkit.game.domain")
+@ConfigurationPropertiesScan
 class GameServiceApplication
 
 /**
- * Starts the [GameServiceApplication] application
+ * ## Starts the [GameServiceApplication] application.
  *
  * @see GameServiceApplication
  */

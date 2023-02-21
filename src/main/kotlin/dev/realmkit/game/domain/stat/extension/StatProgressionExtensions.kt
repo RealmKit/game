@@ -18,30 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.game.domain.stat.dto.StatProgressionResponseDto
 
 /**
- * # [PlayerRepository]
- *
- * Mongo Repository for dealing with [Player documents][Player]
+ * ## [StatProgression] -> [StatProgressionResponseDto]
  *
  * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
+ * import dev.realmkit.game.domain.stat.extension.toResponseDto
  *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
+ * val progression: StatProgression = StatProgression(level = 100, experience = 100_000_000)
+ * val dto: StatProgressionResponseDto = progression.toResponseDto
  * ```
  *
- * @see MongoRepository
+ * @see StatProgressionResponseDto
  */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+val StatProgression.toResponseDto: StatProgressionResponseDto
+    get() = StatProgressionResponseDto(
+        level = level,
+        experience = experience,
+    )

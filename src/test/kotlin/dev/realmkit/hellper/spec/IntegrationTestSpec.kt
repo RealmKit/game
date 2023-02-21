@@ -21,9 +21,7 @@
 package dev.realmkit.hellper.spec
 
 import dev.realmkit.hellper.infra.Mongo
-import io.kotest.core.spec.Spec
 import io.kotest.core.test.TestCase
-import io.kotest.core.test.TestResult
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -41,33 +39,12 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
     }
 
     /**
-     * Before starting the tests spec
-     *
-     * @param spec The test spec itself
-     * @see TestSpec.beforeSpec
-     */
-    override suspend fun beforeSpec(spec: Spec) {
-        Mongo.start()
-    }
-
-    /**
-     * After finishing the tests spec
-     *
-     * @param spec The test spec itself
-     * @see TestSpec.afterSpec
-     */
-    override suspend fun afterSpec(spec: Spec) {
-        Mongo.stop()
-    }
-
-    /**
-     * After each test on the spec
+     * Before each test on the spec
      *
      * @param testCase The test itself
-     * @param result The test result
-     * @see TestSpec.afterEach
+     * @see TestSpec.beforeEach
      */
-    override suspend fun afterEach(testCase: TestCase, result: TestResult) {
+    override suspend fun beforeEach(testCase: TestCase) {
         Mongo.clear()
     }
 

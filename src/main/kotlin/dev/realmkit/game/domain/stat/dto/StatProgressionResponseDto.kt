@@ -18,29 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture
+package dev.realmkit.game.domain.stat.dto
 
-import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.hellper.extension.fake
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-
-val Player.Companion.fixture: Player
-    get() = fixture()
-
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary {
-        fixture()
-    }
+import dev.realmkit.game.domain.base.dto.BaseDto
+import dev.realmkit.game.domain.stat.document.StatProgression
 
 /**
- * Creates a [Player] with random data
+ * # [StatProgressionResponseDto]
  *
- * @param name the [Player] `name`
- * @return the [Player]
+ * The [StatProgression] [response dto representation][StatProgressionResponseDto]
+ *
+ * @property level `the progression` level
+ * @property experience `the progression` experience
+ *
+ * @see BaseDto
  */
-fun Player.Companion.fixture(
-    name: String = fake.superhero.name(),
-): Player = Player(
-    name = name,
+data class StatProgressionResponseDto(
+    val level: Long,
+    val experience: Long,
 )

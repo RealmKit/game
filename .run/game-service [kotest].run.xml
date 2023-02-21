@@ -33,6 +33,8 @@
         <option name="vmparams" value=""/>
         <method v="2">
             <option name="Make" enabled="true"/>
+            <option name="RunConfigurationTask" enabled="true" run_configuration_name="game-service [spotlessApply]"
+                    run_configuration_type="GradleRunConfiguration"/>
         </method>
     </configuration>
 </component>

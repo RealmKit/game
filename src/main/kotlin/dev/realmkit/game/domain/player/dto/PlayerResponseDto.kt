@@ -18,30 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.game.domain.player.dto
 
+import dev.realmkit.game.domain.base.dto.BaseDto
 import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.stat.dto.StatResponseDto
 
 /**
- * # [PlayerRepository]
+ * # [PlayerResponseDto]
  *
- * Mongo Repository for dealing with [Player documents][Player]
+ * The [Player] [response dto representation][PlayerResponseDto]
  *
- * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
+ * @property id `the player` id
+ * @property name `the player` name
+ * @property stat `the player` stat
  *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
- * ```
- *
- * @see MongoRepository
+ * @see BaseDto
  */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+data class PlayerResponseDto(
+    val id: String,
+    val name: String,
+    val stat: StatResponseDto,
+) : BaseDto<Player>

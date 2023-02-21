@@ -22,5 +22,14 @@ package dev.realmkit.game.core.extension
 
 import java.time.Instant
 
+/**
+ * Easy accessors to [Instant] functions and properties.
+ *
+ * ```kotlin
+ * import dev.realmkit.game.core.extension.now
+ *
+ * val time = now
+ * ```
+ */
 val now: Instant
     get() = Instant.now()

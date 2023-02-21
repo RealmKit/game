@@ -18,30 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.repository
+package dev.realmkit.game.domain.stat.dto
 
-import dev.realmkit.game.domain.player.document.Player
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [PlayerRepository]
- *
- * Mongo Repository for dealing with [Player documents][Player]
- *
- * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
- *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
- * ```
- *
- * @see MongoRepository
- */
-@Repository
-interface PlayerRepository : MongoRepository<Player, String>
+class StatProgressionResponseDtoTest : TestSpec({
+    context("unit testing StatProgressionResponseDto") {
+        expect("to create a new plain StatProgressionResponseDto") {
+            val response = StatProgressionResponseDto(
+                level = 1,
+                experience = 0,
+            ).shouldNotBeNull()
+            response.level.shouldNotBeNull()
+            response.experience.shouldNotBeNull()
+        }
+    }
+})

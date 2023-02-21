@@ -18,27 +18,41 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.document
+package dev.realmkit.game.domain.player.extension
 
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
+import dev.realmkit.hellper.extension.fakeArb
 import dev.realmkit.hellper.fixture.player.arbitrary
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.string.shouldNotBeEmpty
+import io.kotest.matchers.shouldBe
 
-class PlayerTest : TestSpec({
-    context("unit testing Player") {
-        expect("to create a new plain Player") {
+class PlayerExtensionsKtTest : TestSpec({
+    context("unit testing Player extensions") {
+        expect("mapping to Response dto") {
             check(Player.arbitrary) { player ->
-                player.shouldNotBeNull()
+                val dto = player.toResponseDto
+                    .shouldNotBeNull()
+                dto.id shouldBe player.id
+                dto.name shouldBe player.name
+                dto.stat.progression.level shouldBe player.stat.progression.level
+                dto.stat.progression.experience shouldBe player.stat.progression.experience
+            }
+        }
+
+        expect("mapping to Document") {
+            check(fakeArb.name) { name ->
+                val player = PlayerCreateRequestDto(name = name).toDocument
+                    .shouldNotBeNull()
                 player.id.shouldNotBeNull()
                 player.createdAt.shouldNotBeNull()
                 player.updatedAt.shouldNotBeNull()
-                player.name.shouldNotBeNull().shouldNotBeEmpty()
+                player.name shouldBe name
                 player.stat.shouldNotBeNull()
                 player.stat.progression.shouldNotBeNull()
-                player.stat.progression.level.shouldBeGreaterThan(0)
-                player.stat.progression.experience.shouldBeGreaterThan(0)
+                player.stat.progression.level shouldBe 1
+                player.stat.progression.experience shouldBe 0
             }
         }
     }

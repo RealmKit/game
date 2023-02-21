@@ -21,10 +21,11 @@
 package dev.realmkit.game.domain.player.repository
 
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.hellper.fixture.arbitrary
+import dev.realmkit.hellper.fixture.player.arbitrary
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
@@ -52,6 +53,8 @@ class PlayerRepositoryTest(
                     find.createdAt.shouldNotBeNull()
                     find.updatedAt.shouldNotBeNull()
                     find.name shouldBe player.name
+                    find.stat.progression.level.shouldBeGreaterThan(0)
+                    find.stat.progression.experience.shouldBeGreaterThan(0)
                 }
             }
             playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }

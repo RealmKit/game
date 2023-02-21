@@ -18,32 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.infra
+package dev.realmkit.game.domain.player.dto
 
-import io.kotest.core.extensions.ApplyExtension
-import io.kotest.extensions.spring.SpringTestExtension
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
+import dev.realmkit.game.domain.player.extension.toDocument
+import dev.realmkit.hellper.extension.fake
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-/**
- * [SpringBootTestApplication]
- * Test SpringBoot class, also [enables Mongo Repositories][EnableMongoRepositories] over `.domain.*` package
- *
- * @see SpringBootApplication
- */
-@SpringBootApplication
-@EnableMongoRepositories("dev.realmkit.game.domain")
-class SpringBootTestApplication
+class PlayerCreateRequestDtoTest : TestSpec({
+    context("unit testing PlayerCreateRequestDto") {
+        expect("to create a new plain PlayerCreateRequestDto") {
+            val request = PlayerCreateRequestDto(name = fake.superhero.name())
+                .shouldNotBeNull()
+            request.name.shouldNotBeNull()
+        }
 
-/**
- * [IntegrationTestContext]
- * Wraps all annotations needed to start an Integration Test
- */
-@DataMongoTest
-@ActiveProfiles("itest")
-@ApplyExtension(SpringTestExtension::class)
-@ContextConfiguration(classes = [SpringBootTestApplication::class])
-annotation class IntegrationTestContext
+        expect("to parse a PlayerCreateRequestDto to Player") {
+            val request = PlayerCreateRequestDto(name = fake.superhero.name())
+                .shouldNotBeNull()
+            request.name.shouldNotBeNull()
+
+            val player = request.toDocument
+            player.name shouldBe request.name
+        }
+    }
+})

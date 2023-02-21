@@ -23,26 +23,42 @@ package dev.realmkit.game.domain.base.document
 import dev.realmkit.game.core.extension.now
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
 
 /**
- * [BaseDocument]
- * Setts the default fields that a Document class should have
+ * # [BaseDocument]
+ *
+ * Defines default and audit properties for Documents.
+ * Others documents should inherit from this class.
+ *
+ * ```kotlin
+ * @Document
+ * data class SomeDocument(
+ *     val someProperty: String,
+ * ) : BaseDocument() {
+ *     companion object
+ * }
+ * ```
+ *
+ * @see Document
  */
 open class BaseDocument {
     /**
-     * Document creation time
+     * Audit property for tracking the creation time of the document.
+     * Should not be updated.
      */
     var createdAt: Instant = now
 
     /**
-     * Document update time
+     * Audit property for tracking the updating time of the document.
+     * Should be updated everytime an update is made on the document.
      */
     var updatedAt: Instant = now
 
     /**
-     * Document id
+     * ID property used to query the document.
      */
     @Id
-    var id: ObjectId = ObjectId.get()
+    var id: String = ObjectId.get().toHexString()
 }

@@ -60,6 +60,7 @@ dependencies {
 
     // Code Dependencies
     implementation(libs.bundles.spring.boot)
+    implementation(libs.kotlinx.coroutines)
 
     // Test Dependencies
     testImplementation(libs.bundles.test.spring.boot)
