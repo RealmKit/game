@@ -1,5 +1,6 @@
 [versions]
 kotlin = "1.8.20-Beta"
+kotlinx = "1.6.4"
 quality-catalog = "0.7.0"
 quality-detekt = "1.22.0"
 quality-dokka = "1.7.20"
@@ -16,6 +17,7 @@ test-testcontainers = "1.17.6"
 
 [libraries]
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
 spring-boot-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb" }
 spring-boot-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
