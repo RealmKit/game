@@ -61,6 +61,7 @@ dependencies {
     // Code Dependencies
     implementation(libs.bundles.spring.boot)
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlin.logging)
 
     // Test Dependencies
     testImplementation(libs.bundles.test.spring.boot)
@@ -94,6 +95,7 @@ configure<SpotlessExtension> {
 
 // Tasks
 tasks {
+    // Compile
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
@@ -101,6 +103,7 @@ tasks {
         }
     }
 
+    // Testing
     withType<Test> {
         useJUnitPlatform()
     }
@@ -111,6 +114,7 @@ tasks {
         }
     }
 
+    // Default Tasks
     check {
         dependsOn(
             detekt,

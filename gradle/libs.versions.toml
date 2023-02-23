@@ -1,13 +1,14 @@
 [versions]
 kotlin = "1.8.20-Beta"
-kotlinx = "1.6.4"
+kotlin-logging = "4.0.0-beta-2"
+kotlinx-coroutines = "1.6.4"
 quality-catalog = "0.7.0"
 quality-detekt = "1.22.0"
 quality-dokka = "1.7.20"
 quality-sonarqube = "4.0.0.2929"
 quality-spotless = "6.15.0"
 quality-versions = "0.46.0"
-spring-boot = "3.0.2"
+spring-boot = "3.0.3"
 spring-dependency = "1.1.0"
 test-archunit = "1.0.1"
 test-faker = "1.14.0-rc.0"
@@ -16,8 +17,9 @@ test-kotest-spring = "1.1.2"
 test-testcontainers = "1.17.6"
 
 [libraries]
+kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-logging" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 spring-boot-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb" }
 spring-boot-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }

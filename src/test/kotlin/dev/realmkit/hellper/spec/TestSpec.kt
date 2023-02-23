@@ -24,6 +24,8 @@ import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.property.Arb
 import io.kotest.property.PropertyContext
 import io.kotest.property.checkAll
+import mu.two.KotlinLogging
+import kotlin.system.measureTimeMillis
 
 /**
  * [TestSpec]
@@ -32,6 +34,8 @@ import io.kotest.property.checkAll
  * @see ExpectSpec
  */
 abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
+    private val logger = KotlinLogging.logger {}
+
     init {
         this.body()
     }
@@ -42,13 +46,15 @@ abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
      *
      * @param arbitrary the arbitrary class
      * @param block the block of tests
-     * @return the [PropertyContext]
+     * @return the execution time
      * @see Arb
      */
-    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): PropertyContext =
-        checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
-            block(arb)
-        }
+    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): Long =
+        measureTimeMillis {
+            checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
+                block(arb)
+            }
+        }.also { logger.info { "execution time: ${it}ms" } }
 
     companion object {
         const val CHECK_ITERATIONS = 1_000
