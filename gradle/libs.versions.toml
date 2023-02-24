@@ -20,6 +20,18 @@ test-testcontainers = "1.17.6"
 kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-logging" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+quality-detekt-plugin-complexity = { module = "io.gitlab.arturbosch.detekt:detekt-rules-complexity", version.ref = "quality-detekt" }
+quality-detekt-plugin-coroutines = { module = "io.gitlab.arturbosch.detekt:detekt-rules-coroutines", version.ref = "quality-detekt" }
+quality-detekt-plugin-documentation = { module = "io.gitlab.arturbosch.detekt:detekt-rules-documentation", version.ref = "quality-detekt" }
+quality-detekt-plugin-empty = { module = "io.gitlab.arturbosch.detekt:detekt-rules-empty", version.ref = "quality-detekt" }
+quality-detekt-plugin-errorprone = { module = "io.gitlab.arturbosch.detekt:detekt-rules-errorprone", version.ref = "quality-detekt" }
+quality-detekt-plugin-exceptions = { module = "io.gitlab.arturbosch.detekt:detekt-rules-exceptions", version.ref = "quality-detekt" }
+quality-detekt-plugin-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "quality-detekt" }
+quality-detekt-plugin-naming = { module = "io.gitlab.arturbosch.detekt:detekt-rules-naming", version.ref = "quality-detekt" }
+quality-detekt-plugin-performance = { module = "io.gitlab.arturbosch.detekt:detekt-rules-performance", version.ref = "quality-detekt" }
+quality-detekt-plugin-ruleauthors = { module = "io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors", version.ref = "quality-detekt" }
+quality-detekt-plugin-rules = { module = "io.gitlab.arturbosch.detekt:detekt-rules", version.ref = "quality-detekt" }
+quality-detekt-plugin-style = { module = "io.gitlab.arturbosch.detekt:detekt-rules-style", version.ref = "quality-detekt" }
 spring-boot-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb" }
 spring-boot-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
@@ -35,6 +47,20 @@ test-testcontainers-junit = { module = "org.testcontainers:junit-jupiter", versi
 test-testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "test-testcontainers" }
 
 [bundles]
+quality-deteket = [
+    "quality-detekt-plugin-complexity",
+    "quality-detekt-plugin-coroutines",
+    "quality-detekt-plugin-documentation",
+    "quality-detekt-plugin-empty",
+    "quality-detekt-plugin-errorprone",
+    "quality-detekt-plugin-exceptions",
+    "quality-detekt-plugin-formatting",
+    "quality-detekt-plugin-naming",
+    "quality-detekt-plugin-performance",
+    "quality-detekt-plugin-ruleauthors",
+    "quality-detekt-plugin-rules",
+    "quality-detekt-plugin-style",
+]
 spring-boot = [
     "spring-boot-data-mongodb",
     "spring-boot-starter",

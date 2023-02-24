@@ -69,6 +69,9 @@ dependencies {
     testImplementation(libs.bundles.test.archunit)
     testImplementation(libs.bundles.test.testcontainers)
     testImplementation(libs.test.faker)
+
+    // Code Quality
+    detektPlugins(libs.bundles.quality.deteket)
 }
 
 // Configuration
