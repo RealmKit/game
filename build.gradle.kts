@@ -96,6 +96,10 @@ configure<SpotlessExtension> {
     }
 }
 
+detekt {
+    config = files("$rootDir/detekt-config.yml")
+}
+
 // Tasks
 tasks {
     // Compile

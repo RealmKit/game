@@ -34,7 +34,7 @@ import dev.realmkit.game.domain.base.document.BaseDocument
  */
 data class StatProgression(
     val level: Long = 1,
-    val experience: Long = 0,
+    var experience: Long = 0,
 ) {
     companion object
 }

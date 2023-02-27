@@ -20,12 +20,10 @@
 
 package dev.realmkit.game.domain.player.service
 
+import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
 import dev.realmkit.game.domain.base.extension.persist
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
-import dev.realmkit.game.domain.player.dto.PlayerResponseDto
-import dev.realmkit.game.domain.player.extension.toDocument
-import dev.realmkit.game.domain.player.extension.toResponseDto
+import dev.realmkit.game.domain.player.extension.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import org.springframework.stereotype.Service
 
@@ -42,24 +40,38 @@ class PlayerService(
     private val playerRepository: PlayerRepository,
 ) {
     /**
-     * Creates a new [Player] within provided fields, persist it to DB and parse to a response dto
+     * Creates a new [Player] within provided fields and persist it to DB
      *
      * ```kotlin
-     * import dev.realmkit.game.domain.player.service.PlayerService
-     *
-     * class SomeController(
-     *     // Inject the Service
-     *     private val playerService: PlayerService,
-     * ) {
-     *     fun create(): PlayerResponseDto =
-     *         playerService.new( "Player Number One" )
-     * }
+     * playerService new Player(name = "Player Number 1")
      * ```
      *
-     * @param request the player create request dto
-     * @return the dto from the persisted entity
+     * @param request the player to create
+     * @return the persisted entity
+     * @throws AccumulatedProblemException when the [Player] request has invalid data
      * @see Player
      */
-    infix fun new(request: PlayerCreateRequestDto): PlayerResponseDto =
-        (playerRepository persist request.toDocument).toResponseDto
+    @Throws(AccumulatedProblemException::class)
+    infix fun new(request: Player): Player =
+        request.validated { player ->
+            playerRepository persist player
+        }
+
+    /**
+     * Increase [Player] experience and persist it to DB
+     *
+     * ```kotlin
+     * playerService gainExperience (100L to player)
+     * ```
+     *
+     * @param request the player to create
+     * @return the persisted entity
+     * @throws AccumulatedProblemException when the [Player] request has invalid data
+     * @see Player
+     */
+    infix fun gainExperience(request: Pair<Long, Player>) =
+        request.second.validated { player ->
+            player.stat.progression.experience += request.first
+            playerRepository persist player
+        }
 }

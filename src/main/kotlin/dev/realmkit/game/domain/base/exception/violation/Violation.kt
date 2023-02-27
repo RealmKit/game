@@ -18,29 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.dto
+package dev.realmkit.game.domain.base.exception.violation
 
-import dev.realmkit.game.domain.player.extension.toDocument
-import dev.realmkit.hellper.extension.fake
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
-
-class PlayerCreateRequestDtoTest : TestSpec({
-    context("unit testing PlayerCreateRequestDto") {
-        expect("to create a new plain PlayerCreateRequestDto") {
-            val request = PlayerCreateRequestDto(name = fake.superhero.name())
-                .shouldNotBeNull()
-            request.name.shouldNotBeNull()
-        }
-
-        expect("to parse a PlayerCreateRequestDto to Player") {
-            val request = PlayerCreateRequestDto(name = fake.superhero.name())
-                .shouldNotBeNull()
-            request.name.shouldNotBeNull()
-
-            val player = request.toDocument
-            player.name shouldBe request.name
-        }
-    }
-})
+/**
+ * # [Violation]
+ * @property message
+ * @property field
+ * @property value
+ * @property owner
+ */
+sealed class Violation(
+    val message: String,
+    val owner: String? = null,
+    val field: String? = null,
+    val value: Any? = null,
+) {
+    override fun toString(): String =
+        "$owner.$field=${value ?: "<null>"} -> $message"
+}

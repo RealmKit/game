@@ -18,45 +18,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.extension
+package dev.realmkit.game.domain.base.extension
 
-import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
-import dev.realmkit.game.domain.player.dto.PlayerResponseDto
-import dev.realmkit.game.domain.stat.extension.toResponseDto
+import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
 
 /**
- * ## [Player] -> [PlayerResponseDto]
- *
- * ```kotlin
- * import dev.realmkit.game.domain.player.extension.toResponseDto
- *
- * val player: Player = Player(name = "Player #1")
- * val dto: PlayerResponseDto = player.toResponseDto
- * ```
- *
- * @see PlayerResponseDto
+ * # [Validator]
  */
-val Player.toResponseDto: PlayerResponseDto
-    get() = PlayerResponseDto(
-        id = id,
-        name = name,
-        stat = stat.toResponseDto,
-    )
-
-/**
- * ## [PlayerCreateRequestDto] -> [Player]
- *
- * ```kotlin
- * import dev.realmkit.game.domain.player.extension.toDocument
- *
- * val dto: PlayerCreateRequestDto = PlayerCreateRequestDto(name = "Player #1")
- * val player: Player = dto.toDocument
- * ```
- *
- * @see PlayerResponseDto
- */
-val PlayerCreateRequestDto.toDocument: Player
-    get() = Player(
-        name = name,
-    )
+object Validator {
+    /**
+     * @param value the value to be validated
+     * @param block the [ValidationContext] function to execute the validations
+     * @return the [value]
+     * @throws AccumulatedProblemException if player data is invalid
+     * @see ValidationContext
+     */
+    @Throws(AccumulatedProblemException::class)
+    inline operator fun <T> invoke(
+        value: T,
+        block: ValidationContext.(T) -> Unit?,
+    ): T = ValidationContext().let { context ->
+        runCatching { context.block(value) }
+            .getOrElse { problem -> context.generic(problem) }
+            .takeIf { context.violations.isNotEmpty() }
+            ?.let { throw AccumulatedProblemException(violations = context.violations) }
+        value
+    }
+}

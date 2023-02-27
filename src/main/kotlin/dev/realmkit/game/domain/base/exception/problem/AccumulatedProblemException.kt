@@ -18,22 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.dto
+package dev.realmkit.game.domain.base.exception.problem
 
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.domain.base.exception.violation.Violation
 
-class StatResponseDtoTest : TestSpec({
-    context("unit testing StatResponseDto") {
-        expect("to create a new plain StatResponseDto") {
-            val response = StatResponseDto(
-                progression = StatProgressionResponseDto(
-                    level = 1,
-                    experience = 0,
-                ),
-            ).shouldNotBeNull()
-            response.progression.level.shouldNotBeNull()
-            response.progression.experience.shouldNotBeNull()
-        }
-    }
-})
+/**
+ * # [AccumulatedProblemException]
+ *
+ * @see Exception
+ * @property violations
+ */
+class AccumulatedProblemException(
+    val violations: HashMap<String, Violation>,
+) : ProblemException("Violations Problem") {
+    override fun toString(): String =
+        "${violations.size} violations: ${violations.entries.joinToString(",")}"
+}

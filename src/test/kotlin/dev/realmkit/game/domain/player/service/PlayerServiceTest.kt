@@ -20,10 +20,16 @@
 
 package dev.realmkit.game.domain.player.service
 
-import dev.realmkit.game.domain.player.dto.PlayerCreateRequestDto
-import dev.realmkit.hellper.extension.fakeArb
+import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
+import dev.realmkit.game.domain.base.exception.violation.DEFAULT_BLANK_VIOLATION_MESSAGE
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.fixture.player.arbitrary
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.maps.shouldHaveSize
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
@@ -36,13 +42,33 @@ class PlayerServiceTest(
             playerService.shouldNotBeNull()
         }
 
-        expect("it should create $CHECK_ITERATIONS Players") {
-            check(fakeArb.name) { name ->
-                val player = playerService new PlayerCreateRequestDto(name = name)
-                player.id.shouldNotBeNull()
-                player.name.shouldNotBeNull()
-                player.stat.progression.level shouldBe 1
-                player.stat.progression.experience shouldBe 0
+        expect("it should create Players") {
+            check(Player.arbitrary) { player ->
+                val persisted = playerService new player
+                persisted.id.shouldNotBeNull()
+                persisted.name.shouldNotBeNull()
+                persisted.stat.progression.level.shouldNotBeNull()
+                persisted.stat.progression.experience.shouldNotBeNull()
+            }
+        }
+
+        context("Violations to be thrown") {
+            expect("name should not be blank") {
+                check(Player.arbitrary) { player ->
+                    shouldThrow<AccumulatedProblemException> {
+                        playerService new player.copy(name = "")
+                    }.shouldNotBeNull().asClue { problem ->
+                        problem.message shouldBe "Violations Problem"
+                        problem.violations.shouldHaveSize(1)
+                        problem.violations["name"].shouldNotBeNull().asClue { violation ->
+                            violation.owner shouldBe Player::class.simpleName
+                            violation.field shouldBe Player::name.name
+                            violation.value.shouldBeNull()
+                            violation.message shouldBe DEFAULT_BLANK_VIOLATION_MESSAGE
+                            violation.toString() shouldBe "Player.name=<null> -> should not be blank"
+                        }
+                    }
+                }
             }
         }
     }

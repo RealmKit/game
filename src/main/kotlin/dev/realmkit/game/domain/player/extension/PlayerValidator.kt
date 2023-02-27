@@ -18,25 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.dto
+package dev.realmkit.game.domain.player.extension
 
-import dev.realmkit.game.domain.base.dto.BaseDto
+import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
+import dev.realmkit.game.domain.base.exception.violation.Violation
+import dev.realmkit.game.domain.base.extension.Validator
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.stat.dto.StatResponseDto
 
 /**
- * # [PlayerResponseDto]
+ * ## [validated]
  *
- * The [Player] [response dto representation][PlayerResponseDto]
+ * Validates [Player] data, if errors are found then accumulate the [Violations][Violation]
  *
- * @property id `the player` id
- * @property name `the player` name
- * @property stat `the player` stat
- *
- * @see BaseDto
+ * @param block the block to run if the validation succeeds
+ * @return itself
+ * @throws AccumulatedProblemException if player data is invalid
+ * @see Player
  */
-data class PlayerResponseDto(
-    val id: String,
-    val name: String,
-    val stat: StatResponseDto,
-) : BaseDto<Player>
+@Throws(AccumulatedProblemException::class)
+fun Player.validated(block: (Player) -> Player): Player =
+    Validator(this) { player ->
+        isBlank(player::name)
+    }.let(block)

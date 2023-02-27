@@ -18,25 +18,16 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
-
-import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.game.domain.stat.dto.StatProgressionResponseDto
+package dev.realmkit.game.domain.base.exception.problem
 
 /**
- * ## [StatProgression] -> [StatProgressionResponseDto]
+ * # [ProblemException]
  *
- * ```kotlin
- * import dev.realmkit.game.domain.stat.extension.toResponseDto
+ * Base exception
  *
- * val progression: StatProgression = StatProgression(level = 100, experience = 100_000_000)
- * val dto: StatProgressionResponseDto = progression.toResponseDto
- * ```
- *
- * @see StatProgressionResponseDto
+ * @see Exception
+ * @property message
  */
-val StatProgression.toResponseDto: StatProgressionResponseDto
-    get() = StatProgressionResponseDto(
-        level = level,
-        experience = experience,
-    )
+abstract class ProblemException(
+    override val message: String,
+) : Exception()

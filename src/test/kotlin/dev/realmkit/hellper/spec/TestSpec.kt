@@ -21,10 +21,11 @@
 package dev.realmkit.hellper.spec
 
 import io.kotest.core.spec.style.ExpectSpec
+import io.kotest.core.test.TestScope
 import io.kotest.property.Arb
 import io.kotest.property.PropertyContext
 import io.kotest.property.checkAll
-import mu.two.KotlinLogging
+import mu.two.KotlinLogging.logger
 import kotlin.system.measureTimeMillis
 
 /**
@@ -34,8 +35,6 @@ import kotlin.system.measureTimeMillis
  * @see ExpectSpec
  */
 abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
-    private val logger = KotlinLogging.logger {}
-
     init {
         this.body()
     }
@@ -49,12 +48,15 @@ abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
      * @return the execution time
      * @see Arb
      */
-    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): Long =
+    suspend fun <T> TestScope.check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): Long =
         measureTimeMillis {
             checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
                 block(arb)
             }
-        }.also { logger.info { "execution time: ${it}ms" } }
+        }.also {
+            logger(testCase.spec::class.simpleName ?: "TestSpec")
+                .info { "[${testCase.name.testName}] execution time was ${it}ms" }
+        }
 
     companion object {
         const val CHECK_ITERATIONS = 1_000

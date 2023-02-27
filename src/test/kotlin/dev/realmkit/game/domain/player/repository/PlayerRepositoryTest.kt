@@ -44,7 +44,7 @@ class PlayerRepositoryTest(
             playerRepository.run { count().shouldBeZero() }
         }
 
-        expect("it should create $CHECK_ITERATIONS Players") {
+        expect("it should create Players") {
             playerRepository.run { count().shouldBeZero() }
             check(Player.arbitrary) { player ->
                 playerRepository.save(player).shouldNotBeNull()

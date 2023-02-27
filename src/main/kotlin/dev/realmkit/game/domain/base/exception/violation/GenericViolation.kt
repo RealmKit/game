@@ -18,24 +18,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
-
-import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.game.domain.stat.dto.StatResponseDto
+package dev.realmkit.game.domain.base.exception.violation
 
 /**
- * ## [Stat] -> [StatResponseDto]
+ * # [GenericViolation]
  *
- * ```kotlin
- * import dev.realmkit.game.domain.stat.extension.toResponseDto
- *
- * val stat: Stat = Stat(progression = StatProgression())
- * val dto: StatResponseDto = stat.toResponseDto
- * ```
- *
- * @see StatResponseDto
+ * @see Violation
  */
-val Stat.toResponseDto: StatResponseDto
-    get() = StatResponseDto(
-        progression = progression.toResponseDto,
-    )
+class GenericViolation(
+    problem: Throwable,
+) : Violation(
+    message = "found generic violation: ${problem.localizedMessage}",
+)

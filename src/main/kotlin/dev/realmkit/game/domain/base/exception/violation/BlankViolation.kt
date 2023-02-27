@@ -18,20 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.dto
+package dev.realmkit.game.domain.base.exception.violation
 
-import dev.realmkit.game.domain.base.dto.BaseDto
-import dev.realmkit.game.domain.player.document.Player
+const val DEFAULT_BLANK_VIOLATION_MESSAGE = "should not be blank"
 
 /**
- * # [PlayerCreateRequestDto]
+ * # [BlankViolation]
  *
- * The [Player] [request dto representation][PlayerCreateRequestDto]
- *
- * @property name `the player` name
- *
- * @see BaseDto
+ * @see Violation
  */
-data class PlayerCreateRequestDto(
-    val name: String,
-) : BaseDto<Player>
+class BlankViolation(
+    owner: String? = null,
+    field: String,
+) : Violation(
+    message = DEFAULT_BLANK_VIOLATION_MESSAGE,
+    owner = owner,
+    field = field,
+)
