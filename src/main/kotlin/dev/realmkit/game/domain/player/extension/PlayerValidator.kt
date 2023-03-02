@@ -20,23 +20,43 @@
 
 package dev.realmkit.game.domain.player.extension
 
-import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
-import dev.realmkit.game.domain.base.exception.violation.Violation
-import dev.realmkit.game.domain.base.extension.Validator
+import dev.realmkit.game.core.exception.ValidationException
+import dev.realmkit.game.core.extension.ValidationExtensions.notBlank
 import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.stat.extension.StatValidator
+import io.konform.validation.Invalid
+import io.konform.validation.Valid
+import io.konform.validation.Validation
+import io.konform.validation.ValidationResult
 
 /**
- * ## [validated]
- *
- * Validates [Player] data, if errors are found then accumulate the [Violations][Violation]
- *
- * @param block the block to run if the validation succeeds
- * @return itself
- * @throws AccumulatedProblemException if player data is invalid
- * @see Player
+ * # [PlayerValidator]
+ * [Player] validations
  */
-@Throws(AccumulatedProblemException::class)
-fun Player.validated(block: (Player) -> Player): Player =
-    Validator(this) { player ->
-        isBlank(player::name)
-    }.let(block)
+object PlayerValidator {
+    /**
+     * ## [validation]
+     * [Player] [Validation] object
+     */
+    val validation: Validation<Player> = Validation {
+        Player::name required { notBlank() }
+        Player::stat required { run(StatValidator.validation) }
+    }
+
+    /**
+     * ## [validated]
+     * Validates the [Player]
+     *
+     * @param block the resulting [Player] on its [ValidationResult] context
+     * @return the [block] result
+     * @throws ValidationException if [Player] has validations issues
+     */
+    @Throws(ValidationException::class)
+    infix fun <R> Player.validated(block: ValidationResult<Player>.(Player) -> R): R =
+        validation(this).let { validation ->
+            when (validation) {
+                is Valid -> validation.block(this)
+                is Invalid -> throw ValidationException(validation)
+            }
+        }
+}

@@ -23,6 +23,7 @@ package dev.realmkit.game.app
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
+import org.springframework.data.mongodb.config.EnableMongoAuditing
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
 /**
@@ -34,6 +35,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  */
 @SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
 @EnableMongoRepositories("dev.realmkit.game.domain")
+@EnableMongoAuditing
 @ConfigurationPropertiesScan
 class GameServiceApplication
 

@@ -18,20 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.base.exception.violation
+package dev.realmkit.game.domain.stat.extension
 
-const val DEFAULT_BLANK_VIOLATION_MESSAGE = "should not be blank"
+import dev.realmkit.game.domain.stat.document.Stat
+import io.konform.validation.Validation
 
 /**
- * # [BlankViolation]
- *
- * @see Violation
+ * # [StatValidator]
+ * [Stat] validations
  */
-class BlankViolation(
-    owner: String? = null,
-    field: String,
-) : Violation(
-    message = DEFAULT_BLANK_VIOLATION_MESSAGE,
-    owner = owner,
-    field = field,
-)
+object StatValidator {
+    /**
+     * ## [validation]
+     * [Stat] [Validation] object
+     */
+    val validation: Validation<Stat> = Validation {
+        Stat::progression required { run(StatProgressionValidator.validation) }
+    }
+}

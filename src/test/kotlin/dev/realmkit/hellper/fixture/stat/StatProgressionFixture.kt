@@ -21,7 +21,7 @@
 package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.hellper.extension.fakeArb
+import dev.realmkit.hellper.extension.FakerExtensions.positiveLong
 import io.kotest.property.Arb
 import io.kotest.property.Shrinker
 import io.kotest.property.arbitrary.arbitrary
@@ -32,8 +32,8 @@ import io.kotest.property.arbitrary.arbitrary
 val StatProgression.Companion.arbitrary: Arb<StatProgression>
     get() = arbitrary(shrinker) {
         fixture(
-            level = fakeArb.positiveLong.bind(),
-            experience = fakeArb.positiveLong.bind(),
+            level = positiveLong.bind(),
+            experience = positiveLong.bind(),
         )
     }
 

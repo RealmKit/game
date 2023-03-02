@@ -21,19 +21,19 @@
 package dev.realmkit.game.domain.stat.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
+import kotlinx.serialization.Serializable
 
 /**
  * # [StatProgression]
- *
  * The StatProgression document.
  *
  * @property level `the progression` level
  * @property experience `the progression` experience
- *
  * @see BaseDocument
  */
+@Serializable
 data class StatProgression(
-    val level: Long = 1,
+    var level: Long = 1,
     var experience: Long = 0,
 ) {
     companion object

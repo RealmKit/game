@@ -22,19 +22,20 @@ package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
 import dev.realmkit.game.domain.stat.document.Stat
+import kotlinx.serialization.Serializable
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * # [Player]
  *
- * The Player document.
+ * The [Player] [document][Document].
  *
  * @property name `the player` name
  * @property stat `the player` stat
- *
  * @see BaseDocument
  */
 @Document
+@Serializable
 data class Player(
     val name: String,
     val stat: Stat = Stat(),

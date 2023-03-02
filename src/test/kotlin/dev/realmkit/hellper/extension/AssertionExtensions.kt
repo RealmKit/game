@@ -18,19 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.base.exception.problem
+package dev.realmkit.hellper.extension
 
-import dev.realmkit.game.domain.base.exception.violation.Violation
+import io.konform.validation.Invalid
+import io.konform.validation.ValidationError
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
 /**
- * # [AccumulatedProblemException]
- *
- * @see Exception
- * @property violations
+ * # [AssertionExtensions]
  */
-class AccumulatedProblemException(
-    val violations: HashMap<String, Violation>,
-) : ProblemException("Violations Problem") {
-    override fun toString(): String =
-        "${violations.size} violations: ${violations.entries.joinToString(",")}"
+object AssertionExtensions {
+    /**
+     * ## [shouldContainFieldError]
+     *
+     * @param error the error pair for [ValidationError.dataPath] to [ValidationError.message]
+     * @return the validation
+     */
+    infix fun Invalid<*>.shouldContainFieldError(error: Pair<String, String>) =
+        errors.first { it.dataPath == error.first }
+            .shouldNotBeNull()
+            .message shouldBe error.second
 }

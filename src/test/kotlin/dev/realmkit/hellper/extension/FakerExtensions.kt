@@ -26,12 +26,11 @@ import io.kotest.property.arbitrary.arbitrary
 import kotlin.random.Random
 import kotlin.random.nextLong
 
-val fake: Faker
-    get() = Faker()
-
-val fakeArb = FakerArbitrary
-
-object FakerArbitrary {
+/**
+ * # [FakerExtensions]
+ */
+object FakerExtensions {
+    val fake: Faker = Faker()
     val name: Arb<String> = arbitrary { fake.superhero.name() }
     val positiveLong: Arb<Long> = arbitrary { Random.nextLong(1L..Long.MAX_VALUE) }
 }

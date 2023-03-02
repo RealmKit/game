@@ -30,6 +30,7 @@ plugins {
     // Kotlin
     idea
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlinx.serialization)
     // Code Quality
     jacoco
     alias(libs.plugins.quality.versions)
@@ -60,8 +61,9 @@ dependencies {
 
     // Code Dependencies
     implementation(libs.bundles.spring.boot)
-    implementation(libs.kotlinx.coroutines)
+    implementation(libs.bundles.kotlinx)
     implementation(libs.kotlin.logging)
+    implementation(libs.validation.konform)
 
     // Test Dependencies
     testImplementation(libs.bundles.test.spring.boot)

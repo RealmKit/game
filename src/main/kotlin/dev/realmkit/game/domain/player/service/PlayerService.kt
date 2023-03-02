@@ -20,10 +20,10 @@
 
 package dev.realmkit.game.domain.player.service
 
-import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
-import dev.realmkit.game.domain.base.extension.persist
+import dev.realmkit.game.core.exception.ValidationException
+import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.player.extension.validated
+import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import org.springframework.stereotype.Service
 
@@ -41,36 +41,35 @@ class PlayerService(
 ) {
     /**
      * Creates a new [Player] within provided fields and persist it to DB
-     *
      * ```kotlin
      * playerService new Player(name = "Player Number 1")
      * ```
      *
-     * @param request the player to create
-     * @return the persisted entity
-     * @throws AccumulatedProblemException when the [Player] request has invalid data
+     * @param request the [player][Player] to create
+     * @return the [persisted entity][Player]
      * @see Player
+     * @throws ValidationException if [Player] has validations issues
      */
-    @Throws(AccumulatedProblemException::class)
+    @Throws(ValidationException::class)
     infix fun new(request: Player): Player =
-        request.validated { player ->
+        request validated { player ->
             playerRepository persist player
         }
 
     /**
      * Increase [Player] experience and persist it to DB
-     *
      * ```kotlin
      * playerService gainExperience (100L to player)
      * ```
      *
-     * @param request the player to create
-     * @return the persisted entity
-     * @throws AccumulatedProblemException when the [Player] request has invalid data
+     * @param request the player to update the experience
+     * @return the [persisted entity][Player]
      * @see Player
+     * @throws ValidationException if [Player] has validations issues
      */
-    infix fun gainExperience(request: Pair<Long, Player>) =
-        request.second.validated { player ->
+    @Throws(ValidationException::class)
+    infix fun gainExperience(request: Pair<Long, Player>): Player =
+        request.second validated { player ->
             player.stat.progression.experience += request.first
             playerRepository persist player
         }

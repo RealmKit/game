@@ -20,16 +20,14 @@
 
 package dev.realmkit.game.domain.player.service
 
-import dev.realmkit.game.domain.base.exception.problem.AccumulatedProblemException
-import dev.realmkit.game.domain.base.exception.violation.DEFAULT_BLANK_VIOLATION_MESSAGE
+import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
 import dev.realmkit.hellper.fixture.player.arbitrary
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.maps.shouldHaveSize
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
@@ -44,29 +42,39 @@ class PlayerServiceTest(
 
         expect("it should create Players") {
             check(Player.arbitrary) { player ->
-                val persisted = playerService new player
-                persisted.id.shouldNotBeNull()
-                persisted.name.shouldNotBeNull()
-                persisted.stat.progression.level.shouldNotBeNull()
-                persisted.stat.progression.experience.shouldNotBeNull()
+                playerService new player
+                player.id.shouldNotBeNull()
+                player.createdAt.shouldNotBeNull()
+                player.updatedAt.shouldNotBeNull()
+                player.version.shouldNotBeNull()
+                player.name.shouldNotBeNull()
+                player.stat.progression.level.shouldNotBeNull()
+                player.stat.progression.experience.shouldNotBeNull()
+            }
+        }
+
+        expect("Player to gain Experience") {
+            check(Player.arbitrary) { player ->
+                player.stat.progression.level = 1
+                player.stat.progression.experience = 0
+
+                playerService new player
+                player.stat.progression.level shouldBe 1L
+                player.stat.progression.experience shouldBe 0L
+
+                playerService gainExperience (100L to player)
+                player.stat.progression.level shouldBe 1L
+                player.stat.progression.experience shouldBe 100L
             }
         }
 
         context("Violations to be thrown") {
             expect("name should not be blank") {
                 check(Player.arbitrary) { player ->
-                    shouldThrow<AccumulatedProblemException> {
+                    shouldThrow<ValidationException> {
                         playerService new player.copy(name = "")
                     }.shouldNotBeNull().asClue { problem ->
-                        problem.message shouldBe "Violations Problem"
-                        problem.violations.shouldHaveSize(1)
-                        problem.violations["name"].shouldNotBeNull().asClue { violation ->
-                            violation.owner shouldBe Player::class.simpleName
-                            violation.field shouldBe Player::name.name
-                            violation.value.shouldBeNull()
-                            violation.message shouldBe DEFAULT_BLANK_VIOLATION_MESSAGE
-                            violation.toString() shouldBe "Player.name=<null> -> should not be blank"
-                        }
+                        problem.invalid shouldContainFieldError (".name" to "must not be blank")
                     }
                 }
             }

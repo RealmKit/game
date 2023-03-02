@@ -18,22 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.dto
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.base.dto.BaseDto
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
 import dev.realmkit.game.domain.stat.document.StatProgression
+import io.konform.validation.Validation
 
 /**
- * # [StatProgressionResponseDto]
- *
- * The [StatProgression] [response dto representation][StatProgressionResponseDto]
- *
- * @property level `the progression` level
- * @property experience `the progression` experience
- *
- * @see BaseDto
+ * # [StatProgressionValidator]
+ * [StatProgression] validations
  */
-data class StatProgressionResponseDto(
-    val level: Long,
-    val experience: Long,
-)
+object StatProgressionValidator {
+    /**
+     * ## [validation]
+     * [StatProgression] [Validation] object
+     */
+    val validation: Validation<StatProgression> = Validation {
+        StatProgression::level required { positive() }
+        StatProgression::experience required { positive() }
+    }
+}

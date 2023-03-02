@@ -2,24 +2,28 @@
 kotlin = "1.8.20-Beta"
 kotlin-logging = "4.0.0-beta-2"
 kotlinx-coroutines = "1.6.4"
+kotlinx-serialization = "1.5.0"
 quality-catalog = "0.7.0"
 quality-detekt = "1.22.0"
 quality-dokka = "1.7.20"
 quality-sonarqube = "4.0.0.2929"
-quality-spotless = "6.15.0"
+quality-spotless = "6.16.0"
 quality-versions = "0.46.0"
 spring-boot = "3.0.3"
 spring-dependency = "1.1.0"
 test-archunit = "1.0.1"
 test-faker = "1.14.0-rc.0"
 test-kotest = "5.5.5"
+test-kotest-konform = "1.0.1"
 test-kotest-spring = "1.1.2"
 test-testcontainers = "1.17.6"
+validation-konform = "0.4.0"
 
 [libraries]
 kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-logging" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 quality-detekt-plugin-complexity = { module = "io.gitlab.arturbosch.detekt:detekt-rules-complexity", version.ref = "quality-detekt" }
 quality-detekt-plugin-coroutines = { module = "io.gitlab.arturbosch.detekt:detekt-rules-coroutines", version.ref = "quality-detekt" }
 quality-detekt-plugin-documentation = { module = "io.gitlab.arturbosch.detekt:detekt-rules-documentation", version.ref = "quality-detekt" }
@@ -40,13 +44,19 @@ test-archunit-junit5 = { module = "com.tngtech.archunit:archunit-junit5", versio
 test-faker = { module = "io.github.serpro69:kotlin-faker", version.ref = "test-faker" }
 test-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "test-kotest" }
 test-kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "test-kotest" }
+test-kotest-konform = { module = "io.kotest.extensions:kotest-assertions-konform", version.ref = "test-kotest-konform" }
 test-kotest-property = { module = "io.kotest:kotest-property", version.ref = "test-kotest" }
 test-kotest-spring = { module = "io.kotest.extensions:kotest-extensions-spring", version.ref = "test-kotest-spring" }
 test-spring-boot = { module = "org.springframework.boot:spring-boot-starter-test" }
 test-testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "test-testcontainers" }
 test-testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "test-testcontainers" }
+validation-konform = { module = "io.konform:konform", version.ref = "validation-konform" }
 
 [bundles]
+kotlinx = [
+    "kotlinx-coroutines",
+    "kotlinx-serialization",
+]
 quality-deteket = [
     "quality-detekt-plugin-complexity",
     "quality-detekt-plugin-coroutines",
@@ -72,6 +82,7 @@ test-archunit = [
 test-kotest = [
     "test-kotest-assertions",
     "test-kotest-junit",
+    "test-kotest-konform",
     "test-kotest-property",
     "test-kotest-spring",
 ]
@@ -86,6 +97,7 @@ test-testcontainers = [
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 quality-catalog = { id = "nl.littlerobots.version-catalog-update", version.ref = "quality-catalog" }
 quality-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "quality-detekt" }
 quality-dokka = { id = "org.jetbrains.dokka", version.ref = "quality-dokka" }

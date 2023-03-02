@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.core.extension
 
+import dev.realmkit.game.core.extension.InstantExtensions.now
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull

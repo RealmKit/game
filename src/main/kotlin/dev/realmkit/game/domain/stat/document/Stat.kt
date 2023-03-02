@@ -18,19 +18,42 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * ## base:
+ * attack = 1.0
+ * defense = 1.0
+ * speed = 1.0
+ * hp = max:10.0 actual:10.0
+ * mp = max:0.0 actual:0.0
+ *
+ * ## rate:
+ * hpRecoverRate = 0.0
+ * mpRecoverRate = 0.0
+ *
+ * ## multiplier:
+ * criticalMultiplier = 1.0
+ *
+ * ## chance:
+ * criticalChance = 0.0
+ *
+ * ## progression:
+ * level = 1
+ * xp = 0
+ */
+
 package dev.realmkit.game.domain.stat.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
+import kotlinx.serialization.Serializable
 
 /**
  * # [Stat]
- *
  * The Stat document.
  *
  * @property progression `the stat` progression
- *
  * @see BaseDocument
  */
+@Serializable
 data class Stat(
     val progression: StatProgression = StatProgression(),
 ) {

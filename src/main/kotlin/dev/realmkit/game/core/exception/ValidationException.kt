@@ -18,21 +18,13 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.base.exception.violation
+package dev.realmkit.game.core.exception
+
+import io.konform.validation.Invalid
 
 /**
- * # [Violation]
- * @property message
- * @property field
- * @property value
- * @property owner
+ * @property invalid
  */
-sealed class Violation(
-    val message: String,
-    val owner: String? = null,
-    val field: String? = null,
-    val value: Any? = null,
-) {
-    override fun toString(): String =
-        "$owner.$field=${value ?: "<null>"} -> $message"
-}
+class ValidationException(
+    val invalid: Invalid<*>,
+) : Exception()

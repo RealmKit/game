@@ -22,7 +22,7 @@ package dev.realmkit.game.app
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.hellper.extension.fake
+import dev.realmkit.hellper.extension.FakerExtensions.fake
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -41,14 +41,15 @@ class GameTest(
         expect("the game to run normally") {
             // Creates a new Player
             val player = playerService new Player(name = fake.superhero.name())
-
             player.id.shouldNotBeNull()
             player.name.shouldNotBeNull().shouldNotBeEmpty()
-            player.stat.progression.level shouldBe 1
-            player.stat.progression.experience shouldBe 0
+            player.stat.progression.level shouldBe 1L
+            player.stat.progression.experience shouldBe 0L
 
-            // Gain XP
-            playerService gainExperience (100L to player)
+            // Gain Experience
+            val playerAfterGainXp = playerService gainExperience (100L to player)
+            playerAfterGainXp.stat.progression.level shouldBe 1L
+            playerAfterGainXp.stat.progression.experience shouldBe 100L
         }
     }
 })

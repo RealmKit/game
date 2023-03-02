@@ -52,6 +52,7 @@ class PlayerRepositoryTest(
                     find.id.shouldNotBeNull()
                     find.createdAt.shouldNotBeNull()
                     find.updatedAt.shouldNotBeNull()
+                    find.version.shouldNotBeNull()
                     find.name shouldBe player.name
                     find.stat.progression.level.shouldBeGreaterThan(0)
                     find.stat.progression.experience.shouldBeGreaterThan(0)

@@ -22,8 +22,8 @@ package dev.realmkit.hellper.fixture.player
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.hellper.extension.fake
-import dev.realmkit.hellper.extension.fakeArb
+import dev.realmkit.hellper.extension.FakerExtensions.fake
+import dev.realmkit.hellper.extension.FakerExtensions.name
 import dev.realmkit.hellper.fixture.stat.arbitrary
 import dev.realmkit.hellper.fixture.stat.fixture
 import io.kotest.property.Arb
@@ -35,7 +35,7 @@ import io.kotest.property.arbitrary.arbitrary
 val Player.Companion.arbitrary: Arb<Player>
     get() = arbitrary {
         fixture(
-            name = fakeArb.name.bind(),
+            name = name.bind(),
             stat = Stat.arbitrary.bind(),
         )
     }
