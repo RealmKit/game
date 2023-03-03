@@ -18,20 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.dto
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.base.dto.BaseDto
-import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.stat.document.Stat
+import io.konform.validation.Validation
 
 /**
- * # [PlayerCreateRequestDto]
- *
- * The [Player] [request dto representation][PlayerCreateRequestDto]
- *
- * @property name `the player` name
- *
- * @see BaseDto
+ * # [StatValidator]
+ * [Stat] validations
  */
-data class PlayerCreateRequestDto(
-    val name: String,
-) : BaseDto<Player>
+object StatValidator {
+    /**
+     * ## [validation]
+     * [Stat] [Validation] object
+     */
+    val validation: Validation<Stat> = Validation {
+        Stat::progression required { run(StatProgressionValidator.validation) }
+    }
+}

@@ -18,22 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.dto
+package dev.realmkit.hellper.extension
 
-import dev.realmkit.hellper.spec.TestSpec
+import io.konform.validation.Invalid
+import io.konform.validation.ValidationError
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-class StatResponseDtoTest : TestSpec({
-    context("unit testing StatResponseDto") {
-        expect("to create a new plain StatResponseDto") {
-            val response = StatResponseDto(
-                progression = StatProgressionResponseDto(
-                    level = 1,
-                    experience = 0,
-                ),
-            ).shouldNotBeNull()
-            response.progression.level.shouldNotBeNull()
-            response.progression.experience.shouldNotBeNull()
-        }
-    }
-})
+/**
+ * # [AssertionExtensions]
+ */
+object AssertionExtensions {
+    /**
+     * ## [shouldContainFieldError]
+     *
+     * @param error the error pair for [ValidationError.dataPath] to [ValidationError.message]
+     * @return the validation
+     */
+    infix fun Invalid<*>.shouldContainFieldError(error: Pair<String, String>) =
+        errors.first { it.dataPath == error.first }
+            .shouldNotBeNull()
+            .message shouldBe error.second
+}

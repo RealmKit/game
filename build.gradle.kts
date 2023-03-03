@@ -30,6 +30,7 @@ plugins {
     // Kotlin
     idea
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlinx.kover)
     // Code Quality
     jacoco
     alias(libs.plugins.quality.versions)
@@ -60,7 +61,9 @@ dependencies {
 
     // Code Dependencies
     implementation(libs.bundles.spring.boot)
-    implementation(libs.kotlinx.coroutines)
+    implementation(libs.bundles.kotlinx)
+    implementation(libs.kotlin.logging)
+    implementation(libs.validation.konform)
 
     // Test Dependencies
     testImplementation(libs.bundles.test.spring.boot)
@@ -68,6 +71,9 @@ dependencies {
     testImplementation(libs.bundles.test.archunit)
     testImplementation(libs.bundles.test.testcontainers)
     testImplementation(libs.test.faker)
+
+    // Code Quality
+    detektPlugins(libs.bundles.quality.deteket)
 }
 
 // Configuration
@@ -92,8 +98,13 @@ configure<SpotlessExtension> {
     }
 }
 
+detekt {
+    config = files("$rootDir/detekt-config.yml")
+}
+
 // Tasks
 tasks {
+    // Compile
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
@@ -101,6 +112,7 @@ tasks {
         }
     }
 
+    // Testing
     withType<Test> {
         useJUnitPlatform()
     }
@@ -111,6 +123,7 @@ tasks {
         }
     }
 
+    // Default Tasks
     check {
         dependsOn(
             detekt,

@@ -44,7 +44,7 @@ class PlayerRepositoryTest(
             playerRepository.run { count().shouldBeZero() }
         }
 
-        expect("it should create $CHECK_ITERATIONS Players") {
+        expect("it should create Players") {
             playerRepository.run { count().shouldBeZero() }
             check(Player.arbitrary) { player ->
                 playerRepository.save(player).shouldNotBeNull()
@@ -52,6 +52,7 @@ class PlayerRepositoryTest(
                     find.id.shouldNotBeNull()
                     find.createdAt.shouldNotBeNull()
                     find.updatedAt.shouldNotBeNull()
+                    find.version.shouldNotBeNull()
                     find.name shouldBe player.name
                     find.stat.progression.level.shouldBeGreaterThan(0)
                     find.stat.progression.experience.shouldBeGreaterThan(0)

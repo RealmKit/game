@@ -20,9 +20,10 @@
 
 package dev.realmkit.game.domain.base.document
 
-import dev.realmkit.game.core.extension.now
-import org.bson.types.ObjectId
+import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.annotation.Version
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
 
@@ -45,20 +46,26 @@ import java.time.Instant
  */
 open class BaseDocument {
     /**
-     * Audit property for tracking the creation time of the document.
-     * Should not be updated.
-     */
-    var createdAt: Instant = now
-
-    /**
-     * Audit property for tracking the updating time of the document.
-     * Should be updated everytime an update is made on the document.
-     */
-    var updatedAt: Instant = now
-
-    /**
-     * ID property used to query the document.
+     * Document ID property
      */
     @Id
-    var id: String = ObjectId.get().toHexString()
+    lateinit var id: String
+
+    /**
+     * Document creation time
+     */
+    @CreatedDate
+    lateinit var createdAt: Instant
+
+    /**
+     * Document update time
+     */
+    @LastModifiedDate
+    lateinit var updatedAt: Instant
+
+    /**
+     * Document version
+     */
+    @Version
+    lateinit var version: String
 }

@@ -27,11 +27,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 /**
  * # [Player]
  *
- * The Player document.
+ * The [Player] [document][Document].
  *
  * @property name `the player` name
  * @property stat `the player` stat
- *
  * @see BaseDocument
  */
 @Document

@@ -18,22 +18,13 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.dto
+package dev.realmkit.game.core.exception
 
-import dev.realmkit.game.domain.base.dto.BaseDto
-import dev.realmkit.game.domain.stat.document.StatProgression
+import io.konform.validation.Invalid
 
 /**
- * # [StatProgressionResponseDto]
- *
- * The [StatProgression] [response dto representation][StatProgressionResponseDto]
- *
- * @property level `the progression` level
- * @property experience `the progression` experience
- *
- * @see BaseDto
+ * @property invalid
  */
-data class StatProgressionResponseDto(
-    val level: Long,
-    val experience: Long,
-)
+class ValidationException(
+    val invalid: Invalid<*>,
+) : Exception()

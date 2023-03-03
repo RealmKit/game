@@ -18,29 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.player.dto
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.player.extension.toDocument
-import dev.realmkit.hellper.extension.fake
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.stat.document.StatProgression
+import io.konform.validation.Validation
 
-class PlayerCreateRequestDtoTest : TestSpec({
-    context("unit testing PlayerCreateRequestDto") {
-        expect("to create a new plain PlayerCreateRequestDto") {
-            val request = PlayerCreateRequestDto(name = fake.superhero.name())
-                .shouldNotBeNull()
-            request.name.shouldNotBeNull()
-        }
-
-        expect("to parse a PlayerCreateRequestDto to Player") {
-            val request = PlayerCreateRequestDto(name = fake.superhero.name())
-                .shouldNotBeNull()
-            request.name.shouldNotBeNull()
-
-            val player = request.toDocument
-            player.name shouldBe request.name
-        }
+/**
+ * # [StatProgressionValidator]
+ * [StatProgression] validations
+ */
+object StatProgressionValidator {
+    /**
+     * ## [validation]
+     * [StatProgression] [Validation] object
+     */
+    val validation: Validation<StatProgression> = Validation {
+        StatProgression::level required { positive() }
+        StatProgression::experience required { positive() }
     }
-})
+}

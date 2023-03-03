@@ -21,9 +21,12 @@
 package dev.realmkit.hellper.spec
 
 import io.kotest.core.spec.style.ExpectSpec
+import io.kotest.core.test.TestScope
 import io.kotest.property.Arb
 import io.kotest.property.PropertyContext
 import io.kotest.property.checkAll
+import mu.two.KotlinLogging.logger
+import kotlin.system.measureTimeMillis
 
 /**
  * [TestSpec]
@@ -42,12 +45,17 @@ abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
      *
      * @param arbitrary the arbitrary class
      * @param block the block of tests
-     * @return the [PropertyContext]
+     * @return the execution time
      * @see Arb
      */
-    suspend fun <T> check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): PropertyContext =
-        checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
-            block(arb)
+    suspend fun <T> TestScope.check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): Long =
+        measureTimeMillis {
+            checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
+                block(arb)
+            }
+        }.also {
+            logger(testCase.spec::class.simpleName ?: "TestSpec")
+                .info { "[${testCase.name.testName}] execution time was ${it}ms" }
         }
 
     companion object {
