@@ -44,7 +44,6 @@
 package dev.realmkit.game.domain.stat.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
-import kotlinx.serialization.Serializable
 
 /**
  * # [Stat]
@@ -53,7 +52,6 @@ import kotlinx.serialization.Serializable
  * @property progression `the stat` progression
  * @see BaseDocument
  */
-@Serializable
 data class Stat(
     val progression: StatProgression = StatProgression(),
 ) {

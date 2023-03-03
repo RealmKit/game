@@ -21,7 +21,6 @@
 package dev.realmkit.game.domain.stat.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
-import kotlinx.serialization.Serializable
 
 /**
  * # [StatProgression]
@@ -31,7 +30,6 @@ import kotlinx.serialization.Serializable
  * @property experience `the progression` experience
  * @see BaseDocument
  */
-@Serializable
 data class StatProgression(
     var level: Long = 1,
     var experience: Long = 0,

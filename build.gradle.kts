@@ -30,7 +30,7 @@ plugins {
     // Kotlin
     idea
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.kotlinx.kover)
     // Code Quality
     jacoco
     alias(libs.plugins.quality.versions)
