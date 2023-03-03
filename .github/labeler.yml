@@ -1,29 +1,31 @@
-# ALL
-repo:
-  - '*'
+'@app':
+  - 'src/main/kotlin/dev/realmkit/game/app/*'
+  - 'src/main/kotlin/dev/realmkit/game/app/**/*'
 
-# SOURCE
-'@service/core':
-  - any: ['src/main/kotlin/dev/realmkit/game/core/*', 'src/main/kotlin/dev/realmkit/game/core/**/*']
+'@domain':
+  - 'src/main/kotlin/dev/realmkit/game/domain/*'
+  - 'src/main/kotlin/dev/realmkit/game/domain/**/*'
 
-'@service/domain':
-  - any: ['src/main/kotlin/dev/realmkit/game/domain/*', 'src/main/kotlin/dev/realmkit/game/domain/**/*']
+'@core':
+  - 'src/main/kotlin/dev/realmkit/game/core/*'
+  - 'src/main/kotlin/dev/realmkit/game/core/**/*'
 
-'@service/app':
-  - any: ['src/main/kotlin/dev/realmkit/game/app/*', 'src/main/kotlin/dev/realmkit/game/app/**/*']
+'@test':
+  - 'src/test/kotlin/*'
+  - 'src/test/kotlin/**/*'
 
-# TESTING
-'@test/test':
-  - any: ['src/test/kotlin/*', 'src/test/kotlin/**/*']
-
-# DOCS
 '@doc':
-  - any: ['**/*.md', '*.md']
+  - '*.md'
+  - '**/*.md'
 
-# CI
 '@ci':
-  - any: ['**/*.yml', '*.yml', '.github/*', '.github/**/*']
+  - '*.yml'
+  - '**/*.yml'
+  - '.github/*'
+  - '.github/**/*'
 
-# DEPENDENCIES
 '@deps':
-  - any: ['**/*.kts', '*.kts', 'gradle/*', 'gradle/**/*']
+  - '*.kts'
+  - '**/*.kts'
+  - 'gradle/*'
+  - 'gradle/**/*'
