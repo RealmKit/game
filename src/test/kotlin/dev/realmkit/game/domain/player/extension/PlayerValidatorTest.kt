@@ -44,12 +44,6 @@ class PlayerValidatorTest : TestSpec({
             }
         }
 
-        expect("validation to be valid") {
-            check(Player.arbitrary) { player ->
-                PlayerValidator.validation shouldBeValid player
-            }
-        }
-
         expect("to throw a ValidationException when validating a Player") {
             check(Player.arbitrary) { player ->
                 shouldThrow<ValidationException> {
@@ -60,7 +54,13 @@ class PlayerValidatorTest : TestSpec({
             }
         }
 
-        expect("validation to be invalid") {
+        expect("player to be valid") {
+            check(Player.arbitrary) { player ->
+                PlayerValidator.validation shouldBeValid player
+            }
+        }
+
+        expect("player to be invalid") {
             val player = Player.fixture(
                 name = "",
                 stat = Stat.fixture(
