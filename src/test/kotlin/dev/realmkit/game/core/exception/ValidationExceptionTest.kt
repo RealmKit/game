@@ -18,13 +18,28 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.base.dto
+package dev.realmkit.game.core.exception
 
-import dev.realmkit.game.domain.base.document.BaseDocument
+import dev.realmkit.hellper.spec.TestSpec
+import io.konform.validation.Invalid
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldNotBeEmpty
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [BaseDto]
- *
- * The DTO representation for [documents][BaseDocument]
- */
-interface BaseDto<T : BaseDocument>
+class ValidationExceptionTest : TestSpec({
+    context("unit testing ValidationException") {
+        expect("throw a ValidationException") {
+            shouldThrow<ValidationException> {
+                throw ValidationException(
+                    invalid = Invalid<Any>(
+                        mapOf(
+                            "field" to listOf("message"),
+                        ),
+                    ),
+                )
+            }.shouldNotBeNull()
+                .invalid.shouldNotBeNull()
+                .errors.shouldNotBeNull().shouldNotBeEmpty()
+        }
+    }
+})

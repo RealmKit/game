@@ -43,22 +43,7 @@ object ValidationExtensions {
      * @return the constraint
      */
     fun ValidationBuilder<String>.notBlank(): Constraint<String> =
-        minimum(1) hint "must not be blank"
-
-    /**
-     * ## [minimum]
-     * validates if the [String] has at least [length] characters
-     * ```kotlin
-     * Document::field required { minimum(10) }
-     * Document::anotherField { minimum(999) }
-     * ```
-     *
-     * @param length the minimum length size
-     * @see minLength
-     * @return the constraint
-     */
-    fun ValidationBuilder<String>.minimum(length: Int): Constraint<String> =
-        minLength(length)
+        minLength(1) hint "must not be blank"
 
     /**
      * ## [positive]
