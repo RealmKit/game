@@ -4,20 +4,17 @@ repo:
 
 # SOURCE
 '@service/core':
-  - any: ['src/main/kotlin/dev/realmkit/game/core/*']
+  - any: ['src/main/kotlin/dev/realmkit/game/core/*', 'src/main/kotlin/dev/realmkit/game/core/**/*']
 
 '@service/domain':
-  - any: ['src/main/kotlin/dev/realmkit/game/domain/*']
+  - any: ['src/main/kotlin/dev/realmkit/game/domain/*', 'src/main/kotlin/dev/realmkit/game/domain/**/*']
 
 '@service/app':
-  - any: ['src/main/kotlin/dev/realmkit/game/app/*']
+  - any: ['src/main/kotlin/dev/realmkit/game/app/*', 'src/main/kotlin/dev/realmkit/game/app/**/*']
 
 # TESTING
 '@test/test':
-  - any: ['src/test/kotlin/*']
-
-'@test/itest':
-  - any: ['src/test/kotlin/*']
+  - any: ['src/test/kotlin/*', 'src/test/kotlin/**/*']
 
 # DOCS
 '@doc':
@@ -25,8 +22,8 @@ repo:
 
 # CI
 '@ci':
-  - any: ['*.yml', '.github/*']
+  - any: ['**/*.yml', '*.yml', '.github/*', '.github/**/*']
 
 # DEPENDENCIES
 '@deps':
-  - any: ['*.kts', 'gradle/*']
+  - any: ['**/*.kts', '*.kts', 'gradle/*', 'gradle/**/*']
