@@ -23,7 +23,6 @@ package dev.realmkit.hellper.fixture
 import dev.realmkit.game.core.extension.Mapper
 import org.json.JSONObject
 import kotlin.reflect.KClass
-import kotlin.reflect.KFunction0
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
@@ -31,13 +30,13 @@ import kotlin.reflect.full.memberProperties
  * # [FixtureBuilder]
  * The fixture builder context handler
  *
- * @property properties the mapped properties values
  * @property type the class type
+ * @property properties the mapped properties values
  * @see Fixture
  */
 data class FixtureBuilder<T : Any>(
-    private val properties: MutableMap<String, Any?> = hashMapOf(),
     private val type: KClass<T>,
+    private val properties: MutableMap<String, Any?> = hashMapOf(),
 ) {
     /**
      * ## [invoke]
@@ -46,10 +45,8 @@ data class FixtureBuilder<T : Any>(
      * @param block the code block
      * @return the object value
      */
-    @Suppress("UNCHECKED_CAST")
-    operator fun <R : Any> KProperty1<T, R>.invoke(block: () -> R): R =
-        block()
-            .let { result -> (result as? KFunction0<R>)?.invoke() ?: result }
+    operator fun <R : Any> KProperty1<T, R>.invoke(block: (R?) -> R): R =
+        block(null)
             .also { value -> properties[name] = map(value) }
 
     /**
@@ -69,7 +66,7 @@ data class FixtureBuilder<T : Any>(
      * @param value the object to map from
      * @return the random data object
      */
-    private fun <T, R : Any> KProperty1<T, R?>.from(value: T): Any? =
+    private fun <T, R> KProperty1<T, R?>.from(value: T): Any? =
         get(value)?.let { objValue ->
             if (objValue::class.isData) {
                 map(objValue)

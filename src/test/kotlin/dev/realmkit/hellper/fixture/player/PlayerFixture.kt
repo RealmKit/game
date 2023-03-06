@@ -39,6 +39,6 @@ val Player.Companion.arbitrary: Arb<Player>
  */
 val Player.Companion.fixture: Player
     get() = Fixture {
-        Player::name { faker.superhero::name }
+        Player::name { faker.superhero.name() }
         Player::stat { Stat.fixture }
     }
