@@ -24,7 +24,6 @@ import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
 import dev.realmkit.hellper.fixture.stat.arbitrary
-import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
@@ -38,8 +37,8 @@ class StatValidatorTest : TestSpec({
         }
 
         expect("stat to be invalid") {
-            val stat = Stat.fixture(
-                progression = StatProgression.fixture(
+            val stat = Stat(
+                progression = StatProgression(
                     level = -1,
                     experience = -1,
                 ),

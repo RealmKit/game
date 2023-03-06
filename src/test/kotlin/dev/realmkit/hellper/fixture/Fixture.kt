@@ -18,19 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.extension
-
-import io.github.serpro69.kfaker.Faker
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-import kotlin.random.Random
-import kotlin.random.nextLong
+package dev.realmkit.hellper.fixture
 
 /**
- * # [FakerExtensions]
+ * # [Fixture]
+ * Creates an object with random data.
+ *
+ * ```kotlin
+ * val player = Fixture {
+ *      Player::name { faker.superhero::name }
+ *      Player::stat { Stat.fixture }
+ * }
+ * ```
  */
-object FakerExtensions {
-    val faker: Faker = Faker()
-    val positiveLong: Long = Random.nextLong(1L until Long.MAX_VALUE)
-    val name: Arb<String> = arbitrary { faker.superhero.name() }
+interface Fixture {
+    companion object {
+        /**
+         * Creates the [Fixture] object.
+         *
+         * @param init the init block
+         * @return the random data object
+         */
+        inline operator fun <reified T : Any> invoke(
+            init: FixtureBuilder<T>.() -> Unit = {},
+        ): T = FixtureBuilder(type = T::class).apply(init).build()
+    }
 }

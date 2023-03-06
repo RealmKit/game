@@ -18,19 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.extension
+package dev.realmkit.game.core.extension
 
-import io.github.serpro69.kfaker.Faker
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-import kotlin.random.Random
-import kotlin.random.nextLong
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 /**
- * # [FakerExtensions]
+ * # [Mapper]
+ * [Mapper] extensions
  */
-object FakerExtensions {
-    val faker: Faker = Faker()
-    val positiveLong: Long = Random.nextLong(1L until Long.MAX_VALUE)
-    val name: Arb<String> = arbitrary { faker.superhero.name() }
+object Mapper {
+    /**
+     * Easy accessors to map JSON data.
+     *
+     * ```kotlin
+     * mapper.readValue(someStringJson, destinationClass::class.java)
+     * ```
+     */
+    val mapper = jacksonObjectMapper()
 }

@@ -5,11 +5,11 @@ kotlinx-coroutines = "1.6.4"
 kotlinx-kover = "0.7.0-ALPHA"
 quality-catalog = "0.7.0"
 quality-detekt = "1.22.0"
-quality-dokka = "1.7.20"
+quality-dokka = "1.8.10"
 quality-sonarqube = "4.0.0.2929"
 quality-spotless = "6.16.0"
 quality-versions = "0.46.0"
-spring-boot = "3.0.3"
+spring-boot = "3.0.4"
 spring-dependency = "1.1.0"
 test-archunit = "1.0.1"
 test-faker = "1.14.0-rc.0"
@@ -17,6 +17,7 @@ test-kotest = "5.5.5"
 test-kotest-konform = "1.0.1"
 test-kotest-spring = "1.1.2"
 test-testcontainers = "1.17.6"
+validation-jackson = "2.14.2"
 validation-konform = "0.4.0"
 
 [libraries]
@@ -49,6 +50,7 @@ test-kotest-spring = { module = "io.kotest.extensions:kotest-extensions-spring",
 test-spring-boot = { module = "org.springframework.boot:spring-boot-starter-test" }
 test-testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "test-testcontainers" }
 test-testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "test-testcontainers" }
+validation-jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "validation-jackson" }
 validation-konform = { module = "io.konform:konform", version.ref = "validation-konform" }
 
 [bundles]
@@ -90,6 +92,10 @@ test-spring-boot = [
 test-testcontainers = [
     "test-testcontainers-junit",
     "test-testcontainers-mongodb",
+]
+validation = [
+    "validation-jackson",
+    "validation-konform",
 ]
 
 [plugins]

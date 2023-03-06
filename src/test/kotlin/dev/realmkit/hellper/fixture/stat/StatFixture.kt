@@ -22,6 +22,7 @@ package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -29,20 +30,12 @@ import io.kotest.property.arbitrary.arbitrary
  * Creates a [Stat] [Arb] with random bind data
  */
 val Stat.Companion.arbitrary: Arb<Stat>
-    get() = arbitrary {
-        fixture(
-            progression = StatProgression.arbitrary.bind(),
-        )
-    }
+    get() = arbitrary { fixture }
 
 /**
  * Creates a [Stat] with random data
- *
- * @param progression the stat progression
- * @return the Stat
  */
-fun Stat.Companion.fixture(
-    progression: StatProgression = StatProgression.fixture(),
-): Stat = Stat(
-    progression = progression,
-)
+val Stat.Companion.fixture: Stat
+    get() = Fixture {
+        Stat::progression { StatProgression.fixture }
+    }
