@@ -20,19 +20,43 @@
 
 package dev.realmkit.hellper.spec
 
+import com.tngtech.archunit.core.domain.JavaClasses
+import com.tngtech.archunit.core.importer.ClassFileImporter
+import com.tngtech.archunit.core.importer.ImportOption
 import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
-import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noMethods
+import com.tngtech.archunit.lang.Priority.HIGH
+import com.tngtech.archunit.lang.Priority.MEDIUM
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.priority
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_THROW_GENERIC_EXCEPTIONS
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_FIELD_INJECTION
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JAVA_UTIL_LOGGING
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JODATIME
 import com.tngtech.archunit.library.GeneralCodingRules.testClassesShouldResideInTheSamePackageAsImplementation
+import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Service
+
+private const val SUFFIX_TEST = "Test"
+private const val SUFFIX_EXCEPTION = "Exception"
+private const val PACKAGE_BASE = "dev.realmkit.game"
+private const val PACKAGE_BASE_CORE = "$PACKAGE_BASE.core.."
+private const val PACKAGE_BASE_CORE_EXCEPTION = "${PACKAGE_BASE_CORE}exception.."
+private const val PACKAGE_BASE_DOMAIN = "$PACKAGE_BASE.domain.."
+private const val PACKAGE_BASE_DOMAIN_DOCUMENT = "${PACKAGE_BASE_DOMAIN}document.."
+private const val PACKAGE_BASE_DOMAIN_REPOSITORY = "${PACKAGE_BASE_DOMAIN}repository.."
+private const val PACKAGE_BASE_DOMAIN_SERVICE = "${PACKAGE_BASE_DOMAIN}service.."
+private const val PACKAGE_BASE_APP = "$PACKAGE_BASE.app.."
+private const val PACKAGE_BASE_SPRING = "org.springframework.."
 
 /**
  * A [ArchTestSpec] extends [TestSpec] with all default Arch Test suite case
  */
 abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
+    private val testJavaClasses: JavaClasses = ClassFileImporter()
+        .withImportOption(ImportOption.DoNotIncludeTests())
+        .importPackages(PACKAGE_BASE)
+
     /**
      * Certify that no Classes throws any kind of generic `Exceptions`
      */
@@ -69,11 +93,132 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
         testClassesShouldResideInTheSamePackageAsImplementation()
 
     /**
+     * Certify that CORE layer does not access DOMAIN or APP layers
+     */
+    @ArchTest
+    val noDomainOrAppInsideCore: ArchRule =
+        priority(HIGH)
+            .noClasses()
+            .that()
+            .resideInAPackage(PACKAGE_BASE_CORE)
+            .should()
+            .dependOnClassesThat()
+            .resideInAnyPackage(PACKAGE_BASE_DOMAIN, PACKAGE_BASE_APP, PACKAGE_BASE_SPRING)
+
+    /**
+     * Certify that DOMAIN layer does not access APP layer
+     */
+    @ArchTest
+    val noAppInsideDomain: ArchRule =
+        priority(HIGH)
+            .noClasses()
+            .that()
+            .resideInAPackage(PACKAGE_BASE_DOMAIN)
+            .should()
+            .dependOnClassesThat()
+            .resideInAnyPackage(PACKAGE_BASE_APP)
+
+    /**
+     * Certify that annotated DOCUMENTS are inside DOMAIN DOCUMENT package only
+     */
+    @ArchTest
+    val documentsShouldResideInsideDomainDocument: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .areAnnotatedWith(Document::class.java)
+            .should()
+            .resideInAPackage(PACKAGE_BASE_DOMAIN_DOCUMENT)
+
+    /**
+     * Certify that REPOSITORIES are annotated and inside DOMAIN REPOSITORY package
+     */
+    @ArchTest
+    val repositoriesShouldBeAnnotated: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .resideInAPackage(PACKAGE_BASE_DOMAIN_REPOSITORY)
+            .and()
+            .areNotAnonymousClasses()
+            .and()
+            .haveSimpleNameNotEndingWith(SUFFIX_TEST)
+            .should()
+            .beAnnotatedWith(Repository::class.java)
+            .andShould()
+            .beInterfaces()
+
+    /**
+     * Certify that annotated REPOSITORIES are inside DOMAIN REPOSITORY package only
+     */
+    @ArchTest
+    val repositoriesShouldResideInsideDomainRepository: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .areAnnotatedWith(Repository::class.java)
+            .should()
+            .resideInAPackage(PACKAGE_BASE_DOMAIN_REPOSITORY)
+
+    /**
+     * Certify that SERVICES are annotated and inside DOMAIN SERVICE package
+     */
+    @ArchTest
+    val servicesShouldBeAnnotated: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .resideInAPackage(PACKAGE_BASE_DOMAIN_SERVICE)
+            .and()
+            .areNotAnonymousClasses()
+            .and()
+            .haveSimpleNameNotEndingWith(SUFFIX_TEST)
+            .should()
+            .beAnnotatedWith(Service::class.java)
+
+    /**
+     * Certify that annotated SERVICES are inside DOMAIN SERVICE package only
+     */
+    @ArchTest
+    val servicesShouldResideInsideDomainService: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .areAnnotatedWith(Service::class.java)
+            .should()
+            .resideInAPackage(PACKAGE_BASE_DOMAIN_SERVICE)
+
+    /**
+     * Certify that EXCEPTIONS are inside CORE EXCEPTION package only
+     */
+    @ArchTest
+    val exceptionsShouldResideInsideCoreException: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .haveSimpleNameEndingWith(SUFFIX_EXCEPTION)
+            .should()
+            .resideInAPackage(PACKAGE_BASE_CORE_EXCEPTION)
+
+    /**
+     * Certify that EXCEPTIONS extends Extension
+     */
+    @ArchTest
+    val exceptionsShouldHaveExceptionAsSuffix: ArchRule =
+        priority(HIGH)
+            .classes()
+            .that()
+            .areAssignableTo(Exception::class.java)
+            .should()
+            .haveSimpleNameEndingWith(SUFFIX_EXCEPTION)
+
+    /**
      * Certify that methods returns raw types
      */
     @ArchTest
     val noMethodsShouldHaveRawReturnType: ArchRule =
-        noMethods()
+        priority(MEDIUM)
+            .noMethods()
             .should()
             .haveRawReturnType(List::class.java)
             .orShould()
