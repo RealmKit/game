@@ -18,19 +18,28 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.extension
+package dev.realmkit.game.core.exception
 
-import io.github.serpro69.kfaker.Faker
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-import kotlin.random.Random
-import kotlin.random.nextLong
+import dev.realmkit.hellper.spec.TestSpec
+import io.konform.validation.Invalid
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldNotBeEmpty
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [FakerExtensions]
- */
-object FakerExtensions {
-    val faker: Faker = Faker()
-    val positiveLong: Long = Random.nextLong(1L until Long.MAX_VALUE)
-    val name: Arb<String> = arbitrary { faker.superhero.name() }
-}
+class ValidationExceptionTest : TestSpec({
+    context("unit testing ValidationException") {
+        expect("throw a ValidationException") {
+            shouldThrow<ValidationException> {
+                throw ValidationException(
+                    invalid = Invalid<Any>(
+                        mapOf(
+                            "field" to listOf("message"),
+                        ),
+                    ),
+                )
+            }.shouldNotBeNull()
+                .invalid.shouldNotBeNull()
+                .errors.shouldNotBeNull().shouldNotBeEmpty()
+        }
+    }
+})

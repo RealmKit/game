@@ -60,10 +60,10 @@ dependencies {
     runtimeOnly(libs.kotlin.reflect)
 
     // Code Dependencies
+    implementation(libs.kotlin.logging)
     implementation(libs.bundles.spring.boot)
     implementation(libs.bundles.kotlinx)
-    implementation(libs.kotlin.logging)
-    implementation(libs.validation.konform)
+    implementation(libs.bundles.validation)
 
     // Test Dependencies
     testImplementation(libs.bundles.test.spring.boot)

@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.base.document
 
 import dev.realmkit.game.core.extension.InstantExtensions.now
-import dev.realmkit.hellper.extension.FakerExtensions.fake
+import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.asClue
 import io.kotest.assertions.throwables.shouldThrow
@@ -39,10 +39,10 @@ class BaseDocumentTest : TestSpec({
 
         expect("to create a new object of BaseDocument with initialized values") {
             BaseDocument().apply {
-                id = fake.random.nextUUID()
+                id = faker.random.nextUUID()
                 createdAt = now
                 updatedAt = now
-                version = fake.random.nextUUID()
+                version = faker.random.nextUUID()
             }.shouldNotBeNull()
                 .asClue { document ->
                     document.id.shouldNotBeNull()

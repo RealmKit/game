@@ -18,45 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
-
-import io.konform.validation.Constraint
-import io.konform.validation.ValidationBuilder
-import io.konform.validation.jsonschema.minLength
-import io.konform.validation.jsonschema.minimum
+package dev.realmkit.hellper.fixture
 
 /**
- * # [ValidationExtensions]
- * [ValidationBuilder] extensions
+ * # [Fixture]
+ * Creates an object with random data.
+ *
+ * ```kotlin
+ * val player = Fixture {
+ *      Player::name { faker.superhero::name }
+ *      Player::stat { Stat.fixture }
+ * }
+ * ```
  */
-object ValidationExtensions {
-    /**
-     * ## [notBlank]
-     * validates if the [String] has at least 1 character
-     * ```kotlin
-     * Document::field required { notBlank() }
-     * Document::anotherField { notBlank() }
-     * ```
-     *
-     * @see minLength
-     *
-     * @return the constraint
-     */
-    fun ValidationBuilder<String>.notBlank(): Constraint<String> =
-        minLength(1) hint "must not be blank"
-
-    /**
-     * ## [positive]
-     * validates if the [Number] is greater than zero
-     * ```kotlin
-     * Document::field required { positive() }
-     * Document::anotherField { positive() }
-     * ```
-     *
-     * @see minimum
-     *
-     * @return the constraint
-     */
-    fun <T : Number> ValidationBuilder<T>.positive(): Constraint<T> =
-        minimum(0) hint "must be positive"
+interface Fixture {
+    companion object {
+        /**
+         * Creates the [Fixture] object.
+         *
+         * @param init the init block
+         * @return the random data object
+         */
+        inline operator fun <reified T : Any> invoke(
+            init: FixtureBuilder<T>.() -> Unit = {},
+        ): T = FixtureBuilder(type = T::class).apply(init).build()
+    }
 }

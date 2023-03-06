@@ -20,16 +20,8 @@
 
 package dev.realmkit.game.domain.player.document
 
-import dev.realmkit.game.domain.player.extension.PlayerValidator.validation
-import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
 import dev.realmkit.hellper.fixture.player.arbitrary
-import dev.realmkit.hellper.fixture.player.fixture
-import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.assertions.konform.shouldBeInvalid
-import io.kotest.assertions.konform.shouldBeValid
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
@@ -44,30 +36,6 @@ class PlayerTest : TestSpec({
                 player.stat.progression.shouldNotBeNull()
                 player.stat.progression.level.shouldBeGreaterThan(0)
                 player.stat.progression.experience.shouldBeGreaterThan(0)
-            }
-        }
-
-        expect("to validate a Player") {
-            check(Player.arbitrary) { player ->
-                validation shouldBeValid player
-            }
-        }
-
-        expect("to validate an invalid Player") {
-            val player = Player.fixture(
-                name = "",
-                stat = Stat.fixture(
-                    progression = StatProgression.fixture(
-                        level = -1,
-                        experience = -1,
-                    ),
-                ),
-            )
-
-            validation.shouldBeInvalid(player) {
-                it shouldContainFieldError (".name" to "must not be blank")
-                it shouldContainFieldError (".stat.progression.level" to "must be positive")
-                it shouldContainFieldError (".stat.progression.experience" to "must be positive")
             }
         }
     }

@@ -20,15 +20,14 @@
 
 package dev.realmkit.game.core.extension
 
-import dev.realmkit.game.core.extension.InstantExtensions.now
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 
-class InstantExtensionsKtTest : TestSpec({
-    context("unit testing Instant extensions") {
+class InstantExtensionsTest : TestSpec({
+    context("unit testing InstantExtensions extensions") {
         expect(".now to be an Instant") {
-            now.shouldNotBeNull()
+            InstantExtensions.now.shouldNotBeNull()
                 .epochSecond.shouldBeGreaterThan(0)
         }
     }

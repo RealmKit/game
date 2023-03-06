@@ -18,25 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
+package dev.realmkit.game.domain.stat.extension
 
+import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.hellper.extension.FakerExtensions.positiveLong
-import dev.realmkit.hellper.fixture.Fixture
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
+import dev.realmkit.hellper.fixture.stat.arbitrary
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.assertions.konform.shouldBeInvalid
+import io.kotest.assertions.konform.shouldBeValid
 
-/**
- * Creates a [StatProgression] [Arb] with random bind data
- */
-val StatProgression.Companion.arbitrary: Arb<StatProgression>
-    get() = arbitrary { fixture }
+class StatValidatorTest : TestSpec({
+    context("unit testing StatValidator") {
+        expect("stat to be valid") {
+            check(Stat.arbitrary) { stat ->
+                StatValidator.validation shouldBeValid stat
+            }
+        }
 
-/**
- * Creates a [StatProgression] with random data
- */
-val StatProgression.Companion.fixture: StatProgression
-    get() = Fixture {
-        StatProgression::level { positiveLong }
-        StatProgression::experience { positiveLong }
+        expect("stat to be invalid") {
+            val stat = Stat(
+                progression = StatProgression(
+                    level = -1,
+                    experience = -1,
+                ),
+            )
+
+            StatValidator.validation.shouldBeInvalid(stat) {
+                it shouldContainFieldError (".progression.level" to "must be positive")
+                it shouldContainFieldError (".progression.experience" to "must be positive")
+            }
+        }
     }
+})

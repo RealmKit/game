@@ -18,13 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.base.dto
+package dev.realmkit.game.core.extension
 
-import dev.realmkit.game.domain.base.document.BaseDocument
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 /**
- * # [BaseDto]
- *
- * The DTO representation for [documents][BaseDocument]
+ * # [Mapper]
+ * [Mapper] extensions
  */
-interface BaseDto<T : BaseDocument>
+object Mapper {
+    /**
+     * Easy accessors to map JSON data.
+     *
+     * ```kotlin
+     * mapper.readValue(someStringJson, destinationClass::class.java)
+     * ```
+     */
+    val mapper = jacksonObjectMapper()
+}

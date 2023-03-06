@@ -1,2 +1,3 @@
 ignore:
   - "src/main/kotlin/**/GameServiceApplication*"
+  - "src/main/kotlin/dev/realmkit/game/domain/base/document/BaseDocument"

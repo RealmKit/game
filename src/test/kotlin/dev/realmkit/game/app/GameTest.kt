@@ -22,7 +22,7 @@ package dev.realmkit.game.app
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.hellper.extension.FakerExtensions.fake
+import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -40,7 +40,7 @@ class GameTest(
 
         expect("the game to run normally") {
             // Creates a new Player
-            val player = playerService new Player(name = fake.superhero.name())
+            val player = playerService new Player(name = faker.superhero.name())
             player.id.shouldNotBeNull()
             player.name.shouldNotBeNull().shouldNotBeEmpty()
             player.stat.progression.level shouldBe 1L
