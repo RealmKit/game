@@ -18,30 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.service
+package dev.realmkit.game.core.extension
 
-import dev.realmkit.hellper.infra.IntegrationTestContext
-import dev.realmkit.hellper.spec.IntegrationTestSpec
-import io.kotest.assertions.asClue
-import io.kotest.matchers.doubles.shouldBePositive
+import dev.realmkit.game.core.extension.MapperExtensions.clone
+import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-@IntegrationTestContext
-class StatServiceTest(
-    private val statService: StatService,
-) : IntegrationTestSpec({
-    context("integration testing StatService") {
-        expect("all beans to be inject") {
-            statService.shouldNotBeNull()
-        }
+data class Dummy(val test: String)
 
-        expect("initial to generate the init Stat values from properties") {
-            statService.initial
-                .shouldNotBeNull()
-                .asClue { stat ->
-                    stat.hp.shouldBePositive()
-                    stat.attack.shouldBePositive()
-                }
+class MapperExtensionsTest : TestSpec({
+    context("unit testing MapperExtensions extensions") {
+        expect(".clone() to deep clone a data class") {
+            val original = Dummy("test")
+            val clone = original.clone()
+            clone.shouldNotBeNull()
+            clone.test shouldBe original.test
         }
     }
 })

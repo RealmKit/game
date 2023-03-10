@@ -3,8 +3,8 @@
     {
       "name": "app.static.data",
       "description": "StaticData properties",
-      "type": "dev.realmkit.game.domain.configuration.property.StaticDataProperties",
-      "sourceType": "dev.realmkit.game.domain.configuration.property.StaticDataProperties"
+      "type": "dev.realmkit.game.domain.staticdata.property.StaticDataProperties",
+      "sourceType": "dev.realmkit.game.domain.staticdata.property.StaticDataProperties"
     }
   ],
   "properties": [

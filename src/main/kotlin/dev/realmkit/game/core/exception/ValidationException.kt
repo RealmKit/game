@@ -30,6 +30,6 @@ import io.konform.validation.Invalid
  *
  * @property invalid the invalid property
  */
-class ValidationException(
+data class ValidationException(
     val invalid: Invalid<*>,
 ) : Exception()

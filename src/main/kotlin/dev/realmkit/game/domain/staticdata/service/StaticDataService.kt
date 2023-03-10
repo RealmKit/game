@@ -18,36 +18,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.game.domain.staticdata.service
 
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.domain.staticdata.document.StaticData
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
+import org.springframework.stereotype.Service
 
-class StatTest : TestSpec({
-    context("unit testing Stat") {
-        expect("to create a new Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
-            }
-        }
-
-        expect("to update a Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
-
-                stat.hp = 0.0
-                stat.hp.shouldBeZero()
-                stat.attack = 0.0
-                stat.attack.shouldBeZero()
-            }
-        }
-    }
-})
+/**
+ * # [StaticDataService]
+ * the [StaticData] service.
+ *
+ * @see Service
+ *
+ * @property staticData the stat static data properties values
+ */
+@Service
+data class StaticDataService(
+    private val staticData: StaticDataProperties,
+) {
+    /**
+     * ## [initial]
+     * [StaticData] initial value from properties
+     *
+     * @see StaticData
+     */
+    val initial: StaticData
+        get() = staticData.initial()
+}

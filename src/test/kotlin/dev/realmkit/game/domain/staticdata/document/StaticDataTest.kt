@@ -18,35 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.game.domain.staticdata.document
 
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.spec.TestSpec
+import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
 
-class StatTest : TestSpec({
-    context("unit testing Stat") {
-        expect("to create a new Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
-            }
-        }
-
-        expect("to update a Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
-
-                stat.hp = 0.0
-                stat.hp.shouldBeZero()
-                stat.attack = 0.0
-                stat.attack.shouldBeZero()
+class StaticDataTest : IntegrationTestSpec({
+    context("integration testing StaticData") {
+        expect("instantiate a StaticData") {
+            StaticData(
+                stat = Stat(
+                    hp = 100.0,
+                    attack = 10.0,
+                ),
+            ).shouldNotBeNull().asClue { staticData ->
+                staticData.stat.shouldNotBeNull()
+                staticData.stat.hp.shouldBePositive()
+                staticData.stat.attack.shouldBePositive()
             }
         }
     }

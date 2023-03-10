@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.app
 
-import dev.realmkit.game.domain.configuration.property.StaticDataProperties
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties

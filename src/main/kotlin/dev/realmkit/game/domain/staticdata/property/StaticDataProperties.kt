@@ -18,36 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.game.domain.staticdata.property
 
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.core.extension.MapperExtensions.clone
+import dev.realmkit.game.domain.staticdata.document.StaticData
+import org.springframework.boot.context.properties.ConfigurationProperties
 
-class StatTest : TestSpec({
-    context("unit testing Stat") {
-        expect("to create a new Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
-            }
-        }
-
-        expect("to update a Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
-
-                stat.hp = 0.0
-                stat.hp.shouldBeZero()
-                stat.attack = 0.0
-                stat.attack.shouldBeZero()
-            }
-        }
-    }
-})
+/**
+ * # [StaticDataProperties]
+ * static data values
+ *
+ * @property initial initial static data values
+ */
+@ConfigurationProperties(prefix = "app.static.data")
+data class StaticDataProperties(
+    private val initial: StaticData,
+) {
+    /**
+     * ## [initial]
+     * initial static data values
+     *
+     * @see StaticData
+     *
+     * @return [StaticData] initial static data values
+     */
+    fun initial(): StaticData = initial.clone()
+}

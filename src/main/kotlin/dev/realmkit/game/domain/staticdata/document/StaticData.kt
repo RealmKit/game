@@ -18,7 +18,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.configuration.property
+package dev.realmkit.game.domain.staticdata.document
 
 import dev.realmkit.game.domain.stat.document.Stat
 

@@ -25,7 +25,7 @@ import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
-import dev.realmkit.game.domain.stat.service.StatService
+import dev.realmkit.game.domain.staticdata.service.StaticDataService
 import io.konform.validation.Validation
 import org.springframework.stereotype.Service
 
@@ -36,12 +36,12 @@ import org.springframework.stereotype.Service
  * @see Service
  *
  * @property playerRepository the player repository bean
- * @property statService the stat service
+ * @property staticDataService the stat service
  */
 @Service
 data class PlayerService(
     private val playerRepository: PlayerRepository,
-    private val statService: StatService,
+    private val staticDataService: StaticDataService,
 ) {
     /**
      * ## [new]
@@ -60,7 +60,7 @@ data class PlayerService(
     infix fun new(name: String): Player =
         this persist Player(
             name = name,
-            stat = statService.initial,
+            stat = staticDataService.initial.stat,
         )
 
     /**

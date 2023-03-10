@@ -18,17 +18,32 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.configuration.property
+package dev.realmkit.game.domain.staticdata.service
 
-import org.springframework.boot.context.properties.ConfigurationProperties
+import dev.realmkit.hellper.infra.IntegrationTestContext
+import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
+import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [StaticDataProperties]
- * static data values
- *
- * @property initial initial static data values
- */
-@ConfigurationProperties(prefix = "app.static.data")
-data class StaticDataProperties(
-    val initial: StaticData,
-)
+@IntegrationTestContext
+class StaticDataServiceTest(
+    private val staticDataService: StaticDataService,
+) : IntegrationTestSpec({
+    context("integration testing StaticDataService") {
+        expect("all beans to be inject") {
+            staticDataService.shouldNotBeNull()
+        }
+
+        expect("initial to generate the init StaticData values from properties") {
+            staticDataService.initial
+                .shouldNotBeNull()
+                .asClue { staticData ->
+                    staticData.shouldNotBeNull()
+                    staticData.stat.shouldNotBeNull()
+                    staticData.stat.hp.shouldBePositive()
+                    staticData.stat.attack.shouldBePositive()
+                }
+        }
+    }
+})

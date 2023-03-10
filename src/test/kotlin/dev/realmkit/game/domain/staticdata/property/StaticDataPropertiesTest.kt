@@ -18,31 +18,32 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.service
+package dev.realmkit.game.domain.staticdata.property
 
-import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.configuration.property.StaticDataProperties
-import dev.realmkit.game.domain.stat.document.Stat
-import org.springframework.stereotype.Service
+import dev.realmkit.hellper.infra.IntegrationTestContext
+import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
+import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [StatService]
- * the [Stat] service.
- *
- * @see Service
- *
- * @property staticData the stat static data properties values
- */
-@Service
-data class StatService(
-    private val staticData: StaticDataProperties,
-) {
-    /**
-     * ## [initial]
-     * [Stat] initial value from properties
-     *
-     * @see Stat
-     */
-    val initial: Stat
-        get() = staticData.initial.stat.clone()
-}
+@IntegrationTestContext
+class StaticDataPropertiesTest(
+    private val staticDataProperties: StaticDataProperties,
+) : IntegrationTestSpec({
+    context("integration testing StaticDataService") {
+        expect("all beans to be inject") {
+            staticDataProperties.shouldNotBeNull()
+        }
+
+        expect("initial to generate the init StaticData values from properties") {
+            staticDataProperties.initial()
+                .shouldNotBeNull()
+                .asClue { staticData ->
+                    staticData.shouldNotBeNull()
+                    staticData.stat.shouldNotBeNull()
+                    staticData.stat.hp.shouldBePositive()
+                    staticData.stat.attack.shouldBePositive()
+                }
+        }
+    }
+})
