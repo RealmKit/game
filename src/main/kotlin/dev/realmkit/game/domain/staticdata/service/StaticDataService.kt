@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service
  * @property staticData the stat static data properties values
  */
 @Service
-data class StaticDataService(
+class StaticDataService(
     private val staticData: StaticDataProperties,
 ) {
     /**
@@ -42,6 +42,6 @@ data class StaticDataService(
      *
      * @see StaticData
      */
-    val initial: StaticData
-        get() = staticData.initial()
+    fun initial(): StaticData =
+        staticData.initial()
 }

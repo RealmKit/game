@@ -23,13 +23,9 @@ package dev.realmkit.game.core.exception
 import io.konform.validation.Invalid
 
 /**
- * # [ValidationException]
  * exception for validations problems
- *
- * @see Exception
- *
  * @property invalid the invalid property
  */
-data class ValidationException(
+class ValidationException(
     val invalid: Invalid<*>,
 ) : Exception()

@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service
  * @property staticDataService the stat service
  */
 @Service
-data class PlayerService(
+class PlayerService(
     private val playerRepository: PlayerRepository,
     private val staticDataService: StaticDataService,
 ) {
@@ -60,7 +60,7 @@ data class PlayerService(
     infix fun new(name: String): Player =
         this persist Player(
             name = name,
-            stat = staticDataService.initial.stat,
+            stat = staticDataService.initial().stat,
         )
 
     /**

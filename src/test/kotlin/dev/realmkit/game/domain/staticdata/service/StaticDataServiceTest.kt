@@ -36,7 +36,7 @@ class StaticDataServiceTest(
         }
 
         expect("initial to generate the init StaticData values from properties") {
-            staticDataService.initial
+            staticDataService.initial()
                 .shouldNotBeNull()
                 .asClue { staticData ->
                     staticData.shouldNotBeNull()

@@ -31,7 +31,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  * @property initial initial static data values
  */
 @ConfigurationProperties(prefix = "app.static.data")
-data class StaticDataProperties(
+class StaticDataProperties(
     private val initial: StaticData,
 ) {
     /**
