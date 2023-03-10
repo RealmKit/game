@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.stat.extension
 
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
 import dev.realmkit.game.domain.stat.document.Stat
 import io.konform.validation.Validation
 
@@ -33,6 +34,7 @@ object StatValidator {
      * [Stat] [Validation] object
      */
     val validation: Validation<Stat> = Validation {
-        Stat::progression required { run(StatProgressionValidator.validation) }
+        Stat::hp required { positive() }
+        Stat::attack required { positive() }
     }
 }

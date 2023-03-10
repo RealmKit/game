@@ -20,13 +20,12 @@
 
 package dev.realmkit.game.app
 
-import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.service.PlayerService
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
 
 @IntegrationTestContext
@@ -39,17 +38,15 @@ class GameTest(
         }
 
         expect("the game to run normally") {
-            // Creates a new Player
-            val player = playerService new Player(name = faker.superhero.name())
-            player.id.shouldNotBeNull()
-            player.name.shouldNotBeNull().shouldNotBeEmpty()
-            player.stat.progression.level shouldBe 1L
-            player.stat.progression.experience shouldBe 0L
-
-            // Gain Experience
-            val playerAfterGainXp = playerService gainExperience (100L to player)
-            playerAfterGainXp.stat.progression.level shouldBe 1L
-            playerAfterGainXp.stat.progression.experience shouldBe 100L
+            playerService.new(faker.superhero.name())
+                .also { player ->
+                    player.id.shouldNotBeNull()
+                    player.createdAt.shouldNotBeNull()
+                    player.updatedAt.shouldNotBeNull()
+                    player.name.shouldNotBeNull().shouldNotBeEmpty()
+                    player.stat.hp.shouldBePositive()
+                    player.stat.attack.shouldBePositive()
+                }
         }
     }
 })

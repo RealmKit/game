@@ -21,15 +21,16 @@
 package dev.realmkit.game.domain.player.repository
 
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.hellper.fixture.player.arbitrary
+import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
-import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
+import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
 class PlayerRepositoryTest(
@@ -46,7 +47,7 @@ class PlayerRepositoryTest(
 
         expect("it should create Players") {
             playerRepository.run { count().shouldBeZero() }
-            check(Player.arbitrary) { player ->
+            check(arbitrary { Player.fixture }) { player ->
                 playerRepository.save(player).shouldNotBeNull()
                 playerRepository.findById(player.id).shouldBePresent().asClue { find ->
                     find.id.shouldNotBeNull()
@@ -54,8 +55,8 @@ class PlayerRepositoryTest(
                     find.updatedAt.shouldNotBeNull()
                     find.version.shouldNotBeNull()
                     find.name shouldBe player.name
-                    find.stat.progression.level.shouldBeGreaterThan(0)
-                    find.stat.progression.experience.shouldBeGreaterThan(0)
+                    find.stat.hp.shouldBePositive()
+                    find.stat.attack.shouldBePositive()
                 }
             }
             playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }

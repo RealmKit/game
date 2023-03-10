@@ -20,18 +20,19 @@
 
 package dev.realmkit.game.domain.stat.document
 
-import dev.realmkit.hellper.fixture.stat.arbitrary
+import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.arbitrary.arbitrary
 
 class StatTest : TestSpec({
     context("unit testing Stat") {
-        expect("to create a new plain Stat") {
-            check(Stat.arbitrary) { stat ->
+        expect("to create a new Stat") {
+            check(arbitrary { Stat.fixture }) { stat ->
                 stat.shouldNotBeNull()
-                stat.progression.shouldNotBeNull()
-                stat.progression.level.shouldNotBeNull()
-                stat.progression.experience.shouldNotBeNull()
+                stat.hp.shouldBePositive()
+                stat.attack.shouldBePositive()
             }
         }
     }

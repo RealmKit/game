@@ -24,7 +24,9 @@ import io.konform.validation.Invalid
 
 /**
  * # [ValidationException]
- * Exception for validations problems
+ * exception for validations problems
+ *
+ * @see Exception
  *
  * @property invalid the invalid property
  */

@@ -25,14 +25,7 @@ import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.Fixture
 import dev.realmkit.hellper.fixture.stat.fixture
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-
-/**
- * Creates a [Player] [Arb] with random bind data
- */
-val Player.Companion.arbitrary: Arb<Player>
-    get() = arbitrary { fixture }
+import dev.realmkit.hellper.fixture.stat.invalid
 
 /**
  * Creates a [Player] with random data
@@ -41,4 +34,13 @@ val Player.Companion.fixture: Player
     get() = Fixture {
         Player::name { faker.superhero.name() }
         Player::stat { Stat.fixture }
+    }
+
+/**
+ * Creates a [Player] with random invalid data
+ */
+val Player.Companion.invalid: Player
+    get() = Fixture {
+        Player::name { "" }
+        Player::stat { Stat.invalid }
     }

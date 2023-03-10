@@ -32,5 +32,8 @@ import kotlin.random.nextLong
 object FakerExtensions {
     val faker: Faker = Faker()
     val positiveLong: Long = Random.nextLong(1L until Long.MAX_VALUE)
+    val negativeLong: Long = Random.nextLong(Long.MIN_VALUE until 0)
+    val positiveDouble: Double = faker.random.nextDouble()
+    val negativeDouble: Double = positiveDouble * -1
     val name: Arb<String> = arbitrary { faker.superhero.name() }
 }

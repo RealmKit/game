@@ -23,27 +23,27 @@ package dev.realmkit.game.domain.player.extension
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
-import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
-import dev.realmkit.hellper.fixture.player.arbitrary
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
+import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.player.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.arbitrary.arbitrary
 
 class PlayerValidatorTest : TestSpec({
     context("unit testing PlayerValidator") {
         expect("to validate a Player") {
-            check(Player.arbitrary) { player ->
+            check(arbitrary { Player.fixture }) { player ->
                 player validated { validated -> validated.shouldNotBeNull() }
             }
         }
 
         expect("to throw a ValidationException when validating a Player") {
-            check(Player.arbitrary) { player ->
+            check(arbitrary { Player.fixture }) { player ->
                 shouldThrow<ValidationException> {
                     player.copy(name = "") validated { null }
                 }.shouldNotBeNull()
@@ -53,26 +53,20 @@ class PlayerValidatorTest : TestSpec({
         }
 
         expect("player to be valid") {
-            check(Player.arbitrary) { player ->
+            check(arbitrary { Player.fixture }) { player ->
                 PlayerValidator.validation shouldBeValid player
             }
         }
 
         expect("player to be invalid") {
-            val player = Player(
-                name = "",
-                stat = Stat(
-                    progression = StatProgression(
-                        level = -1,
-                        experience = -1,
-                    ),
-                ),
-            )
-
-            PlayerValidator.validation.shouldBeInvalid(player) {
-                it shouldContainFieldError (".name" to "must not be blank")
-                it shouldContainFieldError (".stat.progression.level" to "must be positive")
-                it shouldContainFieldError (".stat.progression.experience" to "must be positive")
+            check(arbitrary { Player.invalid }) { player ->
+                PlayerValidator.validation.shouldBeInvalid(player) { invalid ->
+                    invalid shouldHaveAllErrors listOf(
+                        ".name" to "must not be blank",
+                        ".stat.hp" to "must be positive",
+                        ".stat.attack" to "must be positive",
+                    )
+                }
             }
         }
     }

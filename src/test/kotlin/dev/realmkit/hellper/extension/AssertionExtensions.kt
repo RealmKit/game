@@ -20,23 +20,53 @@
 
 package dev.realmkit.hellper.extension
 
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveErrors
 import io.konform.validation.Invalid
 import io.konform.validation.ValidationError
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+
+/**
+ * # [Violation]
+ * violation pair for [ValidationError.dataPath] to [ValidationError.message]
+ */
+typealias Violation = Pair<String, String>
 
 /**
  * # [AssertionExtensions]
  */
 object AssertionExtensions {
     /**
-     * ## [shouldContainFieldError]
+     * ## [shouldHaveAllErrors]
      *
-     * @param error the error pair for [ValidationError.dataPath] to [ValidationError.message]
+     * @param violations the list of violations pair for [ValidationError.dataPath] to [ValidationError.message]
      * @return the validation
      */
-    infix fun Invalid<*>.shouldContainFieldError(error: Pair<String, String>) =
-        errors.first { it.dataPath == error.first }
+    infix fun Invalid<*>.shouldHaveAllErrors(violations: List<Violation>) {
+        violations.forEachIndexed { index, violation ->
+            this shouldContainFieldError violation
+        }
+        this shouldHaveErrors violations.size
+    }
+
+    /**
+     * ## [shouldContainFieldError]
+     *
+     * @param violation the error pair for [ValidationError.dataPath] to [ValidationError.message]
+     * @return the validation
+     */
+    private infix fun Invalid<*>.shouldContainFieldError(violation: Violation) =
+        errors.first { it.dataPath == violation.first }
             .shouldNotBeNull()
-            .message shouldBe error.second
+            .message shouldBe violation.second
+
+    /**
+     * ## [shouldHaveErrors]
+     *
+     * @param size the number of validation errors
+     * @return the validation
+     */
+    private infix fun Invalid<*>.shouldHaveErrors(size: Int) =
+        errors shouldHaveSize size
 }

@@ -18,33 +18,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.service
 
-import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
-import dev.realmkit.hellper.fixture.stat.arbitrary
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.assertions.konform.shouldBeInvalid
-import io.kotest.assertions.konform.shouldBeValid
+import dev.realmkit.hellper.infra.IntegrationTestContext
+import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
+import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-class StatProgressionValidatorTest : TestSpec({
-    context("unit testing StatProgressionValidator") {
-        expect("progression to be valid") {
-            check(StatProgression.arbitrary) { progression ->
-                StatProgressionValidator.validation shouldBeValid progression
-            }
+@IntegrationTestContext
+class StatServiceTest(
+    private val statService: StatService,
+) : IntegrationTestSpec({
+    context("integration testing StatService") {
+        expect("all beans to be inject") {
+            statService.shouldNotBeNull()
         }
 
-        expect("stat to be invalid") {
-            val progression = StatProgression(
-                level = -1,
-                experience = -1,
-            )
-
-            StatProgressionValidator.validation.shouldBeInvalid(progression) {
-                it shouldContainFieldError (".level" to "must be positive")
-                it shouldContainFieldError (".experience" to "must be positive")
-            }
+        expect("initial to generate the init Stat values from properties") {
+            statService.initial
+                .shouldNotBeNull()
+                .asClue { stat ->
+                    stat.hp.shouldBePositive()
+                    stat.attack.shouldBePositive()
+                }
         }
     }
 })

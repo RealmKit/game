@@ -18,20 +18,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.game.domain.configuration.property
 
-import dev.realmkit.hellper.fixture.stat.arbitrary
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.domain.stat.document.Stat
 
-class StatProgressionTest : TestSpec({
-    context("unit testing StatProgression") {
-        expect("to create a new plain StatProgression") {
-            check(StatProgression.arbitrary) { progression ->
-                progression.shouldNotBeNull()
-                progression.level.shouldNotBeNull()
-                progression.experience.shouldNotBeNull()
-            }
-        }
-    }
-})
+/**
+ * # [StaticData]
+ *
+ * @property stat the stat value from properties
+ */
+data class StaticData(
+    val stat: Stat,
+)

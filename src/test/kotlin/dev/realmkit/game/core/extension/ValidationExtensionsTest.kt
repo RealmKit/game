@@ -22,7 +22,7 @@ package dev.realmkit.game.core.extension
 
 import dev.realmkit.game.core.extension.ValidationExtensions.notBlank
 import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldContainFieldError
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.spec.TestSpec
 import io.konform.validation.Validation
 import io.kotest.assertions.konform.shouldBeInvalid
@@ -46,8 +46,10 @@ class ValidationExtensionsTest : TestSpec({
                 Dummy::string { notBlank() }
                 Dummy::number { positive() }
             }.shouldBeInvalid(dummy) {
-                it shouldContainFieldError (".string" to "must not be blank")
-                it shouldContainFieldError (".number" to "must be positive")
+                it shouldHaveAllErrors listOf(
+                    ".string" to "must not be blank",
+                    ".number" to "must be positive",
+                )
             }
         }
     }

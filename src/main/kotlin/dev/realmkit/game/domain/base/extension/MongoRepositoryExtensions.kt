@@ -29,10 +29,13 @@ import org.springframework.data.mongodb.repository.MongoRepository
  */
 object MongoRepositoryExtensions {
     /**
-     * Persists a `Document` and transforms it to a `*ResponseDto`
+     * ## [persist]
+     * persists a [BaseDocument] on [MongoRepository]
      *
-     * @param document the `Document` to persist
-     * @return the DTO response after persisted on database
+     * @see MongoRepository
+     *
+     * @param document the document to persist
+     * @return the persisted document
      */
     infix fun <T : BaseDocument> MongoRepository<T, String>.persist(document: T): T =
         save(document)

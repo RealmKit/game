@@ -21,21 +21,24 @@
 package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
+import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
 import dev.realmkit.hellper.fixture.Fixture
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-
-/**
- * Creates a [Stat] [Arb] with random bind data
- */
-val Stat.Companion.arbitrary: Arb<Stat>
-    get() = arbitrary { fixture }
 
 /**
  * Creates a [Stat] with random data
  */
 val Stat.Companion.fixture: Stat
     get() = Fixture {
-        Stat::progression { StatProgression.fixture }
+        Stat::hp { positiveDouble }
+        Stat::attack { positiveDouble }
+    }
+
+/**
+ * Creates a [Stat] with random invalid data
+ */
+val Stat.Companion.invalid: Stat
+    get() = Fixture {
+        Stat::hp { negativeDouble }
+        Stat::attack { negativeDouble }
     }

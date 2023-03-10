@@ -18,21 +18,31 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.stat.service
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import dev.realmkit.game.core.extension.MapperExtensions.clone
+import dev.realmkit.game.domain.configuration.property.StaticDataProperties
+import dev.realmkit.game.domain.stat.document.Stat
+import org.springframework.stereotype.Service
 
 /**
- * # [Mapper]
- * [Mapper] extensions
+ * # [StatService]
+ * the [Stat] service.
+ *
+ * @see Service
+ *
+ * @property staticData the stat static data properties values
  */
-object Mapper {
+@Service
+data class StatService(
+    private val staticData: StaticDataProperties,
+) {
     /**
-     * Easy accessors to map JSON data.
+     * ## [initial]
+     * [Stat] initial value from properties
      *
-     * ```kotlin
-     * mapper.readValue(someStringJson, destinationClass::class.java)
-     * ```
+     * @see Stat
      */
-    val mapper = jacksonObjectMapper()
+    val initial: Stat
+        get() = staticData.initial.stat.clone()
 }

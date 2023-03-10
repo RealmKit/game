@@ -18,25 +18,17 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
+package dev.realmkit.game.domain.configuration.property
 
-import dev.realmkit.game.domain.stat.document.StatProgression
-import dev.realmkit.hellper.extension.FakerExtensions.positiveLong
-import dev.realmkit.hellper.fixture.Fixture
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
- * Creates a [StatProgression] [Arb] with random bind data
+ * # [StaticDataProperties]
+ * static data values
+ *
+ * @property initial initial static data values
  */
-val StatProgression.Companion.arbitrary: Arb<StatProgression>
-    get() = arbitrary { fixture }
-
-/**
- * Creates a [StatProgression] with random data
- */
-val StatProgression.Companion.fixture: StatProgression
-    get() = Fixture {
-        StatProgression::level { positiveLong }
-        StatProgression::experience { positiveLong }
-    }
+@ConfigurationProperties(prefix = "app.static.data")
+data class StaticDataProperties(
+    val initial: StaticData,
+)

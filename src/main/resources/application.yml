@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: ''
+      uuid-representation: standard
+  devtools:
+    add-properties: false

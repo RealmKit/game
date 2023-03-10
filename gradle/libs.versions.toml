@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.8.20-Beta"
+kotlin = "1.8.20-RC"
 kotlin-logging = "4.0.0-beta-2"
 kotlinx-coroutines = "1.6.4"
 kotlinx-kover = "0.7.0-ALPHA"

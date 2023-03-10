@@ -26,17 +26,17 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * # [Player]
+ * the Player document
  *
- * The [Player] [document][Document].
- *
- * @property name `the player` name
- * @property stat `the player` stat
  * @see BaseDocument
+ *
+ * @property name the player name
+ * @property stat the player stat
  */
 @Document
 data class Player(
     val name: String,
-    val stat: Stat = Stat(),
+    val stat: Stat,
 ) : BaseDocument() {
     companion object
 }

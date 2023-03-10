@@ -18,23 +18,34 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.core.extension
 
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.stat.document.StatProgression
-import io.konform.validation.Validation
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 /**
- * # [StatProgressionValidator]
- * [StatProgression] validations
+ * # [MapperExtensions]
+ * [jacksonObjectMapper] extensions
+ *
+ * @see jacksonObjectMapper
  */
-object StatProgressionValidator {
+object MapperExtensions {
     /**
-     * ## [validation]
-     * [StatProgression] [Validation] object
+     * ## [mapper]
+     * Easy accessors to map JSON data.
+     * ```kotlin
+     * mapper.readValue(someStringJson, destinationClass::class.java)
+     * ```
+     *
+     * @see jacksonObjectMapper
      */
-    val validation: Validation<StatProgression> = Validation {
-        StatProgression::level required { positive() }
-        StatProgression::experience required { positive() }
-    }
+    val mapper = jacksonObjectMapper()
+
+    /**
+     * ## [clone]
+     * deeply clones the object
+     *
+     * @return the cloned object
+     */
+    inline fun <reified T> T.clone(): T =
+        mapper.readValue(mapper.writeValueAsString(this), T::class.java)
 }

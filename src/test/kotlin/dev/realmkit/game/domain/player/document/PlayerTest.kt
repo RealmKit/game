@@ -20,22 +20,22 @@
 
 package dev.realmkit.game.domain.player.document
 
-import dev.realmkit.hellper.fixture.player.arbitrary
+import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
+import io.kotest.property.arbitrary.arbitrary
 
 class PlayerTest : TestSpec({
     context("unit testing Player") {
         expect("to create a new plain Player") {
-            check(Player.arbitrary) { player ->
+            check(arbitrary { Player.fixture }) { player ->
                 player.shouldNotBeNull()
                 player.name.shouldNotBeNull().shouldNotBeEmpty()
                 player.stat.shouldNotBeNull()
-                player.stat.progression.shouldNotBeNull()
-                player.stat.progression.level.shouldBeGreaterThan(0)
-                player.stat.progression.experience.shouldBeGreaterThan(0)
+                player.stat.hp.shouldBePositive()
+                player.stat.attack.shouldBePositive()
             }
         }
     }

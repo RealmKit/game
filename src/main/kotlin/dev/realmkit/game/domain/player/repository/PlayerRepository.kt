@@ -26,19 +26,9 @@ import org.springframework.stereotype.Repository
 
 /**
  * # [PlayerRepository]
- *
- * Mongo Repository for dealing with [Player documents][Player]
- *
+ * the [Player] Mongo Repository interface.
  * ```kotlin
- * import dev.realmkit.game.domain.player.repository.PlayerRepository
- *
- * class SomeService(
- *     // Inject the Repository
- *     private val playerRepository: PlayerRepository,
- * ) {
- *     fun create(): Player =
- *         playerRepository.save( Player() )
- * }
+ * playerRepository.save( Player() )
  * ```
  *
  * @see MongoRepository

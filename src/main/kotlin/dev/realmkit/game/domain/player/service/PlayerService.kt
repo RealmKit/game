@@ -25,52 +25,60 @@ import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
+import dev.realmkit.game.domain.stat.service.StatService
+import io.konform.validation.Validation
 import org.springframework.stereotype.Service
 
 /**
  * # [PlayerService]
+ * the [Player] service.
  *
- * Executes all logics for [Player] document
- *
- * @property playerRepository the player document repository
  * @see Service
+ *
+ * @property playerRepository the player repository bean
+ * @property statService the stat service
  */
 @Service
-class PlayerService(
+data class PlayerService(
     private val playerRepository: PlayerRepository,
+    private val statService: StatService,
 ) {
     /**
-     * Creates a new [Player] within provided fields and persist it to DB
+     * ## [new]
+     * creates a new [Player] and persists it to DB, if valid
      * ```kotlin
-     * playerService new Player(name = "Player Number 1")
+     * playerService new "Player Number 1"
      * ```
      *
-     * @param request the [player][Player] to create
-     * @return the [persisted entity][Player]
      * @see Player
-     * @throws ValidationException if [Player] has validations issues
+     *
+     * @param name the player name
+     * @return the validated persisted document
+     * @throws ValidationException if [Player] has [Validation] issues
      */
     @Throws(ValidationException::class)
-    infix fun new(request: Player): Player =
-        request validated { player ->
-            playerRepository persist player
-        }
+    infix fun new(name: String): Player =
+        this persist Player(
+            name = name,
+            stat = statService.initial,
+        )
 
     /**
-     * Increase [Player] experience and persist it to DB
+     * ## [persist]
+     * validate and persists a [Player] to DB, if valid.
      * ```kotlin
-     * playerService gainExperience (100L to player)
+     * playerService persist player
      * ```
      *
-     * @param request the player to update the experience
-     * @return the [persisted entity][Player]
      * @see Player
-     * @throws ValidationException if [Player] has validations issues
+     *
+     * @param request the player to persist
+     * @return the validated persisted document
+     * @throws ValidationException if [Player] has [Validation] issues
      */
     @Throws(ValidationException::class)
-    infix fun gainExperience(request: Pair<Long, Player>): Player =
-        request.second validated { player ->
-            player.stat.progression.experience += request.first
+    private infix fun persist(request: Player): Player =
+        request validated { player ->
             playerRepository persist player
         }
 }

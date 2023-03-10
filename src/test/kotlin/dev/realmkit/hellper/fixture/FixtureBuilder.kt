@@ -20,7 +20,7 @@
 
 package dev.realmkit.hellper.fixture
 
-import dev.realmkit.game.core.extension.Mapper
+import dev.realmkit.game.core.extension.MapperExtensions.mapper
 import org.json.JSONObject
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
@@ -57,7 +57,7 @@ data class FixtureBuilder<T : Any>(
      */
     fun build(): T =
         JSONObject(properties)
-            .run { Mapper.mapper.readValue(toString(), type.java) }
+            .run { mapper.readValue(toString(), type.java) }
 
     /**
      * ## [from]

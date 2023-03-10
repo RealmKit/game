@@ -20,9 +20,6 @@
 
 package dev.realmkit.hellper.spec
 
-import com.tngtech.archunit.core.domain.JavaClasses
-import com.tngtech.archunit.core.importer.ClassFileImporter
-import com.tngtech.archunit.core.importer.ImportOption
 import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.Priority.HIGH
@@ -53,12 +50,8 @@ private const val PACKAGE_BASE_SPRING = "org.springframework.."
  * A [ArchTestSpec] extends [TestSpec] with all default Arch Test suite case
  */
 abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
-    private val testJavaClasses: JavaClasses = ClassFileImporter()
-        .withImportOption(ImportOption.DoNotIncludeTests())
-        .importPackages(PACKAGE_BASE)
-
     /**
-     * Certify that no Classes throws any kind of generic `Exceptions`
+     * Certify that no Classes throws any kind of generic [Exception]
      */
     @ArchTest
     val noClassesShouldThrowGenericExceptions: ArchRule =
@@ -72,7 +65,7 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
         NO_CLASSES_SHOULD_USE_JAVA_UTIL_LOGGING
 
     /**
-     * Certify that no Classes use `org.joda.time`
+     * Certify that no Classes use [org.joda.time]
      */
     @ArchTest
     val noClassesShouldUseJodaTime: ArchRule =

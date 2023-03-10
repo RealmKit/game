@@ -21,6 +21,7 @@
 package dev.realmkit.hellper.infra
 
 import dev.realmkit.game.app.GameServiceApplication
+import io.kotest.core.annotation.DoNotParallelize
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.extensions.spring.SpringTestExtension
 import org.springframework.boot.test.context.SpringBootTest
@@ -30,7 +31,11 @@ import org.springframework.test.context.ActiveProfiles
  * [IntegrationTestContext]
  * Wraps all annotations needed to start an Integration Test
  */
-@ActiveProfiles("itest")
+@DoNotParallelize
+@ActiveProfiles(
+    "static-data",
+    "itest",
+)
 @SpringBootTest(classes = [GameServiceApplication::class])
 @ApplyExtension(SpringTestExtension::class)
 annotation class IntegrationTestContext

@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "app.static.data",
+      "description": "StaticData properties",
+      "type": "dev.realmkit.game.domain.configuration.property.StaticDataProperties",
+      "sourceType": "dev.realmkit.game.domain.configuration.property.StaticDataProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.devtools.add-properties",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "name": "app.static.data.initial.stat.hp",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat Health Points value"
+    },
+    {
+      "name": "app.static.data.initial.stat.attack",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat Attack value"
+    }
+  ],
+  "hints": []
+}

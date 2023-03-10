@@ -29,9 +29,8 @@ import java.time.Instant
 
 /**
  * # [BaseDocument]
- *
- * Defines default and audit properties for Documents.
- * Others documents should inherit from this class.
+ * defines default and audit properties for Documents
+ * others documents should inherit from this class
  *
  * ```kotlin
  * @Document
@@ -46,25 +45,25 @@ import java.time.Instant
  */
 open class BaseDocument {
     /**
-     * Document ID property
+     * document ID property
      */
     @Id
     lateinit var id: String
 
     /**
-     * Document creation time
+     * document creation time
      */
     @CreatedDate
     lateinit var createdAt: Instant
 
     /**
-     * Document update time
+     * document update time
      */
     @LastModifiedDate
     lateinit var updatedAt: Instant
 
     /**
-     * Document version
+     * document version
      */
     @Version
     lateinit var version: String

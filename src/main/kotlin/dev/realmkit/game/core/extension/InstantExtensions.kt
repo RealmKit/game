@@ -25,11 +25,13 @@ import java.time.Instant
 /**
  * # [InstantExtensions]
  * [Instant] extensions
+ *
+ * @see Instant
  */
 object InstantExtensions {
     /**
+     * ## [now]
      * Easy accessors to [Instant] functions and properties.
-     *
      * ```kotlin
      * val time = now
      * ```

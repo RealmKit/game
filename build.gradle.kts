@@ -77,6 +77,13 @@ dependencies {
 }
 
 // Configuration
+kotlin {
+    sourceSets.all {
+        languageSettings.languageVersion = "2.0"
+    }
+}
+
+// Code Quality
 configure<SpotlessExtension> {
     kotlin {
         target("**/*.kt")
@@ -117,10 +124,9 @@ tasks {
         useJUnitPlatform()
     }
 
+    // Code Quality
     withType<Detekt> {
-        reports {
-            sarif.required.set(true)
-        }
+        reports.sarif.required.set(true)
     }
 
     // Default Tasks
