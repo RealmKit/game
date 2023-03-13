@@ -25,6 +25,7 @@ import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
 
@@ -44,8 +45,9 @@ class GameTest(
                     player.createdAt.shouldNotBeNull()
                     player.updatedAt.shouldNotBeNull()
                     player.name.shouldNotBeNull().shouldNotBeEmpty()
-                    player.stat.hp.shouldBePositive()
-                    player.stat.attack.shouldBePositive()
+                    player.stat.hull.shouldBePositive()
+                    player.stat.shield.shouldBeZero()
+                    player.stat.power.shouldBePositive()
                 }
         }
     }

@@ -55,8 +55,9 @@ class PlayerRepositoryTest(
                     find.updatedAt.shouldNotBeNull()
                     find.version.shouldNotBeNull()
                     find.name shouldBe player.name
-                    find.stat.hp.shouldBePositive()
-                    find.stat.attack.shouldBePositive()
+                    find.stat.hull.shouldBePositive()
+                    find.stat.shield.shouldBePositive()
+                    find.stat.power.shouldBePositive()
                 }
             }
             playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }

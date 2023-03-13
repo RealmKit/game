@@ -13,14 +13,19 @@
       "type": "java.lang.Boolean"
     },
     {
-      "name": "app.static.data.initial.stat.hp",
+      "name": "app.static.data.initial.stat.hull",
       "type": "java.lang.Double",
-      "description": "StaticData Initial Stat Health Points value"
+      "description": "StaticData Initial Stat: Hull Points (hp)"
     },
     {
-      "name": "app.static.data.initial.stat.attack",
+      "name": "app.static.data.initial.stat.shield",
       "type": "java.lang.Double",
-      "description": "StaticData Initial Stat Attack value"
+      "description": "StaticData Initial Stat: Shield Points (sp)"
+    },
+    {
+      "name": "app.static.data.initial.stat.power",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Power (attack)"
     }
   ],
   "hints": []

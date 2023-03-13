@@ -31,13 +31,15 @@ class StaticDataTest : IntegrationTestSpec({
         expect("instantiate a StaticData") {
             StaticData(
                 stat = Stat(
-                    hp = 100.0,
-                    attack = 10.0,
+                    hull = 100.0,
+                    shield = 100.0,
+                    power = 10.0,
                 ),
             ).shouldNotBeNull().asClue { staticData ->
                 staticData.stat.shouldNotBeNull()
-                staticData.stat.hp.shouldBePositive()
-                staticData.stat.attack.shouldBePositive()
+                staticData.stat.hull.shouldBePositive()
+                staticData.stat.shield.shouldBePositive()
+                staticData.stat.power.shouldBePositive()
             }
         }
     }

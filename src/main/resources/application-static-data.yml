@@ -1,5 +1,6 @@
 app.static.data:
   initial:
     stat:
-      hp: 5.0
-      attack: 1.0
+      hull: 5.0
+      shield: 0.0
+      power: 1.0

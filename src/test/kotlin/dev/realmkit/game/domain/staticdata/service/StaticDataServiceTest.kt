@@ -24,6 +24,7 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 @IntegrationTestContext
@@ -41,8 +42,9 @@ class StaticDataServiceTest(
                 .asClue { staticData ->
                     staticData.shouldNotBeNull()
                     staticData.stat.shouldNotBeNull()
-                    staticData.stat.hp.shouldBePositive()
-                    staticData.stat.attack.shouldBePositive()
+                    staticData.stat.hull.shouldBePositive()
+                    staticData.stat.shield.shouldBeZero()
+                    staticData.stat.power.shouldBePositive()
                 }
         }
     }

@@ -63,8 +63,9 @@ class PlayerValidatorTest : TestSpec({
                 PlayerValidator.validation.shouldBeInvalid(player) { invalid ->
                     invalid shouldHaveAllErrors listOf(
                         ".name" to "must not be blank",
-                        ".stat.hp" to "must be positive",
-                        ".stat.attack" to "must be positive",
+                        ".stat.hull" to "must be positive",
+                        ".stat.shield" to "must be positive",
+                        ".stat.power" to "must be positive",
                     )
                 }
             }
