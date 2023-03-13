@@ -34,8 +34,9 @@ class PlayerTest : TestSpec({
                 player.shouldNotBeNull()
                 player.name.shouldNotBeNull().shouldNotBeEmpty()
                 player.stat.shouldNotBeNull()
-                player.stat.hp.shouldBePositive()
-                player.stat.attack.shouldBePositive()
+                player.stat.hull.shouldBePositive()
+                player.stat.shield.shouldBePositive()
+                player.stat.power.shouldBePositive()
             }
         }
     }

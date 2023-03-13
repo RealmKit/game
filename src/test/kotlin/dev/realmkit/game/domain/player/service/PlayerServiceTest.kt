@@ -28,6 +28,7 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.property.arbitrary.arbitrary
 
@@ -48,8 +49,9 @@ class PlayerServiceTest(
                 saved.updatedAt.shouldNotBeNull()
                 saved.version.shouldNotBeNull()
                 saved.name.shouldNotBeNull()
-                saved.stat.hp.shouldBePositive()
-                saved.stat.attack.shouldBePositive()
+                saved.stat.hull.shouldBePositive()
+                saved.stat.shield.shouldBeZero()
+                saved.stat.power.shouldBePositive()
             }
         }
 

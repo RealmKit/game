@@ -30,8 +30,9 @@ import dev.realmkit.hellper.fixture.Fixture
  */
 val Stat.Companion.fixture: Stat
     get() = Fixture {
-        Stat::hp { positiveDouble }
-        Stat::attack { positiveDouble }
+        Stat::hull { positiveDouble }
+        Stat::shield { positiveDouble }
+        Stat::power { positiveDouble }
     }
 
 /**
@@ -39,6 +40,7 @@ val Stat.Companion.fixture: Stat
  */
 val Stat.Companion.invalid: Stat
     get() = Fixture {
-        Stat::hp { negativeDouble }
-        Stat::attack { negativeDouble }
+        Stat::hull { negativeDouble }
+        Stat::shield { negativeDouble }
+        Stat::power { negativeDouble }
     }

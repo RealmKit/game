@@ -24,12 +24,14 @@ package dev.realmkit.game.domain.stat.document
  * # [Stat]
  * the Stat document
  *
- * @property hp `the stat` health points
- * @property attack `the stat` base attack
+ * @property hull `the stat` hull points (hp)
+ * @property shield `the stat` shield points (sp)
+ * @property power `the stat` base power (attack)
  */
 data class Stat(
-    var hp: Double,
-    var attack: Double,
+    var hull: Double,
+    var shield: Double,
+    var power: Double,
 ) {
     companion object
 }

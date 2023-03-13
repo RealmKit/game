@@ -32,21 +32,25 @@ class StatTest : TestSpec({
         expect("to create a new Stat") {
             check(arbitrary { Stat.fixture }) { stat ->
                 stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
+                stat.hull.shouldBePositive()
+                stat.shield.shouldBePositive()
+                stat.power.shouldBePositive()
             }
         }
 
         expect("to update a Stat") {
             check(arbitrary { Stat.fixture }) { stat ->
                 stat.shouldNotBeNull()
-                stat.hp.shouldBePositive()
-                stat.attack.shouldBePositive()
+                stat.hull.shouldBePositive()
+                stat.shield.shouldBePositive()
+                stat.power.shouldBePositive()
 
-                stat.hp = 0.0
-                stat.hp.shouldBeZero()
-                stat.attack = 0.0
-                stat.attack.shouldBeZero()
+                stat.hull = 0.0
+                stat.hull.shouldBeZero()
+                stat.shield = 0.0
+                stat.shield.shouldBeZero()
+                stat.power = 0.0
+                stat.power.shouldBeZero()
             }
         }
     }
