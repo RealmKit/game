@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
@@ -29,25 +29,22 @@ import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 import io.kotest.property.arbitrary.arbitrary
 
-class StatValidatorTest : TestSpec({
-    context("unit testing StatValidator") {
-        expect("stat to be valid") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                StatValidator.validation shouldBeValid stat
+class StatBaseValidatorTest : TestSpec({
+    context("unit testing StatBaseValidator") {
+        expect("base to be valid") {
+            check(arbitrary { StatBase.fixture }) { base ->
+                StatBaseValidator.validation shouldBeValid base
             }
         }
 
-        expect("stat to be invalid") {
-            check(arbitrary { Stat.invalid }) { stat ->
-                StatValidator.validation.shouldBeInvalid(stat) { invalid ->
+        expect("base to be invalid") {
+            check(arbitrary { StatBase.invalid }) { base ->
+                StatBaseValidator.validation.shouldBeInvalid(base) { invalid ->
                     invalid shouldHaveAllErrors listOf(
-                        ".base.hull" to ".current must be lower than .max",
-                        ".base.hull.max" to "must be positive",
-                        ".base.shield" to ".current must be lower than .max",
-                        ".base.shield.max" to "must be positive",
-                        ".rate.shieldRegeneration" to "must be positive",
-                        ".rate.critical" to "must be positive",
-                        ".multiplier.critical" to "must be positive",
+                        ".hull" to ".current must be lower than .max",
+                        ".hull.max" to "must be positive",
+                        ".shield" to ".current must be lower than .max",
+                        ".shield.max" to "must be positive",
                     )
                 }
             }

@@ -18,28 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatBase
+import io.konform.validation.Validation
 
 /**
- * # [Target]
- * the Target interface
+ * # [StatBaseValidator]
+ * [StatBase] validations
  */
-interface Target {
+object StatBaseValidator {
     /**
-     * ## [stat]
-     * the target stat
+     * ## [validation]
+     * [StatBase] -> [Validation] object
      */
-    val stat: Stat
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
+    val validation: Validation<StatBase> = Validation {
+        StatBase::hull required { run(StatValueValidator.double) }
+        StatBase::shield required { run(StatValueValidator.double) }
+    }
 }

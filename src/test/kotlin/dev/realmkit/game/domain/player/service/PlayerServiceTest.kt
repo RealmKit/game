@@ -49,9 +49,16 @@ class PlayerServiceTest(
                 saved.updatedAt.shouldNotBeNull()
                 saved.version.shouldNotBeNull()
                 saved.name.shouldNotBeNull()
-                saved.stat.hull.shouldBePositive()
-                saved.stat.shield.shouldBeZero()
-                saved.stat.power.shouldBePositive()
+                saved.stat.base.hull.current.shouldBePositive()
+                saved.stat.base.hull.max.shouldBePositive()
+                saved.stat.base.shield.current.shouldBeZero()
+                saved.stat.base.shield.max.shouldBeZero()
+                saved.stat.base.power.shouldBePositive()
+                saved.stat.base.defense.shouldBeZero()
+                saved.stat.base.speed.shouldBePositive()
+                saved.stat.rate.shieldRegeneration.shouldBeZero()
+                saved.stat.rate.critical.shouldBeZero()
+                saved.stat.multiplier.critical.shouldBePositive()
             }
         }
 

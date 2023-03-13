@@ -18,28 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
-
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+package dev.realmkit.game.domain.stat.document
 
 /**
- * # [Target]
- * the Target interface
+ * # [StatBase]
+ * the StatBase document
+ *
+ * @see Stat
+ *
+ * @property hull `the base` hull points (hp)
+ * @property shield `the base` shield points (sp)
+ * @property power `the base` base power (attack)
+ * @property defense `the base` base defense (defense)
+ * @property speed `the base` base speed (speed)
  */
-interface Target {
-    /**
-     * ## [stat]
-     * the target stat
-     */
-    val stat: Stat
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
+data class StatBase(
+    var hull: StatValue<Double>,
+    var shield: StatValue<Double>,
+    var power: Double,
+    var defense: Double,
+    var speed: Double,
+) {
+    companion object
 }

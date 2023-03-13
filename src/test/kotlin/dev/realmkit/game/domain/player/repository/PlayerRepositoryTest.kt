@@ -55,9 +55,16 @@ class PlayerRepositoryTest(
                     find.updatedAt.shouldNotBeNull()
                     find.version.shouldNotBeNull()
                     find.name shouldBe player.name
-                    find.stat.hull.shouldBePositive()
-                    find.stat.shield.shouldBePositive()
-                    find.stat.power.shouldBePositive()
+                    find.stat.base.hull.current.shouldBePositive()
+                    find.stat.base.hull.max.shouldBePositive()
+                    find.stat.base.shield.current.shouldBePositive()
+                    find.stat.base.shield.max.shouldBePositive()
+                    find.stat.base.power.shouldBePositive()
+                    find.stat.base.defense.shouldBePositive()
+                    find.stat.base.speed.shouldBePositive()
+                    find.stat.rate.shieldRegeneration.shouldBePositive()
+                    find.stat.rate.critical.shouldBePositive()
+                    find.stat.multiplier.critical.shouldBePositive()
                 }
             }
             playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }

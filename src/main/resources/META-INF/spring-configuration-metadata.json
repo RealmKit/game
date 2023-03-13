@@ -13,19 +13,44 @@
       "type": "java.lang.Boolean"
     },
     {
-      "name": "app.static.data.initial.stat.hull",
+      "name": "app.static.data.initial.stat.base.hull.max",
       "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Hull Points (hp)"
+      "description": "StaticData Initial Stat: Max Hull Points (hp)."
     },
     {
-      "name": "app.static.data.initial.stat.shield",
+      "name": "app.static.data.initial.stat.base.shield.max",
       "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Shield Points (sp)"
+      "description": "StaticData Initial Stat: Max Shield Points (sp)."
     },
     {
-      "name": "app.static.data.initial.stat.power",
+      "name": "app.static.data.initial.stat.base.power",
       "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Power (attack)"
+      "description": "StaticData Initial Stat: Power (attack)."
+    },
+    {
+      "name": "app.static.data.initial.stat.base.defense",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Defense (defense)."
+    },
+    {
+      "name": "app.static.data.initial.stat.base.speed",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Speed (speed)."
+    },
+    {
+      "name": "app.static.data.initial.stat.rate.shieldRegeneration",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Shield Regeneration rate."
+    },
+    {
+      "name": "app.static.data.initial.stat.rate.critical",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Critical chance."
+    },
+    {
+      "name": "app.static.data.initial.stat.multiplier.critical",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Critical multiplier."
     }
   ],
   "hints": []

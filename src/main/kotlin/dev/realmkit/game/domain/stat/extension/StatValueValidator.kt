@@ -18,28 +18,28 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.stat.document.StatValue
+import io.konform.validation.Validation
+
+typealias StatValueDouble = StatValue<Double>
 
 /**
- * # [Target]
- * the Target interface
+ * # [StatValueValidator]
+ * [StatValue] validations
  */
-interface Target {
+object StatValueValidator {
     /**
-     * ## [stat]
-     * the target stat
+     * ## [double]
+     * [StatValueDouble] -> [Validation] object
      */
-    val stat: Stat
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
+    val double: Validation<StatValueDouble> = Validation {
+        StatValueDouble::current required {}
+        StatValueDouble::max required { positive() }
+        addConstraint(".current must be lower than .max") {
+            it.current <= it.max
+        }
+    }
 }

@@ -18,28 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
-
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+package dev.realmkit.game.domain.stat.document
 
 /**
- * # [Target]
- * the Target interface
+ * # [StatMultiplier]
+ * the StatMultiplier document
+ *
+ * @see Stat
+ *
+ * @property critical `the multiplier` for critical hit damage
  */
-interface Target {
-    /**
-     * ## [stat]
-     * the target stat
-     */
-    val stat: Stat
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
+data class StatMultiplier(
+    var critical: Double,
+) {
+    companion object
 }

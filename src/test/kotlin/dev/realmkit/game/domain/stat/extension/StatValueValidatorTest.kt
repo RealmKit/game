@@ -20,21 +20,32 @@
 
 package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.stat.document.Stat
-import io.konform.validation.Validation
+import dev.realmkit.game.domain.stat.document.StatValue
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
+import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.fixture.stat.invalid
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.assertions.konform.shouldBeInvalid
+import io.kotest.assertions.konform.shouldBeValid
+import io.kotest.property.arbitrary.arbitrary
 
-/**
- * # [StatValidator]
- * [Stat] validations
- */
-object StatValidator {
-    /**
-     * ## [validation]
-     * [Stat] -> [Validation] object
-     */
-    val validation: Validation<Stat> = Validation {
-        Stat::base required { run(StatBaseValidator.validation) }
-        Stat::rate required { run(StatRateValidator.validation) }
-        Stat::multiplier required { run(StatMultiplierValidator.validation) }
+class StatValueValidatorTest : TestSpec({
+    context("unit testing StatValueValidator") {
+        expect("value to be valid") {
+            check(arbitrary { StatValue.fixture }) { value ->
+                StatValueValidator.double shouldBeValid value
+            }
+        }
+
+        expect("value to be invalid") {
+            check(arbitrary { StatValue.invalid }) { value ->
+                StatValueValidator.double.shouldBeInvalid(value) { invalid ->
+                    invalid shouldHaveAllErrors listOf(
+                        "" to ".current must be lower than .max",
+                        ".max" to "must be positive",
+                    )
+                }
+            }
+        }
     }
-}
+})
