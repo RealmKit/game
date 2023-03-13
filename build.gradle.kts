@@ -76,13 +76,6 @@ dependencies {
     detektPlugins(libs.bundles.quality.deteket)
 }
 
-// Configuration
-kotlin {
-    sourceSets.all {
-        languageSettings.languageVersion = "2.0"
-    }
-}
-
 // Code Quality
 configure<SpotlessExtension> {
     kotlin {

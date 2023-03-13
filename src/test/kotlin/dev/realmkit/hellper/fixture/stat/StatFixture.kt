@@ -40,7 +40,6 @@ val Stat.Companion.fixture: Stat
  */
 val Stat.Companion.invalid: Stat
     get() = Fixture {
-        Stat::hull { negativeDouble }
         Stat::shield { negativeDouble }
         Stat::power { negativeDouble }
     }

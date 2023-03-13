@@ -34,7 +34,7 @@ object StatValidator {
      * [Stat] [Validation] object
      */
     val validation: Validation<Stat> = Validation {
-        Stat::hull required { positive() }
+        Stat::hull required {}
         Stat::shield required { positive() }
         Stat::power required { positive() }
     }

@@ -22,10 +22,15 @@ package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.checkAll
 
 class PlayerTest : TestSpec({
     context("unit testing Player") {
@@ -37,6 +42,31 @@ class PlayerTest : TestSpec({
                 player.stat.hull.shouldBePositive()
                 player.stat.shield.shouldBePositive()
                 player.stat.power.shouldBePositive()
+            }
+        }
+
+        expect("Player to calculate the damage output") {
+            check(arbitrary { Player.fixture }) { player ->
+                val damage = player.stat.power
+                player.damage() shouldBe damage
+            }
+        }
+
+        expect("Player to attack Target until dead") {
+            checkAll(arbitrary { Player.fixture }, arbitrary { Player.fixture }) { player, target ->
+                player.stat.hull.shouldBePositive()
+                player.isAlive().shouldBeTrue()
+                target.stat.hull.shouldBePositive()
+                target.isAlive().shouldBeTrue()
+
+                while (target.isAlive()) {
+                    player attack target
+                }
+
+                player.stat.hull.shouldBePositive()
+                player.isAlive().shouldBeTrue()
+                target.stat.hull.shouldBeLessThanOrEqual(0.0)
+                target.isAlive().shouldBeFalse()
             }
         }
     }

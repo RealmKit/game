@@ -21,34 +21,34 @@
 package dev.realmkit.game.app
 
 import dev.realmkit.game.domain.player.service.PlayerService
+import dev.realmkit.game.domain.target.service.TargetService
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.string.shouldNotBeEmpty
+import io.kotest.matchers.shouldBe
 
 @IntegrationTestContext
 class GameTest(
     private val playerService: PlayerService,
+    private val targetService: TargetService,
 ) : IntegrationTestSpec({
     context("integration testing Game Application") {
         expect("all beans to be inject") {
             playerService.shouldNotBeNull()
+            targetService.shouldNotBeNull()
         }
 
         expect("the game to run normally") {
-            playerService.new(faker.superhero.name())
-                .also { player ->
-                    player.id.shouldNotBeNull()
-                    player.createdAt.shouldNotBeNull()
-                    player.updatedAt.shouldNotBeNull()
-                    player.name.shouldNotBeNull().shouldNotBeEmpty()
-                    player.stat.hull.shouldBePositive()
-                    player.stat.shield.shouldBeZero()
-                    player.stat.power.shouldBePositive()
-                }
+            val player = playerService.new(faker.superhero.name())
+            val enemy = playerService.new(faker.superhero.name())
+
+            player.damage() shouldBe 1.0
+            enemy.stat.hull shouldBe 5.0
+
+            targetService.attack(player to enemy)
+            enemy.stat.hull shouldBe 4.0
+            enemy.isAlive() shouldBe true
         }
     }
 })
