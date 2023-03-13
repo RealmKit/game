@@ -18,24 +18,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.hellper.fixture.stat
 
-import dev.realmkit.game.domain.stat.document.Stat
-import io.konform.validation.Validation
+import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.hellper.extension.FakerExtensions.negativeLong
+import dev.realmkit.hellper.extension.FakerExtensions.positiveLong
+import dev.realmkit.hellper.fixture.Fixture
 
 /**
- * # [StatValidator]
- * [Stat] validations
+ * Creates a [StatProgression] with random data
  */
-object StatValidator {
-    /**
-     * ## [validation]
-     * [Stat] -> [Validation] object
-     */
-    val validation: Validation<Stat> = Validation {
-        Stat::base required { run(StatBaseValidator.validation) }
-        Stat::rate required { run(StatRateValidator.validation) }
-        Stat::multiplier required { run(StatMultiplierValidator.validation) }
-        Stat::progression required { run(StatProgressionValidator.validation) }
+val StatProgression.Companion.fixture: StatProgression
+    get() = Fixture {
+        StatProgression::level { positiveLong }
+        StatProgression::experience { positiveLong }
     }
-}
+
+/**
+ * Creates a [StatProgression] with random invalid data
+ */
+val StatProgression.Companion.invalid: StatProgression
+    get() = Fixture {
+        StatProgression::level { negativeLong }
+        StatProgression::experience { negativeLong }
+    }

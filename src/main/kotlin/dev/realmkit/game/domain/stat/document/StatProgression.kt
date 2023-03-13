@@ -18,24 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
-
-import dev.realmkit.game.domain.stat.document.Stat
-import io.konform.validation.Validation
+package dev.realmkit.game.domain.stat.document
 
 /**
- * # [StatValidator]
- * [Stat] validations
+ * # [StatProgression]
+ * the StatProgression document
+ *
+ * @see Stat
+ *
+ * @property level `the progression` for level
+ * @property experience `the progression` for experience
  */
-object StatValidator {
-    /**
-     * ## [validation]
-     * [Stat] -> [Validation] object
-     */
-    val validation: Validation<Stat> = Validation {
-        Stat::base required { run(StatBaseValidator.validation) }
-        Stat::rate required { run(StatRateValidator.validation) }
-        Stat::multiplier required { run(StatMultiplierValidator.validation) }
-        Stat::progression required { run(StatProgressionValidator.validation) }
-    }
+data class StatProgression(
+    var level: Long,
+    var experience: Long,
+) {
+    companion object
 }

@@ -23,6 +23,7 @@ package dev.realmkit.hellper.fixture.stat
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
+import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.hellper.fixture.Fixture
 
@@ -34,6 +35,7 @@ val Stat.Companion.fixture: Stat
         Stat::base { StatBase.fixture }
         Stat::rate { StatRate.fixture }
         Stat::multiplier { StatMultiplier.fixture }
+        Stat::progression { StatProgression.fixture }
     }
 
 /**
@@ -44,4 +46,5 @@ val Stat.Companion.invalid: Stat
         Stat::base { StatBase.invalid }
         Stat::rate { StatRate.invalid }
         Stat::multiplier { StatMultiplier.invalid }
+        Stat::progression { StatProgression.invalid }
     }

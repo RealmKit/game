@@ -20,22 +20,21 @@
 
 package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.stat.document.StatProgression
 import io.konform.validation.Validation
 
 /**
- * # [StatValidator]
- * [Stat] validations
+ * # [StatProgressionValidator]
+ * [StatProgression] validations
  */
-object StatValidator {
+object StatProgressionValidator {
     /**
      * ## [validation]
-     * [Stat] -> [Validation] object
+     * [StatProgression] -> [Validation] object
      */
-    val validation: Validation<Stat> = Validation {
-        Stat::base required { run(StatBaseValidator.validation) }
-        Stat::rate required { run(StatRateValidator.validation) }
-        Stat::multiplier required { run(StatMultiplierValidator.validation) }
-        Stat::progression required { run(StatProgressionValidator.validation) }
+    val validation: Validation<StatProgression> = Validation {
+        StatProgression::level required { positive() }
+        StatProgression::experience required { positive() }
     }
 }

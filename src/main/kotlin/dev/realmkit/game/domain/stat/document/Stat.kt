@@ -27,11 +27,13 @@ package dev.realmkit.game.domain.stat.document
  * @property base `the stat` base attributes
  * @property rate `the stat` rate attributes
  * @property multiplier `the stat` multiplier attributes
+ * @property progression `the stat` progression attributes
  */
 data class Stat(
     var base: StatBase,
     var rate: StatRate,
     var multiplier: StatMultiplier,
+    var progression: StatProgression,
 ) {
     companion object
 }

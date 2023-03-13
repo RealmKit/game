@@ -51,6 +51,16 @@
       "name": "app.static.data.initial.stat.multiplier.critical",
       "type": "java.lang.Double",
       "description": "StaticData Initial Stat: Critical multiplier."
+    },
+    {
+      "name": "app.static.data.initial.stat.progression.level",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Stat: Level progression."
+    },
+    {
+      "name": "app.static.data.initial.stat.progression.experience",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Stat: Experience progression."
     }
   ],
   "hints": []
