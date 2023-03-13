@@ -26,14 +26,14 @@ import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.spec.IntegrationTestSpec
+import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 
-class StaticDataTest : IntegrationTestSpec({
-    context("integration testing StaticData") {
+class StaticDataTest : TestSpec({
+    context("unit testing StaticData") {
         expect("instantiate a StaticData") {
             StaticData(
                 stat = Stat(
