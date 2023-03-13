@@ -23,11 +23,13 @@ package dev.realmkit.game.domain.staticdata.document
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
+import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.game.domain.stat.document.StatValue
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 class StaticDataTest : IntegrationTestSpec({
@@ -49,6 +51,10 @@ class StaticDataTest : IntegrationTestSpec({
                     multiplier = StatMultiplier(
                         critical = 100.0,
                     ),
+                    progression = StatProgression(
+                        level = 1,
+                        experience = 1,
+                    ),
                 ),
             ).shouldNotBeNull().asClue { staticData ->
                 staticData.stat.shouldNotBeNull()
@@ -62,6 +68,8 @@ class StaticDataTest : IntegrationTestSpec({
                 staticData.stat.rate.shieldRegeneration.shouldBePositive()
                 staticData.stat.rate.critical.shouldBePositive()
                 staticData.stat.multiplier.critical.shouldBePositive()
+                staticData.stat.progression.level.shouldBePositive()
+                staticData.stat.progression.experience.shouldBePositive()
             }
         }
     }

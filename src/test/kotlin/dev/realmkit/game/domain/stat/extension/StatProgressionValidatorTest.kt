@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.stat.extension
 
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
@@ -29,27 +29,20 @@ import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 import io.kotest.property.arbitrary.arbitrary
 
-class StatValidatorTest : TestSpec({
-    context("unit testing StatValidator") {
-        expect("stat to be valid") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                StatValidator.validation shouldBeValid stat
+class StatProgressionValidatorTest : TestSpec({
+    context("unit testing StatProgressionValidator") {
+        expect("progression to be valid") {
+            check(arbitrary { StatProgression.fixture }) { progression ->
+                StatProgressionValidator.validation shouldBeValid progression
             }
         }
 
-        expect("stat to be invalid") {
-            check(arbitrary { Stat.invalid }) { stat ->
-                StatValidator.validation.shouldBeInvalid(stat) { invalid ->
+        expect("progression to be invalid") {
+            check(arbitrary { StatProgression.invalid }) { progression ->
+                StatProgressionValidator.validation.shouldBeInvalid(progression) { invalid ->
                     invalid shouldHaveAllErrors listOf(
-                        ".base.hull" to ".current must be lower than .max",
-                        ".base.hull.max" to "must be positive",
-                        ".base.shield" to ".current must be lower than .max",
-                        ".base.shield.max" to "must be positive",
-                        ".rate.shieldRegeneration" to "must be positive",
-                        ".rate.critical" to "must be positive",
-                        ".multiplier.critical" to "must be positive",
-                        ".progression.level" to "must be positive",
-                        ".progression.experience" to "must be positive",
+                        ".level" to "must be positive",
+                        ".experience" to "must be positive",
                     )
                 }
             }

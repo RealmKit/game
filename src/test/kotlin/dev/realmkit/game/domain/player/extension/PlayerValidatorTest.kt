@@ -70,6 +70,8 @@ class PlayerValidatorTest : TestSpec({
                         ".stat.rate.shieldRegeneration" to "must be positive",
                         ".stat.rate.critical" to "must be positive",
                         ".stat.multiplier.critical" to "must be positive",
+                        ".stat.progression.level" to "must be positive",
+                        ".stat.progression.experience" to "must be positive",
                     )
                 }
             }
