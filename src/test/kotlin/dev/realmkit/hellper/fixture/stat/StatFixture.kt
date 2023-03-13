@@ -21,8 +21,9 @@
 package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.game.domain.stat.document.StatBase
+import dev.realmkit.game.domain.stat.document.StatMultiplier
+import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.hellper.fixture.Fixture
 
 /**
@@ -30,9 +31,9 @@ import dev.realmkit.hellper.fixture.Fixture
  */
 val Stat.Companion.fixture: Stat
     get() = Fixture {
-        Stat::hull { positiveDouble }
-        Stat::shield { positiveDouble }
-        Stat::power { positiveDouble }
+        Stat::base { StatBase.fixture }
+        Stat::rate { StatRate.fixture }
+        Stat::multiplier { StatMultiplier.fixture }
     }
 
 /**
@@ -40,6 +41,7 @@ val Stat.Companion.fixture: Stat
  */
 val Stat.Companion.invalid: Stat
     get() = Fixture {
-        Stat::shield { negativeDouble }
-        Stat::power { negativeDouble }
+        Stat::base { StatBase.invalid }
+        Stat::rate { StatRate.invalid }
+        Stat::multiplier { StatMultiplier.invalid }
     }

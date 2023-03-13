@@ -32,25 +32,39 @@ class StatTest : TestSpec({
         expect("to create a new Stat") {
             check(arbitrary { Stat.fixture }) { stat ->
                 stat.shouldNotBeNull()
-                stat.hull.shouldBePositive()
-                stat.shield.shouldBePositive()
-                stat.power.shouldBePositive()
+                stat.base.hull.current.shouldBePositive()
+                stat.base.hull.max.shouldBePositive()
+                stat.base.shield.current.shouldBePositive()
+                stat.base.shield.max.shouldBePositive()
+                stat.base.power.shouldBePositive()
+                stat.base.defense.shouldBePositive()
+                stat.base.speed.shouldBePositive()
+                stat.rate.shieldRegeneration.shouldBePositive()
+                stat.rate.critical.shouldBePositive()
+                stat.multiplier.critical.shouldBePositive()
             }
         }
 
         expect("to update a Stat") {
             check(arbitrary { Stat.fixture }) { stat ->
                 stat.shouldNotBeNull()
-                stat.hull.shouldBePositive()
-                stat.shield.shouldBePositive()
-                stat.power.shouldBePositive()
 
-                stat.hull = 0.0
-                stat.hull.shouldBeZero()
-                stat.shield = 0.0
-                stat.shield.shouldBeZero()
-                stat.power = 0.0
-                stat.power.shouldBeZero()
+                stat.base.hull.current.shouldBePositive()
+                stat.base.hull.current = 0.0
+                stat.base.hull.current.shouldBeZero()
+
+                stat.base.hull.max.shouldBePositive()
+                stat.base.hull.max = 0.0
+                stat.base.hull.max.shouldBeZero()
+
+                stat.base.shield.current.shouldBePositive()
+                stat.base.shield.max.shouldBePositive()
+                stat.base.power.shouldBePositive()
+                stat.base.defense.shouldBePositive()
+                stat.base.speed.shouldBePositive()
+                stat.rate.shieldRegeneration.shouldBePositive()
+                stat.rate.critical.shouldBePositive()
+                stat.multiplier.critical.shouldBePositive()
             }
         }
     }

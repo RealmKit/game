@@ -18,28 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.hellper.fixture.stat
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatMultiplier
+import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
+import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.hellper.fixture.Fixture
 
 /**
- * # [Target]
- * the Target interface
+ * Creates a [StatMultiplier] with random data
  */
-interface Target {
-    /**
-     * ## [stat]
-     * the target stat
-     */
-    val stat: Stat
+val StatMultiplier.Companion.fixture: StatMultiplier
+    get() = Fixture {
+        StatMultiplier::critical { positiveDouble }
+    }
 
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
-}
+/**
+ * Creates a [StatMultiplier] with random invalid data
+ */
+val StatMultiplier.Companion.invalid: StatMultiplier
+    get() = Fixture {
+        StatMultiplier::critical { negativeDouble }
+    }

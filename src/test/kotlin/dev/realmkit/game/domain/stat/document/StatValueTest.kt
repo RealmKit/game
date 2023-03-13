@@ -18,28 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.game.domain.stat.document
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.arbitrary.arbitrary
 
-/**
- * # [Target]
- * the Target interface
- */
-interface Target {
-    /**
-     * ## [stat]
-     * the target stat
-     */
-    val stat: Stat
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
-}
+class StatValueTest : TestSpec({
+    context("unit testing StatValue") {
+        expect("to create a new StatValue") {
+            check(arbitrary { StatValue.fixture }) { value ->
+                value.shouldNotBeNull()
+                value.current.shouldBePositive()
+                value.max.shouldBePositive()
+            }
+        }
+    }
+})

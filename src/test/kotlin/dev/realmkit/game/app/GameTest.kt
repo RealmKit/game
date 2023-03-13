@@ -43,12 +43,11 @@ class GameTest(
             val player = playerService.new(faker.superhero.name())
             val enemy = playerService.new(faker.superhero.name())
 
-            player.damage() shouldBe 1.0
-            enemy.stat.hull shouldBe 5.0
+            enemy.stat.base.hull.current shouldBe 5.0
 
             targetService.attack(player to enemy)
-            enemy.stat.hull shouldBe 4.0
-            enemy.isAlive() shouldBe true
+            enemy.stat.base.hull.current shouldBe 4.0
+            enemy.alive shouldBe true
         }
     }
 })

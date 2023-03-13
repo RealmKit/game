@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.core.extension
 
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
 import io.konform.validation.Constraint
 import io.konform.validation.ValidationBuilder
 import io.konform.validation.jsonschema.minLength
@@ -30,6 +31,12 @@ import io.konform.validation.jsonschema.minimum
  * [ValidationBuilder] extensions
  */
 object ValidationExtensions {
+    /**
+     * ## [ZERO]
+     * [Double] zero constant
+     */
+    const val ZERO = 0.0
+
     /**
      * ## [notBlank]
      * validates if the [String] has at least 1 character

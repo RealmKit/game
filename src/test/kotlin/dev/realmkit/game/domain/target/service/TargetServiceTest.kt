@@ -24,6 +24,10 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
@@ -31,18 +35,65 @@ import io.kotest.matchers.shouldBe
 class TargetServiceTest(
     private val targetService: TargetService,
 ) : IntegrationTestSpec({
-    context("integration testing Game Application") {
+    context("integration testing TargetService") {
         expect("all beans to be inject") {
             targetService.shouldNotBeNull()
         }
 
-        expect("the game to run normally") {
+        expect("to not hit a critical attack") {
+            val player = Player.fixture
+            player.stat.rate.critical = 0.0
+
+            val enemy = Player.fixture
+            enemy.stat.base.defense = 10.0
+
+            targetService.attack(player to enemy)
+            enemy.stat.base.shield.current shouldBeGreaterThanOrEqual 0.0
+            enemy.stat.base.hull.current shouldBeGreaterThanOrEqual 0.0
+            enemy.alive.shouldBeTrue()
+        }
+
+        expect("to hit a critical attack") {
+            val player = Player.fixture
+            player.stat.rate.critical = 1.0
+
+            val enemy = Player.fixture
+            enemy.stat.base.defense = 10.0
+
+            targetService.attack(player to enemy)
+            enemy.stat.base.shield.current shouldBeGreaterThanOrEqual 0.0
+            enemy.stat.base.hull.current shouldBeGreaterThanOrEqual 0.0
+            enemy.alive.shouldBeTrue()
+        }
+
+        expect("to not damage a not alive Target") {
             val player = Player.fixture
             val enemy = Player.fixture
+            enemy.stat.base.hull.current = 0.0
+            enemy.alive.shouldBeFalse()
 
-            val hull = enemy.stat.hull
             targetService.attack(player to enemy)
-            enemy.stat.hull shouldBe hull - player.damage()
+            enemy.stat.base.hull.current shouldBeGreaterThanOrEqual 0.0
+            enemy.alive.shouldBeFalse()
+        }
+
+        expect("Player to attack Enemy until it is not alive") {
+            val player = Player.fixture
+            player.stat.base.power = 10.0
+
+            val enemy = Player.fixture
+            enemy.stat.base.defense = 0.0
+
+            val hull = enemy.stat.base.hull.current
+            targetService.attack(player to enemy)
+            enemy.stat.base.hull.current shouldBe hull
+            enemy.stat.base.shield.current shouldBeLessThanOrEqual 0.0
+            enemy.alive.shouldBeTrue()
+
+            targetService.attack(player to enemy)
+            enemy.stat.base.hull.current shouldBeLessThanOrEqual 0.0
+            enemy.stat.base.shield.current shouldBeLessThanOrEqual 0.0
+            enemy.alive.shouldBeFalse()
         }
     }
 })

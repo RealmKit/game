@@ -42,9 +42,16 @@ class StaticDataPropertiesTest(
                 .asClue { staticData ->
                     staticData.shouldNotBeNull()
                     staticData.stat.shouldNotBeNull()
-                    staticData.stat.hull.shouldBePositive()
-                    staticData.stat.shield.shouldBeZero()
-                    staticData.stat.power.shouldBePositive()
+                    staticData.stat.base.hull.current.shouldBePositive()
+                    staticData.stat.base.hull.max.shouldBePositive()
+                    staticData.stat.base.shield.current.shouldBeZero()
+                    staticData.stat.base.shield.max.shouldBeZero()
+                    staticData.stat.base.power.shouldBePositive()
+                    staticData.stat.base.defense.shouldBeZero()
+                    staticData.stat.base.speed.shouldBePositive()
+                    staticData.stat.rate.shieldRegeneration.shouldBeZero()
+                    staticData.stat.rate.critical.shouldBeZero()
+                    staticData.stat.multiplier.critical.shouldBePositive()
                 }
         }
     }

@@ -24,13 +24,10 @@ import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.property.arbitrary.arbitrary
-import io.kotest.property.checkAll
 
 class PlayerTest : TestSpec({
     context("unit testing Player") {
@@ -39,34 +36,24 @@ class PlayerTest : TestSpec({
                 player.shouldNotBeNull()
                 player.name.shouldNotBeNull().shouldNotBeEmpty()
                 player.stat.shouldNotBeNull()
-                player.stat.hull.shouldBePositive()
-                player.stat.shield.shouldBePositive()
-                player.stat.power.shouldBePositive()
+                player.stat.base.hull.current.shouldBePositive()
+                player.stat.base.hull.max.shouldBePositive()
+                player.stat.base.shield.max.shouldBePositive()
+                player.stat.base.shield.max.shouldBePositive()
+                player.stat.base.power.shouldBePositive()
+                player.stat.base.defense.shouldBePositive()
+                player.stat.base.speed.shouldBePositive()
+                player.stat.rate.shieldRegeneration.shouldBePositive()
+                player.stat.rate.critical.shouldBePositive()
+                player.stat.multiplier.critical.shouldBePositive()
             }
         }
 
-        expect("Player to calculate the damage output") {
+        expect("Player to be alive and dead") {
             check(arbitrary { Player.fixture }) { player ->
-                val damage = player.stat.power
-                player.damage() shouldBe damage
-            }
-        }
-
-        expect("Player to attack Target until dead") {
-            checkAll(arbitrary { Player.fixture }, arbitrary { Player.fixture }) { player, target ->
-                player.stat.hull.shouldBePositive()
-                player.isAlive().shouldBeTrue()
-                target.stat.hull.shouldBePositive()
-                target.isAlive().shouldBeTrue()
-
-                while (target.isAlive()) {
-                    player attack target
-                }
-
-                player.stat.hull.shouldBePositive()
-                player.isAlive().shouldBeTrue()
-                target.stat.hull.shouldBeLessThanOrEqual(0.0)
-                target.isAlive().shouldBeFalse()
+                player.alive.shouldBeTrue()
+                player.stat.base.hull.current = 0.0
+                player.alive.shouldBeFalse()
             }
         }
     }

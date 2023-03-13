@@ -18,28 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
-
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+package dev.realmkit.game.domain.stat.document
 
 /**
- * # [Target]
- * the Target interface
+ * # [StatRate]
+ * the StatRate document
+ *
+ * @see Stat
+ *
+ * @property shieldRegeneration `the rate` of shield regeneration
+ * @property critical `the rate` of critical hit chance
  */
-interface Target {
-    /**
-     * ## [stat]
-     * the target stat
-     */
-    val stat: Stat
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
+data class StatRate(
+    var shieldRegeneration: Double,
+    var critical: Double,
+) {
+    companion object
 }

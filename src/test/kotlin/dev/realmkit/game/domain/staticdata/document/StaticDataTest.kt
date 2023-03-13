@@ -21,6 +21,10 @@
 package dev.realmkit.game.domain.staticdata.document
 
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatBase
+import dev.realmkit.game.domain.stat.document.StatMultiplier
+import dev.realmkit.game.domain.stat.document.StatRate
+import dev.realmkit.game.domain.stat.document.StatValue
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
@@ -31,15 +35,33 @@ class StaticDataTest : IntegrationTestSpec({
         expect("instantiate a StaticData") {
             StaticData(
                 stat = Stat(
-                    hull = 100.0,
-                    shield = 100.0,
-                    power = 10.0,
+                    base = StatBase(
+                        hull = StatValue(max = 100.0),
+                        shield = StatValue(max = 100.0),
+                        power = 100.0,
+                        defense = 100.0,
+                        speed = 100.0,
+                    ),
+                    rate = StatRate(
+                        shieldRegeneration = 100.0,
+                        critical = 100.0,
+                    ),
+                    multiplier = StatMultiplier(
+                        critical = 100.0,
+                    ),
                 ),
             ).shouldNotBeNull().asClue { staticData ->
                 staticData.stat.shouldNotBeNull()
-                staticData.stat.hull.shouldBePositive()
-                staticData.stat.shield.shouldBePositive()
-                staticData.stat.power.shouldBePositive()
+                staticData.stat.base.hull.current.shouldBePositive()
+                staticData.stat.base.hull.max.shouldBePositive()
+                staticData.stat.base.shield.current.shouldBePositive()
+                staticData.stat.base.shield.max.shouldBePositive()
+                staticData.stat.base.power.shouldBePositive()
+                staticData.stat.base.defense.shouldBePositive()
+                staticData.stat.base.speed.shouldBePositive()
+                staticData.stat.rate.shieldRegeneration.shouldBePositive()
+                staticData.stat.rate.critical.shouldBePositive()
+                staticData.stat.multiplier.critical.shouldBePositive()
             }
         }
     }

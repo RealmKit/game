@@ -18,28 +18,34 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.hellper.fixture.stat
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatBase
+import dev.realmkit.game.domain.stat.document.StatValue
+import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
+import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.hellper.fixture.Fixture
 
 /**
- * # [Target]
- * the Target interface
+ * Creates a [StatBase] with random data
  */
-interface Target {
-    /**
-     * ## [stat]
-     * the target stat
-     */
-    val stat: Stat
+val StatBase.Companion.fixture: StatBase
+    get() = Fixture {
+        StatBase::hull { StatValue.fixture }
+        StatBase::shield { StatValue.fixture }
+        StatBase::power { positiveDouble }
+        StatBase::defense { positiveDouble }
+        StatBase::speed { positiveDouble }
+    }
 
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    val alive: Boolean
-        get() = stat.base.hull.current > ZERO
-}
+/**
+ * Creates a [StatBase] with random invalid data
+ */
+val StatBase.Companion.invalid: StatBase
+    get() = Fixture {
+        StatBase::hull { StatValue.invalid }
+        StatBase::shield { StatValue.invalid }
+        StatBase::power { negativeDouble }
+        StatBase::defense { negativeDouble }
+        StatBase::speed { negativeDouble }
+    }
