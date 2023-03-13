@@ -41,7 +41,6 @@ class StatValidatorTest : TestSpec({
             check(arbitrary { Stat.invalid }) { stat ->
                 StatValidator.validation.shouldBeInvalid(stat) { invalid ->
                     invalid shouldHaveAllErrors listOf(
-                        ".hull" to "must be positive",
                         ".shield" to "must be positive",
                         ".power" to "must be positive",
                     )

@@ -22,6 +22,7 @@ package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.target.document.Target
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -36,7 +37,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document
 data class Player(
     val name: String,
-    val stat: Stat,
-) : BaseDocument() {
+    override val stat: Stat,
+) : BaseDocument(), Target {
     companion object
 }

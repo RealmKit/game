@@ -18,16 +18,31 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.exception
+package dev.realmkit.game.domain.target.service
 
-import io.konform.validation.Invalid
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.infra.IntegrationTestContext
+import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-/**
- * # [ValidationException]
- * exception for validations problems
- *
- * @property invalid the invalid property
- */
-class ValidationException(
-    val invalid: Invalid<*>,
-) : Exception()
+@IntegrationTestContext
+class TargetServiceTest(
+    private val targetService: TargetService,
+) : IntegrationTestSpec({
+    context("integration testing Game Application") {
+        expect("all beans to be inject") {
+            targetService.shouldNotBeNull()
+        }
+
+        expect("the game to run normally") {
+            val player = Player.fixture
+            val enemy = Player.fixture
+
+            val hull = enemy.stat.hull
+            targetService.attack(player to enemy)
+            enemy.stat.hull shouldBe hull - player.damage()
+        }
+    }
+})

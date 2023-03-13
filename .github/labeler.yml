@@ -19,8 +19,12 @@
   - '**/*.md'
 
 '@ci':
-  - '*.yml'
-  - '**/*.yml'
+  - '.whitesource'
+  - 'renovate.json'
+  - 'qodana.yaml'
+  - 'codecov.yml'
+  - 'detekt-config.yml'
+  - 'diktat-analysis.yml'
   - '.github/*'
   - '.github/**/*'
 

@@ -18,16 +18,28 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.exception
+package dev.realmkit.game.domain.target.service
 
-import io.konform.validation.Invalid
+import dev.realmkit.game.domain.target.document.Target
+import org.springframework.stereotype.Service
 
 /**
- * # [ValidationException]
- * exception for validations problems
+ * # [TargetService]
+ * the [Target] service.
  *
- * @property invalid the invalid property
+ * @see Service
  */
-class ValidationException(
-    val invalid: Invalid<*>,
-) : Exception()
+@Service
+class TargetService {
+    /**
+     * # [attack]
+     * attack a target
+     *
+     * @see Target
+     *
+     * @param targets the `attacker to target` pair
+     */
+    infix fun attack(targets: Pair<Target, Target>) {
+        targets.first attack targets.second
+    }
+}

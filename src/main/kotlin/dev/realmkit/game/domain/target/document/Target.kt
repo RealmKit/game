@@ -18,16 +18,47 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.exception
+package dev.realmkit.game.domain.target.document
 
-import io.konform.validation.Invalid
+import dev.realmkit.game.domain.stat.document.Stat
 
 /**
- * # [ValidationException]
- * exception for validations problems
- *
- * @property invalid the invalid property
+ * # [Target]
+ * the Target interface
  */
-class ValidationException(
-    val invalid: Invalid<*>,
-) : Exception()
+interface Target {
+    /**
+     * ## [stat]
+     * the target stat
+     */
+    val stat: Stat
+
+    /**
+     * ## [damage]
+     * calculates the damage output
+     *
+     * @return the damage output
+     */
+    fun damage(): Double =
+        stat.power
+
+    /**
+     * ## [isAlive]
+     * checks if the target is alive
+     *
+     * @return `true` if the target is alive, `false` otherwise
+     */
+    fun isAlive(): Boolean =
+        stat.hull > 0
+
+    /**
+     * ## [attack]
+     * attacks the target
+     *
+     * @param target the target to attack
+     */
+    infix fun attack(target: Target) {
+        val damage = damage()
+        target.stat.hull -= damage
+    }
+}
