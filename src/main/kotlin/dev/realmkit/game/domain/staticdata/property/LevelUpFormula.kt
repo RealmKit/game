@@ -28,7 +28,16 @@ import kotlin.math.roundToLong
  * `the level up` formula calculator.
  */
 object LevelUpFormula {
+    /**
+     * ## [POW]
+     * consts for creating the level up formula
+     */
     private const val POW = 4
+
+    /**
+     * ## [MODIFIER]
+     * consts for creating the level up formula
+     */
     private const val MODIFIER = 0.3
 
     /**
@@ -38,5 +47,6 @@ object LevelUpFormula {
      * @param level the current level
      * @return the required experience to level up
      */
-    fun xpToLevel(level: Long): Long = (level.toDouble().pow(POW) * MODIFIER / (MODIFIER * level)).roundToLong()
+    fun xpToLevel(level: Long): Long =
+        (level.toDouble().pow(POW) * MODIFIER / (MODIFIER * level)).roundToLong()
 }
