@@ -20,11 +20,13 @@
 
 package dev.realmkit.game.domain.player.service
 
+import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
+import dev.realmkit.game.domain.stat.service.StatService
 import dev.realmkit.game.domain.staticdata.service.StaticDataService
 import io.konform.validation.Validation
 import org.springframework.stereotype.Service
@@ -36,12 +38,14 @@ import org.springframework.stereotype.Service
  * @see Service
  *
  * @property playerRepository the player repository bean
- * @property staticDataService the stat service
+ * @property staticDataService the static data service
+ * @property statService the stat service
  */
 @Service
 class PlayerService(
     private val playerRepository: PlayerRepository,
     private val staticDataService: StaticDataService,
+    private val statService: StatService,
 ) {
     /**
      * ## [new]
@@ -62,6 +66,48 @@ class PlayerService(
             name = name,
             stat = staticDataService.initial().stat,
         )
+
+    /**
+     * ## [update]
+     * updates a [Player] to DB, if valid
+     * also level up it, if possible
+     *
+     * ```kotlin
+     * playerService update player
+     * ```
+     *
+     * @see Player
+     *
+     * @param player the player to update
+     * @return the validated persisted document
+     * @throws ValidationException if [Player] has [Validation] issues
+     * @throws NotFoundException if [Player.id] not found
+     */
+    @Throws(ValidationException::class, NotFoundException::class)
+    infix fun update(player: Player): Player =
+        find(player.id).let {
+            statService levelUp player.stat
+            playerRepository persist player
+        }
+
+    /**
+     * ## [find]
+     * finds a [Player] by id, if exists, else throws [NotFoundException]
+     *
+     * ```kotlin
+     * playerService find "player-id"
+     * ```
+     *
+     * @see Player
+     *
+     * @param id the player id
+     * @return the found player
+     * @throws NotFoundException if [Player] not found
+     */
+    @Throws(NotFoundException::class)
+    private infix fun find(id: String): Player =
+        playerRepository.findById(id)
+            .orElseThrow { NotFoundException(Player::class, id) }
 
     /**
      * ## [persist]

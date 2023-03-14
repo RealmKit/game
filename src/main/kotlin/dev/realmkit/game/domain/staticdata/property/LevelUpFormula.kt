@@ -41,12 +41,12 @@ object LevelUpFormula {
     private const val MODIFIER = 0.3
 
     /**
-     * ## [xpToLevel]
+     * ## [invoke]
      * the required experience to level up
      *
      * @param level the current level
      * @return the required experience to level up
      */
-    fun xpToLevel(level: Long): Long =
+    operator fun invoke(level: Long): Long =
         (level.toDouble().pow(POW) * MODIFIER / (MODIFIER * level)).roundToLong()
 }
