@@ -20,16 +20,21 @@
 
 package dev.realmkit.game.domain.player.service
 
+import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.doubles.shouldBeZero
+import io.kotest.matchers.longs.shouldBePositive
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
@@ -59,18 +64,43 @@ class PlayerServiceTest(
                 saved.stat.rate.shieldRegeneration.shouldBeZero()
                 saved.stat.rate.critical.shouldBeZero()
                 saved.stat.multiplier.critical.shouldBePositive()
+                saved.stat.progression.level.shouldBePositive()
+                saved.stat.progression.experience.shouldBeZero()
             }
         }
 
-        context("Violations to be thrown") {
-            expect("name should not be blank") {
-                shouldThrow<ValidationException> {
-                    playerService new ""
-                }.shouldNotBeNull()
-                    .invalid shouldHaveAllErrors listOf(
-                    ".name" to "must not be blank",
-                )
+        expect("it should level up a Player") {
+            check(arbitrary { Player.fixture }) { player ->
+                val saved = playerService new player.name
+                saved.stat.progression.level shouldBe 1
+                saved.stat.progression.experience shouldBe 0
+
+                saved.stat.progression.experience = 8
+                playerService update saved
+                saved.stat.progression.level shouldBe 2
+                saved.stat.progression.experience shouldBe 0
             }
+        }
+
+        expect("to thrown a NotFoundException when updating a non existing Player") {
+            check(arbitrary { Player.fixture }) { player ->
+                player.id = "non-existing-id"
+                shouldThrow<NotFoundException> {
+                    playerService update player
+                }.shouldNotBeNull().asClue { exception ->
+                    exception.clazz shouldBe Player::class
+                    exception.value shouldBe player.id
+                }
+            }
+        }
+
+        expect("name should not be blank") {
+            shouldThrow<ValidationException> {
+                playerService new ""
+            }.shouldNotBeNull()
+                .invalid shouldHaveAllErrors listOf(
+                ".name" to "must not be blank",
+            )
         }
     }
 })

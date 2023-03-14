@@ -44,7 +44,7 @@ object AssertionExtensions {
      * @return the validation
      */
     infix fun Invalid<*>.shouldHaveAllErrors(violations: List<Violation>) {
-        violations.forEachIndexed { index, violation ->
+        violations.forEach { violation ->
             this shouldContainFieldError violation
         }
         this shouldHaveErrors violations.size
