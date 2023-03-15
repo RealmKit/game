@@ -20,7 +20,7 @@
 
 package dev.realmkit.hellper.extension
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveErrors
 import io.konform.validation.Invalid

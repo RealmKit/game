@@ -39,12 +39,12 @@ class BattleService(
      * ## [onAttack]
      * the attack block
      *
-     * @param first the first target
-     * @param second the second target
+     * @param attacker the first target
+     * @param defender the second target
      * @return nothing
      */
-    private fun onAttack(first: Target, second: Target): Unit =
-        targetService.attack(first to second)
+    private fun onAttack(attacker: Target, defender: Target): Unit =
+        targetService.attack(attacker, defender)
 
     /**
      * ## [battle]

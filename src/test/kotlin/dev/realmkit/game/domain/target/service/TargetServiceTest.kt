@@ -45,7 +45,7 @@ class TargetServiceTest(
             val enemy = Player.fixture
             enemy.stat.base.defense = 10.0
 
-            targetService.attack(player to enemy)
+            targetService.attack(player, enemy)
             enemy.shouldBeAlive()
         }
 
@@ -56,7 +56,7 @@ class TargetServiceTest(
             val enemy = Player.fixture
             enemy.stat.base.defense = 10.0
 
-            targetService.attack(player to enemy)
+            targetService.attack(player, enemy)
             enemy.shouldBeAlive()
         }
 
@@ -66,7 +66,7 @@ class TargetServiceTest(
             enemy.stat.base.hull.current = 0.0
             enemy.shouldBeDead()
 
-            targetService.attack(player to enemy)
+            targetService.attack(player, enemy)
             enemy.shouldBeDead()
         }
 
@@ -78,11 +78,11 @@ class TargetServiceTest(
             enemy.stat.base.defense = 0.0
 
             val hull = enemy.stat.base.hull.current
-            targetService.attack(player to enemy)
+            targetService.attack(player, enemy)
             enemy.stat.base.hull.current shouldBe hull
             enemy.shouldBeAlive()
 
-            targetService.attack(player to enemy)
+            targetService.attack(player, enemy)
             enemy.shouldBeDead()
         }
     }

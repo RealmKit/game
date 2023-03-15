@@ -34,26 +34,28 @@ object TargetExtensions {
      * ## [sortBySpeed]
      * sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.speed]
      */
-    private val sortBySpeed: Comparator<AttackerTargets> = compareBy { target -> -target.first.stat.base.speed }
+    private val sortBySpeed: Comparator<AttackerTargets> =
+        compareBy { target -> -target.first.stat.base.speed }
 
     /**
      * ## [sortByAggro]
      * sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.aggro]
      */
-    private val sortByAggro: Comparator<Target> = compareBy { target: Target -> -target.stat.base.aggro }
+    private val sortByAggro: Comparator<Target> =
+        compareBy { target: Target -> -target.stat.base.aggro }
 
     /**
      * ## [hasAlive]
      * check if there is any [Target] still [Target.alive]
      */
-    val Set<Target>.hasAlive: Boolean
+    val Iterable<Target>.hasAlive: Boolean
         get() = any { target -> target.alive }
 
     /**
      * ## [bySpeed]
      * filter [Target.alive] and sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.speed]
      */
-    val Iterable<AttackerTargets>.bySpeed: List<AttackerTargets>
+    val Iterable<AttackerTargets>.bySpeed: Iterable<AttackerTargets>
         get() = filter { target -> target.first.alive }
             .sortedWith(sortBySpeed)
 
@@ -61,7 +63,7 @@ object TargetExtensions {
      * ## [byAggro]
      * filter [Target.alive] and sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.aggro]
      */
-    private val Iterable<Target>.byAggro: List<Target>
+    private val Iterable<Target>.byAggro: Iterable<Target>
         get() = filter { target -> target.alive }
             .sortedWith(sortByAggro)
 
@@ -72,7 +74,7 @@ object TargetExtensions {
      * @param block the block to execute if the [Target] exists
      * @return the first [Target] by [dev.realmkit.game.domain.stat.document.StatBase.aggro], if exists
      */
-    infix fun Set<Target>.firstByAggro(block: (Target) -> Unit): Target? =
+    infix fun Iterable<Target>.firstByAggro(block: (Target) -> Unit): Target? =
         byAggro.firstOrNull()
             ?.apply(block)
 }

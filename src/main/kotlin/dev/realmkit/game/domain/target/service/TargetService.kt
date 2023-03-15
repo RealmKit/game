@@ -20,10 +20,11 @@
 
 package dev.realmkit.game.domain.target.service
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.ONE
+import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.core.extension.NumberExtensions.isHit
 import dev.realmkit.game.domain.target.document.Target
 import org.springframework.stereotype.Service
-import kotlin.random.Random
 
 /**
  * # [TargetService]
@@ -34,70 +35,95 @@ import kotlin.random.Random
 @Service
 class TargetService {
     /**
+     * ## [damage]
+     * calculates the final damage
+     *
+     * @return the critical damage
+     */
+    private val Target.damage: Double
+        get() = stat.base.power *
+                criticalMultiplier
+
+    /**
+     * ## [criticalMultiplier]
+     * get the [criticalMultiplier] if it is critical, else returns 1
+     */
+    private val Target.criticalMultiplier: Double
+        get() = stat.multiplier.critical
+            .takeIf { stat.rate.critical.isHit }
+            ?: ONE
+
+    /**
+     * ## [absoluteDefense]
+     * get the absolute defense of the target
+     */
+    private val Target.absoluteDefense: Double
+        get() = stat.base.defense
+
+    /**
+     * ## [hasShield]
+     * checks if the target has shield greater than 0.0
+     */
+    private val Target.hasShield: Boolean
+        get() = stat.base.shield.current > ZERO
+
+    /**
      * ## [attack]
      * attack a target
      *
-     * @see Target
-     *
-     * @param target `the target` to attack
+     * @param attacker the attacker
+     * @param defender the defender
      */
-    infix fun attack(target: Pair<Target, Target>) {
-        if (!target.first.alive || !target.second.alive) {
-            return
-        }
-        target.first.damageTo(target.second).also { damage ->
-            if (target.second.stat.base.shield.current > ZERO) {
-                target.second.stat.base.shield.current -= damage
-            } else {
-                target.second.stat.base.hull.current -= damage
-            }
+    fun attack(attacker: Target, defender: Target) {
+        val damage = attacker damage defender
 
-            if (target.second.stat.base.shield.current < ZERO) {
-                target.second.stat.base.shield.current = ZERO
+        if (defender.hasShield) {
+            defender.stat.base.shield.current -= damage
+            if (!defender.hasShield) {
+                defender.stat.base.shield.current = ZERO
             }
+        } else {
+            defender.stat.base.hull.current -= damage
         }
     }
 
     /**
-     * ## [damageTo]
-     * calculates the damage to the target
-     *
-     * @see Target
+     * ## [damage]
+     * calculates the [damage] to the target
      *
      * @param target the target to calculate the damage to
      * @return the damage done to the target, or null if none
      */
-    private fun Target.damageTo(target: Target): Double =
-        if (target.alive) {
-            val damage = criticalDamage() - target.stat.base.defense
-            if (damage > ZERO) {
-                damage
-            } else {
-                ZERO
-            }
-        } else {
-            ZERO
+    private infix fun Target.damage(target: Target): Double =
+        allAlive(this, target) {
+            finalDamage(target)
+                .takeIf { damage -> damage > ZERO }
         }
 
     /**
-     * ## [isCritical]
-     * checks if the target is critical
+     * ## [finalDamage]
+     * calculates the final damage
+     * if `critical`:
+     * ```kotlin
+     * damage - target.absolutDefense
+     * ```
      *
-     * @return `true` if the damage is critical, `false` otherwise
+     * @param target the target to calculate the final damage to
+     * @return the final damage
      */
-    private fun Target.isCritical(): Boolean =
-        Random.nextDouble() <= stat.rate.critical
+    private infix fun Target.finalDamage(target: Target): Double =
+        damage - target.absoluteDefense
 
     /**
-     * ## [criticalDamage]
-     * calculates the critical damage
+     * ## [allAlive]
+     * checks if the targets are all alive, if so, executes the block
      *
-     * @return the critical damage
+     * @param targets the targets to check if it is alive
+     * @param block the block to execute if the target is alive
+     * @return the result of the block, or 0 if the target is not alive
      */
-    private fun Target.criticalDamage(): Double =
-        if (!isCritical()) {
-            stat.base.power
-        } else {
-            stat.base.power * stat.multiplier.critical
-        }
+    private fun allAlive(vararg targets: Target, block: () -> Double?): Double =
+        takeIf { targets.all { target -> target.alive } }
+            ?.let { block() }
+            ?: ZERO
 }

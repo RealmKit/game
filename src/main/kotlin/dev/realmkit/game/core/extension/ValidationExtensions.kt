@@ -32,12 +32,6 @@ import io.konform.validation.jsonschema.minimum
  */
 object ValidationExtensions {
     /**
-     * ## [ZERO]
-     * [Double] zero constant
-     */
-    const val ZERO = 0.0
-
-    /**
      * ## [notBlank]
      * validates if the [String] has at least 1 character
      * ```kotlin

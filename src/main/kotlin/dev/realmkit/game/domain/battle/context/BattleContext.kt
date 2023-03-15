@@ -63,7 +63,7 @@ class BattleContext(
      * @param targets the targets to attack
      * @return target, if exists
      */
-    private infix fun Target.attack(targets: Set<Target>): Target? =
+    private infix fun Target.attack(targets: Iterable<Target>): Target? =
         targets.firstByAggro { target -> onAttack(this, target) }
 
     /**

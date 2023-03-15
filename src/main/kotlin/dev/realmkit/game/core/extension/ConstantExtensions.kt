@@ -20,27 +20,20 @@
 
 package dev.realmkit.game.core.extension
 
-import kotlin.random.Random
-
 /**
- * # [NumberExtensions]
- * extension functions for [Number]
+ * # [ConstantExtensions]
+ * the constant extensions
  */
-object NumberExtensions {
+object ConstantExtensions {
     /**
-     * ## [isHit]
-     * checks if the number is within the random probability
+     * ## [ZERO]
+     * [Double] zero constant (0.0)
      */
-    val Number.isHit: Boolean
-        get() = Random.nextDouble() <= toDouble()
+    const val ZERO = 0.0
 
     /**
-     * ## [repeat]
-     * repeat a block of code a number of times
-     *
-     * @param block the block of code to repeat
-     * @return nothing
+     * ## [ONE]
+     * [Double] one constant (1.0)
      */
-    fun Number.repeat(block: () -> Unit): Unit =
-        repeat(toInt()) { block() }
+    const val ONE = 1.0
 }
