@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.stat.extension
 
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
 import dev.realmkit.game.domain.stat.document.StatBase
 import io.konform.validation.Validation
 
@@ -35,5 +36,9 @@ object StatBaseValidator {
     val validation: Validation<StatBase> = Validation {
         StatBase::hull required { run(StatValueValidator.double) }
         StatBase::shield required { run(StatValueValidator.double) }
+        StatBase::power required { positive() }
+        StatBase::defense required { positive() }
+        StatBase::speed required { positive() }
+        StatBase::aggro required { positive() }
     }
 }

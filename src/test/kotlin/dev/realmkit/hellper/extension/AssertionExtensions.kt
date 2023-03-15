@@ -20,10 +20,19 @@
 
 package dev.realmkit.hellper.extension
 
+import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveErrors
 import io.konform.validation.Invalid
 import io.konform.validation.ValidationError
+import io.kotest.assertions.asClue
+import io.kotest.assertions.withClue
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
+import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
@@ -69,4 +78,31 @@ object AssertionExtensions {
      */
     private infix fun Invalid<*>.shouldHaveErrors(size: Int) =
         errors shouldHaveSize size
+
+    /**
+     * ## [shouldBeAlive]
+     * check if the [Target] is alive
+     *
+     * @see Target.alive
+     *
+     * @return nothing
+     */
+    fun Target.shouldBeAlive() = asClue {
+        withClue("alive") { alive.shouldBeTrue() }
+        withClue(".stat.base.shield.current") { stat.base.shield.current.shouldBeGreaterThanOrEqual(ZERO) }
+        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBePositive() }
+    }
+
+    /**
+     * ## [shouldBeDead]
+     * check if the [Target] is dead
+     *
+     * @see Target.alive
+     *
+     * @return nothing
+     */
+    fun Target.shouldBeDead() = asClue {
+        withClue("alive") { alive.shouldBeFalse() }
+        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(ZERO) }
+    }
 }

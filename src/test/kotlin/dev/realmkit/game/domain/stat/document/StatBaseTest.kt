@@ -39,6 +39,7 @@ class StatBaseTest : TestSpec({
                 base.power.shouldBePositive()
                 base.defense.shouldBePositive()
                 base.speed.shouldBePositive()
+                base.aggro.shouldBePositive()
             }
         }
 
@@ -59,6 +60,7 @@ class StatBaseTest : TestSpec({
                 stat.power.shouldBePositive()
                 stat.defense.shouldBePositive()
                 stat.speed.shouldBePositive()
+                stat.aggro.shouldBePositive()
             }
         }
     }

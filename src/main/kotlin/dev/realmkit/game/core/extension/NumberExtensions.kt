@@ -18,15 +18,29 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.core.extension
 
-import dev.realmkit.game.domain.stat.document.Stat
+import kotlin.random.Random
 
 /**
- * # [StaticData]
- *
- * @property stat the stat value from properties
+ * # [NumberExtensions]
+ * extension functions for [Number]
  */
-data class StaticData(
-    val stat: Stat,
-)
+object NumberExtensions {
+    /**
+     * ## [isHit]
+     * checks if the number is within the random probability
+     */
+    val Number.isHit: Boolean
+        get() = Random.nextDouble() <= toDouble()
+
+    /**
+     * ## [repeat]
+     * repeat a block of code a number of times
+     *
+     * @param block the block of code to repeat
+     * @return nothing
+     */
+    fun Number.repeat(block: () -> Unit): Unit =
+        repeat(toInt()) { block() }
+}

@@ -38,6 +38,11 @@
       "description": "StaticData Initial Stat: Speed (speed)."
     },
     {
+      "name": "app.static.data.initial.stat.base.aggro",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Aggro (aggro)."
+    },
+    {
       "name": "app.static.data.initial.stat.rate.shieldRegeneration",
       "type": "java.lang.Double",
       "description": "StaticData Initial Stat: Shield Regeneration rate."
@@ -61,6 +66,16 @@
       "name": "app.static.data.initial.stat.progression.experience",
       "type": "java.lang.Long",
       "description": "StaticData Initial Stat: Experience progression."
+    },
+    {
+      "name": "app.static.data.battle.battle-duration",
+      "type": "java.lang.Long",
+      "description": "StaticData Battle: Battle Duration (in turns)."
+    },
+    {
+      "name": "app.static.data.battle.turn-duration",
+      "type": "java.lang.Long",
+      "description": "StaticData Battle: Turns Duration (in seconds)."
     }
   ],
   "hints": []

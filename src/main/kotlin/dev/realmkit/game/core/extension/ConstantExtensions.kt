@@ -18,36 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
-
-import dev.realmkit.game.domain.stat.document.StatBase
-import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
+package dev.realmkit.game.core.extension
 
 /**
- * Creates a [StatBase] with random data
+ * # [ConstantExtensions]
+ * the constant extensions
  */
-val StatBase.Companion.fixture: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.fixture }
-        StatBase::shield { StatValue.fixture }
-        StatBase::power { positiveDouble }
-        StatBase::defense { positiveDouble }
-        StatBase::speed { positiveDouble }
-        StatBase::aggro { positiveDouble }
-    }
+object ConstantExtensions {
+    /**
+     * ## [ZERO]
+     * [Double] zero constant (0.0)
+     */
+    const val ZERO = 0.0
 
-/**
- * Creates a [StatBase] with random invalid data
- */
-val StatBase.Companion.invalid: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.invalid }
-        StatBase::shield { StatValue.invalid }
-        StatBase::power { negativeDouble }
-        StatBase::defense { negativeDouble }
-        StatBase::speed { negativeDouble }
-        StatBase::aggro { negativeDouble }
-    }
+    /**
+     * ## [ONE]
+     * [Double] one constant (1.0)
+     */
+    const val ONE = 1.0
+}

@@ -61,6 +61,7 @@ class PlayerServiceTest(
                 saved.stat.base.power.shouldBePositive()
                 saved.stat.base.defense.shouldBeZero()
                 saved.stat.base.speed.shouldBePositive()
+                saved.stat.base.aggro.shouldBePositive()
                 saved.stat.rate.shieldRegeneration.shouldBeZero()
                 saved.stat.rate.critical.shouldBeZero()
                 saved.stat.multiplier.critical.shouldBePositive()

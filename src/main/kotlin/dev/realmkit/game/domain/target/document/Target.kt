@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.target.document
 
-import dev.realmkit.game.core.extension.ValidationExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
 import dev.realmkit.game.domain.stat.document.Stat
 
 /**
