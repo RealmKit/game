@@ -35,7 +35,7 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 class StaticDataTest : TestSpec({
     context("unit testing StaticData") {
         expect("instantiate a StaticData") {
-            StaticData(
+            StaticDataStat(
                 stat = Stat(
                     base = StatBase(
                         hull = StatValue(max = 100.0),
@@ -43,6 +43,7 @@ class StaticDataTest : TestSpec({
                         power = 100.0,
                         defense = 100.0,
                         speed = 100.0,
+                        aggro = 100.0,
                     ),
                     rate = StatRate(
                         shieldRegeneration = 100.0,
@@ -65,6 +66,7 @@ class StaticDataTest : TestSpec({
                 staticData.stat.base.power.shouldBePositive()
                 staticData.stat.base.defense.shouldBePositive()
                 staticData.stat.base.speed.shouldBePositive()
+                staticData.stat.base.aggro.shouldBePositive()
                 staticData.stat.rate.shieldRegeneration.shouldBePositive()
                 staticData.stat.rate.critical.shouldBePositive()
                 staticData.stat.multiplier.critical.shouldBePositive()

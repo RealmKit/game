@@ -18,36 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
-
-import dev.realmkit.game.domain.stat.document.StatBase
-import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
+package dev.realmkit.game.core.extension
 
 /**
- * Creates a [StatBase] with random data
+ * # [NumberExtensions]
+ * extension functions for [Number]
  */
-val StatBase.Companion.fixture: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.fixture }
-        StatBase::shield { StatValue.fixture }
-        StatBase::power { positiveDouble }
-        StatBase::defense { positiveDouble }
-        StatBase::speed { positiveDouble }
-        StatBase::aggro { positiveDouble }
-    }
-
-/**
- * Creates a [StatBase] with random invalid data
- */
-val StatBase.Companion.invalid: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.invalid }
-        StatBase::shield { StatValue.invalid }
-        StatBase::power { negativeDouble }
-        StatBase::defense { negativeDouble }
-        StatBase::speed { negativeDouble }
-        StatBase::aggro { negativeDouble }
-    }
+object NumberExtensions {
+    /**
+     * ## [repeat]
+     * repeat a block of code a number of times
+     *
+     * @param block the block of code to repeat
+     * @return nothing
+     */
+    fun Number.repeat(block: () -> Unit): Unit =
+        repeat(toInt()) { block() }
+}

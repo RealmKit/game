@@ -18,36 +18,46 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.battle.service
 
-import dev.realmkit.game.domain.player.service.PlayerService
+import dev.realmkit.game.domain.battle.context.BattleContext
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
+import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.service.TargetService
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
-import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.infra.IntegrationTestContext
-import dev.realmkit.hellper.spec.IntegrationTestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import org.springframework.stereotype.Service
 
-@IntegrationTestContext
-class GameTest(
-    private val playerService: PlayerService,
+/**
+ * # [BattleService]
+ * the Battle service for handling the Battle system
+ */
+@Service
+class BattleService(
     private val targetService: TargetService,
-) : IntegrationTestSpec({
-    context("integration testing Game Application") {
-        expect("all beans to be inject") {
-            playerService.shouldNotBeNull()
-            targetService.shouldNotBeNull()
-        }
+    private val staticDataProperties: StaticDataProperties,
+) {
+    /**
+     * ## [onAttack]
+     * the attack block
+     *
+     * @param first the first target
+     * @param second the second target
+     * @return nothing
+     */
+    private fun onAttack(first: Target, second: Target): Unit =
+        targetService.attack(first to second)
 
-        expect("the game to run normally") {
-            val player = playerService.new(faker.superhero.name())
-            val enemy = playerService.new(faker.superhero.name())
-
-            enemy.stat.base.hull.current shouldBe 5.0
-
-            targetService.attack(player to enemy)
-            enemy.shouldBeAlive()
-        }
-    }
-})
+    /**
+     * ## [battle]
+     * starts a battle within the [BattleContext] block
+     *
+     * @see BattleContext
+     *
+     * @param block the battle context
+     * @return the battle context
+     */
+    fun battle(block: BattleContext.() -> Unit): BattleContext =
+        BattleContext(
+            properties = staticDataProperties.battle(),
+            onAttack = ::onAttack,
+        ).apply(block).start()
+}

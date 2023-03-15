@@ -21,7 +21,8 @@
 package dev.realmkit.game.domain.staticdata.property
 
 import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.staticdata.document.StaticData
+import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
+import dev.realmkit.game.domain.staticdata.document.StaticDataStat
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
@@ -32,15 +33,26 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  */
 @ConfigurationProperties(prefix = "app.static.data")
 class StaticDataProperties(
-    private val initial: StaticData,
+    private val battle: StaticDataBattle,
+    private val initial: StaticDataStat,
 ) {
     /**
      * ## [initial]
      * initial static data values
      *
-     * @see StaticData
+     * @see StaticDataStat
      *
-     * @return [StaticData] initial static data values
+     * @return [StaticDataStat] initial static data values
      */
-    fun initial(): StaticData = initial.clone()
+    fun battle(): StaticDataBattle = battle.clone()
+
+    /**
+     * ## [initial]
+     * initial static data values
+     *
+     * @see StaticDataStat
+     *
+     * @return [StaticDataStat] initial static data values
+     */
+    fun initial(): StaticDataStat = initial.clone()
 }

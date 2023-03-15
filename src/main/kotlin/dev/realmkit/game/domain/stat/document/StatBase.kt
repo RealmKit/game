@@ -28,9 +28,10 @@ package dev.realmkit.game.domain.stat.document
  *
  * @property hull `the base` hull points (hp)
  * @property shield `the base` shield points (sp)
- * @property power `the base` base power (attack)
- * @property defense `the base` base defense (defense)
- * @property speed `the base` base speed (speed)
+ * @property power `the base` power attribute (attack)
+ * @property defense `the base` defense attribute (defense)
+ * @property speed `the base` speed attribute (speed)
+ * @property aggro `the base` aggro attribute (aggro)
  */
 data class StatBase(
     var hull: StatValue<Double>,
@@ -38,6 +39,7 @@ data class StatBase(
     var power: Double,
     var defense: Double,
     var speed: Double,
+    var aggro: Double,
 ) {
     companion object
 }

@@ -18,15 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.domain.aliases
 
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.document.StatValue
+import dev.realmkit.game.domain.target.document.Target
 
 /**
- * # [StaticData]
- *
- * @property stat the stat value from properties
+ * # [StatValueDouble]
+ * the `stat value` [Double] alias
  */
-data class StaticData(
-    val stat: Stat,
-)
+typealias StatValueDouble = StatValue<Double>
+
+/**
+ * # [AttackBlock]
+ * the `attack block` alias
+ */
+typealias AttackBlock = (Target, Target) -> Unit
+
+/**
+ * # [AttackerTargets]
+ * the `attacker to targets` alias
+ */
+typealias AttackerTargets = Pair<Target, Set<Target>>

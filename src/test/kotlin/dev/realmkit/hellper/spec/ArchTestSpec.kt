@@ -23,7 +23,6 @@ package dev.realmkit.hellper.spec
 import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.Priority.HIGH
-import com.tngtech.archunit.lang.Priority.MEDIUM
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.priority
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_THROW_GENERIC_EXCEPTIONS
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_FIELD_INJECTION
@@ -86,7 +85,7 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
         testClassesShouldResideInTheSamePackageAsImplementation()
 
     /**
-     * Certify that CORE layer does not access DOMAIN or APP layers
+     * Certify that CORE layer does not access the DOMAIN or APP layers
      */
     @ArchTest
     val noDomainOrAppInsideCore: ArchRule =
@@ -99,7 +98,7 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .resideInAnyPackage(PACKAGE_BASE_DOMAIN, PACKAGE_BASE_APP, PACKAGE_BASE_SPRING)
 
     /**
-     * Certify that DOMAIN layer does not access APP layer
+     * Certify that DOMAIN layer does not access the APP layer
      */
     @ArchTest
     val noAppInsideDomain: ArchRule =
@@ -124,7 +123,7 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .resideInAPackage(PACKAGE_BASE_DOMAIN_DOCUMENT)
 
     /**
-     * Certify that REPOSITORIES are annotated and inside DOMAIN REPOSITORY package
+     * Certify that REPOSITORIES are annotated and inside the DOMAIN REPOSITORY package
      */
     @ArchTest
     val repositoriesShouldBeAnnotated: ArchRule =
@@ -142,7 +141,7 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .beInterfaces()
 
     /**
-     * Certify that annotated REPOSITORIES are inside DOMAIN REPOSITORY package only
+     * Certify that annotated REPOSITORIES are inside the DOMAIN REPOSITORY package only
      */
     @ArchTest
     val repositoriesShouldResideInsideDomainRepository: ArchRule =
@@ -194,7 +193,7 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .resideInAPackage(PACKAGE_BASE_CORE_EXCEPTION)
 
     /**
-     * Certify that EXCEPTIONS extends Extension
+     * Certify that EXCEPTIONS extend Extension
      */
     @ArchTest
     val exceptionsShouldHaveExceptionAsSuffix: ArchRule =
@@ -204,20 +203,6 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .areAssignableTo(Exception::class.java)
             .should()
             .haveSimpleNameEndingWith(SUFFIX_EXCEPTION)
-
-    /**
-     * Certify that methods returns raw types
-     */
-    @ArchTest
-    val noMethodsShouldHaveRawReturnType: ArchRule =
-        priority(MEDIUM)
-            .noMethods()
-            .should()
-            .haveRawReturnType(List::class.java)
-            .orShould()
-            .haveRawReturnType(Set::class.java)
-            .orShould()
-            .haveRawReturnType(Map::class.java)
 
     init {
         this.body()

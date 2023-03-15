@@ -1,4 +1,7 @@
 app.static.data:
+  battle:
+    battle-duration: 100
+    turn-duration: 10
   initial:
     stat:
       base:
@@ -7,6 +10,7 @@ app.static.data:
         power: 1.0
         defense: 0.0
         speed: 1.0
+        aggro: 1.0
       rate:
         shieldRegeneration: 0.0
         critical: 0.0

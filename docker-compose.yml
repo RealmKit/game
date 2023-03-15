@@ -8,13 +8,62 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-    volumes:
-      - /tmp/dev/realmkit/mongodb:/data/db
     ports:
       - "27017:27017"
+    volumes:
+      - /tmp/dev/realmkit/mongodb:/data/db
     networks:
       - realmkit_network
     restart: unless-stopped
+
+  realmkit_zookeeper:
+    image: wurstmeister/zookeeper:latest
+    hostname: realmkit_zookeeper
+    container_name: realmkit_zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - realmkit_network
+
+  realmkit_kafka:
+    image: wurstmeister/kafka:latest
+    hostname: realmkit_kafka
+    container_name: realmkit_kafka
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: realmkit_zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://:9093,OUTSIDE://:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "Topic1:1:1,Topic2:1:1:compact"
+    ports:
+      - "9092:9092"
+      - "9093"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - realmkit_network
+    depends_on:
+      - realmkit_zookeeper
+
+  realmkit_kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    hostname: realmkit_kafdrop
+    container_name: realmkit_kafdrop
+    environment:
+      KAFKA_BROKERCONNECT: realmkit_kafka:9093
+      JVM_OPTS: "-Xms32M -Xmx64M"
+      SERVER_SERVLET_CONTEXTPATH: "/"
+    ports:
+      - "9000:9000"
+    networks:
+      - realmkit_network
+    depends_on:
+      - realmkit_zookeeper
+      - realmkit_kafka
 
 networks:
   realmkit_network:

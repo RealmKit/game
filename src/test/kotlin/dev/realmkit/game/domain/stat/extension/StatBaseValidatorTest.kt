@@ -45,6 +45,10 @@ class StatBaseValidatorTest : TestSpec({
                         ".hull.max" to "must be positive",
                         ".shield" to ".current must be lower than .max",
                         ".shield.max" to "must be positive",
+                        ".power" to "must be positive",
+                        ".defense" to "must be positive",
+                        ".speed" to "must be positive",
+                        ".aggro" to "must be positive",
                     )
                 }
             }

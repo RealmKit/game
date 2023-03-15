@@ -62,6 +62,7 @@ class PlayerRepositoryTest(
                     find.stat.base.power.shouldBePositive()
                     find.stat.base.defense.shouldBePositive()
                     find.stat.base.speed.shouldBePositive()
+                    find.stat.base.aggro.shouldBePositive()
                     find.stat.rate.shieldRegeneration.shouldBePositive()
                     find.stat.rate.critical.shouldBePositive()
                     find.stat.multiplier.critical.shouldBePositive()

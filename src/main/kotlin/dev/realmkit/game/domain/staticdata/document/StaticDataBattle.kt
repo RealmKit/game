@@ -18,36 +18,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
-
-import dev.realmkit.game.domain.stat.document.StatBase
-import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
+package dev.realmkit.game.domain.staticdata.document
 
 /**
- * Creates a [StatBase] with random data
+ * # [StaticDataBattle]
+ *
+ * @property battleDuration the battle duration, in turns
+ * @property turnDuration the turn duration, in seconds
  */
-val StatBase.Companion.fixture: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.fixture }
-        StatBase::shield { StatValue.fixture }
-        StatBase::power { positiveDouble }
-        StatBase::defense { positiveDouble }
-        StatBase::speed { positiveDouble }
-        StatBase::aggro { positiveDouble }
-    }
-
-/**
- * Creates a [StatBase] with random invalid data
- */
-val StatBase.Companion.invalid: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.invalid }
-        StatBase::shield { StatValue.invalid }
-        StatBase::power { negativeDouble }
-        StatBase::defense { negativeDouble }
-        StatBase::speed { negativeDouble }
-        StatBase::aggro { negativeDouble }
-    }
+data class StaticDataBattle(
+    val battleDuration: Long,
+    val turnDuration: Long,
+)

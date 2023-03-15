@@ -49,6 +49,7 @@ class StaticDataPropertiesTest(
                     staticData.stat.base.power.shouldBePositive()
                     staticData.stat.base.defense.shouldBeZero()
                     staticData.stat.base.speed.shouldBePositive()
+                    staticData.stat.base.aggro.shouldBePositive()
                     staticData.stat.rate.shieldRegeneration.shouldBeZero()
                     staticData.stat.rate.critical.shouldBeZero()
                     staticData.stat.multiplier.critical.shouldBePositive()

@@ -42,6 +42,9 @@ class TargetService {
      * @param target `the target` to attack
      */
     infix fun attack(target: Pair<Target, Target>) {
+        if (!target.first.alive || !target.second.alive) {
+            return
+        }
         target.first.damageTo(target.second).also { damage ->
             if (target.second.stat.base.shield.current > ZERO) {
                 target.second.stat.base.shield.current -= damage
@@ -49,7 +52,7 @@ class TargetService {
                 target.second.stat.base.hull.current -= damage
             }
 
-            if (target.second.stat.base.shield.current <= ZERO) {
+            if (target.second.stat.base.shield.current < ZERO) {
                 target.second.stat.base.shield.current = ZERO
             }
         }

@@ -20,11 +20,12 @@
 
 package dev.realmkit.game.domain.player.document
 
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeDead
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.property.arbitrary.arbitrary
@@ -43,17 +44,20 @@ class PlayerTest : TestSpec({
                 player.stat.base.power.shouldBePositive()
                 player.stat.base.defense.shouldBePositive()
                 player.stat.base.speed.shouldBePositive()
+                player.stat.base.aggro.shouldBePositive()
                 player.stat.rate.shieldRegeneration.shouldBePositive()
                 player.stat.rate.critical.shouldBePositive()
                 player.stat.multiplier.critical.shouldBePositive()
+                player.stat.progression.level.shouldBePositive()
+                player.stat.progression.experience.shouldBePositive()
             }
         }
 
         expect("Player to be alive and dead") {
             check(arbitrary { Player.fixture }) { player ->
-                player.alive.shouldBeTrue()
+                player.shouldBeAlive()
                 player.stat.base.hull.current = 0.0
-                player.alive.shouldBeFalse()
+                player.shouldBeDead()
             }
         }
     }

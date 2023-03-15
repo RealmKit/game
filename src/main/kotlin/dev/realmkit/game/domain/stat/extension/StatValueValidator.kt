@@ -21,10 +21,9 @@
 package dev.realmkit.game.domain.stat.extension
 
 import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.aliases.StatValueDouble
 import dev.realmkit.game.domain.stat.document.StatValue
 import io.konform.validation.Validation
-
-typealias StatValueDouble = StatValue<Double>
 
 /**
  * # [StatValueValidator]

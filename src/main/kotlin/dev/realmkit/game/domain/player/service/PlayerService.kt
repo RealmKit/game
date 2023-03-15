@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service
 
 /**
  * # [PlayerService]
- * the [Player] service.
+ * the [Player] service
  *
  * @see Service
  *
