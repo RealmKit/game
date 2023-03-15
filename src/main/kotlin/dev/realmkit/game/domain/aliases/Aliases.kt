@@ -33,7 +33,7 @@ typealias StatValueDouble = StatValue<Double>
  * # [AttackBlock]
  * the `attack block` alias
  */
-typealias AttackBlock = (Target, Target) -> Unit
+typealias AttackBlock = (Target, Target) -> Double
 
 /**
  * # [AttackerTargets]

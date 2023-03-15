@@ -43,7 +43,7 @@ class BattleService(
      * @param defender the second target
      * @return nothing
      */
-    private fun onAttack(attacker: Target, defender: Target): Unit =
+    private fun onAttack(attacker: Target, defender: Target): Double =
         targetService.attack(attacker, defender)
 
     /**

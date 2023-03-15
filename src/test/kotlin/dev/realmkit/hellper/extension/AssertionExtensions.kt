@@ -26,6 +26,7 @@ import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveErrors
 import io.konform.validation.Invalid
 import io.konform.validation.ValidationError
 import io.kotest.assertions.asClue
+import io.kotest.assertions.withClue
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
@@ -87,9 +88,9 @@ object AssertionExtensions {
      * @return nothing
      */
     fun Target.shouldBeAlive() = asClue {
-        alive.shouldBeTrue()
-        stat.base.shield.current.shouldBeGreaterThanOrEqual(ZERO)
-        stat.base.hull.current.shouldBePositive()
+        withClue("alive") { alive.shouldBeTrue() }
+        withClue(".stat.base.shield.current") { stat.base.shield.current.shouldBeGreaterThanOrEqual(ZERO) }
+        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBePositive() }
     }
 
     /**
@@ -101,7 +102,7 @@ object AssertionExtensions {
      * @return nothing
      */
     fun Target.shouldBeDead() = asClue {
-        alive.shouldBeFalse()
-        stat.base.hull.current.shouldBeLessThanOrEqual(ZERO)
+        withClue("alive") { alive.shouldBeFalse() }
+        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(ZERO) }
     }
 }

@@ -35,18 +35,18 @@ import org.springframework.stereotype.Service
 @Service
 class TargetService {
     /**
-     * ## [damage]
-     * calculates the final damage
+     * ## [absoluteDamage]
+     * calculates the absolute damage from the [Target]
      *
      * @return the critical damage
      */
-    private val Target.damage: Double
+    private val Target.absoluteDamage: Double
         get() = stat.base.power *
                 criticalMultiplier
 
     /**
      * ## [criticalMultiplier]
-     * get the [criticalMultiplier] if it is critical, else returns 1
+     * get the critical multiplier if it is critical, else returns 1
      */
     private val Target.criticalMultiplier: Double
         get() = stat.multiplier.critical
@@ -69,27 +69,30 @@ class TargetService {
 
     /**
      * ## [attack]
-     * attack a target
+     * attack a target, reducing the shield or the hull
      *
      * @param attacker the attacker
      * @param defender the defender
+     * @return the damage done to the target
      */
-    fun attack(attacker: Target, defender: Target) {
-        val damage = attacker damage defender
-
+    fun attack(attacker: Target, defender: Target): Double {
+        val damage = (attacker damage defender)
         if (defender.hasShield) {
             defender.stat.base.shield.current -= damage
-            if (!defender.hasShield) {
-                defender.stat.base.shield.current = ZERO
-            }
         } else {
             defender.stat.base.hull.current -= damage
         }
+
+        if (!defender.hasShield) {
+            defender.stat.base.shield.current = ZERO
+        }
+
+        return damage
     }
 
     /**
-     * ## [damage]
-     * calculates the [damage] to the target
+     * ## [absoluteDamage]
+     * calculates the [absoluteDamage] to the target
      *
      * @param target the target to calculate the damage to
      * @return the damage done to the target, or null if none
@@ -112,7 +115,7 @@ class TargetService {
      * @return the final damage
      */
     private infix fun Target.finalDamage(target: Target): Double =
-        damage - target.absoluteDefense
+        absoluteDamage - target.absoluteDefense
 
     /**
      * ## [allAlive]

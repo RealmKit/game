@@ -26,6 +26,7 @@ import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeDead
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.withClue
 import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.checkAll
 
@@ -46,8 +47,8 @@ class BattleServiceTest(
 
                 battleService.battle { player against enemy }
 
-                player.shouldBeAlive()
-                enemy.shouldBeDead()
+                withClue("player") { player.shouldBeAlive() }
+                withClue("enemy") { enemy.shouldBeDead() }
             }
         }
 
@@ -64,9 +65,9 @@ class BattleServiceTest(
 
                 battleService.battle { player against listOf(enemy1, enemy2) }
 
-                player.shouldBeAlive()
-                enemy1.shouldBeDead()
-                enemy2.shouldBeDead()
+                withClue("player") { player.shouldBeAlive() }
+                withClue("enemy1") { enemy1.shouldBeDead() }
+                withClue("enemy2") { enemy2.shouldBeDead() }
             }
         }
 
@@ -85,9 +86,9 @@ class BattleServiceTest(
 
                 battleService.battle { listOf(player1, player2) against enemy }
 
-                player1.shouldBeAlive()
-                player2.shouldBeAlive()
-                enemy.shouldBeDead()
+                withClue("player1") { player1.shouldBeAlive() }
+                withClue("player2") { player2.shouldBeAlive() }
+                withClue("enemy") { enemy.shouldBeDead() }
             }
         }
 
@@ -110,10 +111,10 @@ class BattleServiceTest(
 
                 battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
 
-                player1.shouldBeAlive()
-                player2.shouldBeAlive()
-                enemy1.shouldBeDead()
-                enemy2.shouldBeDead()
+                withClue("player1") { player1.shouldBeAlive() }
+                withClue("player2") { player2.shouldBeAlive() }
+                withClue("enemy1") { enemy1.shouldBeDead() }
+                withClue("enemy2") { enemy2.shouldBeDead() }
             }
         }
     }
