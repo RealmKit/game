@@ -138,8 +138,10 @@ class BattleServiceTest(
                 enemy1.stat.base.power = 100.0
                 enemy1.stat.base.defense = 100.0
                 enemy1.stat.base.speed = 2.0
+                enemy1.stat.multiplier.critical = 1.0
                 enemy2.stat.base.defense = 100.0
                 enemy2.stat.base.speed = 1.0
+                enemy2.stat.multiplier.critical = 1.0
 
                 battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
 
