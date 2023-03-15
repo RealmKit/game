@@ -46,7 +46,7 @@ class GameTest(
 
             enemy.stat.base.hull.current shouldBe 5.0
 
-            targetService.attack(player, enemy)
+            targetService attack (player to enemy)
             enemy.shouldBeAlive()
         }
     }

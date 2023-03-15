@@ -22,6 +22,7 @@ package dev.realmkit.game.domain.battle.context
 
 import dev.realmkit.game.core.extension.NumberExtensions.repeat
 import dev.realmkit.game.domain.aliases.AttackBlock
+import dev.realmkit.game.domain.aliases.AttackerTargets
 import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.extension.TargetExtensions.bySpeed
@@ -125,17 +126,7 @@ class BattleContext(
     fun start(): BattleContext {
         while (battleIsNotOver) {
             battleDuration++
-
-            val attackersToTargets = attackers.map { target ->
-                target to defenders
-            }
-            val defendersToTargets = defenders.map { target ->
-                target to attackers
-            }
-
-            val targets = attackersToTargets + defendersToTargets
-
-            targets.bySpeed.forEach { (attacker, targets) ->
+            attackers.versus(defenders).bySpeed.forEach { (attacker, targets) ->
                 attacker.stat.base.speed.repeat {
                     if (attacker.alive) {
                         attacker.attack(targets)
@@ -145,4 +136,7 @@ class BattleContext(
         }
         return this
     }
+
+    private infix fun Set<Target>.versus(targets: Set<Target>): Iterable<AttackerTargets> =
+        this.map { target -> target to targets } + targets.map { target -> target to this }
 }

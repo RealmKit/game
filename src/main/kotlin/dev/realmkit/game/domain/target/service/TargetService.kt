@@ -71,11 +71,11 @@ class TargetService {
      * ## [attack]
      * attack a target, reducing the shield or the hull
      *
-     * @param attacker the attacker
-     * @param defender the defender
+     * @param pair the attacker to defender pair
      * @return the damage done to the target
      */
-    fun attack(attacker: Target, defender: Target): Double {
+    infix fun attack(pair: Pair<Target, Target>): Double {
+        val (attacker: Target, defender: Target) = pair
         val damage = (attacker damage defender)
         if (defender.hasShield) {
             defender.stat.base.shield.current -= damage
