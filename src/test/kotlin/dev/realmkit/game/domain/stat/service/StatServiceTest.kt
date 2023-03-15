@@ -26,7 +26,6 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
 class StatServiceTest(
@@ -38,7 +37,7 @@ class StatServiceTest(
         }
 
         expect("to not level up a Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
+            check(Stat.fixture) { stat ->
                 stat.progression.level = 1L
                 stat.progression.experience = 0L
 
@@ -49,7 +48,7 @@ class StatServiceTest(
         }
 
         expect("to level up a Stat from level 1 to level 2") {
-            check(arbitrary { Stat.fixture }) { stat ->
+            check(Stat.fixture) { stat ->
                 stat.progression.level = 1
                 stat.progression.experience = 8
 
@@ -60,7 +59,7 @@ class StatServiceTest(
         }
 
         expect("to level up a Stat from level 1 to level 3") {
-            check(arbitrary { Stat.fixture }) { stat ->
+            check(Stat.fixture) { stat ->
                 stat.progression.level = 1
                 stat.progression.experience = 8
 
@@ -76,7 +75,7 @@ class StatServiceTest(
         }
 
         expect("to level up a Stat from level 1 to level 100") {
-            check(arbitrary { Stat.fixture }) { stat ->
+            check(Stat.fixture) { stat ->
                 stat.progression.level = 1L
                 stat.progression.experience = 25_502_500L
 

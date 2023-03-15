@@ -24,12 +24,11 @@ import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
 
 class StatRateTest : TestSpec({
     context("unit testing StatRate") {
         expect("to create a new StatRate") {
-            check(arbitrary { StatRate.fixture }) { rate ->
+            check(StatRate.fixture) { rate ->
                 rate.shouldNotBeNull()
                 rate.shieldRegeneration.shouldBePositive()
                 rate.critical.shouldBePositive()

@@ -21,24 +21,30 @@
 package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.StatRate
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
 import dev.realmkit.hellper.fixture.Fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
  * Creates a [StatRate] with random data
  */
-val StatRate.Companion.fixture: StatRate
-    get() = Fixture {
-        StatRate::shieldRegeneration { positiveDouble }
-        StatRate::critical { positiveDouble }
+val StatRate.Companion.fixture: Arb<StatRate>
+    get() = arbitrary { rs ->
+        Fixture {
+            StatRate::shieldRegeneration { rs.positiveDouble() }
+            StatRate::critical { rs.positiveDouble() }
+        }
     }
 
 /**
  * Creates a [StatRate] with random invalid data
  */
-val StatRate.Companion.invalid: StatRate
-    get() = Fixture {
-        StatRate::shieldRegeneration { negativeDouble }
-        StatRate::critical { negativeDouble }
+val StatRate.Companion.invalid: Arb<StatRate>
+    get() = arbitrary { rs ->
+        Fixture {
+            StatRate::shieldRegeneration { rs.negativeDouble() }
+            StatRate::critical { rs.negativeDouble() }
+        }
     }

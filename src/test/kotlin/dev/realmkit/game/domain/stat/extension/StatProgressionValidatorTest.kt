@@ -27,18 +27,17 @@ import dev.realmkit.hellper.fixture.stat.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
-import io.kotest.property.arbitrary.arbitrary
 
 class StatProgressionValidatorTest : TestSpec({
     context("unit testing StatProgressionValidator") {
         expect("progression to be valid") {
-            check(arbitrary { StatProgression.fixture }) { progression ->
+            check(StatProgression.fixture) { progression ->
                 StatProgressionValidator.validation shouldBeValid progression
             }
         }
 
         expect("progression to be invalid") {
-            check(arbitrary { StatProgression.invalid }) { progression ->
+            check(StatProgression.invalid) { progression ->
                 StatProgressionValidator.validation.shouldBeInvalid(progression) { invalid ->
                     invalid shouldHaveAllErrors listOf(
                         ".level" to "must be positive",

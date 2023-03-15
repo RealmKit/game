@@ -22,32 +22,42 @@ package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
 import dev.realmkit.hellper.fixture.Fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
  * Creates a [StatBase] with random data
  */
-val StatBase.Companion.fixture: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.fixture }
-        StatBase::shield { StatValue.fixture }
-        StatBase::power { positiveDouble }
-        StatBase::defense { positiveDouble }
-        StatBase::speed { positiveDouble }
-        StatBase::aggro { positiveDouble }
+val StatBase.Companion.fixture: Arb<StatBase>
+    get() = arbitrary { rs ->
+        val hull = StatValue.fixture.bind()
+        val shield = StatValue.fixture.bind()
+        Fixture {
+            StatBase::hull { hull }
+            StatBase::shield { shield }
+            StatBase::power { rs.positiveDouble() }
+            StatBase::defense { rs.positiveDouble() }
+            StatBase::speed { rs.positiveDouble() }
+            StatBase::aggro { rs.positiveDouble() }
+        }
     }
 
 /**
  * Creates a [StatBase] with random invalid data
  */
-val StatBase.Companion.invalid: StatBase
-    get() = Fixture {
-        StatBase::hull { StatValue.invalid }
-        StatBase::shield { StatValue.invalid }
-        StatBase::power { negativeDouble }
-        StatBase::defense { negativeDouble }
-        StatBase::speed { negativeDouble }
-        StatBase::aggro { negativeDouble }
+val StatBase.Companion.invalid: Arb<StatBase>
+    get() = arbitrary { rs ->
+        val hull = StatValue.invalid.bind()
+        val shield = StatValue.invalid.bind()
+        Fixture {
+            StatBase::hull { hull }
+            StatBase::shield { shield }
+            StatBase::power { rs.negativeDouble() }
+            StatBase::defense { rs.negativeDouble() }
+            StatBase::speed { rs.negativeDouble() }
+            StatBase::aggro { rs.negativeDouble() }
+        }
     }

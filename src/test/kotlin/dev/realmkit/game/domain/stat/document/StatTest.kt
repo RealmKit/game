@@ -25,12 +25,11 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
 
 class StatTest : TestSpec({
     context("unit testing Stat") {
         expect("to create a new Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
+            check(Stat.fixture) { stat ->
                 stat.shouldNotBeNull()
                 stat.base.hull.current.shouldBePositive()
                 stat.base.hull.max.shouldBePositive()
@@ -47,7 +46,7 @@ class StatTest : TestSpec({
         }
 
         expect("to update a Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
+            check(Stat.fixture) { stat ->
                 stat.shouldNotBeNull()
 
                 stat.base.hull.current.shouldBePositive()

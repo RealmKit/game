@@ -35,7 +35,6 @@ import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
 class PlayerServiceTest(
@@ -47,7 +46,7 @@ class PlayerServiceTest(
         }
 
         expect("it should create Players") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 val saved = playerService new player.name
                 saved.id.shouldNotBeNull()
                 saved.createdAt.shouldNotBeNull()
@@ -71,7 +70,7 @@ class PlayerServiceTest(
         }
 
         expect("it should level up a Player") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 val saved = playerService new player.name
                 saved.stat.progression.level shouldBe 1
                 saved.stat.progression.experience shouldBe 0
@@ -84,7 +83,7 @@ class PlayerServiceTest(
         }
 
         expect("to thrown a NotFoundException when updating a non existing Player") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 player.id = "non-existing-id"
                 shouldThrow<NotFoundException> {
                     playerService update player

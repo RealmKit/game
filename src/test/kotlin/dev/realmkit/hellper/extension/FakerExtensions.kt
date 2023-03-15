@@ -23,22 +23,13 @@ package dev.realmkit.hellper.extension
 import io.github.serpro69.kfaker.Faker
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
-import kotlin.random.Random
-import kotlin.random.nextLong
 
 /**
  * # [FakerExtensions]
  */
 object FakerExtensions {
     val faker: Faker = Faker()
-    val positiveLong: Long
-        get() = Random.nextLong(1L until Long.MAX_VALUE)
-    val negativeLong: Long
-        get() = Random.nextLong(Long.MIN_VALUE until 0)
-    val positiveDouble: Double
-        get() = faker.random.nextDouble()
-    val negativeDouble: Double
-        get() = positiveDouble * -1
+
     val name: Arb<String>
         get() = arbitrary { faker.superhero.name() }
 }

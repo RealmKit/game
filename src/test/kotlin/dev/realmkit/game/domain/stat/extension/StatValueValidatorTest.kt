@@ -27,18 +27,17 @@ import dev.realmkit.hellper.fixture.stat.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
-import io.kotest.property.arbitrary.arbitrary
 
 class StatValueValidatorTest : TestSpec({
     context("unit testing StatValueValidator") {
         expect("value to be valid") {
-            check(arbitrary { StatValue.fixture }) { value ->
+            check(StatValue.fixture) { value ->
                 StatValueValidator.double shouldBeValid value
             }
         }
 
         expect("value to be invalid") {
-            check(arbitrary { StatValue.invalid }) { value ->
+            check(StatValue.invalid) { value ->
                 StatValueValidator.double.shouldBeInvalid(value) { invalid ->
                     invalid shouldHaveAllErrors listOf(
                         "" to ".current must be lower than .max",

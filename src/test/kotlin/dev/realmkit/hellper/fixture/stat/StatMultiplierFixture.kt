@@ -21,22 +21,28 @@
 package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.StatMultiplier
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
 import dev.realmkit.hellper.fixture.Fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
  * Creates a [StatMultiplier] with random data
  */
-val StatMultiplier.Companion.fixture: StatMultiplier
-    get() = Fixture {
-        StatMultiplier::critical { positiveDouble }
+val StatMultiplier.Companion.fixture: Arb<StatMultiplier>
+    get() = arbitrary { rs ->
+        Fixture {
+            StatMultiplier::critical { rs.positiveDouble() }
+        }
     }
 
 /**
  * Creates a [StatMultiplier] with random invalid data
  */
-val StatMultiplier.Companion.invalid: StatMultiplier
-    get() = Fixture {
-        StatMultiplier::critical { negativeDouble }
+val StatMultiplier.Companion.invalid: Arb<StatMultiplier>
+    get() = arbitrary { rs ->
+        Fixture {
+            StatMultiplier::critical { rs.negativeDouble() }
+        }
     }

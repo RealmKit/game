@@ -30,7 +30,6 @@ import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
 class PlayerRepositoryTest(
@@ -47,7 +46,7 @@ class PlayerRepositoryTest(
 
         expect("it should create Players") {
             playerRepository.run { count().shouldBeZero() }
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 playerRepository.save(player).shouldNotBeNull()
                 playerRepository.findById(player.id).shouldBePresent().asClue { find ->
                     find.id.shouldNotBeNull()

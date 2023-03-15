@@ -27,7 +27,6 @@ import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.withClue
-import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.checkAll
 
 @IntegrationTestContext
@@ -37,8 +36,8 @@ class BattleServiceTest(
     context("integration testing BattleService") {
         expect("One vs One battle, all Attackers win") {
             checkAll(
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
+                Player.fixture,
+                Player.fixture,
             ) { player, enemy ->
                 player.stat.base.shield.current = 100.0
                 player.stat.base.power = 100.0
@@ -55,9 +54,9 @@ class BattleServiceTest(
 
         expect("One versus Many, all Attackers win") {
             checkAll(
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
+                Player.fixture,
+                Player.fixture,
+                Player.fixture,
             ) { player, enemy1, enemy2 ->
                 player.stat.base.shield.current = 100.0
                 player.stat.base.power = 100.0
@@ -75,9 +74,9 @@ class BattleServiceTest(
 
         expect("Many versus One, all Attackers win") {
             checkAll(
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
+                Player.fixture,
+                Player.fixture,
+                Player.fixture,
             ) { player1, player2, enemy ->
                 player1.stat.base.shield.current = 100.0
                 player1.stat.base.power = 100.0
@@ -98,10 +97,10 @@ class BattleServiceTest(
 
         expect("Many versus Many, all Attackers win") {
             checkAll(
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
+                Player.fixture,
+                Player.fixture,
+                Player.fixture,
+                Player.fixture,
             ) { player1, player2, enemy1, enemy2 ->
                 player1.stat.base.shield.current = 100.0
                 player1.stat.base.power = 100.0
@@ -126,10 +125,10 @@ class BattleServiceTest(
 
         expect("Many versus Many, all Defenders win") {
             checkAll(
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
+                Player.fixture,
+                Player.fixture,
+                Player.fixture,
+                Player.fixture,
             ) { player1, player2, enemy1, enemy2 ->
                 player1.stat.base.speed = 1.0
                 player2.stat.base.speed = 0.5
@@ -154,8 +153,8 @@ class BattleServiceTest(
 
         expect("One versus One, battle last forever") {
             checkAll(
-                arbitrary { Player.fixture },
-                arbitrary { Player.fixture },
+                Player.fixture,
+                Player.fixture,
             ) { player, enemy ->
                 player.stat.base.power = 0.0
                 enemy.stat.base.power = 0.0

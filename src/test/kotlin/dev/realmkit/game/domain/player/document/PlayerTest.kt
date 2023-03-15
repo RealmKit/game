@@ -28,12 +28,11 @@ import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
-import io.kotest.property.arbitrary.arbitrary
 
 class PlayerTest : TestSpec({
     context("unit testing Player") {
         expect("to create a new plain Player") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 player.shouldNotBeNull()
                 player.name.shouldNotBeNull().shouldNotBeEmpty()
                 player.stat.shouldNotBeNull()
@@ -54,7 +53,7 @@ class PlayerTest : TestSpec({
         }
 
         expect("Player to be alive and dead") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 player.shouldBeAlive()
                 player.stat.base.hull.current = 0.0
                 player.shouldBeDead()

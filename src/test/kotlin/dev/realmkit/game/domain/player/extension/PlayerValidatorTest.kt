@@ -32,18 +32,17 @@ import io.kotest.assertions.konform.shouldBeValid
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
 
 class PlayerValidatorTest : TestSpec({
     context("unit testing PlayerValidator") {
         expect("to validate a Player") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 player validated { validated -> validated.shouldNotBeNull() }
             }
         }
 
         expect("to throw a ValidationException when validating a Player") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 shouldThrow<ValidationException> {
                     player.copy(name = "") validated { null }
                 }.shouldNotBeNull()
@@ -53,13 +52,13 @@ class PlayerValidatorTest : TestSpec({
         }
 
         expect("player to be valid") {
-            check(arbitrary { Player.fixture }) { player ->
+            check(Player.fixture) { player ->
                 PlayerValidator.validation shouldBeValid player
             }
         }
 
         expect("player to be invalid") {
-            check(arbitrary { Player.invalid }) { player ->
+            check(Player.invalid) { player ->
                 PlayerValidator.validation.shouldBeInvalid(player) { invalid ->
                     invalid shouldHaveAllErrors listOf(
                         ".name" to "must not be blank",
