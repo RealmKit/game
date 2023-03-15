@@ -35,7 +35,7 @@ class BattleServiceTest(
     private val battleService: BattleService,
 ) : IntegrationTestSpec({
     context("integration testing BattleService") {
-        expect("battle: One versus One") {
+        expect("One vs One battle, all Attackers win") {
             checkAll(
                 arbitrary { Player.fixture },
                 arbitrary { Player.fixture },
@@ -44,6 +44,7 @@ class BattleServiceTest(
                 player.stat.base.power = 100.0
                 player.stat.base.defense = 100.0
                 player.stat.base.speed = 1.0
+                player.stat.multiplier.critical = 1.0
 
                 battleService.battle { player against enemy }
 
@@ -52,7 +53,7 @@ class BattleServiceTest(
             }
         }
 
-        expect("battle: One versus Many") {
+        expect("One versus Many, all Attackers win") {
             checkAll(
                 arbitrary { Player.fixture },
                 arbitrary { Player.fixture },
@@ -62,6 +63,7 @@ class BattleServiceTest(
                 player.stat.base.power = 100.0
                 player.stat.base.defense = 100.0
                 player.stat.base.speed = 1.0
+                player.stat.multiplier.critical = 1.0
 
                 battleService.battle { player against listOf(enemy1, enemy2) }
 
@@ -71,7 +73,7 @@ class BattleServiceTest(
             }
         }
 
-        expect("battle: Many versus One") {
+        expect("Many versus One, all Attackers win") {
             checkAll(
                 arbitrary { Player.fixture },
                 arbitrary { Player.fixture },
@@ -81,8 +83,10 @@ class BattleServiceTest(
                 player1.stat.base.power = 100.0
                 player1.stat.base.defense = 100.0
                 player1.stat.base.speed = 1.0
+                player1.stat.multiplier.critical = 1.0
                 player2.stat.base.defense = 100.0
                 player2.stat.base.speed = 1.0
+                player2.stat.multiplier.critical = 1.0
 
                 battleService.battle { listOf(player1, player2) against enemy }
 
@@ -92,7 +96,7 @@ class BattleServiceTest(
             }
         }
 
-        expect("battle: Many versus Many") {
+        expect("Many versus Many, all Attackers win") {
             checkAll(
                 arbitrary { Player.fixture },
                 arbitrary { Player.fixture },
@@ -103,8 +107,10 @@ class BattleServiceTest(
                 player1.stat.base.power = 100.0
                 player1.stat.base.defense = 100.0
                 player1.stat.base.speed = 2.0
+                player1.stat.multiplier.critical = 1.0
                 player2.stat.base.defense = 100.0
                 player2.stat.base.speed = 1.0
+                player2.stat.multiplier.critical = 1.0
 
                 enemy1.stat.base.speed = 1.0
                 enemy2.stat.base.speed = 0.5
@@ -115,6 +121,47 @@ class BattleServiceTest(
                 withClue("player2") { player2.shouldBeAlive() }
                 withClue("enemy1") { enemy1.shouldBeDead() }
                 withClue("enemy2") { enemy2.shouldBeDead() }
+            }
+        }
+
+        expect("Many versus Many, all Defenders win") {
+            checkAll(
+                arbitrary { Player.fixture },
+                arbitrary { Player.fixture },
+                arbitrary { Player.fixture },
+                arbitrary { Player.fixture },
+            ) { player1, player2, enemy1, enemy2 ->
+                player1.stat.base.speed = 1.0
+                player2.stat.base.speed = 0.5
+
+                enemy1.stat.base.shield.current = 100.0
+                enemy1.stat.base.power = 100.0
+                enemy1.stat.base.defense = 100.0
+                enemy1.stat.base.speed = 2.0
+                enemy2.stat.base.defense = 100.0
+                enemy2.stat.base.speed = 1.0
+
+                battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
+
+                withClue("player1") { player1.shouldBeDead() }
+                withClue("player2") { player2.shouldBeDead() }
+                withClue("enemy1") { enemy1.shouldBeAlive() }
+                withClue("enemy2") { enemy2.shouldBeAlive() }
+            }
+        }
+
+        expect("One versus One, battle last forever") {
+            checkAll(
+                arbitrary { Player.fixture },
+                arbitrary { Player.fixture },
+            ) { player, enemy ->
+                player.stat.base.power = 0.0
+                enemy.stat.base.power = 0.0
+
+                battleService.battle { player against enemy }
+
+                withClue("player1") { player.shouldBeAlive() }
+                withClue("player2") { enemy.shouldBeAlive() }
             }
         }
     }

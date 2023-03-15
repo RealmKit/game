@@ -50,7 +50,7 @@ class BattleContext(
      * check if the battle is over or not
      */
     private val battleIsNotOver: Boolean
-        get() = battleDuration <= properties.battleDuration &&
+        get() = battleDuration < properties.battleDuration &&
                 attackers.hasAlive &&
                 defenders.hasAlive
 
