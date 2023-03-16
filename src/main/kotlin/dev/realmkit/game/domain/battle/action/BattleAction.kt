@@ -18,40 +18,10 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.player
-
-import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.Fixture
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+package dev.realmkit.game.domain.battle.action
 
 /**
- * Creates a [Player] with random data
+ * # [BattleAction]
+ * the `battle action` interface
  */
-val Player.Companion.fixture: Arb<Player>
-    get() = arbitrary {
-        val id = arbitrary { faker.random.nextUUID() }.bind()
-        val name = arbitrary { faker.superhero.name() }.bind()
-        val stat = Stat.fixture.bind()
-        Fixture {
-            Player::id { id }
-            Player::name { name }
-            Player::stat { stat }
-        }
-    }
-
-/**
- * Creates a [Player] with random invalid data
- */
-val Player.Companion.invalid: Arb<Player>
-    get() = arbitrary {
-        val stat = Stat.invalid.bind()
-        Fixture {
-            Player::name { "" }
-            Player::stat { stat }
-        }
-    }
+interface BattleAction

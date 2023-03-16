@@ -39,7 +39,7 @@ class BattleServiceTest(
             battleService.shouldNotBeNull()
         }
 
-        context(".batter()") {
+        context(".battle()") {
             expect("One vs One battle, all Attackers win") {
                 checkAll(
                     Player.fixture,

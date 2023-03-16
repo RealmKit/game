@@ -18,40 +18,43 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.player
+package dev.realmkit.game.domain.battle.action
 
-import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.Fixture
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.domain.target.document.Target
 
 /**
- * Creates a [Player] with random data
+ * # [BattleActionAttack]
+ * the battle attack result
  */
-val Player.Companion.fixture: Arb<Player>
-    get() = arbitrary {
-        val id = arbitrary { faker.random.nextUUID() }.bind()
-        val name = arbitrary { faker.superhero.name() }.bind()
-        val stat = Stat.fixture.bind()
-        Fixture {
-            Player::id { id }
-            Player::name { name }
-            Player::stat { stat }
-        }
-    }
+class BattleActionAttack : BattleAction {
+    /**
+     * ## [finalDamage]
+     * the final damage amount dealt
+     */
+    var finalDamage: Double = ZERO
 
-/**
- * Creates a [Player] with random invalid data
- */
-val Player.Companion.invalid: Arb<Player>
-    get() = arbitrary {
-        val stat = Stat.invalid.bind()
-        Fixture {
-            Player::name { "" }
-            Player::stat { stat }
-        }
-    }
+    /**
+     * ## [toTheShield]
+     * flag to indicate if the damage was dealt to the shield
+     */
+    var toTheShield: Boolean = false
+
+    /**
+     * ## [isCritical]
+     * flag to indicate if the damage was critical
+     */
+    var isCritical: Boolean = false
+
+    /**
+     * ## [attacker]
+     * the attacker target
+     */
+    lateinit var attacker: Target
+
+    /**
+     * ## [defender]
+     * the defender target
+     */
+    lateinit var defender: Target
+}

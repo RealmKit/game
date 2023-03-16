@@ -23,6 +23,7 @@ package dev.realmkit.game.domain.target.service
 import dev.realmkit.game.core.extension.ConstantExtensions.ONE
 import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
 import dev.realmkit.game.core.extension.NumberExtensions.isHit
+import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.target.document.Target
 import org.springframework.stereotype.Service
 
@@ -35,14 +36,22 @@ import org.springframework.stereotype.Service
 @Service
 class TargetService {
     /**
+     * ## [baseDamage]
+     * calculates the base damage from the [Target]
+     *
+     * @return the base damage
+     */
+    private val Target.baseDamage: Double
+        get() = stat.base.power
+
+    /**
      * ## [absoluteDamage]
      * calculates the absolute damage from the [Target]
      *
      * @return the critical damage
      */
     private val Target.absoluteDamage: Double
-        get() = stat.base.power *
-                criticalMultiplier
+        get() = baseDamage * criticalMultiplier
 
     /**
      * ## [criticalMultiplier]
@@ -72,23 +81,27 @@ class TargetService {
      * attack a target, reducing the shield or the hull
      *
      * @param pair the attacker to defender pair
-     * @return the damage done to the target
+     * @return the attack result
      */
-    infix fun attack(pair: Pair<Target, Target>): Double {
-        val (attacker: Target, defender: Target) = pair
-        val damage = (attacker damage defender)
-        if (defender.hasShield) {
-            defender.stat.base.shield.current -= damage
-        } else {
-            defender.stat.base.hull.current -= damage
-        }
+    infix fun attack(pair: Pair<Target, Target>): BattleActionAttack =
+        BattleActionAttack()
+            .apply {
+                attacker = pair.first
+                defender = pair.second
+                finalDamage = attacker damage defender
+                toTheShield = defender.hasShield
+                isCritical = finalDamage > attacker.absoluteDamage
 
-        if (!defender.hasShield) {
-            defender.stat.base.shield.current = ZERO
-        }
+                if (toTheShield) {
+                    defender.stat.base.shield.current -= finalDamage
+                } else {
+                    defender.stat.base.hull.current -= finalDamage
+                }
 
-        return damage
-    }
+                if (!defender.hasShield) {
+                    defender.stat.base.shield.current = ZERO
+                }
+            }
 
     /**
      * ## [absoluteDamage]

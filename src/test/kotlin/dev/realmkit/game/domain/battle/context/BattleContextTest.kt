@@ -20,12 +20,21 @@
 
 package dev.realmkit.game.domain.battle.context
 
+import dev.realmkit.game.domain.battle.action.BattleActionAttack
+import dev.realmkit.game.domain.battle.action.BattleActionAttackerAttempt
+import dev.realmkit.game.domain.battle.action.BattleActionAttackerRepeatAttempt
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
+import dev.realmkit.hellper.extension.AssertionExtensions.onAction
+import dev.realmkit.hellper.extension.AssertionExtensions.onTurn
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveTurns
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class BattleContextTest : TestSpec({
@@ -45,12 +54,44 @@ class BattleContextTest : TestSpec({
                             turnDuration = 10,
                         ),
                         onAttack = { attacker, defender ->
-                            defender.stat.base.hull.current -= attacker.stat.base.power
-                            attacker.stat.base.power
+                            BattleActionAttack().apply {
+                                this.attacker = attacker
+                                this.defender = defender
+                                this.finalDamage = attacker.stat.base.power
+                                this.toTheShield = false
+                                this.isCritical = true
+                                defender.stat.base.hull.current -= this.finalDamage
+                            }
                         },
                     )
                     context.apply { player against enemy }
                     context.start()
+                        .shouldHaveTurns(1)
+                        .onTurn(turn = 1, actions = 4) {
+                            onAction<BattleActionAttackerAttempt> {
+                                attacker shouldBe player.id
+                                speed shouldBe player.stat.base.speed
+                                hit.shouldBeTrue()
+                            }
+                            onAction<BattleActionAttackerRepeatAttempt> {
+                                attacker shouldBe player.id
+                                hull shouldBe player.stat.base.hull.current
+                                shield shouldBe player.stat.base.shield.current
+                                alive.shouldBeTrue()
+                            }
+                            onAction<BattleActionAttack> {
+                                attacker shouldBe player
+                                defender shouldBe enemy
+                                finalDamage shouldBe player.stat.base.power
+                                toTheShield.shouldBeFalse()
+                                isCritical.shouldBeTrue()
+                            }
+                            onAction<BattleActionAttackerAttempt> {
+                                attacker shouldBe enemy.id
+                                speed shouldBe enemy.stat.base.speed
+                                hit.shouldBeFalse()
+                            }
+                        }
 
                     player.shouldBeAlive()
                     enemy.shouldNotBeAlive()

@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.target.document
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
 import dev.realmkit.game.domain.stat.document.Stat
 
@@ -28,6 +29,18 @@ import dev.realmkit.game.domain.stat.document.Stat
  * the Target interface
  */
 interface Target {
+    /**
+     * ## [id]
+     * the target id
+     */
+    val id: String
+
+    /**
+     * ## [name]
+     * the target name
+     */
+    val name: String
+
     /**
      * ## [stat]
      * the target stat
@@ -40,6 +53,7 @@ interface Target {
      *
      * @see Target
      */
+    @get:JsonIgnore
     val alive: Boolean
         get() = stat.base.hull.current > ZERO
 }
