@@ -49,7 +49,7 @@ class BattleServiceTest(
                     player.stat.base.power = 100.0
                     player.stat.base.defense = 100.0
                     player.stat.base.speed = 1.0
-                    player.stat.multiplier.critical = 1.0
+                    player.stat.multiplier.critical = 2.0
 
                     battleService.battle { player against enemy }
 

@@ -59,7 +59,7 @@ class BattleContextResult {
      * @param result the `result` to register
      */
     infix fun registerAttackResults(result: BattleActionAttack) {
-        logsPerTurn[turns]?.add(result)
+        logsPerTurn[turns]!!.add(result)
     }
 
     /**
@@ -70,7 +70,7 @@ class BattleContextResult {
      */
     infix fun registerAttackerAttempt(target: Target) {
         val speed = target.stat.base.speed
-        logsPerTurn[turns]?.add(
+        logsPerTurn[turns]!!.add(
             BattleActionAttackerAttempt(
                 attacker = target.id,
                 speed = speed,
@@ -87,7 +87,7 @@ class BattleContextResult {
     infix fun registerAttackerRepeatAttempt(target: Target) {
         val hull = target.stat.base.hull.current
         val shield = target.stat.base.shield.current
-        logsPerTurn[turns]?.add(
+        logsPerTurn[turns]!!.add(
             BattleActionAttackerRepeatAttempt(
                 attacker = target.id,
                 hull = hull,

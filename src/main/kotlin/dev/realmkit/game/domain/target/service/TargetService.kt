@@ -90,7 +90,7 @@ class TargetService {
                 defender = pair.second
                 finalDamage = attacker damage defender
                 toTheShield = defender.hasShield
-                isCritical = finalDamage > attacker.absoluteDamage
+                isCritical = finalDamage > attacker.baseDamage
 
                 if (toTheShield) {
                     defender.stat.base.shield.current -= finalDamage
