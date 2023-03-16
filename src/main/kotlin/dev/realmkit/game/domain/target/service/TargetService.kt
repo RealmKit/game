@@ -84,24 +84,24 @@ class TargetService {
      * @return the attack result
      */
     infix fun attack(pair: Pair<Target, Target>): BattleActionAttack =
-        BattleActionAttack()
-            .apply {
-                attacker = pair.first
-                defender = pair.second
-                finalDamage = attacker damage defender
-                toTheShield = defender.hasShield
-                isCritical = finalDamage > attacker.baseDamage
+        BattleActionAttack(
+            attacker = pair.first,
+            defender = pair.second,
+        ).apply {
+            finalDamage = attacker damage defender
+            toTheShield = defender.hasShield
+            isCritical = finalDamage > attacker.baseDamage
 
-                if (toTheShield) {
-                    defender.stat.base.shield.current -= finalDamage
-                } else {
-                    defender.stat.base.hull.current -= finalDamage
-                }
-
-                if (!defender.hasShield) {
-                    defender.stat.base.shield.current = ZERO
-                }
+            if (toTheShield) {
+                defender.stat.base.shield.current -= finalDamage
+            } else {
+                defender.stat.base.hull.current -= finalDamage
             }
+
+            if (!defender.hasShield) {
+                defender.stat.base.shield.current = ZERO
+            }
+        }
 
     /**
      * ## [absoluteDamage]

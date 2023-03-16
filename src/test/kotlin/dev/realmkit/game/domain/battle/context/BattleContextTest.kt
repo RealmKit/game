@@ -54,13 +54,14 @@ class BattleContextTest : TestSpec({
                             turnDuration = 10,
                         ),
                         onAttack = { attacker, defender ->
-                            BattleActionAttack().apply {
-                                this.attacker = attacker
-                                this.defender = defender
-                                this.finalDamage = attacker.stat.base.power
-                                this.toTheShield = false
-                                this.isCritical = true
-                                defender.stat.base.hull.current -= this.finalDamage
+                            BattleActionAttack(
+                                attacker = attacker,
+                                defender = defender,
+                            ).apply {
+                                finalDamage = attacker.stat.base.power
+                                toTheShield = false
+                                isCritical = true
+                                defender.stat.base.hull.current -= finalDamage
                             }
                         },
                     )

@@ -26,8 +26,13 @@ import dev.realmkit.game.domain.target.document.Target
 /**
  * # [BattleActionAttack]
  * the battle attack result
+ * @property attacker
+ * @property defender
  */
-class BattleActionAttack : BattleAction {
+class BattleActionAttack(
+    val attacker: Target,
+    val defender: Target,
+) : BattleAction {
     /**
      * ## [finalDamage]
      * the final damage amount dealt
@@ -45,16 +50,4 @@ class BattleActionAttack : BattleAction {
      * flag to indicate if the damage was critical
      */
     var isCritical: Boolean = false
-
-    /**
-     * ## [attacker]
-     * the attacker target
-     */
-    lateinit var attacker: Target
-
-    /**
-     * ## [defender]
-     * the defender target
-     */
-    lateinit var defender: Target
 }
