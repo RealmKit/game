@@ -35,7 +35,6 @@ import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
 class PlayerServiceTest(
@@ -46,62 +45,66 @@ class PlayerServiceTest(
             playerService.shouldNotBeNull()
         }
 
-        expect("it should create Players") {
-            check(arbitrary { Player.fixture }) { player ->
-                val saved = playerService new player.name
-                saved.id.shouldNotBeNull()
-                saved.createdAt.shouldNotBeNull()
-                saved.updatedAt.shouldNotBeNull()
-                saved.version.shouldNotBeNull()
-                saved.name.shouldNotBeNull()
-                saved.stat.base.hull.current.shouldBePositive()
-                saved.stat.base.hull.max.shouldBePositive()
-                saved.stat.base.shield.current.shouldBeZero()
-                saved.stat.base.shield.max.shouldBeZero()
-                saved.stat.base.power.shouldBePositive()
-                saved.stat.base.defense.shouldBeZero()
-                saved.stat.base.speed.shouldBePositive()
-                saved.stat.base.aggro.shouldBePositive()
-                saved.stat.rate.shieldRegeneration.shouldBeZero()
-                saved.stat.rate.critical.shouldBeZero()
-                saved.stat.multiplier.critical.shouldBePositive()
-                saved.stat.progression.level.shouldBePositive()
-                saved.stat.progression.experience.shouldBeZero()
-            }
-        }
-
-        expect("it should level up a Player") {
-            check(arbitrary { Player.fixture }) { player ->
-                val saved = playerService new player.name
-                saved.stat.progression.level shouldBe 1
-                saved.stat.progression.experience shouldBe 0
-
-                saved.stat.progression.experience = 8
-                playerService update saved
-                saved.stat.progression.level shouldBe 2
-                saved.stat.progression.experience shouldBe 0
-            }
-        }
-
-        expect("to thrown a NotFoundException when updating a non existing Player") {
-            check(arbitrary { Player.fixture }) { player ->
-                player.id = "non-existing-id"
-                shouldThrow<NotFoundException> {
-                    playerService update player
-                }.shouldNotBeNull().asClue { exception ->
-                    exception.clazz shouldBe Player::class
-                    exception.value shouldBe player.id
+        context(".new()") {
+            expect("it should create Players") {
+                check(Player.fixture) { player ->
+                    val saved = playerService new player.name
+                    saved.id.shouldNotBeNull()
+                    saved.createdAt.shouldNotBeNull()
+                    saved.updatedAt.shouldNotBeNull()
+                    saved.version.shouldNotBeNull()
+                    saved.name.shouldNotBeNull()
+                    saved.stat.base.hull.current.shouldBePositive()
+                    saved.stat.base.hull.max.shouldBePositive()
+                    saved.stat.base.shield.current.shouldBeZero()
+                    saved.stat.base.shield.max.shouldBeZero()
+                    saved.stat.base.power.shouldBePositive()
+                    saved.stat.base.defense.shouldBeZero()
+                    saved.stat.base.speed.shouldBePositive()
+                    saved.stat.base.aggro.shouldBePositive()
+                    saved.stat.rate.shieldRegeneration.shouldBeZero()
+                    saved.stat.rate.critical.shouldBeZero()
+                    saved.stat.multiplier.critical.shouldBePositive()
+                    saved.stat.progression.level.shouldBePositive()
+                    saved.stat.progression.experience.shouldBeZero()
                 }
             }
+
+            expect("name should not be blank") {
+                shouldThrow<ValidationException> {
+                    playerService new ""
+                }.shouldNotBeNull()
+                    .invalid shouldHaveAllErrors listOf(
+                    ".name" to "must not be blank",
+                )
+            }
         }
 
-        expect("name should not be blank") {
-            shouldThrow<ValidationException> {
-                playerService new ""
-            }.shouldNotBeNull()
-                .invalid shouldHaveAllErrors listOf(
-                ".name" to "must not be blank",
-            )
+        context(".update()") {
+            expect("it should level up a Player when updating it") {
+                check(Player.fixture) { player ->
+                    val saved = playerService new player.name
+                    saved.stat.progression.level shouldBe 1
+                    saved.stat.progression.experience shouldBe 0
+
+                    saved.stat.progression.experience = 8
+                    playerService update saved
+                    saved.stat.progression.level shouldBe 2
+                    saved.stat.progression.experience shouldBe 0
+                }
+            }
+
+            expect("to thrown a NotFoundException when updating a non existing Player") {
+                check(Player.fixture) { player ->
+                    player.id = "non-existing-id"
+                    shouldThrow<NotFoundException> {
+                        playerService update player
+                    }.shouldNotBeNull().asClue { exception ->
+                        exception.clazz shouldBe Player::class
+                        exception.value shouldBe player.id
+                    }
+                }
+            }
         }
     }
 })

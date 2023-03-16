@@ -18,19 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.battle.action
 
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.core.extension.ConstantExtensions
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
-            }
-        }
-    }
-})
+/**
+ * # [BattleActionAttackerAttempt]
+ * the `battle action attacker attempt` class
+ *
+ * @property attacker the `attacker` id
+ * @property speed the `speed` of the attacker
+ */
+class BattleActionAttackerAttempt(
+    val attacker: String,
+    val speed: Double,
+) : BattleAction {
+    /**
+     * ## [hit]
+     * check if it was a hit or not
+     */
+    val hit: Boolean
+        get() = speed >= ConstantExtensions.ONE
+}

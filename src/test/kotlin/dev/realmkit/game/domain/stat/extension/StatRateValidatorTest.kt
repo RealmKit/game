@@ -27,23 +27,26 @@ import dev.realmkit.hellper.fixture.stat.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
-import io.kotest.property.arbitrary.arbitrary
 
 class StatRateValidatorTest : TestSpec({
     context("unit testing StatRateValidator") {
-        expect("rate to be valid") {
-            check(arbitrary { StatRate.fixture }) { rate ->
-                StatRateValidator.validation shouldBeValid rate
+        context("isValid") {
+            expect("rate to be valid") {
+                check(StatRate.fixture) { rate ->
+                    StatRateValidator.validation shouldBeValid rate
+                }
             }
         }
 
-        expect("rate to be invalid") {
-            check(arbitrary { StatRate.invalid }) { rate ->
-                StatRateValidator.validation.shouldBeInvalid(rate) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        ".shieldRegeneration" to "must be positive",
-                        ".critical" to "must be positive",
-                    )
+        context("isInvalid") {
+            expect("rate to be invalid") {
+                check(StatRate.invalid) { rate ->
+                    StatRateValidator.validation.shouldBeInvalid(rate) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            ".shieldRegeneration" to "must be positive",
+                            ".critical" to "must be positive",
+                        )
+                    }
                 }
             }
         }

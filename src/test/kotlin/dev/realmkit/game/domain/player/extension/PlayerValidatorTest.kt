@@ -32,51 +32,54 @@ import io.kotest.assertions.konform.shouldBeValid
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
 
 class PlayerValidatorTest : TestSpec({
     context("unit testing PlayerValidator") {
-        expect("to validate a Player") {
-            check(arbitrary { Player.fixture }) { player ->
-                player validated { validated -> validated.shouldNotBeNull() }
+        context("isValid") {
+            expect("to validate a Player") {
+                check(Player.fixture) { player ->
+                    player validated { validated -> validated.shouldNotBeNull() }
+                }
+            }
+
+            expect("player to be valid") {
+                check(Player.fixture) { player ->
+                    PlayerValidator.validation shouldBeValid player
+                }
             }
         }
 
-        expect("to throw a ValidationException when validating a Player") {
-            check(arbitrary { Player.fixture }) { player ->
-                shouldThrow<ValidationException> {
-                    player.copy(name = "") validated { null }
-                }.shouldNotBeNull()
-                    .invalid.shouldNotBeNull()
-                    .errors.shouldNotBeNull().shouldNotBeEmpty()
+        context("isInvalid") {
+            expect("to throw a ValidationException when validating a Player") {
+                check(Player.fixture) { player ->
+                    shouldThrow<ValidationException> {
+                        player.copy(name = "") validated { null }
+                    }.shouldNotBeNull()
+                        .invalid.shouldNotBeNull()
+                        .errors.shouldNotBeNull().shouldNotBeEmpty()
+                }
             }
-        }
 
-        expect("player to be valid") {
-            check(arbitrary { Player.fixture }) { player ->
-                PlayerValidator.validation shouldBeValid player
-            }
-        }
-
-        expect("player to be invalid") {
-            check(arbitrary { Player.invalid }) { player ->
-                PlayerValidator.validation.shouldBeInvalid(player) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        ".name" to "must not be blank",
-                        ".stat.base.hull" to ".current must be lower than .max",
-                        ".stat.base.hull.max" to "must be positive",
-                        ".stat.base.shield" to ".current must be lower than .max",
-                        ".stat.base.shield.max" to "must be positive",
-                        ".stat.base.power" to "must be positive",
-                        ".stat.base.defense" to "must be positive",
-                        ".stat.base.speed" to "must be positive",
-                        ".stat.base.aggro" to "must be positive",
-                        ".stat.rate.shieldRegeneration" to "must be positive",
-                        ".stat.rate.critical" to "must be positive",
-                        ".stat.multiplier.critical" to "must be positive",
-                        ".stat.progression.level" to "must be positive",
-                        ".stat.progression.experience" to "must be positive",
-                    )
+            expect("player to be invalid") {
+                check(Player.invalid) { player ->
+                    PlayerValidator.validation.shouldBeInvalid(player) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            ".name" to "must not be blank",
+                            ".stat.base.hull" to ".current must be lower than .max",
+                            ".stat.base.hull.max" to "must be positive",
+                            ".stat.base.shield" to ".current must be lower than .max",
+                            ".stat.base.shield.max" to "must be positive",
+                            ".stat.base.power" to "must be positive",
+                            ".stat.base.defense" to "must be positive",
+                            ".stat.base.speed" to "must be positive",
+                            ".stat.base.aggro" to "must be positive",
+                            ".stat.rate.shieldRegeneration" to "must be positive",
+                            ".stat.rate.critical" to "must be positive",
+                            ".stat.multiplier.critical" to "must be positive",
+                            ".stat.progression.level" to "must be positive",
+                            ".stat.progression.experience" to "must be positive",
+                        )
+                    }
                 }
             }
         }

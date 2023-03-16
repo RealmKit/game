@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.domain.aliases
 
+import dev.realmkit.game.domain.battle.action.BattleAction
+import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.stat.document.StatValue
 import dev.realmkit.game.domain.target.document.Target
 
@@ -33,10 +35,16 @@ typealias StatValueDouble = StatValue<Double>
  * # [AttackBlock]
  * the `attack block` alias
  */
-typealias AttackBlock = (Target, Target) -> Double
+typealias AttackBlock = (Target, Target) -> BattleActionAttack
 
 /**
  * # [AttackerTargets]
  * the `attacker to targets` alias
  */
 typealias AttackerTargets = Pair<Target, Set<Target>>
+
+/**
+ * # [LogsPerTurn]
+ * the `logs per turn` alias
+ */
+typealias LogsPerTurn = MutableMap<Long, LinkedHashSet<BattleAction>>

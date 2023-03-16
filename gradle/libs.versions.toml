@@ -51,6 +51,7 @@ test-spring-boot = { module = "org.springframework.boot:spring-boot-starter-test
 test-testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "test-testcontainers" }
 test-testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "test-testcontainers" }
 validation-jackson = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "validation-jackson" }
+validation-jackson-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
 validation-konform = { module = "io.konform:konform", version.ref = "validation-konform" }
 
 [bundles]
@@ -95,6 +96,7 @@ test-testcontainers = [
 ]
 validation = [
     "validation-jackson",
+    "validation-jackson-jsr310",
     "validation-konform",
 ]
 

@@ -26,7 +26,6 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.property.arbitrary.arbitrary
 
 @IntegrationTestContext
 class StatServiceTest(
@@ -37,52 +36,54 @@ class StatServiceTest(
             statService.shouldNotBeNull()
         }
 
-        expect("to not level up a Stat") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.progression.level = 1L
-                stat.progression.experience = 0L
+        context(".levelUp()") {
+            expect("to not level up a Stat") {
+                check(Stat.fixture) { stat ->
+                    stat.progression.level = 1L
+                    stat.progression.experience = 0L
 
-                statService levelUp stat
-                stat.progression.level shouldBe 1L
-                stat.progression.experience shouldBe 0L
+                    statService levelUp stat
+                    stat.progression.level shouldBe 1L
+                    stat.progression.experience shouldBe 0L
+                }
             }
-        }
 
-        expect("to level up a Stat from level 1 to level 2") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.progression.level = 1
-                stat.progression.experience = 8
+            expect("to level up a Stat from level 1 to level 2") {
+                check(Stat.fixture) { stat ->
+                    stat.progression.level = 1
+                    stat.progression.experience = 8
 
-                statService levelUp stat
-                stat.progression.level shouldBe 2
-                stat.progression.experience shouldBe 0
+                    statService levelUp stat
+                    stat.progression.level shouldBe 2
+                    stat.progression.experience shouldBe 0
+                }
             }
-        }
 
-        expect("to level up a Stat from level 1 to level 3") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.progression.level = 1
-                stat.progression.experience = 8
+            expect("to level up a Stat from level 1 to level 3") {
+                check(Stat.fixture) { stat ->
+                    stat.progression.level = 1
+                    stat.progression.experience = 8
 
-                statService levelUp stat
-                stat.progression.level shouldBe 2
-                stat.progression.experience shouldBe 0
-                stat.progression.experience = 27
+                    statService levelUp stat
+                    stat.progression.level shouldBe 2
+                    stat.progression.experience shouldBe 0
+                    stat.progression.experience = 27
 
-                statService levelUp stat
-                stat.progression.level shouldBe 3
-                stat.progression.experience shouldBe 0
+                    statService levelUp stat
+                    stat.progression.level shouldBe 3
+                    stat.progression.experience shouldBe 0
+                }
             }
-        }
 
-        expect("to level up a Stat from level 1 to level 100") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                stat.progression.level = 1L
-                stat.progression.experience = 25_502_500L
+            expect("to level up a Stat from level 1 to level 100") {
+                check(Stat.fixture) { stat ->
+                    stat.progression.level = 1L
+                    stat.progression.experience = 25_502_500L
 
-                statService levelUp stat
-                stat.progression.level shouldBe 100L
-                stat.progression.experience shouldBe 1L
+                    statService levelUp stat
+                    stat.progression.level shouldBe 100L
+                    stat.progression.experience shouldBe 1L
+                }
             }
         }
     }

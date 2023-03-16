@@ -26,25 +26,39 @@ import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.hellper.fixture.Fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
  * Creates a [Stat] with random data
  */
-val Stat.Companion.fixture: Stat
-    get() = Fixture {
-        Stat::base { StatBase.fixture }
-        Stat::rate { StatRate.fixture }
-        Stat::multiplier { StatMultiplier.fixture }
-        Stat::progression { StatProgression.fixture }
+val Stat.Companion.fixture: Arb<Stat>
+    get() = arbitrary {
+        val base = StatBase.fixture.bind()
+        val rate = StatRate.fixture.bind()
+        val multiplier = StatMultiplier.fixture.bind()
+        val progression = StatProgression.fixture.bind()
+        Fixture {
+            Stat::base { base }
+            Stat::rate { rate }
+            Stat::multiplier { multiplier }
+            Stat::progression { progression }
+        }
     }
 
 /**
  * Creates a [Stat] with random invalid data
  */
-val Stat.Companion.invalid: Stat
-    get() = Fixture {
-        Stat::base { StatBase.invalid }
-        Stat::rate { StatRate.invalid }
-        Stat::multiplier { StatMultiplier.invalid }
-        Stat::progression { StatProgression.invalid }
+val Stat.Companion.invalid: Arb<Stat>
+    get() = arbitrary {
+        val base = StatBase.invalid.bind()
+        val rate = StatRate.invalid.bind()
+        val multiplier = StatMultiplier.invalid.bind()
+        val progression = StatProgression.invalid.bind()
+        Fixture {
+            Stat::base { base }
+            Stat::rate { rate }
+            Stat::multiplier { multiplier }
+            Stat::progression { progression }
+        }
     }

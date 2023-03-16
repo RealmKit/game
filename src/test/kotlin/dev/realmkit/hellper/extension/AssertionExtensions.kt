@@ -21,6 +21,8 @@
 package dev.realmkit.hellper.extension
 
 import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.domain.battle.action.BattleAction
+import dev.realmkit.game.domain.battle.context.BattleContextResult
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveErrors
 import io.konform.validation.Invalid
@@ -33,8 +35,12 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.longs.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 
 /**
  * # [Violation]
@@ -94,15 +100,67 @@ object AssertionExtensions {
     }
 
     /**
-     * ## [shouldBeDead]
+     * ## [shouldNotBeAlive]
      * check if the [Target] is dead
      *
      * @see Target.alive
      *
      * @return nothing
      */
-    fun Target.shouldBeDead() = asClue {
+    fun Target.shouldNotBeAlive() = asClue {
         withClue("alive") { alive.shouldBeFalse() }
         withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(ZERO) }
+    }
+
+    /**
+     * ## [shouldHaveTurns]
+     * check if the [BattleContextResult] has the expected number of turns
+     *
+     * @param size the number of turns
+     * @return the battle result
+     */
+    fun BattleContextResult?.shouldHaveTurns(size: Long): BattleContextResult {
+        shouldNotBeNull()
+        turns.shouldBe(size)
+        logsPerTurn.shouldHaveSize(size.toInt())
+        return this
+    }
+
+    /**
+     * ## [onTurn]
+     * check what happens in a turn
+     *
+     * @param turn the turn number
+     * @param actions the number of actions
+     * @param block the block to check the actions
+     * @return the battle result
+     */
+    fun BattleContextResult?.onTurn(
+        turn: Long,
+        actions: Long,
+        block: Iterator<BattleAction>.() -> Unit,
+    ): BattleContextResult {
+        shouldNotBeNull()
+        turns.shouldBeGreaterThanOrEqual(turn)
+        logsPerTurn.size.shouldBeGreaterThanOrEqual(turn.toInt())
+        logsPerTurn[turn].shouldNotBeNull()
+            .shouldHaveSize(actions.toInt())
+            .iterator()
+            .block()
+        return this
+    }
+
+    /**
+     * ## [onAction]
+     * check what happens in an action and step to the next action
+     *
+     * @param block the block to check the action
+     * @return the battle result
+     */
+    inline fun <reified T : BattleAction> Iterator<BattleAction>.onAction(block: T.() -> Unit): Iterator<BattleAction> {
+        shouldNotBeNull()
+        hasNext().shouldBeTrue()
+        next().shouldNotBeNull().shouldBeTypeOf<T>().apply(block)
+        return this
     }
 }

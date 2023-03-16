@@ -39,6 +39,7 @@ object MapperExtensions {
      * @see jacksonObjectMapper
      */
     val mapper = jacksonObjectMapper()
+        .findAndRegisterModules()!!
 
     /**
      * ## [clone]

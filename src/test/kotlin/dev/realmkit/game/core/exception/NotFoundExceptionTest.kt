@@ -18,18 +18,25 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.core.exception
 
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.assertions.asClue
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
+class NotFoundExceptionTest : TestSpec({
+    context("unit testing NotFoundException") {
+        expect("throw a NotFoundException") {
+            shouldThrow<NotFoundException> {
+                throw NotFoundException(
+                    clazz = String::class,
+                    value = "value",
+                )
+            }.shouldNotBeNull().asClue { exception ->
+                exception.clazz shouldBe String::class
+                exception.value shouldBe "value"
             }
         }
     }

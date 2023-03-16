@@ -21,16 +21,16 @@
 package dev.realmkit.game.core.extension
 
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
-import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
-            }
+class ConstantExtensionsTest : TestSpec({
+    context("unit testing ConstantExtensions extensions") {
+        expect("ZERO to be 0.0") {
+            ConstantExtensions.ZERO shouldBe 0.0
+        }
+
+        expect("ONE to be 1.0") {
+            ConstantExtensions.ONE shouldBe 1.0
         }
     }
 })

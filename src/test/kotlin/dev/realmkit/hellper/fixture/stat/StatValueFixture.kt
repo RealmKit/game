@@ -21,25 +21,32 @@
 package dev.realmkit.hellper.fixture.stat
 
 import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.FakerExtensions.negativeDouble
-import dev.realmkit.hellper.extension.FakerExtensions.positiveDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
 import dev.realmkit.hellper.fixture.Fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
  * Creates a [StatValue] with random data
  */
-val StatValue.Companion.fixture: StatValue<Double>
-    get() = Fixture {
-        val max = positiveDouble
-        StatValue<Double>::max { max }
-        StatValue<Double>::current { max / 2 }
+val StatValue.Companion.fixture: Arb<StatValue<Double>>
+    get() = arbitrary { rs ->
+        val max = rs.positiveDouble()
+        Fixture {
+            StatValue<Double>::max { max }
+            StatValue<Double>::current { max / 2 }
+        }
     }
 
 /**
  * Creates a [StatValue] with random invalid data
  */
-val StatValue.Companion.invalid: StatValue<Double>
-    get() = Fixture {
-        StatValue<Double>::max { negativeDouble }
-        StatValue<Double>::current { positiveDouble }
+val StatValue.Companion.invalid: Arb<StatValue<Double>>
+    get() = arbitrary { rs ->
+        val max = rs.negativeDouble()
+        Fixture {
+            StatValue<Double>::max { max }
+            StatValue<Double>::current { max / 2 }
+        }
     }

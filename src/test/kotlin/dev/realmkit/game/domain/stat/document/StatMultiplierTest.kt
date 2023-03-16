@@ -24,14 +24,15 @@ import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.property.arbitrary.arbitrary
 
 class StatMultiplierTest : TestSpec({
     context("unit testing StatMultiplier") {
-        expect("to create a new StatMultiplier") {
-            check(arbitrary { StatMultiplier.fixture }) { multiplier ->
-                multiplier.shouldNotBeNull()
-                multiplier.critical.shouldBePositive()
+        context("instantiate") {
+            expect("to create a new StatMultiplier") {
+                check(StatMultiplier.fixture) { multiplier ->
+                    multiplier.shouldNotBeNull()
+                    multiplier.critical.shouldBePositive()
+                }
             }
         }
     }

@@ -18,19 +18,48 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.hellper.extension
 
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
-import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.RandomSource
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
-            }
-        }
-    }
-})
+/**
+ * # [RandomSource]
+ * extension functions for [RandomSource]
+ */
+object RandomSourceExtensions {
+    /**
+     * ## [positiveDouble]
+     * returns a random positive [Double] value
+     *
+     * @return the random [Double]
+     */
+    fun RandomSource.positiveDouble(): Double =
+        random.nextDouble()
+
+    /**
+     * ## [negativeDouble]
+     * returns a random negative [Double] value
+     *
+     * @return the random [Double]
+     */
+    fun RandomSource.negativeDouble(): Double =
+        -positiveDouble()
+
+    /**
+     * ## [positiveLong]
+     * returns a random positive [Long] value
+     *
+     * @return the random [Long]
+     */
+    fun RandomSource.positiveLong(): Long =
+        random.nextLong(from = 1, until = Long.MAX_VALUE)
+
+    /**
+     * ## [negativeLong]
+     * returns a random negative [Long] value
+     *
+     * @return the random [Long]
+     */
+    fun RandomSource.negativeLong(): Long =
+        -positiveLong()
+}

@@ -42,16 +42,16 @@ class BattleContext(
     private val properties: StaticDataBattle,
     private val onAttack: AttackBlock,
 ) {
+    private val battleContextResult: BattleContextResult = BattleContextResult()
     private val attackers: MutableSet<Target> = mutableSetOf()
     private val defenders: MutableSet<Target> = mutableSetOf()
-    private var battleDuration: Int = 0
 
     /**
      * ## [battleIsNotOver]
      * check if the battle is over or not
      */
     private val battleIsNotOver: Boolean
-        get() = battleDuration < properties.battleDuration &&
+        get() = battleContextResult.turns < properties.battleDuration &&
                 attackers.hasAlive &&
                 defenders.hasAlive
 
@@ -65,7 +65,7 @@ class BattleContext(
      * @return target, if exists
      */
     private infix fun Target.attack(targets: Iterable<Target>): Target? =
-        targets.firstByAggro { target -> onAttack(this, target) }
+        targets.firstByAggro { target -> battleContextResult registerAttackResults onAttack(this, target) }
 
     /**
      * ## [against]
@@ -121,22 +121,33 @@ class BattleContext(
      * ## [start]
      * start the battle until the battle is over
      *
-     * @return the battle context
+     * @return the battle result
      */
-    fun start(): BattleContext {
+    fun start(): BattleContextResult {
         while (battleIsNotOver) {
-            battleDuration++
+            battleContextResult.registerTurn()
             attackers.versus(defenders).bySpeed.forEach { (attacker, targets) ->
+                battleContextResult.registerAttackerAttempt(attacker)
                 attacker.stat.base.speed.repeat {
+                    battleContextResult.registerAttackerRepeatAttempt(attacker)
                     if (attacker.alive) {
                         attacker.attack(targets)
                     }
                 }
             }
         }
-        return this
+        return battleContextResult
     }
 
+    /**
+     * ## [versus]
+     * create the attacker targets
+     *
+     * @see AttackerTargets
+     *
+     * @param targets the targets to attack
+     * @return the attacker+defenders targets
+     */
     private infix fun Set<Target>.versus(targets: Set<Target>): Iterable<AttackerTargets> =
         this.map { target -> target to targets } + targets.map { target -> target to this }
 }

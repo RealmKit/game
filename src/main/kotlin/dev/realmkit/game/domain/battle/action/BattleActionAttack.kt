@@ -18,19 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.battle.action
 
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.domain.target.document.Target
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
-            }
-        }
-    }
-})
+/**
+ * # [BattleActionAttack]
+ * the battle attack result
+ * @property attacker
+ * @property defender
+ */
+class BattleActionAttack(
+    val attacker: Target,
+    val defender: Target,
+) : BattleAction {
+    /**
+     * ## [finalDamage]
+     * the final damage amount dealt
+     */
+    var finalDamage: Double = ZERO
+
+    /**
+     * ## [toTheShield]
+     * flag to indicate if the damage was dealt to the shield
+     */
+    var toTheShield: Boolean = false
+
+    /**
+     * ## [isCritical]
+     * flag to indicate if the damage was critical
+     */
+    var isCritical: Boolean = false
+}

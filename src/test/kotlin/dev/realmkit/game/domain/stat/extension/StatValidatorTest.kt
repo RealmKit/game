@@ -27,34 +27,37 @@ import dev.realmkit.hellper.fixture.stat.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
-import io.kotest.property.arbitrary.arbitrary
 
 class StatValidatorTest : TestSpec({
     context("unit testing StatValidator") {
-        expect("stat to be valid") {
-            check(arbitrary { Stat.fixture }) { stat ->
-                StatValidator.validation shouldBeValid stat
+        context("isValid") {
+            expect("stat to be valid") {
+                check(Stat.fixture) { stat ->
+                    StatValidator.validation shouldBeValid stat
+                }
             }
         }
 
-        expect("stat to be invalid") {
-            check(arbitrary { Stat.invalid }) { stat ->
-                StatValidator.validation.shouldBeInvalid(stat) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        ".base.hull" to ".current must be lower than .max",
-                        ".base.hull.max" to "must be positive",
-                        ".base.shield" to ".current must be lower than .max",
-                        ".base.shield.max" to "must be positive",
-                        ".base.power" to "must be positive",
-                        ".base.defense" to "must be positive",
-                        ".base.speed" to "must be positive",
-                        ".base.aggro" to "must be positive",
-                        ".rate.shieldRegeneration" to "must be positive",
-                        ".rate.critical" to "must be positive",
-                        ".multiplier.critical" to "must be positive",
-                        ".progression.level" to "must be positive",
-                        ".progression.experience" to "must be positive",
-                    )
+        context("isInvalid") {
+            expect("stat to be invalid") {
+                check(Stat.invalid) { stat ->
+                    StatValidator.validation.shouldBeInvalid(stat) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            ".base.hull" to ".current must be lower than .max",
+                            ".base.hull.max" to "must be positive",
+                            ".base.shield" to ".current must be lower than .max",
+                            ".base.shield.max" to "must be positive",
+                            ".base.power" to "must be positive",
+                            ".base.defense" to "must be positive",
+                            ".base.speed" to "must be positive",
+                            ".base.aggro" to "must be positive",
+                            ".rate.shieldRegeneration" to "must be positive",
+                            ".rate.critical" to "must be positive",
+                            ".multiplier.critical" to "must be positive",
+                            ".progression.level" to "must be positive",
+                            ".progression.experience" to "must be positive",
+                        )
+                    }
                 }
             }
         }

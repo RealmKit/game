@@ -36,7 +36,7 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 data class Player(
-    val name: String,
+    override val name: String,
     override val stat: Stat,
 ) : BaseDocument(), Target {
     companion object

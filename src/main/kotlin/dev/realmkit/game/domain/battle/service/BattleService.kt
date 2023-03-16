@@ -20,8 +20,10 @@
 
 package dev.realmkit.game.domain.battle.service
 
+import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
-import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
+import dev.realmkit.game.domain.battle.context.BattleContextResult
+import dev.realmkit.game.domain.staticdata.service.StaticDataService
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.service.TargetService
 import org.springframework.stereotype.Service
@@ -33,7 +35,7 @@ import org.springframework.stereotype.Service
 @Service
 class BattleService(
     private val targetService: TargetService,
-    private val staticDataProperties: StaticDataProperties,
+    private val staticDataService: StaticDataService,
 ) {
     /**
      * ## [onAttack]
@@ -41,9 +43,9 @@ class BattleService(
      *
      * @param attacker the first target
      * @param defender the second target
-     * @return nothing
+     * @return the attack result
      */
-    private fun onAttack(attacker: Target, defender: Target): Double =
+    private fun onAttack(attacker: Target, defender: Target): BattleActionAttack =
         targetService attack (attacker to defender)
 
     /**
@@ -53,11 +55,11 @@ class BattleService(
      * @see BattleContext
      *
      * @param block the battle context
-     * @return the battle context
+     * @return the battle result
      */
-    fun battle(block: BattleContext.() -> Unit): BattleContext =
+    fun battle(block: BattleContext.() -> Unit): BattleContextResult =
         BattleContext(
-            properties = staticDataProperties.battle(),
+            properties = staticDataService.battle(),
             onAttack = ::onAttack,
         ).apply(block).start()
 }

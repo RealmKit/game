@@ -27,22 +27,25 @@ import dev.realmkit.hellper.fixture.stat.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
-import io.kotest.property.arbitrary.arbitrary
 
 class StatMultiplierValidatorTest : TestSpec({
     context("unit testing StatMultiplierValidator") {
-        expect("multiplier to be valid") {
-            check(arbitrary { StatMultiplier.fixture }) { multiplier ->
-                StatMultiplierValidator.validation shouldBeValid multiplier
+        context("isValid") {
+            expect("multiplier to be valid") {
+                check(StatMultiplier.fixture) { multiplier ->
+                    StatMultiplierValidator.validation shouldBeValid multiplier
+                }
             }
         }
 
-        expect("multiplier to be invalid") {
-            check(arbitrary { StatMultiplier.invalid }) { multiplier ->
-                StatMultiplierValidator.validation.shouldBeInvalid(multiplier) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        ".critical" to "must be positive",
-                    )
+        context("isInvalid") {
+            expect("multiplier to be invalid") {
+                check(StatMultiplier.invalid) { multiplier ->
+                    StatMultiplierValidator.validation.shouldBeInvalid(multiplier) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            ".critical" to "must be positive",
+                        )
+                    }
                 }
             }
         }
