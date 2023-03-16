@@ -30,25 +30,29 @@ import io.kotest.assertions.konform.shouldBeValid
 
 class StatBaseValidatorTest : TestSpec({
     context("unit testing StatBaseValidator") {
-        expect("base to be valid") {
-            check(StatBase.fixture) { base ->
-                StatBaseValidator.validation shouldBeValid base
+        context("isValid") {
+            expect("base to be valid") {
+                check(StatBase.fixture) { base ->
+                    StatBaseValidator.validation shouldBeValid base
+                }
             }
         }
 
-        expect("base to be invalid") {
-            check(StatBase.invalid) { base ->
-                StatBaseValidator.validation.shouldBeInvalid(base) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        ".hull" to ".current must be lower than .max",
-                        ".hull.max" to "must be positive",
-                        ".shield" to ".current must be lower than .max",
-                        ".shield.max" to "must be positive",
-                        ".power" to "must be positive",
-                        ".defense" to "must be positive",
-                        ".speed" to "must be positive",
-                        ".aggro" to "must be positive",
-                    )
+        context("isInvalid") {
+            expect("base to be invalid") {
+                check(StatBase.invalid) { base ->
+                    StatBaseValidator.validation.shouldBeInvalid(base) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            ".hull" to ".current must be lower than .max",
+                            ".hull.max" to "must be positive",
+                            ".shield" to ".current must be lower than .max",
+                            ".shield.max" to "must be positive",
+                            ".power" to "must be positive",
+                            ".defense" to "must be positive",
+                            ".speed" to "must be positive",
+                            ".aggro" to "must be positive",
+                        )
+                    }
                 }
             }
         }

@@ -30,19 +30,23 @@ import io.kotest.assertions.konform.shouldBeValid
 
 class StatValueValidatorTest : TestSpec({
     context("unit testing StatValueValidator") {
-        expect("value to be valid") {
-            check(StatValue.fixture) { value ->
-                StatValueValidator.double shouldBeValid value
+        context("isValid") {
+            expect("value to be valid") {
+                check(StatValue.fixture) { value ->
+                    StatValueValidator.double shouldBeValid value
+                }
             }
         }
 
-        expect("value to be invalid") {
-            check(StatValue.invalid) { value ->
-                StatValueValidator.double.shouldBeInvalid(value) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        "" to ".current must be lower than .max",
-                        ".max" to "must be positive",
-                    )
+        context("isInvalid") {
+            expect("value to be invalid") {
+                check(StatValue.invalid) { value ->
+                    StatValueValidator.double.shouldBeInvalid(value) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            "" to ".current must be lower than .max",
+                            ".max" to "must be positive",
+                        )
+                    }
                 }
             }
         }

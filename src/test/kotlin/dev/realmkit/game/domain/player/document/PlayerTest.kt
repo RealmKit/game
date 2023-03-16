@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeDead
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
@@ -31,32 +31,36 @@ import io.kotest.matchers.string.shouldNotBeEmpty
 
 class PlayerTest : TestSpec({
     context("unit testing Player") {
-        expect("to create a new plain Player") {
-            check(Player.fixture) { player ->
-                player.shouldNotBeNull()
-                player.name.shouldNotBeNull().shouldNotBeEmpty()
-                player.stat.shouldNotBeNull()
-                player.stat.base.hull.current.shouldBePositive()
-                player.stat.base.hull.max.shouldBePositive()
-                player.stat.base.shield.max.shouldBePositive()
-                player.stat.base.shield.max.shouldBePositive()
-                player.stat.base.power.shouldBePositive()
-                player.stat.base.defense.shouldBePositive()
-                player.stat.base.speed.shouldBePositive()
-                player.stat.base.aggro.shouldBePositive()
-                player.stat.rate.shieldRegeneration.shouldBePositive()
-                player.stat.rate.critical.shouldBePositive()
-                player.stat.multiplier.critical.shouldBePositive()
-                player.stat.progression.level.shouldBePositive()
-                player.stat.progression.experience.shouldBePositive()
+        context("instantiate") {
+            expect("to create a new plain Player") {
+                check(Player.fixture) { player ->
+                    player.shouldNotBeNull()
+                    player.name.shouldNotBeNull().shouldNotBeEmpty()
+                    player.stat.shouldNotBeNull()
+                    player.stat.base.hull.current.shouldBePositive()
+                    player.stat.base.hull.max.shouldBePositive()
+                    player.stat.base.shield.max.shouldBePositive()
+                    player.stat.base.shield.max.shouldBePositive()
+                    player.stat.base.power.shouldBePositive()
+                    player.stat.base.defense.shouldBePositive()
+                    player.stat.base.speed.shouldBePositive()
+                    player.stat.base.aggro.shouldBePositive()
+                    player.stat.rate.shieldRegeneration.shouldBePositive()
+                    player.stat.rate.critical.shouldBePositive()
+                    player.stat.multiplier.critical.shouldBePositive()
+                    player.stat.progression.level.shouldBePositive()
+                    player.stat.progression.experience.shouldBePositive()
+                }
             }
         }
 
-        expect("Player to be alive and dead") {
-            check(Player.fixture) { player ->
-                player.shouldBeAlive()
-                player.stat.base.hull.current = 0.0
-                player.shouldBeDead()
+        context(".isAlive") {
+            expect("Player to be alive and dead") {
+                check(Player.fixture) { player ->
+                    player.shouldBeAlive()
+                    player.stat.base.hull.current = 0.0
+                    player.shouldNotBeAlive()
+                }
             }
         }
     }

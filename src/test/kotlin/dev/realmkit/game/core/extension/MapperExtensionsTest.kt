@@ -29,11 +29,13 @@ data class Dummy(val test: String)
 
 class MapperExtensionsTest : TestSpec({
     context("unit testing MapperExtensions extensions") {
-        expect(".clone() to deep clone a data class") {
-            val original = Dummy("test")
-            val clone = original.clone()
-            clone.shouldNotBeNull()
-            clone.test shouldBe original.test
+        context(".clone()") {
+            expect(".clone() to deep clone a data class") {
+                val original = Dummy("test")
+                val clone = original.clone()
+                clone.shouldNotBeNull()
+                clone.test shouldBe original.test
+            }
         }
     }
 })

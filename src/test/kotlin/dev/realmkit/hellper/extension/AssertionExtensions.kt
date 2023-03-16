@@ -94,14 +94,14 @@ object AssertionExtensions {
     }
 
     /**
-     * ## [shouldBeDead]
+     * ## [shouldNotBeAlive]
      * check if the [Target] is dead
      *
      * @see Target.alive
      *
      * @return nothing
      */
-    fun Target.shouldBeDead() = asClue {
+    fun Target.shouldNotBeAlive() = asClue {
         withClue("alive") { alive.shouldBeFalse() }
         withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(ZERO) }
     }

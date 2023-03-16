@@ -18,18 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
+class StatProgressionTest : TestSpec({
+    context("unit testing StatProgression") {
+        context("instantiate") {
+            expect("to create a new StatProgression") {
+                check(StatProgression.fixture) { progression ->
+                    progression.shouldNotBeNull()
+                    progression.level.shouldBePositive()
+                    progression.experience.shouldBePositive()
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ package dev.realmkit.game.domain.target.service
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeDead
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
@@ -39,50 +39,52 @@ class TargetServiceTest(
             targetService.shouldNotBeNull()
         }
 
-        expect("to not hit a critical attack") {
-            checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                player.stat.rate.critical = 0.0
-                enemy.stat.base.defense = 10.0
+        context(".attack()") {
+            expect("to not hit a critical attack") {
+                checkAll(Player.fixture, Player.fixture) { player, enemy ->
+                    player.stat.rate.critical = 0.0
+                    enemy.stat.base.defense = 10.0
 
-                targetService attack (player to enemy)
-                enemy.shouldBeAlive()
+                    targetService attack (player to enemy)
+                    enemy.shouldBeAlive()
+                }
             }
-        }
 
-        expect("to hit a critical attack") {
-            checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                player.stat.rate.critical = 1.0
-                enemy.stat.base.defense = 10.0
+            expect("to hit a critical attack") {
+                checkAll(Player.fixture, Player.fixture) { player, enemy ->
+                    player.stat.rate.critical = 1.0
+                    enemy.stat.base.defense = 10.0
 
-                targetService attack (player to enemy)
-                enemy.shouldBeAlive()
+                    targetService attack (player to enemy)
+                    enemy.shouldBeAlive()
+                }
             }
-        }
 
-        expect("to not damage a not alive Target") {
-            checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                enemy.stat.base.hull.current = 0.0
-                enemy.shouldBeDead()
+            expect("to not damage a not alive Target") {
+                checkAll(Player.fixture, Player.fixture) { player, enemy ->
+                    enemy.stat.base.hull.current = 0.0
+                    enemy.shouldNotBeAlive()
 
-                targetService attack (player to enemy)
-                enemy.shouldBeDead()
+                    targetService attack (player to enemy)
+                    enemy.shouldNotBeAlive()
+                }
             }
-        }
 
-        expect("Player to attack Enemy until it is not alive") {
-            checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                player.stat.base.power = 100.0
-                player.stat.rate.critical = 1.0
-                player.stat.multiplier.critical = 1.0
-                enemy.stat.base.defense = 0.0
+            expect("Player to attack Enemy until it is not alive") {
+                checkAll(Player.fixture, Player.fixture) { player, enemy ->
+                    player.stat.base.power = 100.0
+                    player.stat.rate.critical = 1.0
+                    player.stat.multiplier.critical = 1.0
+                    enemy.stat.base.defense = 0.0
 
-                val hull = enemy.stat.base.hull.current
-                targetService attack (player to enemy)
-                enemy.stat.base.hull.current shouldBe hull
-                enemy.shouldBeAlive()
+                    val hull = enemy.stat.base.hull.current
+                    targetService attack (player to enemy)
+                    enemy.stat.base.hull.current shouldBe hull
+                    enemy.shouldBeAlive()
 
-                targetService attack (player to enemy)
-                enemy.shouldBeDead()
+                    targetService attack (player to enemy)
+                    enemy.shouldNotBeAlive()
+                }
             }
         }
     }

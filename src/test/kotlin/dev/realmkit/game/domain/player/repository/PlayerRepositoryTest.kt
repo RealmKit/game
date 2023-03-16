@@ -40,34 +40,38 @@ class PlayerRepositoryTest(
             playerRepository.shouldNotBeNull()
         }
 
-        expect("it should be empty") {
-            playerRepository.run { count().shouldBeZero() }
+        context(".count()") {
+            expect("it should be empty") {
+                playerRepository.run { count().shouldBeZero() }
+            }
         }
 
-        expect("it should create Players") {
-            playerRepository.run { count().shouldBeZero() }
-            check(Player.fixture) { player ->
-                playerRepository.save(player).shouldNotBeNull()
-                playerRepository.findById(player.id).shouldBePresent().asClue { find ->
-                    find.id.shouldNotBeNull()
-                    find.createdAt.shouldNotBeNull()
-                    find.updatedAt.shouldNotBeNull()
-                    find.version.shouldNotBeNull()
-                    find.name shouldBe player.name
-                    find.stat.base.hull.current.shouldBePositive()
-                    find.stat.base.hull.max.shouldBePositive()
-                    find.stat.base.shield.current.shouldBePositive()
-                    find.stat.base.shield.max.shouldBePositive()
-                    find.stat.base.power.shouldBePositive()
-                    find.stat.base.defense.shouldBePositive()
-                    find.stat.base.speed.shouldBePositive()
-                    find.stat.base.aggro.shouldBePositive()
-                    find.stat.rate.shieldRegeneration.shouldBePositive()
-                    find.stat.rate.critical.shouldBePositive()
-                    find.stat.multiplier.critical.shouldBePositive()
+        context(".save()") {
+            expect("it should create Players") {
+                playerRepository.run { count().shouldBeZero() }
+                check(Player.fixture) { player ->
+                    playerRepository.save(player).shouldNotBeNull()
+                    playerRepository.findById(player.id).shouldBePresent().asClue { find ->
+                        find.id.shouldNotBeNull()
+                        find.createdAt.shouldNotBeNull()
+                        find.updatedAt.shouldNotBeNull()
+                        find.version.shouldNotBeNull()
+                        find.name shouldBe player.name
+                        find.stat.base.hull.current.shouldBePositive()
+                        find.stat.base.hull.max.shouldBePositive()
+                        find.stat.base.shield.current.shouldBePositive()
+                        find.stat.base.shield.max.shouldBePositive()
+                        find.stat.base.power.shouldBePositive()
+                        find.stat.base.defense.shouldBePositive()
+                        find.stat.base.speed.shouldBePositive()
+                        find.stat.base.aggro.shouldBePositive()
+                        find.stat.rate.shieldRegeneration.shouldBePositive()
+                        find.stat.rate.critical.shouldBePositive()
+                        find.stat.multiplier.critical.shouldBePositive()
+                    }
                 }
+                playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }
             }
-            playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }
         }
     }
 })

@@ -20,16 +20,30 @@
 
 package dev.realmkit.game.core.extension
 
+import dev.realmkit.game.core.extension.NumberExtensions.isHit
+import dev.realmkit.game.core.extension.NumberExtensions.repeat
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
-import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
+class NumberExtensionsTest : TestSpec({
+    context("unit testing NumberExtensions extensions") {
+        context(".isHit") {
+            expect("isHit to be a hit") {
+                1.0.isHit.shouldBeTrue()
+            }
+
+            expect("isHit to not be a hit") {
+                0.0.isHit.shouldBeFalse()
+            }
+        }
+
+        context(".repeat()") {
+            expect("repeat to repeat 3 times") {
+                var count = 0
+                3.repeat { count++ }
+                count shouldBe 3
             }
         }
     }

@@ -23,43 +23,23 @@ package dev.realmkit.game.domain.stat.document
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 class StatBaseTest : TestSpec({
     context("unit testing StatBase") {
-        expect("to create a new StatBase") {
-            check(StatBase.fixture) { base ->
-                base.shouldNotBeNull()
-                base.hull.current.shouldBePositive()
-                base.hull.max.shouldBePositive()
-                base.shield.current.shouldBePositive()
-                base.shield.max.shouldBePositive()
-                base.power.shouldBePositive()
-                base.defense.shouldBePositive()
-                base.speed.shouldBePositive()
-                base.aggro.shouldBePositive()
-            }
-        }
-
-        expect("to update a StatBase") {
-            check(StatBase.fixture) { stat ->
-                stat.shouldNotBeNull()
-
-                stat.hull.current.shouldBePositive()
-                stat.hull.current = 0.0
-                stat.hull.current.shouldBeZero()
-
-                stat.hull.max.shouldBePositive()
-                stat.hull.max = 0.0
-                stat.hull.max.shouldBeZero()
-
-                stat.shield.current.shouldBePositive()
-                stat.shield.max.shouldBePositive()
-                stat.power.shouldBePositive()
-                stat.defense.shouldBePositive()
-                stat.speed.shouldBePositive()
-                stat.aggro.shouldBePositive()
+        context("instantiate") {
+            expect("to create a new StatBase") {
+                check(StatBase.fixture) { base ->
+                    base.shouldNotBeNull()
+                    base.hull.current.shouldBePositive()
+                    base.hull.max.shouldBePositive()
+                    base.shield.current.shouldBePositive()
+                    base.shield.max.shouldBePositive()
+                    base.power.shouldBePositive()
+                    base.defense.shouldBePositive()
+                    base.speed.shouldBePositive()
+                    base.aggro.shouldBePositive()
+                }
             }
         }
     }

@@ -27,10 +27,12 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 
 class StatMultiplierTest : TestSpec({
     context("unit testing StatMultiplier") {
-        expect("to create a new StatMultiplier") {
-            check(StatMultiplier.fixture) { multiplier ->
-                multiplier.shouldNotBeNull()
-                multiplier.critical.shouldBePositive()
+        context("instantiate") {
+            expect("to create a new StatMultiplier") {
+                check(StatMultiplier.fixture) { multiplier ->
+                    multiplier.shouldNotBeNull()
+                    multiplier.critical.shouldBePositive()
+                }
             }
         }
     }

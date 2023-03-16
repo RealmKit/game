@@ -18,18 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.staticdata.document
 
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.longs.shouldBeGreaterThan
+import io.kotest.assertions.asClue
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
+class StaticDataBattleTest : TestSpec({
+    context("unit testing StaticDataBattle") {
+        context("instantiate") {
+            expect("instantiate a StaticDataBattle") {
+                StaticDataBattle(
+                    battleDuration = 10,
+                    turnDuration = 10,
+                ).shouldNotBeNull().asClue { staticData ->
+                    staticData.battleDuration shouldBe 10
+                    staticData.turnDuration shouldBe 10
+                }
             }
         }
     }

@@ -27,11 +27,13 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 
 class StatRateTest : TestSpec({
     context("unit testing StatRate") {
-        expect("to create a new StatRate") {
-            check(StatRate.fixture) { rate ->
-                rate.shouldNotBeNull()
-                rate.shieldRegeneration.shouldBePositive()
-                rate.critical.shouldBePositive()
+        context("instantiate") {
+            expect("to create a new StatRate") {
+                check(StatRate.fixture) { rate ->
+                    rate.shouldNotBeNull()
+                    rate.shieldRegeneration.shouldBePositive()
+                    rate.critical.shouldBePositive()
+                }
             }
         }
     }

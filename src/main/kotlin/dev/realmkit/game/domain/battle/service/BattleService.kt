@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.battle.service
 
 import dev.realmkit.game.domain.battle.context.BattleContext
-import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
+import dev.realmkit.game.domain.staticdata.service.StaticDataService
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.service.TargetService
 import org.springframework.stereotype.Service
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service
 @Service
 class BattleService(
     private val targetService: TargetService,
-    private val staticDataProperties: StaticDataProperties,
+    private val staticDataService: StaticDataService,
 ) {
     /**
      * ## [onAttack]
@@ -57,7 +57,7 @@ class BattleService(
      */
     fun battle(block: BattleContext.() -> Unit): BattleContext =
         BattleContext(
-            properties = staticDataProperties.battle(),
+            properties = staticDataService.battle(),
             onAttack = ::onAttack,
         ).apply(block).start()
 }

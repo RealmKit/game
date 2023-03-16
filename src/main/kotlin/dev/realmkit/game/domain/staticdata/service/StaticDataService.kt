@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.staticdata.service
 
+import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
 import dev.realmkit.game.domain.staticdata.document.StaticDataStat
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
@@ -41,7 +42,20 @@ class StaticDataService(
      * [StaticDataStat] initial value from properties
      *
      * @see StaticDataStat
+     *
+     * @return StaticDataStat initial properties
      */
     fun initial(): StaticDataStat =
         staticData.initial()
+
+    /**
+     * ## [battle
+     * [StaticDataBattle] value from properties
+     *
+     * @see StaticDataBattle
+     *
+     * @return StaticDataBattle properties
+     */
+    fun battle(): StaticDataBattle =
+        staticData.battle()
 }

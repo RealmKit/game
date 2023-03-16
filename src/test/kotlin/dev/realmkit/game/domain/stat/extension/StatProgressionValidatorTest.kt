@@ -30,19 +30,23 @@ import io.kotest.assertions.konform.shouldBeValid
 
 class StatProgressionValidatorTest : TestSpec({
     context("unit testing StatProgressionValidator") {
-        expect("progression to be valid") {
-            check(StatProgression.fixture) { progression ->
-                StatProgressionValidator.validation shouldBeValid progression
+        context("isValid") {
+            expect("progression to be valid") {
+                check(StatProgression.fixture) { progression ->
+                    StatProgressionValidator.validation shouldBeValid progression
+                }
             }
         }
 
-        expect("progression to be invalid") {
-            check(StatProgression.invalid) { progression ->
-                StatProgressionValidator.validation.shouldBeInvalid(progression) { invalid ->
-                    invalid shouldHaveAllErrors listOf(
-                        ".level" to "must be positive",
-                        ".experience" to "must be positive",
-                    )
+        context("isInvalid") {
+            expect("progression to be invalid") {
+                check(StatProgression.invalid) { progression ->
+                    StatProgressionValidator.validation.shouldBeInvalid(progression) { invalid ->
+                        invalid shouldHaveAllErrors listOf(
+                            ".level" to "must be positive",
+                            ".experience" to "must be positive",
+                        )
+                    }
                 }
             }
         }
