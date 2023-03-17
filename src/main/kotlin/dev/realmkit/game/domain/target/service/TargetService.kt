@@ -36,24 +36,6 @@ import org.springframework.stereotype.Service
 @Service
 class TargetService {
     /**
-     * ## [baseDamage]
-     * calculates the base damage from the [Target]
-     *
-     * @return the base damage
-     */
-    private val Target.baseDamage: Double
-        get() = stat.base.attack
-
-    /**
-     * ## [absoluteDamage]
-     * calculates the absolute damage from the [Target]
-     *
-     * @return the critical damage
-     */
-    private val Target.absoluteDamage: Double
-        get() = baseDamage * criticalMultiplier
-
-    /**
      * ## [criticalMultiplier]
      * get the critical multiplier if it is critical, else returns 1
      */
@@ -61,13 +43,6 @@ class TargetService {
         get() = stat.multiplier.critical
             .takeIf { stat.rate.critical.isHit }
             ?: ONE
-
-    /**
-     * ## [absoluteDefense]
-     * get the absolute defense of the target
-     */
-    private val Target.absoluteDefense: Double
-        get() = stat.base.defense
 
     /**
      * ## [hasShield]
@@ -78,49 +53,36 @@ class TargetService {
 
     /**
      * ## [attack]
-     * attack a target, reducing the shield or the hull
+     * attack a [Target], reducing the shield or the hull
      *
-     * @param pair the attacker to defender pair
+     * @param attacker the attacker
+     * @param defender the defender
      * @return the attack result
      */
-    infix fun attack(pair: Pair<Target, Target>): BattleActionAttack =
-        BattleActionAttack(
-            attacker = pair.first,
-            defender = pair.second,
-        ).apply {
-            damage = attacker damage defender
-            finalDamage = defender reduce damage
-            toTheShield = defender.hasShield
-            isCritical = damage > attacker.baseDamage
+    fun attack(attacker: Target, defender: Target): BattleActionAttack {
+        val damage = attacker.stat.base.attack
+        val criticalMultiplier = attacker.criticalMultiplier
+        val reduction = defender.stat.base.defense
 
-            if (toTheShield) {
-                defender.stat.base.shield.current -= damage
-            } else {
-                defender.stat.base.hull.current -= damage
-            }
+        val finalDamage = (damage * criticalMultiplier) - reduction
+        val toTheShield = defender.hasShield
 
-            if (!defender.hasShield) {
-                defender.stat.base.shield.current = ZERO
-            }
+        if (defender.hasShield) {
+            defender.stat.base.shield.current -= finalDamage
+        } else {
+            defender.stat.base.hull.current -= finalDamage
         }
 
-    /**
-     * ## [damage]
-     * calculates the [damage] to the target
-     *
-     * @param target the target to calculate the damage to
-     * @return the damage done to the target, or null if none
-     */
-    private infix fun Target.damage(target: Target): Double =
-        absoluteDamage.takeIf { damage -> alive && target.alive && damage > ZERO } ?: ZERO
+        if (!defender.hasShield) {
+            defender.stat.base.shield.current = ZERO
+        }
 
-    /**
-     * ## [reduce]
-     * reduces the damage to the target
-     *
-     * @param damage the damage to reduce from
-     * @return the damage after reduction, or 0.0 if none
-     */
-    private infix fun Target.reduce(damage: Double?): Double =
-        damage?.minus(absoluteDefense)?.takeIf { reduced -> alive && reduced > ZERO } ?: ZERO
+        return BattleActionAttack(
+            attacker = attacker,
+            defender = defender,
+            finalDamage = finalDamage,
+            toTheShield = toTheShield,
+            isCritical = criticalMultiplier > ONE,
+        )
+    }
 }

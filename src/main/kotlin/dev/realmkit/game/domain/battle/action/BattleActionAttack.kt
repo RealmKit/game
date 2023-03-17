@@ -20,40 +20,21 @@
 
 package dev.realmkit.game.domain.battle.action
 
-import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
 import dev.realmkit.game.domain.target.document.Target
 
 /**
  * # [BattleActionAttack]
  * the battle attack result
- * @property attacker
- * @property defender
+ * @property attacker the attacker target
+ * @property defender the defender target
+ * @property finalDamage the final damage output
+ * @property toTheShield flag to indicate if the damage was to the shield
+ * @property isCritical flag to indicate if the damage was critical
  */
-class BattleActionAttack(
+data class BattleActionAttack(
     val attacker: Target,
     val defender: Target,
-) : BattleAction {
-    /**
-     * ## [damage]
-     * the damage amount dealt
-     */
-    var damage: Double = ZERO
-
-    /**
-     * ## [finalDamage]
-     * the final damage amount dealt
-     */
-    var finalDamage: Double = ZERO
-
-    /**
-     * ## [toTheShield]
-     * flag to indicate if the damage was dealt to the shield
-     */
-    var toTheShield: Boolean = false
-
-    /**
-     * ## [isCritical]
-     * flag to indicate if the damage was critical
-     */
-    var isCritical: Boolean = false
-}
+    val finalDamage: Double,
+    val toTheShield: Boolean,
+    val isCritical: Boolean,
+) : BattleAction

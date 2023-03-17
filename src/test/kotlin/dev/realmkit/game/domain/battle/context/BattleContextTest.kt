@@ -67,7 +67,7 @@ class BattleContextTest : TestSpec({
                             onAction<BattleActionAttack> {
                                 attacker shouldBe player
                                 defender shouldBe enemy
-                                damage shouldBe player.stat.base.attack
+                                finalDamage shouldBe player.stat.base.attack
                                 toTheShield.shouldBeFalse()
                                 isCritical.shouldBeFalse()
                             }

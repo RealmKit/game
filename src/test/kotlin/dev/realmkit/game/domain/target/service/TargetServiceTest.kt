@@ -44,7 +44,7 @@ class TargetServiceTest(
                 checkAll(Player.fixture, Player.fixture) { player, enemy ->
                     player.stat.base.attack = -1.0
 
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.shouldBeAlive()
                 }
             }
@@ -54,7 +54,7 @@ class TargetServiceTest(
                     player.stat.rate.critical = 0.0
                     enemy.stat.base.defense = 10.0
 
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.shouldBeAlive()
                 }
             }
@@ -65,7 +65,7 @@ class TargetServiceTest(
                     player.stat.multiplier.critical = 2.0
                     enemy.stat.base.defense = 10.0
 
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.shouldBeAlive()
                 }
             }
@@ -75,7 +75,7 @@ class TargetServiceTest(
                     player.stat.rate.critical = 1.0
                     player.stat.multiplier.critical = 2.0
 
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.shouldBeAlive()
                 }
             }
@@ -85,7 +85,7 @@ class TargetServiceTest(
                     enemy.stat.base.hull.current = 0.0
                     enemy.shouldNotBeAlive()
 
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.shouldNotBeAlive()
                 }
             }
@@ -98,11 +98,11 @@ class TargetServiceTest(
                     enemy.stat.base.defense = 0.0
 
                     val hull = enemy.stat.base.hull.current
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.stat.base.hull.current shouldBe hull
                     enemy.shouldBeAlive()
 
-                    targetService attack (player to enemy)
+                    targetService.attack(player, enemy)
                     enemy.shouldNotBeAlive()
                 }
             }

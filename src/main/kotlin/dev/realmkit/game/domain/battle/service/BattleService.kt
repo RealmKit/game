@@ -46,7 +46,7 @@ class BattleService(
      * @return the attack result
      */
     private fun onAttack(attacker: Target, defender: Target): BattleActionAttack =
-        targetService attack (attacker to defender)
+        targetService.attack(attacker, defender)
 
     /**
      * ## [battle]
