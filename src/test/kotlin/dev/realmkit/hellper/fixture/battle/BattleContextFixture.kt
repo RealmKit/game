@@ -39,15 +39,15 @@ val BattleContext.Companion.fixture: Arb<BattleContext>
                 turnDuration = rs.positiveLong(),
             ),
             onAttack = { attacker, defender ->
+                val finalDamage = attacker.stat.base.attack
+                defender.stat.base.hull.current -= finalDamage
                 BattleActionAttack(
                     attacker = attacker,
                     defender = defender,
-                ).apply {
-                    finalDamage = attacker.stat.base.attack
-                    toTheShield = false
-                    isCritical = false
-                    defender.stat.base.hull.current -= finalDamage
-                }
+                    finalDamage = finalDamage,
+                    toTheShield = false,
+                    isCritical = false,
+                )
             },
         )
     }

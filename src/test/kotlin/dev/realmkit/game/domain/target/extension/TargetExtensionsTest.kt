@@ -30,6 +30,7 @@ import dev.realmkit.hellper.fixture.player.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
@@ -88,6 +89,12 @@ class TargetExtensionsTest : TestSpec({
                 }.shouldNotBeNull()
                     .shouldBe(player1)
             }
+        }
+
+        context(".firstByAggro") {
+            emptyList<Player>().firstByAggro {
+                throw AssertionError("Should not be called")
+            }.shouldBeNull()
         }
     }
 })

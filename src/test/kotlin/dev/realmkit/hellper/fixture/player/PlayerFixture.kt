@@ -71,6 +71,8 @@ val Player.Companion.invalid: Arb<Player>
  * sets the player's stats to be very high
  */
 fun Player.setupHighStats() {
+    stat.base.hull.current = Double.MAX_VALUE
+    stat.base.shield.current = Double.MAX_VALUE
     stat.base.attack = Double.MAX_VALUE
     stat.base.defense = Double.MAX_VALUE
     stat.base.speed = ONE
