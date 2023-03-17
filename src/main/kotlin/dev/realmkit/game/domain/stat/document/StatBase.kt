@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+
 /**
  * # [StatBase]
  * the StatBase document
@@ -28,15 +30,17 @@ package dev.realmkit.game.domain.stat.document
  *
  * @property hull `the base` hull points (hp)
  * @property shield `the base` shield points (sp)
- * @property power `the base` power attribute (attack)
+ * @property energy `the base` energy points (ep)
+ * @property attack `the base` attack attribute (attack)
  * @property defense `the base` defense attribute (defense)
  * @property speed `the base` speed attribute (speed)
  * @property aggro `the base` aggro attribute (aggro)
  */
 data class StatBase(
-    var hull: StatValue<Double>,
-    var shield: StatValue<Double>,
-    var power: Double,
+    var hull: CurrentMaxDouble,
+    var shield: CurrentMaxDouble,
+    var energy: CurrentMaxDouble,
+    var attack: Double,
     var defense: Double,
     var speed: Double,
     var aggro: Double,

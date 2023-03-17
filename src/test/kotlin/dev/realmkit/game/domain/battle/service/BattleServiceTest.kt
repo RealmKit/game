@@ -24,6 +24,7 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
 import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.player.setupHighStats
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.withClue
@@ -45,11 +46,7 @@ class BattleServiceTest(
                     Player.fixture,
                     Player.fixture,
                 ) { player, enemy ->
-                    player.stat.base.shield.current = 100.0
-                    player.stat.base.power = 100.0
-                    player.stat.base.defense = 100.0
-                    player.stat.base.speed = 1.0
-                    player.stat.multiplier.critical = 2.0
+                    player.setupHighStats()
 
                     battleService.battle { player against enemy }
 
@@ -64,11 +61,7 @@ class BattleServiceTest(
                     Player.fixture,
                     Player.fixture,
                 ) { player, enemy1, enemy2 ->
-                    player.stat.base.shield.current = 100.0
-                    player.stat.base.power = 100.0
-                    player.stat.base.defense = 100.0
-                    player.stat.base.speed = 1.0
-                    player.stat.multiplier.critical = 1.0
+                    player.setupHighStats()
 
                     battleService.battle { player against listOf(enemy1, enemy2) }
 
@@ -84,14 +77,8 @@ class BattleServiceTest(
                     Player.fixture,
                     Player.fixture,
                 ) { player1, player2, enemy ->
-                    player1.stat.base.shield.current = 100.0
-                    player1.stat.base.power = 100.0
-                    player1.stat.base.defense = 100.0
-                    player1.stat.base.speed = 1.0
-                    player1.stat.multiplier.critical = 1.0
-                    player2.stat.base.defense = 100.0
-                    player2.stat.base.speed = 1.0
-                    player2.stat.multiplier.critical = 1.0
+                    player1.setupHighStats()
+                    player2.setupHighStats()
 
                     battleService.battle { listOf(player1, player2) against enemy }
 
@@ -108,15 +95,8 @@ class BattleServiceTest(
                     Player.fixture,
                     Player.fixture,
                 ) { player1, player2, enemy1, enemy2 ->
-                    player1.stat.base.shield.current = 100.0
-                    player1.stat.base.power = 100.0
-                    player1.stat.base.defense = 100.0
-                    player1.stat.base.speed = 2.0
-                    player1.stat.multiplier.critical = 1.0
-                    player2.stat.base.defense = 100.0
-                    player2.stat.base.speed = 1.0
-                    player2.stat.multiplier.critical = 1.0
-
+                    player1.setupHighStats()
+                    player2.setupHighStats()
                     enemy1.stat.base.speed = 1.0
                     enemy2.stat.base.speed = 0.5
 
@@ -138,15 +118,8 @@ class BattleServiceTest(
                 ) { player1, player2, enemy1, enemy2 ->
                     player1.stat.base.speed = 1.0
                     player2.stat.base.speed = 0.5
-
-                    enemy1.stat.base.shield.current = 100.0
-                    enemy1.stat.base.power = 100.0
-                    enemy1.stat.base.defense = 100.0
-                    enemy1.stat.base.speed = 2.0
-                    enemy1.stat.multiplier.critical = 1.0
-                    enemy2.stat.base.defense = 100.0
-                    enemy2.stat.base.speed = 1.0
-                    enemy2.stat.multiplier.critical = 1.0
+                    enemy1.setupHighStats()
+                    enemy2.setupHighStats()
 
                     battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
 
@@ -162,8 +135,8 @@ class BattleServiceTest(
                     Player.fixture,
                     Player.fixture,
                 ) { player, enemy ->
-                    player.stat.base.power = 0.0
-                    enemy.stat.base.power = 0.0
+                    player.stat.base.attack = 0.0
+                    enemy.stat.base.attack = 0.0
 
                     battleService.battle { player against enemy }
 

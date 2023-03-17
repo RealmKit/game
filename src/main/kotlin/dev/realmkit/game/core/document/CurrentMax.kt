@@ -18,41 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
-
-import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
-import org.springframework.boot.context.properties.ConfigurationProperties
+package dev.realmkit.game.core.document
 
 /**
- * # [StaticDataProperties]
- * static data values
+ * # [CurrentMax]
+ * the `current max` document
  *
- * @property initial initial static data values
+ * @property max `the max` value
+ * @property current `the current` value
  */
-@ConfigurationProperties(prefix = "app.static.data")
-class StaticDataProperties(
-    private val battle: StaticDataBattle,
-    private val initial: StaticDataValues,
+data class CurrentMax<T : Number>(
+    var max: T,
+    var current: T = max,
 ) {
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun battle(): StaticDataBattle = battle.clone()
-
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun initial(): StaticDataValues = initial.clone()
+    companion object
 }

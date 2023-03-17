@@ -62,16 +62,18 @@ class PlayerService(
      */
     @Throws(ValidationException::class)
     infix fun new(name: String): Player =
-        this persist Player(
-            name = name,
-            stat = staticDataService.initial().stat,
-        )
+        staticDataService.initial().let { initial ->
+            this persist Player(
+                name = name,
+                stat = initial.stat,
+                resource = initial.resource,
+            )
+        }
 
     /**
      * ## [update]
      * updates a [Player] to DB, if valid
      * also level up it, if possible
-     *
      * ```kotlin
      * playerService update player
      * ```
@@ -93,7 +95,6 @@ class PlayerService(
     /**
      * ## [find]
      * finds a [Player] by id, if exists, else throws [NotFoundException]
-     *
      * ```kotlin
      * playerService find "player-id"
      * ```

@@ -18,15 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.domain.resource.document
 
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.hellper.fixture.resource.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.longs.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [StaticDataStat]
- *
- * @property stat the stat value from properties
- */
-data class StaticDataStat(
-    val stat: Stat,
-)
+class ResourceTest : TestSpec({
+    context("unit testing Resource") {
+        context("instantiate") {
+            expect("to create a new Resource") {
+                check(Resource.fixture) { resource ->
+                    resource.shouldNotBeNull()
+                    resource.titanium.shouldBePositive()
+                    resource.crystal.shouldBePositive()
+                    resource.darkMatter.shouldBePositive()
+                    resource.antiMatter.shouldBePositive()
+                    resource.purunhalium.shouldBePositive()
+                }
+            }
+        }
+    }
+})

@@ -58,7 +58,9 @@ class PlayerServiceTest(
                     saved.stat.base.hull.max.shouldBePositive()
                     saved.stat.base.shield.current.shouldBeZero()
                     saved.stat.base.shield.max.shouldBeZero()
-                    saved.stat.base.power.shouldBePositive()
+                    saved.stat.base.energy.current.shouldBePositive()
+                    saved.stat.base.energy.max.shouldBePositive()
+                    saved.stat.base.attack.shouldBePositive()
                     saved.stat.base.defense.shouldBeZero()
                     saved.stat.base.speed.shouldBePositive()
                     saved.stat.base.aggro.shouldBePositive()
@@ -67,6 +69,11 @@ class PlayerServiceTest(
                     saved.stat.multiplier.critical.shouldBePositive()
                     saved.stat.progression.level.shouldBePositive()
                     saved.stat.progression.experience.shouldBeZero()
+                    saved.resource.titanium.shouldBePositive()
+                    saved.resource.crystal.shouldBeZero()
+                    saved.resource.darkMatter.shouldBeZero()
+                    saved.resource.antiMatter.shouldBeZero()
+                    saved.resource.purunhalium.shouldBeZero()
                 }
             }
 

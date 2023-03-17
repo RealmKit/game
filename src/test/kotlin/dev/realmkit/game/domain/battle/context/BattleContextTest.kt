@@ -24,12 +24,12 @@ import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.action.BattleActionAttackerAttempt
 import dev.realmkit.game.domain.battle.action.BattleActionAttackerRepeatAttempt
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
 import dev.realmkit.hellper.extension.AssertionExtensions.onAction
 import dev.realmkit.hellper.extension.AssertionExtensions.onTurn
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveTurns
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
+import dev.realmkit.hellper.fixture.battle.fixture
 import dev.realmkit.hellper.fixture.player.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -44,29 +44,13 @@ class BattleContextTest : TestSpec({
                 checkAll(
                     Player.fixture,
                     Player.fixture,
-                ) { player, enemy ->
-                    player.stat.base.power = 100.0
+                    BattleContext.fixture,
+                ) { player, enemy, context ->
+                    player.stat.base.attack = 100.0
                     player.stat.base.speed = 1.0
 
-                    val context = BattleContext(
-                        properties = StaticDataBattle(
-                            battleDuration = 10,
-                            turnDuration = 10,
-                        ),
-                        onAttack = { attacker, defender ->
-                            BattleActionAttack(
-                                attacker = attacker,
-                                defender = defender,
-                            ).apply {
-                                finalDamage = attacker.stat.base.power
-                                toTheShield = false
-                                isCritical = true
-                                defender.stat.base.hull.current -= finalDamage
-                            }
-                        },
-                    )
                     context.apply { player against enemy }
-                    context.start()
+                        .start()
                         .shouldHaveTurns(1)
                         .onTurn(turn = 1, actions = 4) {
                             onAction<BattleActionAttackerAttempt> {
@@ -83,9 +67,9 @@ class BattleContextTest : TestSpec({
                             onAction<BattleActionAttack> {
                                 attacker shouldBe player
                                 defender shouldBe enemy
-                                finalDamage shouldBe player.stat.base.power
+                                finalDamage shouldBe player.stat.base.attack
                                 toTheShield.shouldBeFalse()
-                                isCritical.shouldBeTrue()
+                                isCritical.shouldBeFalse()
                             }
                             onAction<BattleActionAttackerAttempt> {
                                 attacker shouldBe enemy.id

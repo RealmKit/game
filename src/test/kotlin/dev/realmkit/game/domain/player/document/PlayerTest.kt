@@ -39,9 +39,11 @@ class PlayerTest : TestSpec({
                     player.stat.shouldNotBeNull()
                     player.stat.base.hull.current.shouldBePositive()
                     player.stat.base.hull.max.shouldBePositive()
+                    player.stat.base.shield.current.shouldBePositive()
                     player.stat.base.shield.max.shouldBePositive()
-                    player.stat.base.shield.max.shouldBePositive()
-                    player.stat.base.power.shouldBePositive()
+                    player.stat.base.energy.current.shouldBePositive()
+                    player.stat.base.energy.max.shouldBePositive()
+                    player.stat.base.attack.shouldBePositive()
                     player.stat.base.defense.shouldBePositive()
                     player.stat.base.speed.shouldBePositive()
                     player.stat.base.aggro.shouldBePositive()
@@ -50,6 +52,11 @@ class PlayerTest : TestSpec({
                     player.stat.multiplier.critical.shouldBePositive()
                     player.stat.progression.level.shouldBePositive()
                     player.stat.progression.experience.shouldBePositive()
+                    player.resource.titanium.shouldBePositive()
+                    player.resource.crystal.shouldBePositive()
+                    player.resource.darkMatter.shouldBePositive()
+                    player.resource.antiMatter.shouldBePositive()
+                    player.resource.purunhalium.shouldBePositive()
                 }
             }
         }

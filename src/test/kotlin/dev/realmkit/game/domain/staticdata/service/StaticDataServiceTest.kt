@@ -49,7 +49,9 @@ class StaticDataServiceTest(
                         staticData.stat.base.hull.max.shouldBePositive()
                         staticData.stat.base.shield.current.shouldBeZero()
                         staticData.stat.base.shield.max.shouldBeZero()
-                        staticData.stat.base.power.shouldBePositive()
+                        staticData.stat.base.energy.current.shouldBePositive()
+                        staticData.stat.base.energy.max.shouldBePositive()
+                        staticData.stat.base.attack.shouldBePositive()
                         staticData.stat.base.defense.shouldBeZero()
                         staticData.stat.base.speed.shouldBePositive()
                         staticData.stat.base.aggro.shouldBePositive()
@@ -61,6 +63,11 @@ class StaticDataServiceTest(
                         staticData.stat.progression.shouldNotBeNull()
                         staticData.stat.progression.level.shouldBePositive()
                         staticData.stat.progression.experience.shouldBeZero()
+                        staticData.resource.titanium.shouldBePositive()
+                        staticData.resource.crystal.shouldBeZero()
+                        staticData.resource.darkMatter.shouldBeZero()
+                        staticData.resource.antiMatter.shouldBeZero()
+                        staticData.resource.purunhalium.shouldBeZero()
                     }
             }
         }

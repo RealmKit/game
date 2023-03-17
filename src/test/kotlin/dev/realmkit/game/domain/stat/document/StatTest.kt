@@ -36,7 +36,9 @@ class StatTest : TestSpec({
                     stat.base.hull.max.shouldBePositive()
                     stat.base.shield.current.shouldBePositive()
                     stat.base.shield.max.shouldBePositive()
-                    stat.base.power.shouldBePositive()
+                    stat.base.energy.current.shouldBePositive()
+                    stat.base.energy.max.shouldBePositive()
+                    stat.base.attack.shouldBePositive()
                     stat.base.defense.shouldBePositive()
                     stat.base.speed.shouldBePositive()
                     stat.base.aggro.shouldBePositive()
@@ -61,8 +63,22 @@ class StatTest : TestSpec({
                     stat.base.hull.max.shouldBeZero()
 
                     stat.base.shield.current.shouldBePositive()
+                    stat.base.shield.current = 0.0
+                    stat.base.shield.current.shouldBeZero()
+
                     stat.base.shield.max.shouldBePositive()
-                    stat.base.power.shouldBePositive()
+                    stat.base.shield.max = 0.0
+                    stat.base.shield.max.shouldBeZero()
+
+                    stat.base.energy.current.shouldBePositive()
+                    stat.base.energy.current = 0.0
+                    stat.base.energy.current.shouldBeZero()
+
+                    stat.base.energy.max.shouldBePositive()
+                    stat.base.energy.max = 0.0
+                    stat.base.energy.max.shouldBeZero()
+
+                    stat.base.attack.shouldBePositive()
                     stat.base.defense.shouldBePositive()
                     stat.base.speed.shouldBePositive()
                     stat.base.aggro.shouldBePositive()

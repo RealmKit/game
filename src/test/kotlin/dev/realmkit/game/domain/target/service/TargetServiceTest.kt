@@ -72,7 +72,7 @@ class TargetServiceTest(
 
             expect("Player to attack Enemy until it is not alive") {
                 checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    player.stat.base.power = 100.0
+                    player.stat.base.attack = 100.0
                     player.stat.rate.critical = 1.0
                     player.stat.multiplier.critical = 1.0
                     enemy.stat.base.defense = 0.0

@@ -18,23 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.game.core.extension
 
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import io.konform.validation.Validation
 
-class StatValueTest : TestSpec({
-    context("unit testing StatValue") {
-        context("instantiate") {
-            expect("to create a new StatValue") {
-                check(StatValue.fixture) { value ->
-                    value.shouldNotBeNull()
-                    value.current.shouldBePositive()
-                    value.max.shouldBePositive()
-                }
-            }
+/**
+ * # [CurrentMaxValidator]
+ * [dev.realmkit.game.core.document.CurrentMax] validations
+ */
+object CurrentMaxValidator {
+    /**
+     * ## [double]
+     * [dev.realmkit.game.core.document.CurrentMax] -> [Validation] object
+     */
+    val double: Validation<CurrentMaxDouble> = Validation {
+        CurrentMaxDouble::current required {}
+        CurrentMaxDouble::max required { positive() }
+        addConstraint(".current must be lower than .max") {
+            it.current <= it.max
         }
     }
-})
+}

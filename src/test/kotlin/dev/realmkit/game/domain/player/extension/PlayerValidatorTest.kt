@@ -69,7 +69,9 @@ class PlayerValidatorTest : TestSpec({
                             ".stat.base.hull.max" to "must be positive",
                             ".stat.base.shield" to ".current must be lower than .max",
                             ".stat.base.shield.max" to "must be positive",
-                            ".stat.base.power" to "must be positive",
+                            ".stat.base.energy" to ".current must be lower than .max",
+                            ".stat.base.energy.max" to "must be positive",
+                            ".stat.base.attack" to "must be positive",
                             ".stat.base.defense" to "must be positive",
                             ".stat.base.speed" to "must be positive",
                             ".stat.base.aggro" to "must be positive",
@@ -78,6 +80,11 @@ class PlayerValidatorTest : TestSpec({
                             ".stat.multiplier.critical" to "must be positive",
                             ".stat.progression.level" to "must be positive",
                             ".stat.progression.experience" to "must be positive",
+                            ".resource.titanium" to "must be positive",
+                            ".resource.crystal" to "must be positive",
+                            ".resource.darkMatter" to "must be positive",
+                            ".resource.antiMatter" to "must be positive",
+                            ".resource.purunhalium" to "must be positive",
                         )
                     }
                 }

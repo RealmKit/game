@@ -18,41 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
+package dev.realmkit.hellper.fixture.battle
 
-import dev.realmkit.game.core.extension.MapperExtensions.clone
+import dev.realmkit.game.domain.battle.action.BattleActionAttack
+import dev.realmkit.game.domain.battle.context.BattleContext
+import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
-import org.springframework.boot.context.properties.ConfigurationProperties
+import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveLong
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
 /**
- * # [StaticDataProperties]
- * static data values
- *
- * @property initial initial static data values
+ * Creates a [Player] with random data
  */
-@ConfigurationProperties(prefix = "app.static.data")
-class StaticDataProperties(
-    private val battle: StaticDataBattle,
-    private val initial: StaticDataValues,
-) {
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun battle(): StaticDataBattle = battle.clone()
-
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun initial(): StaticDataValues = initial.clone()
-}
+val BattleContext.Companion.fixture: Arb<BattleContext>
+    get() = arbitrary { rs ->
+        BattleContext(
+            properties = StaticDataBattle(
+                battleDuration = rs.positiveLong(),
+                turnDuration = rs.positiveLong(),
+            ),
+            onAttack = { attacker, defender ->
+                BattleActionAttack(
+                    attacker = attacker,
+                    defender = defender,
+                ).apply {
+                    finalDamage = attacker.stat.base.attack
+                    toTheShield = false
+                    isCritical = false
+                    defender.stat.base.hull.current -= finalDamage
+                }
+            },
+        )
+    }

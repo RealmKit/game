@@ -18,35 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
+package dev.realmkit.game.domain.resource.extension
 
-import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
-import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.resource.document.Resource
+import io.konform.validation.Validation
 
 /**
- * Creates a [StatValue] with random data
+ * # [ResourceValidator]
+ * [Resource] validations
  */
-val StatValue.Companion.fixture: Arb<StatValue<Double>>
-    get() = arbitrary { rs ->
-        val max = rs.positiveDouble()
-        Fixture {
-            StatValue<Double>::max { max }
-            StatValue<Double>::current { max / 2 }
-        }
+object ResourceValidator {
+    /**
+     * ## [validation]
+     * [Resource] -> [Validation] object
+     */
+    val validation: Validation<Resource> = Validation {
+        Resource::titanium required { positive() }
+        Resource::crystal required { positive() }
+        Resource::darkMatter required { positive() }
+        Resource::antiMatter required { positive() }
+        Resource::purunhalium required { positive() }
     }
-
-/**
- * Creates a [StatValue] with random invalid data
- */
-val StatValue.Companion.invalid: Arb<StatValue<Double>>
-    get() = arbitrary { rs ->
-        val max = rs.negativeDouble()
-        Fixture {
-            StatValue<Double>::max { max }
-            StatValue<Double>::current { max / 2 }
-        }
-    }
+}

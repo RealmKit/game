@@ -20,11 +20,13 @@
 
 package dev.realmkit.hellper.fixture.stat
 
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.game.domain.stat.document.StatBase
-import dev.realmkit.game.domain.stat.document.StatValue
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
 import dev.realmkit.hellper.fixture.Fixture
+import dev.realmkit.hellper.fixture.core.fixture
+import dev.realmkit.hellper.fixture.core.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -33,12 +35,14 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val StatBase.Companion.fixture: Arb<StatBase>
     get() = arbitrary { rs ->
-        val hull = StatValue.fixture.bind()
-        val shield = StatValue.fixture.bind()
+        val hull = CurrentMaxDouble.fixture.bind()
+        val shield = CurrentMaxDouble.fixture.bind()
+        val energy = CurrentMaxDouble.fixture.bind()
         Fixture {
             StatBase::hull { hull }
             StatBase::shield { shield }
-            StatBase::power { rs.positiveDouble() }
+            StatBase::energy { energy }
+            StatBase::attack { rs.positiveDouble() }
             StatBase::defense { rs.positiveDouble() }
             StatBase::speed { rs.positiveDouble() }
             StatBase::aggro { rs.positiveDouble() }
@@ -50,12 +54,14 @@ val StatBase.Companion.fixture: Arb<StatBase>
  */
 val StatBase.Companion.invalid: Arb<StatBase>
     get() = arbitrary { rs ->
-        val hull = StatValue.invalid.bind()
-        val shield = StatValue.invalid.bind()
+        val hull = CurrentMaxDouble.invalid.bind()
+        val shield = CurrentMaxDouble.invalid.bind()
+        val energy = CurrentMaxDouble.invalid.bind()
         Fixture {
             StatBase::hull { hull }
             StatBase::shield { shield }
-            StatBase::power { rs.negativeDouble() }
+            StatBase::energy { energy }
+            StatBase::attack { rs.negativeDouble() }
             StatBase::defense { rs.negativeDouble() }
             StatBase::speed { rs.negativeDouble() }
             StatBase::aggro { rs.negativeDouble() }

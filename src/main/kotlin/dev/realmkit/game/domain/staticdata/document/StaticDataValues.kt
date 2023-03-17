@@ -18,18 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.game.domain.staticdata.document
+
+import dev.realmkit.game.domain.resource.document.Resource
+import dev.realmkit.game.domain.stat.document.Stat
 
 /**
- * # [StatValue]
- * the StatValue document
+ * # [StaticDataValues]
+ * the StaticDataValues properties
  *
- * @property current `the stat value` current value
- * @property max `the stat value` max value
+ * @property stat the stat value from properties
+ * @property resource
  */
-data class StatValue<T : Number>(
-    var max: T,
-    var current: T = max,
-) {
-    companion object
-}
+data class StaticDataValues(
+    val stat: Stat,
+    val resource: Resource,
+)

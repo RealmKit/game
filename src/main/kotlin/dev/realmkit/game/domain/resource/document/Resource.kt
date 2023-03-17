@@ -18,27 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
-
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.aliases.StatValueDouble
-import dev.realmkit.game.domain.stat.document.StatValue
-import io.konform.validation.Validation
+package dev.realmkit.game.domain.resource.document
 
 /**
- * # [StatValueValidator]
- * [StatValue] validations
+ * # [Resource]
+ * the Resource document
+ *
+ * @property titanium `the resource` titanium
+ * @property crystal `the resource` crystal
+ * @property darkMatter `the resource` dark matter
+ * @property antiMatter `the resource` anti matter
+ * @property purunhalium `the resource` purunhalium for `cat cosmic entity`
  */
-object StatValueValidator {
-    /**
-     * ## [double]
-     * [StatValueDouble] -> [Validation] object
-     */
-    val double: Validation<StatValueDouble> = Validation {
-        StatValueDouble::current required {}
-        StatValueDouble::max required { positive() }
-        addConstraint(".current must be lower than .max") {
-            it.current <= it.max
-        }
-    }
+data class Resource(
+    var titanium: Long,
+    var crystal: Long,
+    var darkMatter: Long,
+    var antiMatter: Long,
+    var purunhalium: Long,
+) {
+    companion object
 }

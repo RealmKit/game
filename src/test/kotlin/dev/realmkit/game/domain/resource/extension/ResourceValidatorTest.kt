@@ -18,33 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.resource.extension
 
-import dev.realmkit.game.domain.stat.document.StatValue
+import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
+import dev.realmkit.hellper.fixture.resource.fixture
+import dev.realmkit.hellper.fixture.resource.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 
-class StatValueValidatorTest : TestSpec({
-    context("unit testing StatValueValidator") {
+class ResourceValidatorTest : TestSpec({
+    context("unit testing ResourceValidator") {
         context("isValid") {
-            expect("value to be valid") {
-                check(StatValue.fixture) { value ->
-                    StatValueValidator.double shouldBeValid value
+            expect("resource to be valid") {
+                check(Resource.fixture) { resource ->
+                    ResourceValidator.validation shouldBeValid resource
                 }
             }
         }
 
         context("isInvalid") {
-            expect("value to be invalid") {
-                check(StatValue.invalid) { value ->
-                    StatValueValidator.double.shouldBeInvalid(value) { invalid ->
+            expect("resource to be invalid") {
+                check(Resource.invalid) { resource ->
+                    ResourceValidator.validation.shouldBeInvalid(resource) { invalid ->
                         invalid shouldHaveAllErrors listOf(
-                            "" to ".current must be lower than .max",
-                            ".max" to "must be positive",
+                            ".titanium" to "must be positive",
+                            ".crystal" to "must be positive",
+                            ".darkMatter" to "must be positive",
+                            ".antiMatter" to "must be positive",
+                            ".purunhalium" to "must be positive",
                         )
                     }
                 }
