@@ -23,9 +23,14 @@
       "description": "StaticData Initial Stat: Max Shield Points (sp)."
     },
     {
-      "name": "app.static.data.initial.stat.base.power",
+      "name": "app.static.data.initial.stat.base.energy.max",
       "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Power (attack)."
+      "description": "StaticData Initial Stat: Max Energy Points (ep)."
+    },
+    {
+      "name": "app.static.data.initial.stat.base.attack",
+      "type": "java.lang.Double",
+      "description": "StaticData Initial Stat: Attack (attack)."
     },
     {
       "name": "app.static.data.initial.stat.base.defense",

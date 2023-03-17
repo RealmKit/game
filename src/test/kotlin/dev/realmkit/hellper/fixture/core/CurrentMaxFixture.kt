@@ -18,23 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.document
+package dev.realmkit.hellper.fixture.core
 
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.core.document.CurrentMax
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
+import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
+import dev.realmkit.hellper.fixture.Fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
-class StatValueTest : TestSpec({
-    context("unit testing StatValue") {
-        context("instantiate") {
-            expect("to create a new StatValue") {
-                check(StatValue.fixture) { value ->
-                    value.shouldNotBeNull()
-                    value.current.shouldBePositive()
-                    value.max.shouldBePositive()
-                }
-            }
+/**
+ * Creates a [CurrentMax] with random data
+ */
+val CurrentMax.Companion.fixture: Arb<CurrentMaxDouble>
+    get() = arbitrary { rs ->
+        val max = rs.positiveDouble()
+        Fixture {
+            CurrentMaxDouble::max { max }
+            CurrentMaxDouble::current { max / 2 }
         }
     }
-})
+
+/**
+ * Creates a [CurrentMax] with random invalid data
+ */
+val CurrentMax.Companion.invalid: Arb<CurrentMaxDouble>
+    get() = arbitrary { rs ->
+        val max = rs.negativeDouble()
+        Fixture {
+            CurrentMaxDouble::max { max }
+            CurrentMaxDouble::current { max / 2 }
+        }
+    }

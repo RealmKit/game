@@ -18,27 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
-
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.aliases.StatValueDouble
-import dev.realmkit.game.domain.stat.document.StatValue
-import io.konform.validation.Validation
+package dev.realmkit.game.core.document
 
 /**
- * # [StatValueValidator]
- * [StatValue] validations
+ * # [CurrentMax]
+ * the `current max` document
+ *
+ * @property max `the max` value
+ * @property current `the current` value
  */
-object StatValueValidator {
-    /**
-     * ## [double]
-     * [StatValueDouble] -> [Validation] object
-     */
-    val double: Validation<StatValueDouble> = Validation {
-        StatValueDouble::current required {}
-        StatValueDouble::max required { positive() }
-        addConstraint(".current must be lower than .max") {
-            it.current <= it.max
-        }
-    }
+data class CurrentMax<T : Number>(
+    var max: T,
+    var current: T = max,
+) {
+    companion object
 }

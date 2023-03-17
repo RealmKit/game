@@ -30,6 +30,7 @@
             </option>
             <option name="taskNames">
                 <list>
+                    <option value="clean"/>
                     <option value="check"/>
                 </list>
             </option>

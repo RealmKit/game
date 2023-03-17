@@ -20,12 +20,12 @@
 
 package dev.realmkit.game.domain.staticdata.document
 
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
-import dev.realmkit.game.domain.stat.document.StatValue
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
@@ -39,9 +39,10 @@ class StaticDataStatTest : TestSpec({
                 StaticDataStat(
                     stat = Stat(
                         base = StatBase(
-                            hull = StatValue(max = 100.0),
-                            shield = StatValue(max = 100.0),
-                            power = 100.0,
+                            hull = CurrentMaxDouble(max = 100.0),
+                            shield = CurrentMaxDouble(max = 100.0),
+                            energy = CurrentMaxDouble(max = 100.0),
+                            attack = 100.0,
                             defense = 100.0,
                             speed = 100.0,
                             aggro = 100.0,
@@ -64,7 +65,9 @@ class StaticDataStatTest : TestSpec({
                     staticData.stat.base.hull.max.shouldBePositive()
                     staticData.stat.base.shield.current.shouldBePositive()
                     staticData.stat.base.shield.max.shouldBePositive()
-                    staticData.stat.base.power.shouldBePositive()
+                    staticData.stat.base.energy.current.shouldBePositive()
+                    staticData.stat.base.energy.max.shouldBePositive()
+                    staticData.stat.base.attack.shouldBePositive()
                     staticData.stat.base.defense.shouldBePositive()
                     staticData.stat.base.speed.shouldBePositive()
                     staticData.stat.base.aggro.shouldBePositive()

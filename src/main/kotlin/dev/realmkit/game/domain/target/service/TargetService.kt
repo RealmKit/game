@@ -42,7 +42,7 @@ class TargetService {
      * @return the base damage
      */
     private val Target.baseDamage: Double
-        get() = stat.base.power
+        get() = stat.base.attack
 
     /**
      * ## [absoluteDamage]

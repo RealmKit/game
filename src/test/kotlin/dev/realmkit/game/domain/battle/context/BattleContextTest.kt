@@ -45,7 +45,7 @@ class BattleContextTest : TestSpec({
                     Player.fixture,
                     Player.fixture,
                 ) { player, enemy ->
-                    player.stat.base.power = 100.0
+                    player.stat.base.attack = 100.0
                     player.stat.base.speed = 1.0
 
                     val context = BattleContext(
@@ -58,7 +58,7 @@ class BattleContextTest : TestSpec({
                                 attacker = attacker,
                                 defender = defender,
                             ).apply {
-                                finalDamage = attacker.stat.base.power
+                                finalDamage = attacker.stat.base.attack
                                 toTheShield = false
                                 isCritical = true
                                 defender.stat.base.hull.current -= finalDamage
@@ -83,7 +83,7 @@ class BattleContextTest : TestSpec({
                             onAction<BattleActionAttack> {
                                 attacker shouldBe player
                                 defender shouldBe enemy
-                                finalDamage shouldBe player.stat.base.power
+                                finalDamage shouldBe player.stat.base.attack
                                 toTheShield.shouldBeFalse()
                                 isCritical.shouldBeTrue()
                             }

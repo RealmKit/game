@@ -18,35 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
+package dev.realmkit.game.core.extension
 
-import dev.realmkit.game.domain.stat.document.StatValue
-import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
-import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import io.konform.validation.Validation
 
 /**
- * Creates a [StatValue] with random data
+ * # [CurrentMaxValidator]
+ * [dev.realmkit.game.core.document.CurrentMax] validations
  */
-val StatValue.Companion.fixture: Arb<StatValue<Double>>
-    get() = arbitrary { rs ->
-        val max = rs.positiveDouble()
-        Fixture {
-            StatValue<Double>::max { max }
-            StatValue<Double>::current { max / 2 }
+object CurrentMaxValidator {
+    /**
+     * ## [double]
+     * [dev.realmkit.game.core.document.CurrentMax] -> [Validation] object
+     */
+    val double: Validation<CurrentMaxDouble> = Validation {
+        CurrentMaxDouble::current required {}
+        CurrentMaxDouble::max required { positive() }
+        addConstraint(".current must be lower than .max") {
+            it.current <= it.max
         }
     }
-
-/**
- * Creates a [StatValue] with random invalid data
- */
-val StatValue.Companion.invalid: Arb<StatValue<Double>>
-    get() = arbitrary { rs ->
-        val max = rs.negativeDouble()
-        Fixture {
-            StatValue<Double>::max { max }
-            StatValue<Double>::current { max / 2 }
-        }
-    }
+}

@@ -31,6 +31,7 @@
         <option name="packageName" value=""/>
         <option name="vmparams" value=""/>
         <method v="2">
+            <option name="RunConfigurationTask" enabled="true" run_configuration_name="game-service [clean]" run_configuration_type="GradleRunConfiguration"/>
             <option name="Make" enabled="true"/>
             <option name="RunConfigurationTask" enabled="false" run_configuration_name="game-service [spotlessApply]" run_configuration_type="GradleRunConfiguration"/>
         </method>
