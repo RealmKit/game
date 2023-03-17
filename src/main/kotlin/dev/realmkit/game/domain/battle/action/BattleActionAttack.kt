@@ -34,6 +34,12 @@ class BattleActionAttack(
     val defender: Target,
 ) : BattleAction {
     /**
+     * ## [damage]
+     * the damage amount dealt
+     */
+    var damage: Double = ZERO
+
+    /**
      * ## [finalDamage]
      * the final damage amount dealt
      */

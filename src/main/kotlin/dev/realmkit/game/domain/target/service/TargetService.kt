@@ -88,14 +88,15 @@ class TargetService {
             attacker = pair.first,
             defender = pair.second,
         ).apply {
-            finalDamage = attacker damage defender
+            damage = attacker damage defender
+            finalDamage = defender reduce damage
             toTheShield = defender.hasShield
-            isCritical = finalDamage > attacker.baseDamage
+            isCritical = damage > attacker.baseDamage
 
             if (toTheShield) {
-                defender.stat.base.shield.current -= finalDamage
+                defender.stat.base.shield.current -= damage
             } else {
-                defender.stat.base.hull.current -= finalDamage
+                defender.stat.base.hull.current -= damage
             }
 
             if (!defender.hasShield) {
@@ -104,42 +105,22 @@ class TargetService {
         }
 
     /**
-     * ## [absoluteDamage]
-     * calculates the [absoluteDamage] to the target
+     * ## [damage]
+     * calculates the [damage] to the target
      *
      * @param target the target to calculate the damage to
      * @return the damage done to the target, or null if none
      */
     private infix fun Target.damage(target: Target): Double =
-        allAlive(this, target) {
-            finalDamage(target)
-                .takeIf { damage -> damage > ZERO }
-        }
+        absoluteDamage.takeIf { damage -> alive && target.alive && damage > ZERO } ?: ZERO
 
     /**
-     * ## [finalDamage]
-     * calculates the final damage
-     * if `critical`:
-     * ```kotlin
-     * damage - target.absolutDefense
-     * ```
+     * ## [reduce]
+     * reduces the damage to the target
      *
-     * @param target the target to calculate the final damage to
-     * @return the final damage
+     * @param damage the damage to reduce from
+     * @return the damage after reduction, or 0.0 if none
      */
-    private infix fun Target.finalDamage(target: Target): Double =
-        absoluteDamage - target.absoluteDefense
-
-    /**
-     * ## [allAlive]
-     * checks if the targets are all alive, if so, executes the block
-     *
-     * @param targets the targets to check if it is alive
-     * @param block the block to execute if the target is alive
-     * @return the result of the block, or 0 if the target is not alive
-     */
-    private fun allAlive(vararg targets: Target, block: () -> Double?): Double =
-        takeIf { targets.all { target -> target.alive } }
-            ?.let { block() }
-            ?: ZERO
+    private infix fun Target.reduce(damage: Double?): Double =
+        damage?.minus(absoluteDefense)?.takeIf { reduced -> alive && reduced > ZERO } ?: ZERO
 }

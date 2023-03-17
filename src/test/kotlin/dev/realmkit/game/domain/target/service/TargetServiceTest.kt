@@ -40,7 +40,7 @@ class TargetServiceTest(
         }
 
         context(".attack()") {
-            expect("to not hit a critical attack") {
+            expect("to not hit a critical attack, enemy should be alive") {
                 checkAll(Player.fixture, Player.fixture) { player, enemy ->
                     player.stat.rate.critical = 0.0
                     enemy.stat.base.defense = 10.0
@@ -50,10 +50,21 @@ class TargetServiceTest(
                 }
             }
 
-            expect("to hit a critical attack") {
+            expect("to hit a critical attack, enemy should be alive") {
                 checkAll(Player.fixture, Player.fixture) { player, enemy ->
                     player.stat.rate.critical = 1.0
+                    player.stat.multiplier.critical = 2.0
                     enemy.stat.base.defense = 10.0
+
+                    targetService attack (player to enemy)
+                    enemy.shouldBeAlive()
+                }
+            }
+
+            expect("to hit a critical attack, enemy should not be alive") {
+                checkAll(Player.fixture, Player.fixture) { player, enemy ->
+                    player.stat.rate.critical = 1.0
+                    player.stat.multiplier.critical = 2.0
 
                     targetService attack (player to enemy)
                     enemy.shouldBeAlive()

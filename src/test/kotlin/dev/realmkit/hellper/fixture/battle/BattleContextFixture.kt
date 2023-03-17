@@ -43,10 +43,10 @@ val BattleContext.Companion.fixture: Arb<BattleContext>
                     attacker = attacker,
                     defender = defender,
                 ).apply {
-                    finalDamage = attacker.stat.base.attack
+                    damage = attacker.stat.base.attack
                     toTheShield = false
                     isCritical = false
-                    defender.stat.base.hull.current -= finalDamage
+                    defender.stat.base.hull.current -= damage
                 }
             },
         )
