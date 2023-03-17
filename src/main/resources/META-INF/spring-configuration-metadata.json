@@ -81,6 +81,31 @@
       "name": "app.static.data.battle.turn-duration",
       "type": "java.lang.Long",
       "description": "StaticData Battle: Turns Duration (in seconds)."
+    },
+    {
+      "name": "app.static.data.initial.resource.titanium",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Resource: Titanium resources."
+    },
+    {
+      "name": "app.static.data.initial.resource.crystal",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Resource: Crystal resources."
+    },
+    {
+      "name": "app.static.data.initial.resource.dark-matter",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Resource: DarkMatter resources."
+    },
+    {
+      "name": "app.static.data.initial.resource.anti-matter",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Resource: AntiMatter resources."
+    },
+    {
+      "name": "app.static.data.initial.resource.purunhalium",
+      "type": "java.lang.Long",
+      "description": "StaticData Initial Resource: Purunhalium for `cat cosmic entity` resources."
     }
   ],
   "hints": []

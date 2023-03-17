@@ -150,4 +150,6 @@ class BattleContext(
      */
     private infix fun Set<Target>.versus(targets: Set<Target>): Iterable<AttackerTargets> =
         this.map { target -> target to targets } + targets.map { target -> target to this }
+
+    companion object
 }

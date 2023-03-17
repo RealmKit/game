@@ -18,41 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
+package dev.realmkit.game.domain.staticdata.document
 
-import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
-import org.springframework.boot.context.properties.ConfigurationProperties
+import dev.realmkit.game.domain.resource.document.Resource
+import dev.realmkit.game.domain.stat.document.Stat
 
 /**
- * # [StaticDataProperties]
- * static data values
+ * # [StaticDataValues]
+ * the StaticDataValues properties
  *
- * @property initial initial static data values
+ * @property stat the stat value from properties
+ * @property resource
  */
-@ConfigurationProperties(prefix = "app.static.data")
-class StaticDataProperties(
-    private val battle: StaticDataBattle,
-    private val initial: StaticDataValues,
-) {
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun battle(): StaticDataBattle = battle.clone()
-
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun initial(): StaticDataValues = initial.clone()
-}
+data class StaticDataValues(
+    val stat: Stat,
+    val resource: Resource,
+)

@@ -80,6 +80,11 @@ class PlayerValidatorTest : TestSpec({
                             ".stat.multiplier.critical" to "must be positive",
                             ".stat.progression.level" to "must be positive",
                             ".stat.progression.experience" to "must be positive",
+                            ".resource.titanium" to "must be positive",
+                            ".resource.crystal" to "must be positive",
+                            ".resource.darkMatter" to "must be positive",
+                            ".resource.antiMatter" to "must be positive",
+                            ".resource.purunhalium" to "must be positive",
                         )
                     }
                 }

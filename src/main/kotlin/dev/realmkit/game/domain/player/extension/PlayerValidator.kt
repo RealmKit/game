@@ -23,6 +23,7 @@ package dev.realmkit.game.domain.player.extension
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.core.extension.ValidationExtensions.notBlank
 import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.resource.extension.ResourceValidator
 import dev.realmkit.game.domain.stat.extension.StatValidator
 import io.konform.validation.Invalid
 import io.konform.validation.Valid
@@ -41,6 +42,7 @@ object PlayerValidator {
     val validation: Validation<Player> = Validation {
         Player::name required { notBlank() }
         Player::stat required { run(StatValidator.validation) }
+        Player::resource required { run(ResourceValidator.validation) }
     }
 
     /**

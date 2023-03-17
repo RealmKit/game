@@ -20,3 +20,9 @@ app.static.data:
       progression:
         level: 1
         experience: 0
+    resource:
+      titanium: 1000
+      crystal: 0
+      dark-matter: 0
+      anti-matter: 0
+      purunhalium: 0

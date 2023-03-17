@@ -21,6 +21,7 @@
 package dev.realmkit.game.domain.staticdata.document
 
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
@@ -36,7 +37,7 @@ class StaticDataStatTest : TestSpec({
     context("unit testing StaticData") {
         context("instantiate") {
             expect("instantiate a StaticData") {
-                StaticDataStat(
+                StaticDataValues(
                     stat = Stat(
                         base = StatBase(
                             hull = CurrentMaxDouble(max = 100.0),
@@ -59,6 +60,13 @@ class StaticDataStatTest : TestSpec({
                             experience = 1,
                         ),
                     ),
+                    resource = Resource(
+                        titanium = 100,
+                        crystal = 100,
+                        darkMatter = 100,
+                        antiMatter = 100,
+                        purunhalium = 100,
+                    ),
                 ).shouldNotBeNull().asClue { staticData ->
                     staticData.stat.shouldNotBeNull()
                     staticData.stat.base.hull.current.shouldBePositive()
@@ -76,6 +84,11 @@ class StaticDataStatTest : TestSpec({
                     staticData.stat.multiplier.critical.shouldBePositive()
                     staticData.stat.progression.level.shouldBePositive()
                     staticData.stat.progression.experience.shouldBePositive()
+                    staticData.resource.titanium.shouldBePositive()
+                    staticData.resource.crystal.shouldBePositive()
+                    staticData.resource.darkMatter.shouldBePositive()
+                    staticData.resource.antiMatter.shouldBePositive()
+                    staticData.resource.purunhalium.shouldBePositive()
                 }
             }
         }

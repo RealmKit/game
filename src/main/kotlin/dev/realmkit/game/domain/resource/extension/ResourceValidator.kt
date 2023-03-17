@@ -18,15 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.domain.resource.extension
 
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.domain.resource.document.Resource
+import io.konform.validation.Validation
 
 /**
- * # [StaticDataStat]
- *
- * @property stat the stat value from properties
+ * # [ResourceValidator]
+ * [Resource] validations
  */
-data class StaticDataStat(
-    val stat: Stat,
-)
+object ResourceValidator {
+    /**
+     * ## [validation]
+     * [Resource] -> [Validation] object
+     */
+    val validation: Validation<Resource> = Validation {
+        Resource::titanium required { positive() }
+        Resource::crystal required { positive() }
+        Resource::darkMatter required { positive() }
+        Resource::antiMatter required { positive() }
+        Resource::purunhalium required { positive() }
+    }
+}

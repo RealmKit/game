@@ -69,6 +69,11 @@ class PlayerServiceTest(
                     saved.stat.multiplier.critical.shouldBePositive()
                     saved.stat.progression.level.shouldBePositive()
                     saved.stat.progression.experience.shouldBeZero()
+                    saved.resource.titanium.shouldBePositive()
+                    saved.resource.crystal.shouldBeZero()
+                    saved.resource.darkMatter.shouldBeZero()
+                    saved.resource.antiMatter.shouldBeZero()
+                    saved.resource.purunhalium.shouldBeZero()
                 }
             }
 

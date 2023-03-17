@@ -63,6 +63,11 @@ class StaticDataServiceTest(
                         staticData.stat.progression.shouldNotBeNull()
                         staticData.stat.progression.level.shouldBePositive()
                         staticData.stat.progression.experience.shouldBeZero()
+                        staticData.resource.titanium.shouldBePositive()
+                        staticData.resource.crystal.shouldBeZero()
+                        staticData.resource.darkMatter.shouldBeZero()
+                        staticData.resource.antiMatter.shouldBeZero()
+                        staticData.resource.purunhalium.shouldBeZero()
                     }
             }
         }

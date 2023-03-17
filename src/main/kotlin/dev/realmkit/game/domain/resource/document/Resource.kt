@@ -18,41 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
-
-import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
-import org.springframework.boot.context.properties.ConfigurationProperties
+package dev.realmkit.game.domain.resource.document
 
 /**
- * # [StaticDataProperties]
- * static data values
+ * # [Resource]
+ * the Resource document
  *
- * @property initial initial static data values
+ * @property titanium `the resource` titanium
+ * @property crystal `the resource` crystal
+ * @property darkMatter `the resource` dark matter
+ * @property antiMatter `the resource` anti matter
+ * @property purunhalium `the resource` purunhalium for `cat cosmic entity`
  */
-@ConfigurationProperties(prefix = "app.static.data")
-class StaticDataProperties(
-    private val battle: StaticDataBattle,
-    private val initial: StaticDataValues,
+data class Resource(
+    var titanium: Long,
+    var crystal: Long,
+    var darkMatter: Long,
+    var antiMatter: Long,
+    var purunhalium: Long,
 ) {
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun battle(): StaticDataBattle = battle.clone()
-
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun initial(): StaticDataValues = initial.clone()
+    companion object
 }

@@ -52,6 +52,11 @@ class PlayerTest : TestSpec({
                     player.stat.multiplier.critical.shouldBePositive()
                     player.stat.progression.level.shouldBePositive()
                     player.stat.progression.experience.shouldBePositive()
+                    player.resource.titanium.shouldBePositive()
+                    player.resource.crystal.shouldBePositive()
+                    player.resource.darkMatter.shouldBePositive()
+                    player.resource.antiMatter.shouldBePositive()
+                    player.resource.purunhalium.shouldBePositive()
                 }
             }
         }

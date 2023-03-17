@@ -26,6 +26,7 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
@@ -70,6 +71,11 @@ class PlayerRepositoryTest(
                         find.stat.rate.shieldRegeneration.shouldBePositive()
                         find.stat.rate.critical.shouldBePositive()
                         find.stat.multiplier.critical.shouldBePositive()
+                        find.resource.titanium.shouldBePositive()
+                        find.resource.crystal.shouldBePositive()
+                        find.resource.darkMatter.shouldBePositive()
+                        find.resource.antiMatter.shouldBePositive()
+                        find.resource.purunhalium.shouldBePositive()
                     }
                 }
                 playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }

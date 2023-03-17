@@ -18,41 +18,26 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
+package dev.realmkit.game.domain.resource.document
 
-import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
-import org.springframework.boot.context.properties.ConfigurationProperties
+import dev.realmkit.hellper.fixture.resource.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.longs.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
 
-/**
- * # [StaticDataProperties]
- * static data values
- *
- * @property initial initial static data values
- */
-@ConfigurationProperties(prefix = "app.static.data")
-class StaticDataProperties(
-    private val battle: StaticDataBattle,
-    private val initial: StaticDataValues,
-) {
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun battle(): StaticDataBattle = battle.clone()
-
-    /**
-     * ## [initial]
-     * initial static data values
-     *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
-     */
-    fun initial(): StaticDataValues = initial.clone()
-}
+class ResourceTest : TestSpec({
+    context("unit testing Resource") {
+        context("instantiate") {
+            expect("to create a new Resource") {
+                check(Resource.fixture) { resource ->
+                    resource.shouldNotBeNull()
+                    resource.titanium.shouldBePositive()
+                    resource.crystal.shouldBePositive()
+                    resource.darkMatter.shouldBePositive()
+                    resource.antiMatter.shouldBePositive()
+                    resource.purunhalium.shouldBePositive()
+                }
+            }
+        }
+    }
+})
