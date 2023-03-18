@@ -18,9 +18,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.extension.validator
 
-import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
@@ -28,23 +28,23 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 
-class StatProgressionValidatorTest : TestSpec({
-    context("unit testing StatProgressionValidator") {
+class StatRateValidatorTest : TestSpec({
+    context("unit testing StatRateValidator") {
         context("isValid") {
-            expect("progression to be valid") {
-                check(StatProgression.fixture) { progression ->
-                    StatProgressionValidator.validation shouldBeValid progression
+            expect("rate to be valid") {
+                check(StatRate.fixture) { rate ->
+                    StatRateValidator.validation shouldBeValid rate
                 }
             }
         }
 
         context("isInvalid") {
-            expect("progression to be invalid") {
-                check(StatProgression.invalid) { progression ->
-                    StatProgressionValidator.validation.shouldBeInvalid(progression) { invalid ->
+            expect("rate to be invalid") {
+                check(StatRate.invalid) { rate ->
+                    StatRateValidator.validation.shouldBeInvalid(rate) { invalid ->
                         invalid shouldHaveAllErrors listOf(
-                            ".level" to "must be positive",
-                            ".experience" to "must be positive",
+                            ".shieldRegeneration" to "must be positive",
+                            ".critical" to "must be positive",
                         )
                     }
                 }

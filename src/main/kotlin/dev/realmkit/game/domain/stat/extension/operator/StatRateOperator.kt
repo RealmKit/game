@@ -18,23 +18,44 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.extension.operator
 
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.minus
+import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
 import dev.realmkit.game.domain.stat.document.StatRate
-import io.konform.validation.Validation
 
 /**
- * # [StatRateValidator]
- * [StatRate] validations
+ * # [StatRateOperator]
+ * [StatRate] operators
  */
-object StatRateValidator {
+object StatRateOperator {
     /**
-     * ## [validation]
-     * [StatRate] -> [Validation] object
+     * ## [plus]
+     * [StatRate] `+` operator, sum the properties
+     *
+     * @see [StatRate]
+     *
+     * @param other the other [StatRate]
+     * @return a copy of [StatRate] with the summed properties
      */
-    val validation: Validation<StatRate> = Validation {
-        StatRate::shieldRegeneration required { positive() }
-        StatRate::critical required { positive() }
-    }
+    operator fun StatRate.plus(other: StatRate): StatRate =
+        copy(
+            shieldRegeneration = shieldRegeneration + other.shieldRegeneration,
+            critical = critical + other.critical,
+        )
+
+    /**
+     * ## [minus]
+     * [StatRate] `-` operator, subtract the properties
+     *
+     * @see [StatRate]
+     *
+     * @param other the other [StatRate]
+     * @return a copy of [StatRate] with the subtracted properties
+     */
+    operator fun StatRate.minus(other: StatRate): StatRate =
+        copy(
+            shieldRegeneration = shieldRegeneration - other.shieldRegeneration,
+            critical = critical - other.critical,
+        )
 }

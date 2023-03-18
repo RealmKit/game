@@ -18,22 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.infra
+package dev.realmkit.game.domain.stat.extension.validator
 
-import dev.realmkit.game.app.GameServiceApplication
-import io.kotest.core.extensions.ApplyExtension
-import io.kotest.extensions.spring.SpringTestExtension
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
+import dev.realmkit.game.domain.stat.document.Stat
+import io.konform.validation.Validation
 
 /**
- * [IntegrationTestContext]
- * Wraps all annotations needed to start an Integration Test
+ * # [StatValidator]
+ * [Stat] validations
  */
-@ActiveProfiles(
-    "static-data",
-    "itest",
-)
-@SpringBootTest(classes = [GameServiceApplication::class])
-@ApplyExtension(SpringTestExtension::class)
-annotation class IntegrationTestContext
+object StatValidator {
+    /**
+     * ## [validation]
+     * [Stat] -> [Validation] object
+     */
+    val validation: Validation<Stat> = Validation {
+        Stat::base required { run(StatBaseValidator.validation) }
+        Stat::rate required { run(StatRateValidator.validation) }
+        Stat::multiplier required { run(StatMultiplierValidator.validation) }
+        Stat::progression required { run(StatProgressionValidator.validation) }
+    }
+}

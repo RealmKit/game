@@ -24,7 +24,7 @@ import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.core.extension.ValidationExtensions.notBlank
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.resource.extension.ResourceValidator
-import dev.realmkit.game.domain.stat.extension.StatValidator
+import dev.realmkit.game.domain.stat.extension.validator.StatValidator
 import io.konform.validation.Invalid
 import io.konform.validation.Valid
 import io.konform.validation.Validation
