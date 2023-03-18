@@ -20,18 +20,19 @@
 
 package dev.realmkit.game.domain.battle.action
 
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType
+import dev.realmkit.game.domain.target.document.Target
+
 /**
- * # [BattleActionAttackerRepeatAttempt]
- * the `battle action attacker repeat attempt` class
+ * # [BattleActionFinalResult]
+ * the battle action final result
  *
- * @property attacker the `attacker` id
- * @property hull the `hull` of the attacker
- * @property shield the `shield` of the attacker
- * @property alive the `alive` status of the attacker
+ * @property result the battle action final result type
+ * @property attackers the attackers
+ * @property defenders the defenders
  */
-class BattleActionAttackerRepeatAttempt(
-    val attacker: String,
-    val hull: Double,
-    val shield: Double,
-    val alive: Boolean,
+data class BattleActionFinalResult(
+    val result: BattleActionFinalResultType,
+    val attackers: Set<Target>,
+    val defenders: Set<Target>,
 ) : BattleAction

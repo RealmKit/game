@@ -28,23 +28,17 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class NumberExtensionsTest : TestSpec({
-    context("unit testing NumberExtensions extensions") {
-        context(".isHit") {
-            expect("isHit to be a hit") {
-                1.0.isHit.shouldBeTrue()
-            }
+    expect("isHit to be a hit") {
+        1.0.isHit.shouldBeTrue()
+    }
 
-            expect("isHit to not be a hit") {
-                0.0.isHit.shouldBeFalse()
-            }
-        }
+    expect("isHit to not be a hit") {
+        0.0.isHit.shouldBeFalse()
+    }
 
-        context(".repeat()") {
-            expect("repeat to repeat 3 times") {
-                var count = 0
-                3.repeat { count++ }
-                count shouldBe 3
-            }
-        }
+    expect("repeat to repeat 3 times") {
+        var count = 0
+        3.repeat { count++ }
+        count shouldBe 3
     }
 })

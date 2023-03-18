@@ -34,78 +34,74 @@ import io.kotest.property.checkAll
 class TargetServiceTest(
     private val targetService: TargetService,
 ) : IntegrationTestSpec({
-    context("integration testing TargetService") {
-        expect("all beans to be inject") {
-            targetService.shouldNotBeNull()
+    expect("all beans to be inject") {
+        targetService.shouldNotBeNull()
+    }
+
+    expect("to not hit a when negative damage") {
+        checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            player.stat.base.attack = -1.0
+
+            targetService.attack(player, enemy)
+            enemy.shouldBeAlive()
         }
+    }
 
-        context(".attack()") {
-            expect("to not hit a when negative damage") {
-                checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    player.stat.base.attack = -1.0
+    expect("to not hit a critical attack, enemy should be alive") {
+        checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            player.stat.rate.critical = 0.0
+            enemy.stat.base.defense = 10.0
 
-                    targetService.attack(player, enemy)
-                    enemy.shouldBeAlive()
-                }
-            }
+            targetService.attack(player, enemy)
+            enemy.shouldBeAlive()
+        }
+    }
 
-            expect("to not hit a critical attack, enemy should be alive") {
-                checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    player.stat.rate.critical = 0.0
-                    enemy.stat.base.defense = 10.0
+    expect("to hit a critical attack, enemy should be alive") {
+        checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            player.stat.rate.critical = 1.0
+            player.stat.multiplier.critical = 2.0
+            enemy.stat.base.defense = 10.0
 
-                    targetService.attack(player, enemy)
-                    enemy.shouldBeAlive()
-                }
-            }
+            targetService.attack(player, enemy)
+            enemy.shouldBeAlive()
+        }
+    }
 
-            expect("to hit a critical attack, enemy should be alive") {
-                checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    player.stat.rate.critical = 1.0
-                    player.stat.multiplier.critical = 2.0
-                    enemy.stat.base.defense = 10.0
+    expect("to hit a critical attack, enemy should not be alive") {
+        checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            player.stat.rate.critical = 1.0
+            player.stat.multiplier.critical = 2.0
 
-                    targetService.attack(player, enemy)
-                    enemy.shouldBeAlive()
-                }
-            }
+            targetService.attack(player, enemy)
+            enemy.shouldBeAlive()
+        }
+    }
 
-            expect("to hit a critical attack, enemy should not be alive") {
-                checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    player.stat.rate.critical = 1.0
-                    player.stat.multiplier.critical = 2.0
+    expect("to not damage a not alive Target") {
+        checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            enemy.stat.base.hull.current = 0.0
+            enemy.shouldNotBeAlive()
 
-                    targetService.attack(player, enemy)
-                    enemy.shouldBeAlive()
-                }
-            }
+            targetService.attack(player, enemy)
+            enemy.shouldNotBeAlive()
+        }
+    }
 
-            expect("to not damage a not alive Target") {
-                checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    enemy.stat.base.hull.current = 0.0
-                    enemy.shouldNotBeAlive()
+    expect("Player to attack Enemy until it is not alive") {
+        checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            player.stat.base.attack = 100.0
+            player.stat.rate.critical = 1.0
+            player.stat.multiplier.critical = 1.0
+            enemy.stat.base.defense = 0.0
 
-                    targetService.attack(player, enemy)
-                    enemy.shouldNotBeAlive()
-                }
-            }
+            val hull = enemy.stat.base.hull.current
+            targetService.attack(player, enemy)
+            enemy.stat.base.hull.current shouldBe hull
+            enemy.shouldBeAlive()
 
-            expect("Player to attack Enemy until it is not alive") {
-                checkAll(Player.fixture, Player.fixture) { player, enemy ->
-                    player.stat.base.attack = 100.0
-                    player.stat.rate.critical = 1.0
-                    player.stat.multiplier.critical = 1.0
-                    enemy.stat.base.defense = 0.0
-
-                    val hull = enemy.stat.base.hull.current
-                    targetService.attack(player, enemy)
-                    enemy.stat.base.hull.current shouldBe hull
-                    enemy.shouldBeAlive()
-
-                    targetService.attack(player, enemy)
-                    enemy.shouldNotBeAlive()
-                }
-            }
+            targetService.attack(player, enemy)
+            enemy.shouldNotBeAlive()
         }
     }
 })

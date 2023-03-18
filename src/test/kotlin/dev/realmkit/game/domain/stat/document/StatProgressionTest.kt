@@ -24,17 +24,14 @@ import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.checkAll
 
 class StatProgressionTest : TestSpec({
-    context("unit testing StatProgression") {
-        context("instantiate") {
-            expect("to create a new StatProgression") {
-                check(StatProgression.fixture) { progression ->
-                    progression.shouldNotBeNull()
-                    progression.level.shouldBePositive()
-                    progression.experience.shouldBePositive()
-                }
-            }
+    expect("to create a new StatProgression") {
+        checkAll(StatProgression.fixture) { progression ->
+            progression.shouldNotBeNull()
+            progression.level.shouldBePositive()
+            progression.experience.shouldBePositive()
         }
     }
 })

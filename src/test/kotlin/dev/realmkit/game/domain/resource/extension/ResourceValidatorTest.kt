@@ -27,30 +27,25 @@ import dev.realmkit.hellper.fixture.resource.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
+import io.kotest.property.checkAll
 
 class ResourceValidatorTest : TestSpec({
-    context("unit testing ResourceValidator") {
-        context("isValid") {
-            expect("resource to be valid") {
-                check(Resource.fixture) { resource ->
-                    ResourceValidator.validation shouldBeValid resource
-                }
-            }
+    expect("resource to be valid") {
+        checkAll(Resource.fixture) { resource ->
+            ResourceValidator.validation shouldBeValid resource
         }
+    }
 
-        context("isInvalid") {
-            expect("resource to be invalid") {
-                check(Resource.invalid) { resource ->
-                    ResourceValidator.validation.shouldBeInvalid(resource) { invalid ->
-                        invalid shouldHaveAllErrors listOf(
-                            ".titanium" to "must be positive",
-                            ".crystal" to "must be positive",
-                            ".darkMatter" to "must be positive",
-                            ".antiMatter" to "must be positive",
-                            ".purunhalium" to "must be positive",
-                        )
-                    }
-                }
+    expect("resource to be invalid") {
+        checkAll(Resource.invalid) { resource ->
+            ResourceValidator.validation.shouldBeInvalid(resource) { invalid ->
+                invalid shouldHaveAllErrors listOf(
+                    ".titanium" to "must be positive",
+                    ".crystal" to "must be positive",
+                    ".darkMatter" to "must be positive",
+                    ".antiMatter" to "must be positive",
+                    ".purunhalium" to "must be positive",
+                )
             }
         }
     }

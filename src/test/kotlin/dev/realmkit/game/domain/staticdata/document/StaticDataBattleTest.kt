@@ -26,17 +26,13 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 class StaticDataBattleTest : TestSpec({
-    context("unit testing StaticDataBattle") {
-        context("instantiate") {
-            expect("instantiate a StaticDataBattle") {
-                StaticDataBattle(
-                    battleDuration = 10,
-                    turnDuration = 10,
-                ).shouldNotBeNull().asClue { staticData ->
-                    staticData.battleDuration shouldBe 10
-                    staticData.turnDuration shouldBe 10
-                }
-            }
+    expect("instantiate a StaticDataBattle") {
+        StaticDataBattle(
+            battleDuration = 10,
+            turnDuration = 10,
+        ).shouldNotBeNull().asClue { staticData ->
+            staticData.battleDuration shouldBe 10
+            staticData.turnDuration shouldBe 10
         }
     }
 })

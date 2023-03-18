@@ -20,7 +20,7 @@
 
 package dev.realmkit.hellper.extension
 
-import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.game.domain.battle.action.BattleAction
 import dev.realmkit.game.domain.battle.context.BattleContextResult
@@ -50,6 +50,11 @@ import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
+
+/**
+ * how long should be the list of fixtures
+ */
+const val DEFAULT_FIXTURES_SIZE = 10
 
 /**
  * # [Violation]
@@ -104,7 +109,7 @@ object AssertionExtensions {
      */
     fun Target.shouldBeAlive(): Target = asClue {
         withClue("alive") { alive.shouldBeTrue() }
-        withClue(".stat.base.shield.current") { stat.base.shield.current.shouldBeGreaterThanOrEqual(ZERO) }
+        withClue(".stat.base.shield.current") { stat.base.shield.current.shouldBeGreaterThanOrEqual(DOUBLE_ZERO) }
         withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBePositive() }
         this
     }
@@ -119,7 +124,7 @@ object AssertionExtensions {
      */
     fun Target.shouldNotBeAlive(): Target = asClue {
         withClue("alive") { alive.shouldBeFalse() }
-        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(ZERO) }
+        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(DOUBLE_ZERO) }
         this
     }
 
@@ -149,7 +154,7 @@ object AssertionExtensions {
     fun BattleContextResult?.onTurn(
         turn: Long,
         actions: Long,
-        block: Iterator<BattleAction>.() -> Unit,
+        block: Iterator<BattleAction>.() -> Unit = {},
     ): BattleContextResult {
         shouldNotBeNull()
         turns.shouldBeGreaterThanOrEqual(turn)
@@ -157,7 +162,7 @@ object AssertionExtensions {
         logsPerTurn[turn].shouldNotBeNull()
             .shouldHaveSize(actions.toInt())
             .iterator()
-            .block()
+            .apply(block)
         return this
     }
 
@@ -168,10 +173,14 @@ object AssertionExtensions {
      * @param block the block to check the action
      * @return the battle result
      */
-    inline fun <reified T : BattleAction> Iterator<BattleAction>.onAction(block: T.() -> Unit): Iterator<BattleAction> {
-        shouldNotBeNull()
-        hasNext().shouldBeTrue()
-        next().shouldNotBeNull().shouldBeTypeOf<T>().apply(block)
+    inline fun <reified T : BattleAction> Iterator<BattleAction>.onAction(block: T.() -> Unit = {}): Iterator<BattleAction> {
+        withClue("onAction: ${T::class.simpleName}") {
+            shouldNotBeNull()
+            hasNext().shouldBeTrue()
+            next().shouldNotBeNull()
+                .shouldBeTypeOf<T>()
+                .apply(block)
+        }
         return this
     }
 
@@ -336,8 +345,8 @@ object AssertionExtensions {
      * @return the [CurrentMaxDouble] being validated
      */
     fun CurrentMaxDouble.shouldBeSubtractedOf(actual: CurrentMaxDouble, other: CurrentMaxDouble): CurrentMaxDouble = asClue {
-        max shouldBe if (actual.max - other.max > ZERO) actual.max - other.max else ZERO
-        max shouldNotBeLessThan ZERO
+        max shouldBe if (actual.max - other.max > DOUBLE_ZERO) actual.max - other.max else DOUBLE_ZERO
+        max shouldNotBeLessThan DOUBLE_ZERO
         current shouldNotBeGreaterThan max
         this
     }

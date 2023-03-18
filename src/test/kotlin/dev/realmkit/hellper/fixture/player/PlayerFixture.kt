@@ -20,10 +20,13 @@
 
 package dev.realmkit.hellper.fixture.player
 
-import dev.realmkit.game.core.extension.ConstantExtensions.ONE
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ONE
+import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ONE
+import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ZERO
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.hellper.extension.DEFAULT_FIXTURES_SIZE
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.Fixture
 import dev.realmkit.hellper.fixture.resource.fixture
@@ -32,6 +35,7 @@ import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
+import kotlin.Double.Companion.MAX_VALUE
 
 /**
  * ## [fixture]
@@ -67,14 +71,28 @@ val Player.Companion.invalid: Arb<Player>
     }
 
 /**
- * ## [setupHighStats]
+ * ## [many]
+ * creates a [List] of [Player] with random data
+ *
+ * @param size the size of the list
+ * @return [Arb] of [List] of [Player]
+ */
+fun Player.Companion.many(size: Int = DEFAULT_FIXTURES_SIZE): Arb<List<Player>> =
+    arbitrary {
+        MutableList(size) { Player.fixture.bind() }
+    }
+
+/**
+ * ## [prepareToWinBattle]
  * sets the player's stats to be very high
  */
-fun Player.setupHighStats() {
-    stat.base.hull.current = Double.MAX_VALUE
-    stat.base.shield.current = Double.MAX_VALUE
-    stat.base.attack = Double.MAX_VALUE
-    stat.base.defense = Double.MAX_VALUE
-    stat.base.speed = ONE
-    stat.multiplier.critical = ONE
+fun Player.prepareToWinBattle() {
+    stat.base.hull.current = MAX_VALUE
+    stat.base.shield.current = MAX_VALUE
+    stat.base.attack = MAX_VALUE
+    stat.base.defense = MAX_VALUE
+    stat.base.speed = DOUBLE_ONE
+    stat.multiplier.critical = DOUBLE_ONE
+    stat.progression.level = LONG_ONE
+    stat.progression.experience = LONG_ZERO
 }

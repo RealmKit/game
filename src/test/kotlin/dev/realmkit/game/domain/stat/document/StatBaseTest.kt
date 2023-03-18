@@ -24,25 +24,22 @@ import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.checkAll
 
 class StatBaseTest : TestSpec({
-    context("unit testing StatBase") {
-        context("instantiate") {
-            expect("to create a new StatBase") {
-                check(StatBase.fixture) { base ->
-                    base.shouldNotBeNull()
-                    base.hull.current.shouldBePositive()
-                    base.hull.max.shouldBePositive()
-                    base.shield.current.shouldBePositive()
-                    base.shield.max.shouldBePositive()
-                    base.energy.current.shouldBePositive()
-                    base.energy.max.shouldBePositive()
-                    base.attack.shouldBePositive()
-                    base.defense.shouldBePositive()
-                    base.speed.shouldBePositive()
-                    base.aggro.shouldBePositive()
-                }
-            }
+    expect("to create a new StatBase") {
+        checkAll(StatBase.fixture) { base ->
+            base.shouldNotBeNull()
+            base.hull.current.shouldBePositive()
+            base.hull.max.shouldBePositive()
+            base.shield.current.shouldBePositive()
+            base.shield.max.shouldBePositive()
+            base.energy.current.shouldBePositive()
+            base.energy.max.shouldBePositive()
+            base.attack.shouldBePositive()
+            base.defense.shouldBePositive()
+            base.speed.shouldBePositive()
+            base.aggro.shouldBePositive()
         }
     }
 })

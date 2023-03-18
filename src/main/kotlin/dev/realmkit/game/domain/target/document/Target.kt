@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.target.document
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
 import dev.realmkit.game.domain.stat.document.Stat
 
 /**
@@ -55,5 +55,5 @@ interface Target {
      */
     @get:JsonIgnore
     val alive: Boolean
-        get() = stat.base.hull.current > ZERO
+        get() = stat.base.hull.current > DOUBLE_ZERO
 }

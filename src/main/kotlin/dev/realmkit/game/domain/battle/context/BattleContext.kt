@@ -126,17 +126,21 @@ class BattleContext(
     fun start(): BattleContextResult {
         while (battleIsNotOver) {
             battleContextResult.registerTurn()
-            attackers.versus(defenders).bySpeed.forEach { (attacker, targets) ->
-                battleContextResult.registerAttackerAttempt(attacker)
-                attacker.stat.base.speed.repeat {
-                    battleContextResult.registerAttackerRepeatAttempt(attacker)
-                    if (attacker.alive) {
-                        attacker.attack(targets)
+            attackers.versus(defenders).bySpeed.forEach { (target, targets) ->
+                target.takeIf { attacker -> attacker.alive }
+                    ?.let { attacker ->
+                        attacker.stat.base.speed.repeat {
+                            battleContextResult.registerAttackerAttempt(attacker)
+                            attacker.attack(targets)
+                        }
                     }
-                }
             }
         }
-        return battleContextResult
+
+        return battleContextResult.registerFinalResult(
+            attackers = attackers,
+            defenders = defenders,
+        )
     }
 
     /**

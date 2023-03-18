@@ -30,45 +30,44 @@ import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
+import io.kotest.property.checkAll
 
 @IntegrationTestContext
 class PlayerRepositoryTest(
     private val playerRepository: PlayerRepository,
 ) : IntegrationTestSpec({
-    context("integration testing Player Repository") {
-        expect("all beans to be inject") {
-            playerRepository.shouldNotBeNull()
-        }
+    expect("all beans to be inject") {
+        playerRepository.shouldNotBeNull()
+    }
 
-        context(".save()") {
-            expect("it should create Players") {
-                check(Player.fixture) { player ->
-                    playerRepository.save(player).shouldNotBeNull()
-                    playerRepository.findById(player.id).shouldBePresent().asClue { find ->
-                        find.id.shouldNotBeNull()
-                        find.createdAt.shouldNotBeNull()
-                        find.updatedAt.shouldNotBeNull()
-                        find.version.shouldNotBeNull()
-                        find.name shouldBe player.name
-                        find.stat.base.hull.current.shouldBePositive()
-                        find.stat.base.hull.max.shouldBePositive()
-                        find.stat.base.shield.current.shouldBePositive()
-                        find.stat.base.shield.max.shouldBePositive()
-                        find.stat.base.energy.current.shouldBePositive()
-                        find.stat.base.energy.max.shouldBePositive()
-                        find.stat.base.attack.shouldBePositive()
-                        find.stat.base.defense.shouldBePositive()
-                        find.stat.base.speed.shouldBePositive()
-                        find.stat.base.aggro.shouldBePositive()
-                        find.stat.rate.shieldRegeneration.shouldBePositive()
-                        find.stat.rate.critical.shouldBePositive()
-                        find.stat.multiplier.critical.shouldBePositive()
-                        find.resource.titanium.shouldBePositive()
-                        find.resource.crystal.shouldBePositive()
-                        find.resource.darkMatter.shouldBePositive()
-                        find.resource.antiMatter.shouldBePositive()
-                        find.resource.purunhalium.shouldBePositive()
-                    }
+    expect("it should create Players") {
+        checkAll(Player.fixture) { player ->
+            playerRepository.run {
+                save(player).shouldNotBeNull()
+                findById(player.id).shouldBePresent().asClue { find ->
+                    find.id.shouldNotBeNull()
+                    find.createdAt.shouldNotBeNull()
+                    find.updatedAt.shouldNotBeNull()
+                    find.version.shouldNotBeNull()
+                    find.name shouldBe player.name
+                    find.stat.base.hull.current.shouldBePositive()
+                    find.stat.base.hull.max.shouldBePositive()
+                    find.stat.base.shield.current.shouldBePositive()
+                    find.stat.base.shield.max.shouldBePositive()
+                    find.stat.base.energy.current.shouldBePositive()
+                    find.stat.base.energy.max.shouldBePositive()
+                    find.stat.base.attack.shouldBePositive()
+                    find.stat.base.defense.shouldBePositive()
+                    find.stat.base.speed.shouldBePositive()
+                    find.stat.base.aggro.shouldBePositive()
+                    find.stat.rate.shieldRegeneration.shouldBePositive()
+                    find.stat.rate.critical.shouldBePositive()
+                    find.stat.multiplier.critical.shouldBePositive()
+                    find.resource.titanium.shouldBePositive()
+                    find.resource.crystal.shouldBePositive()
+                    find.resource.darkMatter.shouldBePositive()
+                    find.resource.antiMatter.shouldBePositive()
+                    find.resource.purunhalium.shouldBePositive()
                 }
             }
         }

@@ -29,7 +29,7 @@ import dev.realmkit.game.core.extension.ConstantExtensions
  * @property attacker the `attacker` id
  * @property speed the `speed` of the attacker
  */
-class BattleActionAttackerAttempt(
+data class BattleActionAttackerAttempt(
     val attacker: String,
     val speed: Double,
 ) : BattleAction {
@@ -38,5 +38,5 @@ class BattleActionAttackerAttempt(
      * check if it was a hit or not
      */
     val hit: Boolean
-        get() = speed >= ConstantExtensions.ONE
+        get() = speed >= ConstantExtensions.DOUBLE_ONE
 }

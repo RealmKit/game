@@ -23,8 +23,16 @@ package dev.realmkit.game.domain.battle.context
 import dev.realmkit.game.domain.aliases.LogsPerTurn
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.action.BattleActionAttackerAttempt
-import dev.realmkit.game.domain.battle.action.BattleActionAttackerRepeatAttempt
+import dev.realmkit.game.domain.battle.action.BattleActionFinalResult
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW_ALL_ALIVE
 import dev.realmkit.game.domain.target.document.Target
+import dev.realmkit.game.domain.target.extension.TargetExtensions.allAlive
+import dev.realmkit.game.domain.target.extension.TargetExtensions.hasAlive
+import dev.realmkit.game.domain.target.extension.TargetExtensions.noneAlive
 
 /**
  * # [BattleContextResult]
@@ -44,10 +52,18 @@ class BattleContextResult {
     var turns: Long = 0
 
     /**
+     * ## [finalResult]
+     * the `final result` of the battle
+     */
+    lateinit var finalResult: BattleActionFinalResult
+
+    /**
      * ## [registerTurn]
      * register a new turn
+     *
+     * @return itself
      */
-    fun registerTurn() {
+    fun registerTurn(): BattleContextResult = apply {
         turns++
         logsPerTurn[turns] = linkedSetOf()
     }
@@ -57,8 +73,9 @@ class BattleContextResult {
      * register the attack results
      *
      * @param result the `result` to register
+     * @return itself
      */
-    infix fun registerAttackResults(result: BattleActionAttack) {
+    infix fun registerAttackResults(result: BattleActionAttack): BattleContextResult = apply {
         logsPerTurn[turns]!!.add(result)
     }
 
@@ -67,8 +84,9 @@ class BattleContextResult {
      * register the attacker attempt
      *
      * @param target the `target` to register
+     * @return itself
      */
-    infix fun registerAttackerAttempt(target: Target) {
+    infix fun registerAttackerAttempt(target: Target): BattleContextResult = apply {
         val speed = target.stat.base.speed
         logsPerTurn[turns]!!.add(
             BattleActionAttackerAttempt(
@@ -79,21 +97,39 @@ class BattleContextResult {
     }
 
     /**
-     * ## [registerAttackerRepeatAttempt]
-     * register the attacker repeat attempt
+     * ## [registerFinalResult]
+     * register the battle result, who won and who lost or if it was a draw
      *
-     * @param target the `target` to register
+     * @see BattleContextResult
+     *
+     * @param attackers the `attackers` to register
+     * @param defenders the `defenders` to register
+     * @return itself
      */
-    infix fun registerAttackerRepeatAttempt(target: Target) {
-        val hull = target.stat.base.hull.current
-        val shield = target.stat.base.shield.current
-        logsPerTurn[turns]!!.add(
-            BattleActionAttackerRepeatAttempt(
-                attacker = target.id,
-                hull = hull,
-                shield = shield,
-                alive = target.alive,
-            ),
+    fun registerFinalResult(attackers: MutableSet<Target>, defenders: MutableSet<Target>): BattleContextResult = apply {
+        finalResult = BattleActionFinalResult(
+            result = resultType(attackers, defenders),
+            attackers = attackers,
+            defenders = defenders,
         )
+        logsPerTurn[turns]!!.add(finalResult)
     }
+
+    /**
+     * ## [resultType]
+     * get the battle final result type
+     *
+     * @see BattleActionFinalResultType
+     *
+     * @param attackers the `attackers` to check
+     * @param defenders the `defenders` to check
+     * @return the `battle final result type` enum
+     */
+    private fun resultType(attackers: MutableSet<Target>, defenders: MutableSet<Target>): BattleActionFinalResultType =
+        when {
+            attackers.hasAlive && defenders.noneAlive -> ATTACKERS_WIN
+            attackers.noneAlive && defenders.hasAlive -> DEFENDERS_WIN
+            attackers.allAlive && defenders.allAlive -> DRAW_ALL_ALIVE
+            else -> DRAW
+        }
 }

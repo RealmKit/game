@@ -30,23 +30,17 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.property.checkAll
 
 class StatRateOperatorTest : TestSpec({
-    context("unit testing StatRate") {
-        context("operator plus (+)") {
-            expect("to SUM two StatRate") {
-                checkAll(StatRate.fixture, StatRate.fixture) { actual, other ->
-                    val sum = actual + other
-                    sum.shouldBeSumOf(actual, other)
-                }
-            }
+    expect("to SUM two StatRate") {
+        checkAll(StatRate.fixture, StatRate.fixture) { actual, other ->
+            val sum = actual + other
+            sum.shouldBeSumOf(actual, other)
         }
+    }
 
-        context("operator minus (-)") {
-            expect("to SUBTRACT two StatRate") {
-                checkAll(StatRate.fixture, StatRate.fixture) { actual, other ->
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                }
-            }
+    expect("to SUBTRACT two StatRate") {
+        checkAll(StatRate.fixture, StatRate.fixture) { actual, other ->
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
         }
     }
 })

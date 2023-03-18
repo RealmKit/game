@@ -52,6 +52,20 @@ object TargetExtensions {
         get() = any { target -> target.alive }
 
     /**
+     * ## [allAlive]
+     * check if all [Target] still [Target.alive]
+     */
+    val Iterable<Target>.allAlive: Boolean
+        get() = all { target -> target.alive }
+
+    /**
+     * ## [noneAlive]
+     * check if all [Target] no [Target.alive]
+     */
+    val Iterable<Target>.noneAlive: Boolean
+        get() = none { target -> target.alive }
+
+    /**
      * ## [bySpeed]
      * filter [Target.alive] and sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.speed]
      */

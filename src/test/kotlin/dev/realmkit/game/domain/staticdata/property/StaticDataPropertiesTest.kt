@@ -33,54 +33,48 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 class StaticDataPropertiesTest(
     private val staticDataProperties: StaticDataProperties,
 ) : IntegrationTestSpec({
-    context("integration testing StaticDataService") {
-        expect("all beans to be inject") {
-            staticDataProperties.shouldNotBeNull()
-        }
+    expect("all beans to be inject") {
+        staticDataProperties.shouldNotBeNull()
+    }
 
-        context(".initial()") {
-            expect("initial to generate the init StaticData values from properties") {
-                staticDataProperties.initial()
-                    .shouldNotBeNull()
-                    .asClue { staticData ->
-                        staticData.stat.shouldNotBeNull()
-                        staticData.stat.base.shouldNotBeNull()
-                        staticData.stat.base.hull.current.shouldBePositive()
-                        staticData.stat.base.hull.max.shouldBePositive()
-                        staticData.stat.base.shield.current.shouldBeZero()
-                        staticData.stat.base.shield.max.shouldBeZero()
-                        staticData.stat.base.energy.current.shouldBePositive()
-                        staticData.stat.base.energy.max.shouldBePositive()
-                        staticData.stat.base.attack.shouldBePositive()
-                        staticData.stat.base.defense.shouldBeZero()
-                        staticData.stat.base.speed.shouldBePositive()
-                        staticData.stat.base.aggro.shouldBePositive()
-                        staticData.stat.rate.shouldNotBeNull()
-                        staticData.stat.rate.shieldRegeneration.shouldBeZero()
-                        staticData.stat.rate.critical.shouldBeZero()
-                        staticData.stat.multiplier.shouldNotBeNull()
-                        staticData.stat.multiplier.critical.shouldBePositive()
-                        staticData.stat.progression.shouldNotBeNull()
-                        staticData.stat.progression.level.shouldBePositive()
-                        staticData.stat.progression.experience.shouldBeZero()
-                        staticData.resource.titanium.shouldBePositive()
-                        staticData.resource.crystal.shouldBeZero()
-                        staticData.resource.darkMatter.shouldBeZero()
-                        staticData.resource.antiMatter.shouldBeZero()
-                        staticData.resource.purunhalium.shouldBeZero()
-                    }
+    expect("initial to generate the init StaticData values from properties") {
+        staticDataProperties.initial()
+            .shouldNotBeNull()
+            .asClue { staticData ->
+                staticData.stat.shouldNotBeNull()
+                staticData.stat.base.shouldNotBeNull()
+                staticData.stat.base.hull.current.shouldBePositive()
+                staticData.stat.base.hull.max.shouldBePositive()
+                staticData.stat.base.shield.current.shouldBeZero()
+                staticData.stat.base.shield.max.shouldBeZero()
+                staticData.stat.base.energy.current.shouldBePositive()
+                staticData.stat.base.energy.max.shouldBePositive()
+                staticData.stat.base.attack.shouldBePositive()
+                staticData.stat.base.defense.shouldBeZero()
+                staticData.stat.base.speed.shouldBePositive()
+                staticData.stat.base.aggro.shouldBePositive()
+                staticData.stat.rate.shouldNotBeNull()
+                staticData.stat.rate.shieldRegeneration.shouldBeZero()
+                staticData.stat.rate.critical.shouldBeZero()
+                staticData.stat.multiplier.shouldNotBeNull()
+                staticData.stat.multiplier.critical.shouldBePositive()
+                staticData.stat.progression.shouldNotBeNull()
+                staticData.stat.progression.level.shouldBePositive()
+                staticData.stat.progression.experience.shouldBeZero()
+                staticData.resource.titanium.shouldBePositive()
+                staticData.resource.crystal.shouldBeZero()
+                staticData.resource.darkMatter.shouldBeZero()
+                staticData.resource.antiMatter.shouldBeZero()
+                staticData.resource.purunhalium.shouldBeZero()
             }
-        }
+    }
 
-        context(".battle()") {
-            expect("battle to generate the battle StaticData values from properties") {
-                staticDataProperties.battle()
-                    .shouldNotBeNull()
-                    .asClue { staticData ->
-                        staticData.battleDuration.shouldBePositive()
-                        staticData.turnDuration.shouldBePositive()
-                    }
+    expect("battle to generate the battle StaticData values from properties") {
+        staticDataProperties.battle()
+            .shouldNotBeNull()
+            .asClue { staticData ->
+                staticData.battleDuration.shouldBePositive()
+                staticData.turnDuration.shouldBePositive()
             }
-        }
     }
 })

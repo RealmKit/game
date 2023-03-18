@@ -29,32 +29,26 @@ import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 
 class ValidationExtensionsTest : TestSpec({
-    context("unit testing ValidationExtensions extensions") {
-        data class Dummy(val string: String, val number: Long)
+    data class Dummy(val string: String, val number: Long)
 
-        context("isValid") {
-            expect("to be valid") {
-                val dummy = Dummy("string", 1)
-                Validation {
-                    Dummy::string { notBlank() }
-                    Dummy::number { positive() }
-                }.shouldBeValid(dummy)
-            }
-        }
+    expect("to be valid") {
+        val dummy = Dummy("string", 1)
+        Validation {
+            Dummy::string { notBlank() }
+            Dummy::number { positive() }
+        }.shouldBeValid(dummy)
+    }
 
-        context("isInvalid") {
-            expect("to be invalid") {
-                val dummy = Dummy("", -1)
-                Validation {
-                    Dummy::string { notBlank() }
-                    Dummy::number { positive() }
-                }.shouldBeInvalid(dummy) {
-                    it shouldHaveAllErrors listOf(
-                        ".string" to "must not be blank",
-                        ".number" to "must be positive",
-                    )
-                }
-            }
+    expect("to be invalid") {
+        val dummy = Dummy("", -1)
+        Validation {
+            Dummy::string { notBlank() }
+            Dummy::number { positive() }
+        }.shouldBeInvalid(dummy) {
+            it shouldHaveAllErrors listOf(
+                ".string" to "must not be blank",
+                ".number" to "must be positive",
+            )
         }
     }
 })

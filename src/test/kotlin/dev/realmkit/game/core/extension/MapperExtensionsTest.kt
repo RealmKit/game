@@ -28,14 +28,10 @@ import io.kotest.matchers.shouldBe
 data class Dummy(val test: String)
 
 class MapperExtensionsTest : TestSpec({
-    context("unit testing MapperExtensions extensions") {
-        context(".clone()") {
-            expect(".clone() to deep clone a data class") {
-                val original = Dummy("test")
-                val clone = original.clone()
-                clone.shouldNotBeNull()
-                clone.test shouldBe original.test
-            }
-        }
+    expect(".clone() to deep clone a data class") {
+        val original = Dummy("test")
+        val clone = original.clone()
+        clone.shouldNotBeNull()
+        clone.test shouldBe original.test
     }
 })

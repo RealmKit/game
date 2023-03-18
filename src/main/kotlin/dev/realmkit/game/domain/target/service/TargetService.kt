@@ -20,8 +20,8 @@
 
 package dev.realmkit.game.domain.target.service
 
-import dev.realmkit.game.core.extension.ConstantExtensions.ONE
-import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ONE
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
 import dev.realmkit.game.core.extension.NumberExtensions.isHit
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.target.document.Target
@@ -42,14 +42,14 @@ class TargetService {
     private val Target.criticalMultiplier: Double
         get() = stat.multiplier.critical
             .takeIf { stat.rate.critical.isHit }
-            ?: ONE
+            ?: DOUBLE_ONE
 
     /**
      * ## [hasShield]
      * checks if the target has shield greater than 0.0
      */
     private val Target.hasShield: Boolean
-        get() = stat.base.shield.current > ZERO
+        get() = stat.base.shield.current > DOUBLE_ZERO
 
     /**
      * ## [attack]
@@ -74,7 +74,7 @@ class TargetService {
         }
 
         if (!defender.hasShield) {
-            defender.stat.base.shield.current = ZERO
+            defender.stat.base.shield.current = DOUBLE_ZERO
         }
 
         return BattleActionAttack(
@@ -82,7 +82,7 @@ class TargetService {
             defender = defender,
             finalDamage = finalDamage,
             toTheShield = toTheShield,
-            isCritical = criticalMultiplier > ONE,
+            isCritical = criticalMultiplier > DOUBLE_ONE,
         )
     }
 }

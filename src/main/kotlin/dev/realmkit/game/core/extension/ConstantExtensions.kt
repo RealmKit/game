@@ -26,14 +26,26 @@ package dev.realmkit.game.core.extension
  */
 object ConstantExtensions {
     /**
-     * ## [ZERO]
+     * ## [DOUBLE_ZERO]
      * [Double] zero constant (0.0)
      */
-    const val ZERO = 0.0
+    const val DOUBLE_ZERO = 0.0
 
     /**
-     * ## [ONE]
+     * ## [DOUBLE_ONE]
      * [Double] one constant (1.0)
      */
-    const val ONE = 1.0
+    const val DOUBLE_ONE = 1.0
+
+    /**
+     * ## [LONG_ZERO]
+     * [Long] zero constant (0L)
+     */
+    const val LONG_ZERO = 0L
+
+    /**
+     * ## [LONG_ONE]
+     * [Long] one constant (1L)
+     */
+    const val LONG_ONE = 1L
 }

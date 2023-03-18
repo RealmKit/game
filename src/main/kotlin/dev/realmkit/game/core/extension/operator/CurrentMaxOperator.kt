@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.core.extension.operator
 
-import dev.realmkit.game.core.extension.ConstantExtensions.ZERO
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 
 /**
@@ -57,8 +57,8 @@ object CurrentMaxOperator {
         copy(
             max = max - other.max,
         ).apply {
-            if (max < ZERO) {
-                max = ZERO
+            if (max < DOUBLE_ZERO) {
+                max = DOUBLE_ZERO
             }
             if (current > max) {
                 current = max
