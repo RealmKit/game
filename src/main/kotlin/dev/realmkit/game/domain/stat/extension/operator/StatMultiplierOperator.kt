@@ -18,22 +18,42 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.extension.operator
 
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
+import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.minus
+import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
 import dev.realmkit.game.domain.stat.document.StatMultiplier
-import io.konform.validation.Validation
 
 /**
- * # [StatMultiplierValidator]
- * [StatMultiplier] validations
+ * # [StatMultiplierOperator]
+ * [StatMultiplier] operators
  */
-object StatMultiplierValidator {
+object StatMultiplierOperator {
     /**
-     * ## [validation]
-     * [StatMultiplier] -> [Validation] object
+     * ## [plus]
+     * [StatMultiplier] `+` operator, sum the properties
+     *
+     * @see [StatMultiplier]
+     *
+     * @param other the other [StatMultiplier]
+     * @return a copy of [StatMultiplier] with the summed properties
      */
-    val validation: Validation<StatMultiplier> = Validation {
-        StatMultiplier::critical required { positive() }
-    }
+    operator fun StatMultiplier.plus(other: StatMultiplier): StatMultiplier =
+        copy(
+            critical = critical + other.critical,
+        )
+
+    /**
+     * ## [minus]
+     * [StatMultiplier] `-` operator, subtract the properties
+     *
+     * @see [StatMultiplier]
+     *
+     * @param other the other [StatMultiplier]
+     * @return a copy of [StatMultiplier] with the subtracted properties
+     */
+    operator fun StatMultiplier.minus(other: StatMultiplier): StatMultiplier =
+        copy(
+            critical = critical - other.critical,
+        )
 }

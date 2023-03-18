@@ -18,29 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.extension.operator
 
-import dev.realmkit.game.core.extension.CurrentMaxValidator
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.stat.document.StatBase
-import io.konform.validation.Validation
+import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.game.domain.stat.extension.operator.StatProgressionOperator.plus
+import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSumOf
+import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.property.checkAll
 
-/**
- * # [StatBaseValidator]
- * [StatBase] validations
- */
-object StatBaseValidator {
-    /**
-     * ## [validation]
-     * [StatBase] -> [Validation] object
-     */
-    val validation: Validation<StatBase> = Validation {
-        StatBase::hull required { run(CurrentMaxValidator.double) }
-        StatBase::shield required { run(CurrentMaxValidator.double) }
-        StatBase::energy required { run(CurrentMaxValidator.double) }
-        StatBase::attack required { positive() }
-        StatBase::defense required { positive() }
-        StatBase::speed required { positive() }
-        StatBase::aggro required { positive() }
+class StatProgressionOperatorTest : TestSpec({
+    context("unit testing StatProgression") {
+        context("operator plus (+)") {
+            expect("to SUM two StatProgression") {
+                checkAll(StatProgression.fixture, StatProgression.fixture) { actual, other ->
+                    val sum = actual + other
+                    sum.shouldBeSumOf(actual, other)
+                }
+            }
+        }
     }
-}
+})

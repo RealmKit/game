@@ -18,22 +18,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.infra
+package dev.realmkit.game.domain.stat.extension.operator
 
-import dev.realmkit.game.app.GameServiceApplication
-import io.kotest.core.extensions.ApplyExtension
-import io.kotest.extensions.spring.SpringTestExtension
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
+import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
+import dev.realmkit.game.domain.stat.document.StatProgression
 
 /**
- * [IntegrationTestContext]
- * Wraps all annotations needed to start an Integration Test
+ * # [StatProgressionOperator]
+ * [StatProgression] operators
  */
-@ActiveProfiles(
-    "static-data",
-    "itest",
-)
-@SpringBootTest(classes = [GameServiceApplication::class])
-@ApplyExtension(SpringTestExtension::class)
-annotation class IntegrationTestContext
+object StatProgressionOperator {
+    /**
+     * ## [plus]
+     * [StatProgression] `+` operator, sum the properties
+     *
+     * @see [StatProgression]
+     *
+     * @param other the other [StatProgression]
+     * @return a copy of [StatProgression] with the summed properties
+     */
+    operator fun StatProgression.plus(other: StatProgression): StatProgression =
+        copy(
+            experience = experience + other.experience,
+        )
+}

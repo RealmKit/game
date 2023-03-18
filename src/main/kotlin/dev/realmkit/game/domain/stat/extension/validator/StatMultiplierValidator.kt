@@ -18,26 +18,22 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.stat.extension.validator
 
 import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.game.domain.stat.document.StatMultiplier
 import io.konform.validation.Validation
 
 /**
- * # [CurrentMaxValidator]
- * [dev.realmkit.game.core.document.CurrentMax] validations
+ * # [StatMultiplierValidator]
+ * [StatMultiplier] validations
  */
-object CurrentMaxValidator {
+object StatMultiplierValidator {
     /**
-     * ## [double]
-     * [dev.realmkit.game.core.document.CurrentMax] -> [Validation] object
+     * ## [validation]
+     * [StatMultiplier] -> [Validation] object
      */
-    val double: Validation<CurrentMaxDouble> = Validation {
-        CurrentMaxDouble::current required {}
-        CurrentMaxDouble::max required { positive() }
-        addConstraint(".current must be lower than .max") {
-            it.current <= it.max
-        }
+    val validation: Validation<StatMultiplier> = Validation {
+        StatMultiplier::critical required { positive() }
     }
 }

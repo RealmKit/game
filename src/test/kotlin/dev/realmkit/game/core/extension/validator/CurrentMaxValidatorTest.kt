@@ -18,34 +18,36 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.core.extension.validator
 
-import dev.realmkit.game.domain.stat.document.StatRate
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
+import dev.realmkit.hellper.fixture.core.fixture
+import dev.realmkit.hellper.fixture.core.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 
-class StatRateValidatorTest : TestSpec({
-    context("unit testing StatRateValidator") {
-        context("isValid") {
-            expect("rate to be valid") {
-                check(StatRate.fixture) { rate ->
-                    StatRateValidator.validation shouldBeValid rate
+class CurrentMaxValidatorTest : TestSpec({
+    context("unit testing CurrentMaxValidator") {
+        context("CurrentMaxDouble") {
+            context("isValid") {
+                expect("currentMax to be valid") {
+                    check(CurrentMaxDouble.fixture) { currentMax ->
+                        CurrentMaxValidator.validation shouldBeValid currentMax
+                    }
                 }
             }
-        }
 
-        context("isInvalid") {
-            expect("rate to be invalid") {
-                check(StatRate.invalid) { rate ->
-                    StatRateValidator.validation.shouldBeInvalid(rate) { invalid ->
-                        invalid shouldHaveAllErrors listOf(
-                            ".shieldRegeneration" to "must be positive",
-                            ".critical" to "must be positive",
-                        )
+            context("isInvalid") {
+                expect("currentMax to be invalid") {
+                    check(CurrentMaxDouble.invalid) { currentMax ->
+                        CurrentMaxValidator.validation.shouldBeInvalid(currentMax) { invalid ->
+                            invalid shouldHaveAllErrors listOf(
+                                "" to ".current must be lower than .max",
+                                ".max" to "must be positive",
+                            )
+                        }
                     }
                 }
             }

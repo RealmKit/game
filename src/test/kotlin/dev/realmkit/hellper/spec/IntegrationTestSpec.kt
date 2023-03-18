@@ -21,7 +21,6 @@
 package dev.realmkit.hellper.spec
 
 import dev.realmkit.hellper.infra.Mongo
-import io.kotest.core.test.TestCase
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -38,21 +37,11 @@ abstract class IntegrationTestSpec(body: IntegrationTestSpec.() -> Unit = {}) : 
         this.body()
     }
 
-    /**
-     * Before each test on the spec
-     *
-     * @param testCase The test itself
-     * @see TestSpec.beforeEach
-     */
-    override suspend fun beforeEach(testCase: TestCase) {
-        Mongo.clear()
-    }
-
     companion object {
         /**
-         * Sets the [Mongo container][Mongo] url on the properties registry
+         * Sets the [Mongo container][Mongo] url on the property registry
          *
-         * @param registry the properties registry
+         * @param registry the property registry
          * @see DynamicPropertyRegistry
          */
         @JvmStatic

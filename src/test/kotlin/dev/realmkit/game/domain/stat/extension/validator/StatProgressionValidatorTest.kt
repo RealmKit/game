@@ -18,9 +18,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.extension.validator
 
-import dev.realmkit.game.domain.stat.document.StatBase
+import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
@@ -28,31 +28,23 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
 
-class StatBaseValidatorTest : TestSpec({
-    context("unit testing StatBaseValidator") {
+class StatProgressionValidatorTest : TestSpec({
+    context("unit testing StatProgressionValidator") {
         context("isValid") {
-            expect("base to be valid") {
-                check(StatBase.fixture) { base ->
-                    StatBaseValidator.validation shouldBeValid base
+            expect("progression to be valid") {
+                check(StatProgression.fixture) { progression ->
+                    StatProgressionValidator.validation shouldBeValid progression
                 }
             }
         }
 
         context("isInvalid") {
-            expect("base to be invalid") {
-                check(StatBase.invalid) { base ->
-                    StatBaseValidator.validation.shouldBeInvalid(base) { invalid ->
+            expect("progression to be invalid") {
+                check(StatProgression.invalid) { progression ->
+                    StatProgressionValidator.validation.shouldBeInvalid(progression) { invalid ->
                         invalid shouldHaveAllErrors listOf(
-                            ".hull" to ".current must be lower than .max",
-                            ".hull.max" to "must be positive",
-                            ".shield" to ".current must be lower than .max",
-                            ".shield.max" to "must be positive",
-                            ".energy" to ".current must be lower than .max",
-                            ".energy.max" to "must be positive",
-                            ".attack" to "must be positive",
-                            ".defense" to "must be positive",
-                            ".speed" to "must be positive",
-                            ".aggro" to "must be positive",
+                            ".level" to "must be positive",
+                            ".experience" to "must be positive",
                         )
                     }
                 }

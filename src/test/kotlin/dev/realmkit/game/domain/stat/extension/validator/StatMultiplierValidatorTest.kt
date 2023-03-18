@@ -18,7 +18,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension
+package dev.realmkit.game.domain.stat.extension.validator
 
 import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors

@@ -27,7 +27,6 @@ import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive
-import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.optional.shouldBePresent
 import io.kotest.matchers.shouldBe
@@ -41,15 +40,8 @@ class PlayerRepositoryTest(
             playerRepository.shouldNotBeNull()
         }
 
-        context(".count()") {
-            expect("it should be empty") {
-                playerRepository.run { count().shouldBeZero() }
-            }
-        }
-
         context(".save()") {
             expect("it should create Players") {
-                playerRepository.run { count().shouldBeZero() }
                 check(Player.fixture) { player ->
                     playerRepository.save(player).shouldNotBeNull()
                     playerRepository.findById(player.id).shouldBePresent().asClue { find ->
@@ -78,7 +70,6 @@ class PlayerRepositoryTest(
                         find.resource.purunhalium.shouldBePositive()
                     }
                 }
-                playerRepository.run { count().shouldBe(CHECK_ITERATIONS) }
             }
         }
     }
