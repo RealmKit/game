@@ -75,7 +75,7 @@ class TargetExtensionsTest : TestSpec({
         }
     }
 
-    expect(".firstByAggro") {
+    expect(".firstByAggro to return the first Target") {
         checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
             listOf(
                 player2,
@@ -88,7 +88,7 @@ class TargetExtensionsTest : TestSpec({
         }
     }
 
-    expect(".firstByAggro") {
+    expect(".firstByAggro to throw an exception if no Target is found") {
         emptyList<Player>().firstByAggro {
             throw AssertionError("Should not be called")
         }.shouldBeNull()

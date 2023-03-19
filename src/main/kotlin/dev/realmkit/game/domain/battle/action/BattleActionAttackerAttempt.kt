@@ -20,8 +20,6 @@
 
 package dev.realmkit.game.domain.battle.action
 
-import dev.realmkit.game.core.extension.ConstantExtensions
-
 /**
  * # [BattleActionAttackerAttempt]
  * the `battle action attacker attempt` class
@@ -32,11 +30,4 @@ import dev.realmkit.game.core.extension.ConstantExtensions
 data class BattleActionAttackerAttempt(
     val attacker: String,
     val speed: Double,
-) : BattleAction {
-    /**
-     * ## [hit]
-     * check if it was a hit or not
-     */
-    val hit: Boolean
-        get() = speed >= ConstantExtensions.DOUBLE_ONE
-}
+) : BattleAction

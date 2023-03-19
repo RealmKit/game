@@ -40,7 +40,6 @@ import dev.realmkit.hellper.fixture.player.many
 import dev.realmkit.hellper.fixture.player.prepareToWinBattle
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
@@ -61,7 +60,6 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttackerAttempt> {
                         attacker shouldBe player.id
                         speed shouldBe player.stat.base.speed
-                        hit.shouldBeTrue()
                     }
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
@@ -99,7 +97,6 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttackerAttempt> {
                         attacker shouldBe enemy.id
                         speed shouldBe enemy.stat.base.speed
-                        hit.shouldBeTrue()
                     }
                     onAction<BattleActionAttack> {
                         attacker shouldBe enemy
@@ -214,7 +211,6 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttackerAttempt> {
                         attacker shouldBe player.id
                         speed shouldBe player.stat.base.speed
-                        hit.shouldBeTrue()
                     }
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
@@ -227,7 +223,6 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttackerAttempt> {
                         attacker shouldBe player.id
                         speed shouldBe player.stat.base.speed
-                        hit.shouldBeTrue()
                     }
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
@@ -240,7 +235,6 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttackerAttempt> {
                         attacker shouldBe player.id
                         speed shouldBe player.stat.base.speed
-                        hit.shouldBeTrue()
                     }
                     onAction<BattleActionAttack> {
                         attacker shouldBe player

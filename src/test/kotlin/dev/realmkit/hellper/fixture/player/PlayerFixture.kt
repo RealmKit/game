@@ -87,7 +87,9 @@ fun Player.Companion.many(size: Int = DEFAULT_FIXTURES_SIZE): Arb<List<Player>> 
  * sets the player's stats to be very high
  */
 fun Player.prepareToWinBattle() {
+    stat.base.hull.max = MAX_VALUE
     stat.base.hull.current = MAX_VALUE
+    stat.base.shield.max = MAX_VALUE
     stat.base.shield.current = MAX_VALUE
     stat.base.attack = MAX_VALUE
     stat.base.defense = MAX_VALUE

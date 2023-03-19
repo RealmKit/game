@@ -50,8 +50,7 @@ class BattleService(
      * @return the total experience
      */
     private val <T : Target> Set<T>.totalExperience: Long
-        get() = filter { target -> !target.alive }
-            .sumOf { target -> target.stat.progression.experience }
+        get() = sumOf { target -> target.stat.progression.experience }
 
     /**
      * ## [battle]
@@ -105,8 +104,7 @@ class BattleService(
      */
     private fun updateExperience(targets: Set<Target>, experienceToAdd: Long) =
         targets.filterIsInstance<Player>()
-            .parallelStream()
-            .forEach { player ->
+            .onEach { player ->
                 player.stat.progression.experience += experienceToAdd
                 playerService.update(player)
             }

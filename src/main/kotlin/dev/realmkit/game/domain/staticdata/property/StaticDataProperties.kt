@@ -37,12 +37,12 @@ class StaticDataProperties(
     private val initial: StaticDataValues,
 ) {
     /**
-     * ## [initial]
-     * initial static data values
+     * ## [battle]
+     * battle static data values
      *
-     * @see StaticDataValues
+     * @see StaticDataBattle
      *
-     * @return [StaticDataValues] initial static data values
+     * @return [StaticDataBattle] battle static data values
      */
     fun battle(): StaticDataBattle = battle.clone()
 
