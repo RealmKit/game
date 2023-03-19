@@ -27,7 +27,6 @@ package dev.realmkit.game.domain.battle.enums
 enum class BattleActionFinalResultType {
     ATTACKERS_WIN,
     DEFENDERS_WIN,
-    DRAW_ALL_ALIVE,
     DRAW,
     ;
 }

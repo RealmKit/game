@@ -28,11 +28,8 @@ import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW_ALL_ALIVE
 import dev.realmkit.game.domain.target.document.Target
-import dev.realmkit.game.domain.target.extension.TargetExtensions.allAlive
 import dev.realmkit.game.domain.target.extension.TargetExtensions.hasAlive
-import dev.realmkit.game.domain.target.extension.TargetExtensions.noneAlive
 
 /**
  * # [BattleContextResult]
@@ -55,7 +52,8 @@ class BattleContextResult {
      * ## [finalResult]
      * the `final result` of the battle
      */
-    lateinit var finalResult: BattleActionFinalResult
+    val finalResult: BattleActionFinalResult
+        get() = logsPerTurn[turns]!!.last() as BattleActionFinalResult
 
     /**
      * ## [registerTurn]
@@ -107,12 +105,13 @@ class BattleContextResult {
      * @return itself
      */
     fun registerFinalResult(attackers: MutableSet<Target>, defenders: MutableSet<Target>): BattleContextResult = apply {
-        finalResult = BattleActionFinalResult(
-            result = resultType(attackers, defenders),
-            attackers = attackers,
-            defenders = defenders,
+        logsPerTurn[turns]!!.add(
+            BattleActionFinalResult(
+                result = resultType(attackers, defenders),
+                attackers = attackers,
+                defenders = defenders,
+            ),
         )
-        logsPerTurn[turns]!!.add(finalResult)
     }
 
     /**
@@ -127,9 +126,8 @@ class BattleContextResult {
      */
     private fun resultType(attackers: MutableSet<Target>, defenders: MutableSet<Target>): BattleActionFinalResultType =
         when {
-            attackers.hasAlive && defenders.noneAlive -> ATTACKERS_WIN
-            attackers.noneAlive && defenders.hasAlive -> DEFENDERS_WIN
-            attackers.allAlive && defenders.allAlive -> DRAW_ALL_ALIVE
+            attackers.hasAlive && !defenders.hasAlive -> ATTACKERS_WIN
+            !attackers.hasAlive && defenders.hasAlive -> DEFENDERS_WIN
             else -> DRAW
         }
 }

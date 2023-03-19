@@ -23,7 +23,7 @@ package dev.realmkit.game.domain.battle.service
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW_ALL_ALIVE
+import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
@@ -163,7 +163,7 @@ class BattleServiceTest(
 
             battleService.battle { player against enemy }
                 .finalResult.shouldNotBeNull()
-                .result shouldBe DRAW_ALL_ALIVE
+                .result shouldBe DRAW
 
             withClue("player") { player.shouldBeAlive() }
             withClue("enemy") { enemy.shouldBeAlive() }

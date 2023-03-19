@@ -26,7 +26,6 @@ import dev.realmkit.game.domain.battle.action.BattleActionFinalResult
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
 import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW_ALL_ALIVE
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.onAction
 import dev.realmkit.hellper.extension.AssertionExtensions.onTurn
@@ -136,12 +135,12 @@ class BattleContextTest : TestSpec({
                 .onTurn(turn = 4, actions = 0)
                 .onTurn(turn = 5, actions = 1) {
                     onAction<BattleActionFinalResult> {
-                        result shouldBe DRAW_ALL_ALIVE
+                        result shouldBe DRAW
                         attackers shouldBe listOf(player)
                         defenders shouldBe listOf(enemy)
                     }
                 }.finalResult.shouldNotBeNull()
-                .result shouldBe DRAW_ALL_ALIVE
+                .result shouldBe DRAW
 
             player.shouldBeAlive()
             enemy.shouldBeAlive()
