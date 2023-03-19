@@ -24,8 +24,6 @@ import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ZERO
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
 import dev.realmkit.game.domain.battle.context.BattleContextResult
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.service.PlayerService
 import dev.realmkit.game.domain.staticdata.service.StaticDataService
@@ -50,7 +48,8 @@ class BattleService(
      * @return the total experience
      */
     private val <T : Target> Set<T>.totalExperience: Long
-        get() = sumOf { target -> target.stat.progression.experience }
+        get() = filter { target -> !target.alive }
+            .sumOf { target -> target.stat.progression.experience }
 
     /**
      * ## [battle]
@@ -87,11 +86,8 @@ class BattleService(
      * @return itself
      */
     private fun BattleContextResult.applyResults(): BattleContextResult = apply {
-        when (finalResult.result) {
-            ATTACKERS_WIN -> updateExperience(finalResult.attackers, finalResult.defenders.totalExperience)
-            DEFENDERS_WIN -> updateExperience(finalResult.defenders, finalResult.attackers.totalExperience)
-            else -> LONG_ZERO
-        }
+        updateExperience(attackers, defenders.totalExperience)
+        updateExperience(defenders, attackers.totalExperience)
     }
 
     /**
@@ -102,10 +98,14 @@ class BattleService(
      * @param experienceToAdd the experience to add
      * @return nothing
      */
-    private fun updateExperience(targets: Set<Target>, experienceToAdd: Long) =
+    private fun updateExperience(targets: Set<Target>, experienceToAdd: Long) {
+        if (experienceToAdd == LONG_ZERO) {
+            return
+        }
         targets.filterIsInstance<Player>()
             .onEach { player ->
                 player.stat.progression.experience += experienceToAdd
                 playerService.update(player)
             }
+    }
 }

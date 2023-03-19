@@ -20,6 +20,7 @@
 
 package dev.realmkit.hellper.fixture.stat
 
+import dev.realmkit.game.core.extension.ConstantExtensions
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
@@ -62,3 +63,20 @@ val Stat.Companion.invalid: Arb<Stat>
             Stat::progression { progression }
         }
     }
+
+/**
+ * ## [prepareToWinBattle]
+ * sets the stats to be very high
+ */
+fun Stat.prepareToWinBattle() {
+    base.hull.max = Double.MAX_VALUE
+    base.hull.current = Double.MAX_VALUE
+    base.shield.max = Double.MAX_VALUE
+    base.shield.current = Double.MAX_VALUE
+    base.attack = Double.MAX_VALUE
+    base.defense = Double.MAX_VALUE
+    base.speed = ConstantExtensions.DOUBLE_ONE
+    multiplier.critical = ConstantExtensions.DOUBLE_ONE
+    progression.level = ConstantExtensions.LONG_ONE
+    progression.experience = ConstantExtensions.LONG_ZERO
+}

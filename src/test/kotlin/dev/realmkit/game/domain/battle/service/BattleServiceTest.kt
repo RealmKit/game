@@ -21,20 +21,18 @@
 package dev.realmkit.game.domain.battle.service
 
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW
+import dev.realmkit.game.domain.enemy.document.Enemy
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
+import dev.realmkit.hellper.fixture.enemy.fixture
 import dev.realmkit.hellper.fixture.player.fixture
-import dev.realmkit.hellper.fixture.player.prepareToWinBattle
+import dev.realmkit.hellper.fixture.stat.prepareToWinBattle
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.withClue
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 @IntegrationTestContext
@@ -49,14 +47,12 @@ class BattleServiceTest(
     expect("One vs One battle, all Attackers win") {
         checkAll(
             Player.fixture,
-            Player.fixture,
+            Enemy.fixture,
         ) { player, enemy ->
-            player.prepareToWinBattle()
+            player.stat.prepareToWinBattle()
             playerRepository persist player
 
             battleService.battle { player against enemy }
-                .finalResult.shouldNotBeNull()
-                .result shouldBe ATTACKERS_WIN
 
             withClue("player") { player.shouldBeAlive() }
             withClue("enemy") { enemy.shouldNotBeAlive() }
@@ -66,15 +62,13 @@ class BattleServiceTest(
     expect("One versus Many, all Attackers win") {
         checkAll(
             Player.fixture,
-            Player.fixture,
-            Player.fixture,
+            Enemy.fixture,
+            Enemy.fixture,
         ) { player, enemy1, enemy2 ->
-            player.prepareToWinBattle()
+            player.stat.prepareToWinBattle()
             playerRepository persist player
 
             battleService.battle { player against listOf(enemy1, enemy2) }
-                .finalResult.shouldNotBeNull()
-                .result shouldBe ATTACKERS_WIN
 
             withClue("player") { player.shouldBeAlive() }
             withClue("enemy1") { enemy1.shouldNotBeAlive() }
@@ -86,16 +80,14 @@ class BattleServiceTest(
         checkAll(
             Player.fixture,
             Player.fixture,
-            Player.fixture,
+            Enemy.fixture,
         ) { player1, player2, enemy ->
-            player1.prepareToWinBattle()
+            player1.stat.prepareToWinBattle()
+            player2.stat.prepareToWinBattle()
             playerRepository persist player1
-            player2.prepareToWinBattle()
             playerRepository persist player2
 
             battleService.battle { listOf(player1, player2) against enemy }
-                .finalResult.shouldNotBeNull()
-                .result shouldBe ATTACKERS_WIN
 
             withClue("player1") { player1.shouldBeAlive() }
             withClue("player2") { player2.shouldBeAlive() }
@@ -107,19 +99,17 @@ class BattleServiceTest(
         checkAll(
             Player.fixture,
             Player.fixture,
-            Player.fixture,
-            Player.fixture,
+            Enemy.fixture,
+            Enemy.fixture,
         ) { player1, player2, enemy1, enemy2 ->
-            player1.prepareToWinBattle()
+            player1.stat.prepareToWinBattle()
+            player2.stat.prepareToWinBattle()
             playerRepository persist player1
-            player2.prepareToWinBattle()
             playerRepository persist player2
             enemy1.stat.base.speed = 1.0
             enemy2.stat.base.speed = 0.5
 
             battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
-                .finalResult.shouldNotBeNull()
-                .result shouldBe ATTACKERS_WIN
 
             withClue("player1") { player1.shouldBeAlive() }
             withClue("player2") { player2.shouldBeAlive() }
@@ -132,19 +122,15 @@ class BattleServiceTest(
         checkAll(
             Player.fixture,
             Player.fixture,
-            Player.fixture,
-            Player.fixture,
+            Enemy.fixture,
+            Enemy.fixture,
         ) { player1, player2, enemy1, enemy2 ->
             player1.stat.base.speed = 1.0
             player2.stat.base.speed = 0.5
-            enemy1.prepareToWinBattle()
-            playerRepository persist enemy1
-            enemy2.prepareToWinBattle()
-            playerRepository persist enemy2
+            enemy1.stat.prepareToWinBattle()
+            enemy2.stat.prepareToWinBattle()
 
             battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
-                .finalResult.shouldNotBeNull()
-                .result shouldBe DEFENDERS_WIN
 
             withClue("player1") { player1.shouldNotBeAlive() }
             withClue("player2") { player2.shouldNotBeAlive() }
@@ -156,14 +142,12 @@ class BattleServiceTest(
     expect("One versus One, battle last forever") {
         checkAll(
             Player.fixture,
-            Player.fixture,
+            Enemy.fixture,
         ) { player, enemy ->
             player.stat.base.attack = 0.0
             enemy.stat.base.attack = 0.0
 
             battleService.battle { player against enemy }
-                .finalResult.shouldNotBeNull()
-                .result shouldBe DRAW
 
             withClue("player") { player.shouldBeAlive() }
             withClue("enemy") { enemy.shouldBeAlive() }

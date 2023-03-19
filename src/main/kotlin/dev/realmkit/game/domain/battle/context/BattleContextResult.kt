@@ -22,20 +22,25 @@ package dev.realmkit.game.domain.battle.context
 
 import dev.realmkit.game.domain.aliases.LogsPerTurn
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
-import dev.realmkit.game.domain.battle.action.BattleActionAttackerAttempt
-import dev.realmkit.game.domain.battle.action.BattleActionFinalResult
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.ATTACKERS_WIN
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DEFENDERS_WIN
-import dev.realmkit.game.domain.battle.enums.BattleActionFinalResultType.DRAW
 import dev.realmkit.game.domain.target.document.Target
-import dev.realmkit.game.domain.target.extension.TargetExtensions.hasAlive
 
 /**
  * # [BattleContextResult]
  * the `battle context result` for keeping the battle logs
  */
 class BattleContextResult {
+    /**
+     * ## [attackers]
+     * the `attackers` set of the battle
+     */
+    val attackers: MutableSet<Target> = mutableSetOf()
+
+    /**
+     * ## [defenders]
+     * the `defenders` set of the battle
+     */
+    val defenders: MutableSet<Target> = mutableSetOf()
+
     /**
      * ## [logsPerTurn]
      * the `logs per turn` map
@@ -49,11 +54,16 @@ class BattleContextResult {
     var turns: Long = 0
 
     /**
-     * ## [finalResult]
-     * the `final result` of the battle
+     * ## [start]
+     * start the battle
+     *
+     * @param attackers the `attackers` set
+     * @param defenders the `defenders` set
      */
-    val finalResult: BattleActionFinalResult
-        get() = logsPerTurn[turns]!!.last() as BattleActionFinalResult
+    fun start(attackers: MutableSet<Target>, defenders: MutableSet<Target>) {
+        this.attackers.addAll(attackers)
+        this.defenders.addAll(defenders)
+    }
 
     /**
      * ## [registerTurn]
@@ -76,58 +86,4 @@ class BattleContextResult {
     infix fun registerAttackResults(result: BattleActionAttack): BattleContextResult = apply {
         logsPerTurn[turns]!!.add(result)
     }
-
-    /**
-     * ## [registerAttackerAttempt]
-     * register the attacker attempt
-     *
-     * @param target the `target` to register
-     * @return itself
-     */
-    infix fun registerAttackerAttempt(target: Target): BattleContextResult = apply {
-        val speed = target.stat.base.speed
-        logsPerTurn[turns]!!.add(
-            BattleActionAttackerAttempt(
-                attacker = target.id,
-                speed = speed,
-            ),
-        )
-    }
-
-    /**
-     * ## [registerFinalResult]
-     * register the battle result, who won and who lost or if it was a draw
-     *
-     * @see BattleContextResult
-     *
-     * @param attackers the `attackers` to register
-     * @param defenders the `defenders` to register
-     * @return itself
-     */
-    fun registerFinalResult(attackers: MutableSet<Target>, defenders: MutableSet<Target>): BattleContextResult = apply {
-        logsPerTurn[turns]!!.add(
-            BattleActionFinalResult(
-                result = resultType(attackers, defenders),
-                attackers = attackers,
-                defenders = defenders,
-            ),
-        )
-    }
-
-    /**
-     * ## [resultType]
-     * get the battle final result type
-     *
-     * @see BattleActionFinalResultType
-     *
-     * @param attackers the `attackers` to check
-     * @param defenders the `defenders` to check
-     * @return the `battle final result type` enum
-     */
-    private fun resultType(attackers: MutableSet<Target>, defenders: MutableSet<Target>): BattleActionFinalResultType =
-        when {
-            attackers.hasAlive && !defenders.hasAlive -> ATTACKERS_WIN
-            !attackers.hasAlive && defenders.hasAlive -> DEFENDERS_WIN
-            else -> DRAW
-        }
 }

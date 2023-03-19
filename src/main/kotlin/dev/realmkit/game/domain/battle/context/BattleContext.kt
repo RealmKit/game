@@ -65,7 +65,9 @@ class BattleContext(
      * @return target, if exists
      */
     private infix fun Target.attack(targets: Iterable<Target>): Target? =
-        targets.firstByAggro { target -> battleContextResult registerAttackResults onAttack(this, target) }
+        targets.firstByAggro { target ->
+            battleContextResult registerAttackResults onAttack(this, target)
+        }
 
     /**
      * ## [against]
@@ -124,23 +126,19 @@ class BattleContext(
      * @return the battle result
      */
     fun start(): BattleContextResult {
+        battleContextResult.start(attackers = attackers, defenders = defenders)
         while (battleIsNotOver) {
             battleContextResult.registerTurn()
             attackers.versus(defenders).bySpeed.forEach { (target, targets) ->
                 target.takeIf { attacker -> attacker.alive }
                     ?.let { attacker ->
                         attacker.stat.base.speed.repeat {
-                            battleContextResult.registerAttackerAttempt(attacker)
-                            attacker.attack(targets)
+                            attacker attack targets
                         }
                     }
             }
         }
-
-        return battleContextResult.registerFinalResult(
-            attackers = attackers,
-            defenders = defenders,
-        )
+        return battleContextResult
     }
 
     /**
