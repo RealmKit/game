@@ -18,20 +18,27 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.battle.action
+package dev.realmkit.game.domain.enemy.document
+
+import dev.realmkit.game.domain.base.document.BaseDocument
+import dev.realmkit.game.domain.resource.document.Resource
+import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.target.document.Target
+import org.springframework.data.mongodb.core.mapping.Document
 
 /**
- * # [BattleActionAttackerRepeatAttempt]
- * the `battle action attacker repeat attempt` class
+ * # [Enemy]
+ * the Enemy document
  *
- * @property attacker the `attacker` id
- * @property hull the `hull` of the attacker
- * @property shield the `shield` of the attacker
- * @property alive the `alive` status of the attacker
+ * @property name the player name
+ * @property stat the player stat
+ * @property resource the player resources
  */
-class BattleActionAttackerRepeatAttempt(
-    val attacker: String,
-    val hull: Double,
-    val shield: Double,
-    val alive: Boolean,
-) : BattleAction
+@Document
+data class Enemy(
+    override val name: String,
+    override val stat: Stat,
+    val resource: Resource,
+) : BaseDocument(), Target {
+    companion object
+}

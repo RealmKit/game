@@ -28,47 +28,42 @@ import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldNotBeEmpty
+import io.kotest.property.checkAll
 
 class PlayerTest : TestSpec({
-    context("unit testing Player") {
-        context("instantiate") {
-            expect("to create a new plain Player") {
-                check(Player.fixture) { player ->
-                    player.shouldNotBeNull()
-                    player.name.shouldNotBeNull().shouldNotBeEmpty()
-                    player.stat.shouldNotBeNull()
-                    player.stat.base.hull.current.shouldBePositive()
-                    player.stat.base.hull.max.shouldBePositive()
-                    player.stat.base.shield.current.shouldBePositive()
-                    player.stat.base.shield.max.shouldBePositive()
-                    player.stat.base.energy.current.shouldBePositive()
-                    player.stat.base.energy.max.shouldBePositive()
-                    player.stat.base.attack.shouldBePositive()
-                    player.stat.base.defense.shouldBePositive()
-                    player.stat.base.speed.shouldBePositive()
-                    player.stat.base.aggro.shouldBePositive()
-                    player.stat.rate.shieldRegeneration.shouldBePositive()
-                    player.stat.rate.critical.shouldBePositive()
-                    player.stat.multiplier.critical.shouldBePositive()
-                    player.stat.progression.level.shouldBePositive()
-                    player.stat.progression.experience.shouldBePositive()
-                    player.resource.titanium.shouldBePositive()
-                    player.resource.crystal.shouldBePositive()
-                    player.resource.darkMatter.shouldBePositive()
-                    player.resource.antiMatter.shouldBePositive()
-                    player.resource.purunhalium.shouldBePositive()
-                }
-            }
+    expect("to create a new plain Player") {
+        checkAll(Player.fixture) { player ->
+            player.shouldNotBeNull()
+            player.name.shouldNotBeNull().shouldNotBeEmpty()
+            player.stat.shouldNotBeNull()
+            player.stat.base.hull.current.shouldBePositive()
+            player.stat.base.hull.max.shouldBePositive()
+            player.stat.base.shield.current.shouldBePositive()
+            player.stat.base.shield.max.shouldBePositive()
+            player.stat.base.energy.current.shouldBePositive()
+            player.stat.base.energy.max.shouldBePositive()
+            player.stat.base.attack.shouldBePositive()
+            player.stat.base.defense.shouldBePositive()
+            player.stat.base.speed.shouldBePositive()
+            player.stat.base.aggro.shouldBePositive()
+            player.stat.rate.shieldRegeneration.shouldBePositive()
+            player.stat.rate.critical.shouldBePositive()
+            player.stat.multiplier.critical.shouldBePositive()
+            player.stat.progression.level.shouldBePositive()
+            player.stat.progression.experience.shouldBePositive()
+            player.resource.titanium.shouldBePositive()
+            player.resource.crystal.shouldBePositive()
+            player.resource.darkMatter.shouldBePositive()
+            player.resource.antiMatter.shouldBePositive()
+            player.resource.purunhalium.shouldBePositive()
         }
+    }
 
-        context(".isAlive") {
-            expect("Player to be alive and dead") {
-                check(Player.fixture) { player ->
-                    player.shouldBeAlive()
-                    player.stat.base.hull.current = 0.0
-                    player.shouldNotBeAlive()
-                }
-            }
+    expect("Player to be alive and dead") {
+        checkAll(Player.fixture) { player ->
+            player.shouldBeAlive()
+            player.stat.base.hull.current = 0.0
+            player.shouldNotBeAlive()
         }
     }
 })

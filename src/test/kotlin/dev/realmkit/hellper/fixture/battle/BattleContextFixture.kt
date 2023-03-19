@@ -24,19 +24,20 @@ import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveLong
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
+
+const val DEFAULT_BATTLE_DURATION: Long = 5L
 
 /**
  * Creates a [Player] with random data
  */
 val BattleContext.Companion.fixture: Arb<BattleContext>
-    get() = arbitrary { rs ->
+    get() = arbitrary {
         BattleContext(
             properties = StaticDataBattle(
-                battleDuration = rs.positiveLong(),
-                turnDuration = rs.positiveLong(),
+                battleDuration = DEFAULT_BATTLE_DURATION,
+                turnDuration = DEFAULT_BATTLE_DURATION,
             ),
             onAttack = { attacker, defender ->
                 val finalDamage = attacker.stat.base.attack

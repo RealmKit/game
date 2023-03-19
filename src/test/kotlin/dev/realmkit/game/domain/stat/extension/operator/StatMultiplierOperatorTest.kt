@@ -30,23 +30,17 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.property.checkAll
 
 class StatMultiplierOperatorTest : TestSpec({
-    context("unit testing StatMultiplier") {
-        context("operator plus (+)") {
-            expect("to SUM two StatMultiplier") {
-                checkAll(StatMultiplier.fixture, StatMultiplier.fixture) { actual, other ->
-                    val sum = actual + other
-                    sum.shouldBeSumOf(actual, other)
-                }
-            }
+    expect("to SUM two StatMultiplier") {
+        checkAll(StatMultiplier.fixture, StatMultiplier.fixture) { actual, other ->
+            val sum = actual + other
+            sum.shouldBeSumOf(actual, other)
         }
+    }
 
-        context("operator minus (-)") {
-            expect("to SUBTRACT two StatMultiplier") {
-                checkAll(StatMultiplier.fixture, StatMultiplier.fixture) { actual, other ->
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                }
-            }
+    expect("to SUBTRACT two StatMultiplier") {
+        checkAll(StatMultiplier.fixture, StatMultiplier.fixture) { actual, other ->
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
         }
     }
 })

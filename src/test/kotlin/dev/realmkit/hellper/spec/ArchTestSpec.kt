@@ -165,6 +165,8 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
             .areNotAnonymousClasses()
             .and()
             .haveSimpleNameNotEndingWith(SUFFIX_TEST)
+            .and()
+            .areNotInnerClasses()
             .should()
             .beAnnotatedWith(Service::class.java)
 

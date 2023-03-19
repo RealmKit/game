@@ -36,65 +36,61 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class TargetExtensionsTest : TestSpec({
-    context("unit testing TargetExtensions") {
-        context(".hasAlive") {
-            expect("to have an alive Target") {
-                check(Player.fixture) { player ->
-                    listOf(player).hasAlive.shouldBeTrue()
-                }
-            }
-
-            expect("to have several alive Target") {
-                checkAll(Player.fixture, Player.fixture) { player1, player2 ->
-                    listOf(player1, player2).hasAlive.shouldBeTrue()
-                }
-            }
-
-            expect("to have just one alive Target") {
-                checkAll(Player.fixture, Player.invalid) { player1, player2 ->
-                    listOf(player1, player2).hasAlive.shouldBeTrue()
-                }
-            }
-
-            expect("to have no alive Target") {
-                checkAll(Player.invalid, Player.invalid) { player1, player2 ->
-                    listOf(player1, player2).hasAlive.shouldBeFalse()
-                }
-            }
+    expect("to have an alive Target") {
+        checkAll(Player.fixture) { player ->
+            listOf(player).hasAlive.shouldBeTrue()
         }
+    }
 
-        context(".bySpeed") {
-            checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
-                listOf<AttackerTargets>(
-                    player2 to emptySet(),
-                    player3 to emptySet(),
-                    player1 to emptySet(),
-                ).bySpeed
-                    .first()
-                    .shouldNotBeNull()
-                    .first
-                    .shouldNotBeNull()
-                    .shouldBe(player1)
-            }
+    expect("to have several alive Target") {
+        checkAll(Player.fixture, Player.fixture) { player1, player2 ->
+            listOf(player1, player2).hasAlive.shouldBeTrue()
         }
+    }
 
-        context(".firstByAggro") {
-            checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
-                listOf(
-                    player2,
-                    player3,
-                    player1,
-                ).firstByAggro { player ->
-                    player shouldBe player1
-                }.shouldNotBeNull()
-                    .shouldBe(player1)
-            }
+    expect("to have just one alive Target") {
+        checkAll(Player.fixture, Player.invalid) { player1, player2 ->
+            listOf(player1, player2).hasAlive.shouldBeTrue()
         }
+    }
 
-        context(".firstByAggro") {
-            emptyList<Player>().firstByAggro {
-                throw AssertionError("Should not be called")
-            }.shouldBeNull()
+    expect("to have no alive Target") {
+        checkAll(Player.invalid, Player.invalid) { player1, player2 ->
+            listOf(player1, player2).hasAlive.shouldBeFalse()
         }
+    }
+
+    expect(".bySpeed") {
+        checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
+            listOf<AttackerTargets>(
+                player2 to emptySet(),
+                player3 to emptySet(),
+                player1 to emptySet(),
+            ).bySpeed
+                .first()
+                .shouldNotBeNull()
+                .first
+                .shouldNotBeNull()
+                .shouldBe(player1)
+        }
+    }
+
+    expect(".firstByAggro to return the first Target") {
+        checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
+            listOf(
+                player2,
+                player3,
+                player1,
+            ).firstByAggro { player ->
+                player shouldBe player1
+            }.shouldNotBeNull()
+                .shouldBe(player1)
+        }
+    }
+
+    expect(".firstByAggro to throw an exception if no Target is found") {
+        emptyList<Player>().firstByAggro {
+            throw AssertionError("Should not be called")
+        }.shouldBeNull()
     }
 })

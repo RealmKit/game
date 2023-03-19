@@ -34,20 +34,18 @@ class GameTest(
     private val playerService: PlayerService,
     private val targetService: TargetService,
 ) : IntegrationTestSpec({
-    context("integration testing Game Application") {
-        expect("all beans to be inject") {
-            playerService.shouldNotBeNull()
-            targetService.shouldNotBeNull()
-        }
+    expect("all beans to be inject") {
+        playerService.shouldNotBeNull()
+        targetService.shouldNotBeNull()
+    }
 
-        expect("the game to run normally") {
-            val player = playerService.new(faker.superhero.name())
-            val enemy = playerService.new(faker.superhero.name())
+    expect("the game to run normally") {
+        val player = playerService.new(faker.superhero.name())
+        val enemy = playerService.new(faker.superhero.name())
 
-            enemy.stat.base.hull.current shouldBe 5.0
+        enemy.stat.base.hull.current shouldBe 5.0
 
-            targetService.attack(player, enemy)
-            enemy.shouldBeAlive()
-        }
+        targetService.attack(player, enemy)
+        enemy.shouldBeAlive()
     }
 })

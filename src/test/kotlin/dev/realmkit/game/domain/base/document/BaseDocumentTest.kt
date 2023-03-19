@@ -28,30 +28,26 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 class BaseDocumentTest : TestSpec({
-    context("unit testing BaseDocument") {
-        context("instantiate") {
-            expect("to create a new object of BaseDocument with uninitialized values") {
-                val document = BaseDocument()
-                shouldThrow<UninitializedPropertyAccessException> { document.id }
-                shouldThrow<UninitializedPropertyAccessException> { document.createdAt }
-                shouldThrow<UninitializedPropertyAccessException> { document.updatedAt }
-                shouldThrow<UninitializedPropertyAccessException> { document.version }
-            }
+    expect("to create a new object of BaseDocument with uninitialized values") {
+        val document = BaseDocument()
+        shouldThrow<UninitializedPropertyAccessException> { document.id }
+        shouldThrow<UninitializedPropertyAccessException> { document.createdAt }
+        shouldThrow<UninitializedPropertyAccessException> { document.updatedAt }
+        shouldThrow<UninitializedPropertyAccessException> { document.version }
+    }
 
-            expect("to create a new object of BaseDocument with initialized values") {
-                BaseDocument().apply {
-                    id = faker.random.nextUUID()
-                    createdAt = now
-                    updatedAt = now
-                    version = faker.random.nextUUID()
-                }.shouldNotBeNull()
-                    .asClue { document ->
-                        document.id.shouldNotBeNull()
-                        document.createdAt.shouldNotBeNull()
-                        document.updatedAt.shouldNotBeNull()
-                        document.version.shouldNotBeNull()
-                    }
+    expect("to create a new object of BaseDocument with initialized values") {
+        BaseDocument().apply {
+            id = faker.random.nextUUID()
+            createdAt = now
+            updatedAt = now
+            version = faker.random.nextUUID()
+        }.shouldNotBeNull()
+            .asClue { document ->
+                document.id.shouldNotBeNull()
+                document.createdAt.shouldNotBeNull()
+                document.updatedAt.shouldNotBeNull()
+                document.version.shouldNotBeNull()
             }
-        }
     }
 })

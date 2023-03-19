@@ -25,12 +25,8 @@ import io.kotest.matchers.longs.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 class InstantExtensionsTest : TestSpec({
-    context("unit testing InstantExtensions extensions") {
-        context(".now") {
-            expect(".now to be an Instant") {
-                InstantExtensions.now.shouldNotBeNull()
-                    .epochSecond.shouldBeGreaterThan(0)
-            }
-        }
+    expect(".now to be an Instant") {
+        InstantExtensions.now.shouldNotBeNull()
+            .epochSecond.shouldBeGreaterThan(0)
     }
 })

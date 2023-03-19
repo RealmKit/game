@@ -31,73 +31,67 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class StatOperatorTest : TestSpec({
-    context("unit testing Stat") {
-        context("operator plus (+)") {
-            expect("to SUM two Stat") {
-                checkAll(Stat.fixture, Stat.fixture) { actual, other ->
-                    val sum = actual + other
-                    sum.shouldBeSumOf(actual, other)
-                }
-            }
+    expect("to SUM two Stat") {
+        checkAll(Stat.fixture, Stat.fixture) { actual, other ->
+            val sum = actual + other
+            sum.shouldBeSumOf(actual, other)
         }
+    }
 
-        context("operator minus (-)") {
-            expect("to SUBTRACT two Stat") {
-                checkAll(Stat.fixture, Stat.fixture) { actual, other ->
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                }
-            }
+    expect("to SUBTRACT two Stat") {
+        checkAll(Stat.fixture, Stat.fixture) { actual, other ->
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+        }
+    }
 
-            expect("to SUBTRACT two Stat, with max > current") {
-                checkAll(Stat.fixture, Stat.fixture) { actual, other ->
-                    actual.base.hull.max = 10.0
-                    actual.base.hull.current = 1.0
-                    actual.base.shield.max = 10.0
-                    actual.base.shield.current = 1.0
-                    actual.base.energy.max = 10.0
-                    actual.base.energy.current = 1.0
-                    other.base.hull.max = 5.0
-                    other.base.shield.max = 5.0
-                    other.base.energy.max = 5.0
+    expect("to SUBTRACT two Stat, with max > current") {
+        checkAll(Stat.fixture, Stat.fixture) { actual, other ->
+            actual.base.hull.max = 10.0
+            actual.base.hull.current = 1.0
+            actual.base.shield.max = 10.0
+            actual.base.shield.current = 1.0
+            actual.base.energy.max = 10.0
+            actual.base.energy.current = 1.0
+            other.base.hull.max = 5.0
+            other.base.shield.max = 5.0
+            other.base.energy.max = 5.0
 
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                    subtract.base.hull.max shouldBe 5.0
-                    subtract.base.hull.current shouldBe 1.0
-                    subtract.base.shield.max shouldBe 5.0
-                    subtract.base.shield.current shouldBe 1.0
-                    subtract.base.energy.max shouldBe 5.0
-                    subtract.base.energy.current shouldBe 1.0
-                    subtract.progression.level shouldBe actual.progression.level
-                    subtract.progression.experience shouldBe actual.progression.experience
-                }
-            }
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+            subtract.base.hull.max shouldBe 5.0
+            subtract.base.hull.current shouldBe 1.0
+            subtract.base.shield.max shouldBe 5.0
+            subtract.base.shield.current shouldBe 1.0
+            subtract.base.energy.max shouldBe 5.0
+            subtract.base.energy.current shouldBe 1.0
+            subtract.progression.level shouldBe actual.progression.level
+            subtract.progression.experience shouldBe actual.progression.experience
+        }
+    }
 
-            expect("to SUBTRACT two Stat, with max < current") {
-                checkAll(Stat.fixture, Stat.fixture) { actual, other ->
-                    actual.base.hull.max = 10.0
-                    actual.base.hull.current = 10.0
-                    actual.base.shield.max = 10.0
-                    actual.base.shield.current = 10.0
-                    actual.base.energy.max = 10.0
-                    actual.base.energy.current = 10.0
-                    other.base.hull.max = 5.0
-                    other.base.shield.max = 5.0
-                    other.base.energy.max = 5.0
+    expect("to SUBTRACT two Stat, with max < current") {
+        checkAll(Stat.fixture, Stat.fixture) { actual, other ->
+            actual.base.hull.max = 10.0
+            actual.base.hull.current = 10.0
+            actual.base.shield.max = 10.0
+            actual.base.shield.current = 10.0
+            actual.base.energy.max = 10.0
+            actual.base.energy.current = 10.0
+            other.base.hull.max = 5.0
+            other.base.shield.max = 5.0
+            other.base.energy.max = 5.0
 
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                    subtract.base.hull.max shouldBe 5.0
-                    subtract.base.hull.current shouldBe 5.0
-                    subtract.base.shield.max shouldBe 5.0
-                    subtract.base.shield.current shouldBe 5.0
-                    subtract.base.energy.max shouldBe 5.0
-                    subtract.base.energy.current shouldBe 5.0
-                    subtract.progression.level shouldBe actual.progression.level
-                    subtract.progression.experience shouldBe actual.progression.experience
-                }
-            }
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+            subtract.base.hull.max shouldBe 5.0
+            subtract.base.hull.current shouldBe 5.0
+            subtract.base.shield.max shouldBe 5.0
+            subtract.base.shield.current shouldBe 5.0
+            subtract.base.energy.max shouldBe 5.0
+            subtract.base.energy.current shouldBe 5.0
+            subtract.progression.level shouldBe actual.progression.level
+            subtract.progression.experience shouldBe actual.progression.experience
         }
     }
 })

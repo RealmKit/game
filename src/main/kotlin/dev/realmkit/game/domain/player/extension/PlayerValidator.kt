@@ -51,7 +51,7 @@ object PlayerValidator {
      *
      * @param block the resulting [Player] on its [ValidationResult] context
      * @return the [block] result
-     * @throws ValidationException if [Player] has validations issues
+     * @throws ValidationException if [Player] has validation issues
      */
     @Throws(ValidationException::class)
     infix fun <R> Player.validated(block: ValidationResult<Player>.(Player) -> R): R =

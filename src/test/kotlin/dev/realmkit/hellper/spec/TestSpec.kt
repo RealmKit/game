@@ -20,13 +20,9 @@
 
 package dev.realmkit.hellper.spec
 
+import io.kotest.common.ExperimentalKotest
+import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.ExpectSpec
-import io.kotest.core.test.TestScope
-import io.kotest.property.Arb
-import io.kotest.property.PropertyContext
-import io.kotest.property.checkAll
-import mu.two.KotlinLogging.logger
-import kotlin.system.measureTimeMillis
 
 /**
  * [TestSpec]
@@ -34,31 +30,12 @@ import kotlin.system.measureTimeMillis
  *
  * @see ExpectSpec
  */
+@OptIn(ExperimentalKotest::class)
 abstract class TestSpec(body: TestSpec.() -> Unit = {}) : ExpectSpec() {
     init {
+        threads = 10
+        concurrency = 10
+        isolationMode = InstancePerTest
         this.body()
-    }
-
-    /**
-     * Execute a checkAll arbitrary from Kotest
-     * This will iterate hundreds of times over the same test
-     *
-     * @param arbitrary the arbitrary class
-     * @param block the block of tests
-     * @return the execution time
-     * @see Arb
-     */
-    suspend fun <T> TestScope.check(arbitrary: Arb<T>, block: PropertyContext.(T) -> Unit): Long =
-        measureTimeMillis {
-            checkAll(CHECK_ITERATIONS, arbitrary) { arb ->
-                block(arb)
-            }
-        }.also {
-            logger(testCase.spec::class.simpleName ?: "TestSpec")
-                .info { "[${testCase.name.testName}] execution time was ${it}ms" }
-        }
-
-    companion object {
-        const val CHECK_ITERATIONS = 1_000
     }
 }

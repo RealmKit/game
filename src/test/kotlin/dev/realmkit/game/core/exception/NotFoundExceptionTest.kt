@@ -27,17 +27,15 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 class NotFoundExceptionTest : TestSpec({
-    context("unit testing NotFoundException") {
-        expect("throw a NotFoundException") {
-            shouldThrow<NotFoundException> {
-                throw NotFoundException(
-                    clazz = String::class,
-                    value = "value",
-                )
-            }.shouldNotBeNull().asClue { exception ->
-                exception.clazz shouldBe String::class
-                exception.value shouldBe "value"
-            }
+    expect("throw a NotFoundException") {
+        shouldThrow<NotFoundException> {
+            throw NotFoundException(
+                clazz = String::class,
+                value = "value",
+            )
+        }.shouldNotBeNull().asClue { exception ->
+            exception.clazz shouldBe String::class
+            exception.value shouldBe "value"
         }
     }
 })

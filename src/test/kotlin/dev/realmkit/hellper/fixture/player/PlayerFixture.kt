@@ -20,7 +20,6 @@
 
 package dev.realmkit.hellper.fixture.player
 
-import dev.realmkit.game.core.extension.ConstantExtensions.ONE
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.stat.document.Stat
@@ -65,16 +64,3 @@ val Player.Companion.invalid: Arb<Player>
             Player::resource { resource }
         }
     }
-
-/**
- * ## [setupHighStats]
- * sets the player's stats to be very high
- */
-fun Player.setupHighStats() {
-    stat.base.hull.current = Double.MAX_VALUE
-    stat.base.shield.current = Double.MAX_VALUE
-    stat.base.attack = Double.MAX_VALUE
-    stat.base.defense = Double.MAX_VALUE
-    stat.base.speed = ONE
-    stat.multiplier.critical = ONE
-}

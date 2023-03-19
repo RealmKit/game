@@ -22,8 +22,6 @@ package dev.realmkit.game.domain.battle.context
 
 import dev.realmkit.game.domain.aliases.LogsPerTurn
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
-import dev.realmkit.game.domain.battle.action.BattleActionAttackerAttempt
-import dev.realmkit.game.domain.battle.action.BattleActionAttackerRepeatAttempt
 import dev.realmkit.game.domain.target.document.Target
 
 /**
@@ -31,6 +29,18 @@ import dev.realmkit.game.domain.target.document.Target
  * the `battle context result` for keeping the battle logs
  */
 class BattleContextResult {
+    /**
+     * ## [attackers]
+     * the `attackers` set of the battle
+     */
+    val attackers: MutableSet<Target> = mutableSetOf()
+
+    /**
+     * ## [defenders]
+     * the `defenders` set of the battle
+     */
+    val defenders: MutableSet<Target> = mutableSetOf()
+
     /**
      * ## [logsPerTurn]
      * the `logs per turn` map
@@ -44,10 +54,24 @@ class BattleContextResult {
     var turns: Long = 0
 
     /**
+     * ## [start]
+     * start the battle
+     *
+     * @param attackers the `attackers` set
+     * @param defenders the `defenders` set
+     */
+    fun start(attackers: MutableSet<Target>, defenders: MutableSet<Target>) {
+        this.attackers.addAll(attackers)
+        this.defenders.addAll(defenders)
+    }
+
+    /**
      * ## [registerTurn]
      * register a new turn
+     *
+     * @return itself
      */
-    fun registerTurn() {
+    fun registerTurn(): BattleContextResult = apply {
         turns++
         logsPerTurn[turns] = linkedSetOf()
     }
@@ -57,43 +81,9 @@ class BattleContextResult {
      * register the attack results
      *
      * @param result the `result` to register
+     * @return itself
      */
-    infix fun registerAttackResults(result: BattleActionAttack) {
+    infix fun registerAttackResults(result: BattleActionAttack): BattleContextResult = apply {
         logsPerTurn[turns]!!.add(result)
-    }
-
-    /**
-     * ## [registerAttackerAttempt]
-     * register the attacker attempt
-     *
-     * @param target the `target` to register
-     */
-    infix fun registerAttackerAttempt(target: Target) {
-        val speed = target.stat.base.speed
-        logsPerTurn[turns]!!.add(
-            BattleActionAttackerAttempt(
-                attacker = target.id,
-                speed = speed,
-            ),
-        )
-    }
-
-    /**
-     * ## [registerAttackerRepeatAttempt]
-     * register the attacker repeat attempt
-     *
-     * @param target the `target` to register
-     */
-    infix fun registerAttackerRepeatAttempt(target: Target) {
-        val hull = target.stat.base.hull.current
-        val shield = target.stat.base.shield.current
-        logsPerTurn[turns]!!.add(
-            BattleActionAttackerRepeatAttempt(
-                attacker = target.id,
-                hull = hull,
-                shield = shield,
-                alive = target.alive,
-            ),
-        )
     }
 }

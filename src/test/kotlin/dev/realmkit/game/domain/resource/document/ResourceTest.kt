@@ -24,20 +24,17 @@ import dev.realmkit.hellper.fixture.resource.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.checkAll
 
 class ResourceTest : TestSpec({
-    context("unit testing Resource") {
-        context("instantiate") {
-            expect("to create a new Resource") {
-                check(Resource.fixture) { resource ->
-                    resource.shouldNotBeNull()
-                    resource.titanium.shouldBePositive()
-                    resource.crystal.shouldBePositive()
-                    resource.darkMatter.shouldBePositive()
-                    resource.antiMatter.shouldBePositive()
-                    resource.purunhalium.shouldBePositive()
-                }
-            }
+    expect("to create a new Resource") {
+        checkAll(Resource.fixture) { resource ->
+            resource.shouldNotBeNull()
+            resource.titanium.shouldBePositive()
+            resource.crystal.shouldBePositive()
+            resource.darkMatter.shouldBePositive()
+            resource.antiMatter.shouldBePositive()
+            resource.purunhalium.shouldBePositive()
         }
     }
 })

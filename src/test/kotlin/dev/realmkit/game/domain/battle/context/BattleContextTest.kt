@@ -21,67 +21,169 @@
 package dev.realmkit.game.domain.battle.context
 
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
-import dev.realmkit.game.domain.battle.action.BattleActionAttackerAttempt
-import dev.realmkit.game.domain.battle.action.BattleActionAttackerRepeatAttempt
+import dev.realmkit.game.domain.enemy.document.Enemy
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.onAction
 import dev.realmkit.hellper.extension.AssertionExtensions.onTurn
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveTurns
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
+import dev.realmkit.hellper.fixture.battle.DEFAULT_BATTLE_DURATION
 import dev.realmkit.hellper.fixture.battle.fixture
+import dev.realmkit.hellper.fixture.enemy.fixture
+import dev.realmkit.hellper.fixture.enemy.many
 import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.stat.prepareToWinBattle
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class BattleContextTest : TestSpec({
-    context("unit testing BattleContext") {
-        context(".start()") {
-            expect("One vs One battle, all Attackers win") {
-                checkAll(
-                    Player.fixture,
-                    Player.fixture,
-                    BattleContext.fixture,
-                ) { player, enemy, context ->
-                    player.stat.base.attack = 100.0
-                    player.stat.base.speed = 1.0
+    expect("One vs One battle, all Attackers win") {
+        checkAll(
+            Player.fixture,
+            Enemy.fixture,
+            BattleContext.fixture,
+        ) { player, enemy, context ->
+            player.stat.prepareToWinBattle()
 
-                    context.apply { player against enemy }
-                        .start()
-                        .shouldHaveTurns(1)
-                        .onTurn(turn = 1, actions = 4) {
-                            onAction<BattleActionAttackerAttempt> {
-                                attacker shouldBe player.id
-                                speed shouldBe player.stat.base.speed
-                                hit.shouldBeTrue()
-                            }
-                            onAction<BattleActionAttackerRepeatAttempt> {
-                                attacker shouldBe player.id
-                                hull shouldBe player.stat.base.hull.current
-                                shield shouldBe player.stat.base.shield.current
-                                alive.shouldBeTrue()
-                            }
-                            onAction<BattleActionAttack> {
-                                attacker shouldBe player
-                                defender shouldBe enemy
-                                finalDamage shouldBe player.stat.base.attack
-                                toTheShield.shouldBeFalse()
-                                isCritical.shouldBeFalse()
-                            }
-                            onAction<BattleActionAttackerAttempt> {
-                                attacker shouldBe enemy.id
-                                speed shouldBe enemy.stat.base.speed
-                                hit.shouldBeFalse()
-                            }
-                        }
-
-                    player.shouldBeAlive()
-                    enemy.shouldNotBeAlive()
+            context.apply { player against enemy }
+                .start()
+                .shouldHaveTurns(1)
+                .onTurn(turn = 1, actions = 1) {
+                    onAction<BattleActionAttack> {
+                        attacker shouldBe player
+                        defender shouldBe enemy
+                        finalDamage shouldBe player.stat.base.attack
+                        toTheShield.shouldBeFalse()
+                        isCritical.shouldBeFalse()
+                    }
                 }
-            }
+
+            player.shouldBeAlive()
+            enemy.shouldNotBeAlive()
+        }
+    }
+
+    expect("One vs One battle, all Defenders win") {
+        checkAll(
+            Player.fixture,
+            Enemy.fixture,
+            BattleContext.fixture,
+        ) { player, enemy, context ->
+            enemy.stat.base.attack = 100.0
+            enemy.stat.base.speed = 1.0
+
+            context.apply { player against enemy }
+                .start()
+                .shouldHaveTurns(1)
+                .onTurn(turn = 1, actions = 1) {
+                    onAction<BattleActionAttack> {
+                        attacker shouldBe enemy
+                        defender shouldBe player
+                        finalDamage shouldBe enemy.stat.base.attack
+                        toTheShield.shouldBeFalse()
+                        isCritical.shouldBeFalse()
+                    }
+                }
+
+            player.shouldNotBeAlive()
+            enemy.shouldBeAlive()
+        }
+    }
+
+    expect("One vs One battle, draw, all alive") {
+        checkAll(
+            Player.fixture,
+            Enemy.fixture,
+            BattleContext.fixture,
+        ) { player, enemy, context ->
+            player.stat.base.speed = 0.0
+            enemy.stat.base.speed = 0.0
+
+            context.apply { player against enemy }
+                .start()
+                .shouldHaveTurns(DEFAULT_BATTLE_DURATION)
+                .onTurn(turn = 1, actions = 0)
+                .onTurn(turn = 2, actions = 0)
+                .onTurn(turn = 3, actions = 0)
+                .onTurn(turn = 4, actions = 0)
+                .onTurn(turn = 5, actions = 0)
+
+            player.shouldBeAlive()
+            enemy.shouldBeAlive()
+        }
+    }
+
+    expect("One vs One battle, draw, some alive") {
+        checkAll(
+            Player.fixture,
+            Enemy.many(),
+            BattleContext.fixture,
+        ) { player, enemies, context ->
+            player.stat.prepareToWinBattle()
+            enemies.onEach { enemy -> enemy.stat.base.speed = 0.0 }
+
+            context.apply { player against enemies }
+                .start()
+                .shouldHaveTurns(DEFAULT_BATTLE_DURATION)
+                .onTurn(turn = 1, actions = 1) { onAction<BattleActionAttack>() }
+                .onTurn(turn = 2, actions = 1) { onAction<BattleActionAttack>() }
+                .onTurn(turn = 3, actions = 1) { onAction<BattleActionAttack>() }
+                .onTurn(turn = 4, actions = 1) { onAction<BattleActionAttack>() }
+                .onTurn(turn = 5, actions = 1) { onAction<BattleActionAttack>() }
+
+            player.shouldBeAlive()
+        }
+    }
+
+    expect("One vs Many battle, all Attackers win") {
+        checkAll(
+            Player.fixture,
+            Enemy.fixture,
+            Enemy.fixture,
+            Enemy.fixture,
+            BattleContext.fixture,
+        ) { player, enemy1, enemy2, enemy3, context ->
+            player.stat.prepareToWinBattle()
+            enemy1.stat.base.aggro = 1.0
+            enemy2.stat.base.aggro = 2.0
+            enemy3.stat.base.aggro = 3.0
+
+            context.apply { player against listOf(enemy1, enemy2, enemy3) }
+                .start()
+                .shouldHaveTurns(3)
+                .onTurn(turn = 1, actions = 1) {
+                    onAction<BattleActionAttack> {
+                        attacker shouldBe player
+                        defender shouldBe enemy3
+                        finalDamage shouldBe player.stat.base.attack
+                        toTheShield.shouldBeFalse()
+                        isCritical.shouldBeFalse()
+                    }
+                }.onTurn(turn = 2, actions = 1) {
+                    onAction<BattleActionAttack> {
+                        attacker shouldBe player
+                        defender shouldBe enemy2
+                        finalDamage shouldBe player.stat.base.attack
+                        toTheShield.shouldBeFalse()
+                        isCritical.shouldBeFalse()
+                    }
+                }.onTurn(turn = 3, actions = 1) {
+                    onAction<BattleActionAttack> {
+                        attacker shouldBe player
+                        defender shouldBe enemy1
+                        finalDamage shouldBe player.stat.base.attack
+                        toTheShield.shouldBeFalse()
+                        isCritical.shouldBeFalse()
+                    }
+                }
+
+            player.shouldBeAlive()
+            enemy1.shouldNotBeAlive()
+            enemy2.shouldNotBeAlive()
+            enemy3.shouldNotBeAlive()
         }
     }
 })

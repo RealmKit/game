@@ -23,6 +23,7 @@ package dev.realmkit.game.domain.stat.service
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.staticdata.property.LevelUpFormula
 import org.springframework.stereotype.Service
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * # [StatService]
@@ -33,6 +34,21 @@ import org.springframework.stereotype.Service
 @Service
 class StatService {
     /**
+     * ## [experienceTable]
+     * the `experience to level up` table
+     */
+    private val experienceTable: ConcurrentHashMap<Long, Long> = ConcurrentHashMap()
+
+    /**
+     * ## [experienceRequiredToLevelUp]
+     * the required experience to level up
+     */
+    private val Stat.experienceRequiredToLevelUp: Long
+        get() = experienceTable.computeIfAbsent(progression.level + 1) {
+            LevelUpFormula(progression.level + 1)
+        }
+
+    /**
      * ## [levelUp]
      * level up the [Stat] if possible
      *
@@ -41,37 +57,11 @@ class StatService {
      * @param stat the stat to level up
      * @return the leveled stat
      */
-    infix fun levelUp(stat: Stat): Stat =
-        stat.shouldLevelUp { xpToLevelUp ->
-            stat.progression.experience -= xpToLevelUp
+    infix fun levelUp(stat: Stat): Stat {
+        while (stat.progression.experience >= stat.experienceRequiredToLevelUp) {
+            stat.progression.experience -= stat.experienceRequiredToLevelUp
             stat.progression.level++
-            levelUp(stat)
         }
-
-    /**
-     * ## [shouldLevelUp]
-     * check if the [Stat] should level up
-     *
-     * @see Stat
-     *
-     * @return if the stat should level up or not
-     */
-    private fun Stat.shouldLevelUp(block: (Long) -> Unit): Stat =
-        experienceRequiredToLevelUp().let { xp ->
-            if (progression.experience >= xp) {
-                block(xp)
-            }
-            this
-        }
-
-    /**
-     * ## [experienceRequiredToLevelUp]
-     * get the experience required to level up
-     *
-     * @see Stat
-     *
-     * @return the experience required to level up
-     */
-    private fun Stat.experienceRequiredToLevelUp(): Long =
-        LevelUpFormula(progression.level + 1)
+        return stat
+    }
 }

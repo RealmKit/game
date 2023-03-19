@@ -31,51 +31,43 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class CurrentMaxOperatorTest : TestSpec({
-    context("unit testing CurrentMaxOperator") {
-        context("CurrentMaxDouble") {
-            context("operator plus (+)") {
-                expect("to SUM two CurrentMaxDouble") {
-                    checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
-                        val sum = actual + other
-                        sum.shouldBeSumOf(actual, other)
-                    }
-                }
-            }
+    expect("to SUM two CurrentMaxDouble") {
+        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+            val sum = actual + other
+            sum.shouldBeSumOf(actual, other)
+        }
+    }
 
-            context("operator minus (-)") {
-                expect("to SUBTRACT two CurrentMaxDouble") {
-                    checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
-                        val subtract = actual - other
-                        subtract.shouldBeSubtractedOf(actual, other)
-                    }
-                }
+    expect("to SUBTRACT two CurrentMaxDouble") {
+        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+        }
+    }
 
-                expect("to SUBTRACT two CurrentMaxDouble, with max > current") {
-                    checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
-                        actual.max = 10.0
-                        actual.current = 1.0
-                        other.max = 5.0
+    expect("to SUBTRACT two CurrentMaxDouble, with max > current") {
+        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+            actual.max = 10.0
+            actual.current = 1.0
+            other.max = 5.0
 
-                        val subtract = actual - other
-                        subtract.shouldBeSubtractedOf(actual, other)
-                        subtract.max shouldBe 5.0
-                        subtract.current shouldBe 1.0
-                    }
-                }
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+            subtract.max shouldBe 5.0
+            subtract.current shouldBe 1.0
+        }
+    }
 
-                expect("to SUBTRACT two CurrentMaxDouble, with max < current") {
-                    checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
-                        actual.max = 10.0
-                        actual.current = 10.0
-                        other.max = 5.0
+    expect("to SUBTRACT two CurrentMaxDouble, with max < current") {
+        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+            actual.max = 10.0
+            actual.current = 10.0
+            other.max = 5.0
 
-                        val subtract = actual - other
-                        subtract.shouldBeSubtractedOf(actual, other)
-                        subtract.max shouldBe 5.0
-                        subtract.current shouldBe 5.0
-                    }
-                }
-            }
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+            subtract.max shouldBe 5.0
+            subtract.current shouldBe 5.0
         }
     }
 })

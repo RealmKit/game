@@ -27,19 +27,17 @@ import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
 
 class ValidationExceptionTest : TestSpec({
-    context("unit testing ValidationException") {
-        expect("throw a ValidationException") {
-            shouldThrow<ValidationException> {
-                throw ValidationException(
-                    invalid = Invalid<Any>(
-                        mapOf(
-                            "field" to listOf("message"),
-                        ),
+    expect("throw a ValidationException") {
+        shouldThrow<ValidationException> {
+            throw ValidationException(
+                invalid = Invalid<Any>(
+                    mapOf(
+                        "field" to listOf("message"),
                     ),
-                )
-            }.shouldNotBeNull()
-                .invalid.shouldNotBeNull()
-                .errors.shouldNotBeNull().shouldNotBeEmpty()
-        }
+                ),
+            )
+        }.shouldNotBeNull()
+            .invalid.shouldNotBeNull()
+            .errors.shouldNotBeNull().shouldNotBeEmpty()
     }
 })

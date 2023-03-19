@@ -27,29 +27,22 @@ import dev.realmkit.hellper.fixture.core.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid
+import io.kotest.property.checkAll
 
 class CurrentMaxValidatorTest : TestSpec({
-    context("unit testing CurrentMaxValidator") {
-        context("CurrentMaxDouble") {
-            context("isValid") {
-                expect("currentMax to be valid") {
-                    check(CurrentMaxDouble.fixture) { currentMax ->
-                        CurrentMaxValidator.validation shouldBeValid currentMax
-                    }
-                }
-            }
+    expect("currentMax to be valid") {
+        checkAll(CurrentMaxDouble.fixture) { currentMax ->
+            CurrentMaxValidator.validation shouldBeValid currentMax
+        }
+    }
 
-            context("isInvalid") {
-                expect("currentMax to be invalid") {
-                    check(CurrentMaxDouble.invalid) { currentMax ->
-                        CurrentMaxValidator.validation.shouldBeInvalid(currentMax) { invalid ->
-                            invalid shouldHaveAllErrors listOf(
-                                "" to ".current must be lower than .max",
-                                ".max" to "must be positive",
-                            )
-                        }
-                    }
-                }
+    expect("currentMax to be invalid") {
+        checkAll(CurrentMaxDouble.invalid) { currentMax ->
+            CurrentMaxValidator.validation.shouldBeInvalid(currentMax) { invalid ->
+                invalid shouldHaveAllErrors listOf(
+                    "" to ".current must be lower than .max",
+                    ".max" to "must be positive",
+                )
             }
         }
     }

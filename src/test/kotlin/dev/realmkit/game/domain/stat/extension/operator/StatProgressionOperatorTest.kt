@@ -28,14 +28,10 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.property.checkAll
 
 class StatProgressionOperatorTest : TestSpec({
-    context("unit testing StatProgression") {
-        context("operator plus (+)") {
-            expect("to SUM two StatProgression") {
-                checkAll(StatProgression.fixture, StatProgression.fixture) { actual, other ->
-                    val sum = actual + other
-                    sum.shouldBeSumOf(actual, other)
-                }
-            }
+    expect("to SUM two StatProgression") {
+        checkAll(StatProgression.fixture, StatProgression.fixture) { actual, other ->
+            val sum = actual + other
+            sum.shouldBeSumOf(actual, other)
         }
     }
 })

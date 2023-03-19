@@ -31,69 +31,63 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class StatBaseOperatorTest : TestSpec({
-    context("unit testing StatBaseOperator") {
-        context("operator plus (+)") {
-            expect("to SUM two StatBase") {
-                checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
-                    val sum = actual + other
-                    sum.shouldBeSumOf(actual, other)
-                }
-            }
+    expect("to SUM two StatBase") {
+        checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
+            val sum = actual + other
+            sum.shouldBeSumOf(actual, other)
         }
+    }
 
-        context("operator minus (-)") {
-            expect("to SUBTRACT two StatBase") {
-                checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                }
-            }
+    expect("to SUBTRACT two StatBase") {
+        checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+        }
+    }
 
-            expect("to SUBTRACT two StatBase, with max > current") {
-                checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
-                    actual.hull.max = 10.0
-                    actual.hull.current = 1.0
-                    actual.shield.max = 10.0
-                    actual.shield.current = 1.0
-                    actual.energy.max = 10.0
-                    actual.energy.current = 1.0
-                    other.hull.max = 5.0
-                    other.shield.max = 5.0
-                    other.energy.max = 5.0
+    expect("to SUBTRACT two StatBase, with max > current") {
+        checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
+            actual.hull.max = 10.0
+            actual.hull.current = 1.0
+            actual.shield.max = 10.0
+            actual.shield.current = 1.0
+            actual.energy.max = 10.0
+            actual.energy.current = 1.0
+            other.hull.max = 5.0
+            other.shield.max = 5.0
+            other.energy.max = 5.0
 
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                    subtract.hull.max shouldBe 5.0
-                    subtract.hull.current shouldBe 1.0
-                    subtract.shield.max shouldBe 5.0
-                    subtract.shield.current shouldBe 1.0
-                    subtract.energy.max shouldBe 5.0
-                    subtract.energy.current shouldBe 1.0
-                }
-            }
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+            subtract.hull.max shouldBe 5.0
+            subtract.hull.current shouldBe 1.0
+            subtract.shield.max shouldBe 5.0
+            subtract.shield.current shouldBe 1.0
+            subtract.energy.max shouldBe 5.0
+            subtract.energy.current shouldBe 1.0
+        }
+    }
 
-            expect("to SUBTRACT two StatBase, with max < current") {
-                checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
-                    actual.hull.max = 10.0
-                    actual.hull.current = 10.0
-                    actual.shield.max = 10.0
-                    actual.shield.current = 10.0
-                    actual.energy.max = 10.0
-                    actual.energy.current = 10.0
-                    other.hull.max = 5.0
-                    other.shield.max = 5.0
-                    other.energy.max = 5.0
+    expect("to SUBTRACT two StatBase, with max < current") {
+        checkAll(StatBase.fixture, StatBase.fixture) { actual, other ->
+            actual.hull.max = 10.0
+            actual.hull.current = 10.0
+            actual.shield.max = 10.0
+            actual.shield.current = 10.0
+            actual.energy.max = 10.0
+            actual.energy.current = 10.0
+            other.hull.max = 5.0
+            other.shield.max = 5.0
+            other.energy.max = 5.0
 
-                    val subtract = actual - other
-                    subtract.shouldBeSubtractedOf(actual, other)
-                    subtract.hull.max shouldBe 5.0
-                    subtract.hull.current shouldBe 5.0
-                    subtract.shield.max shouldBe 5.0
-                    subtract.shield.current shouldBe 5.0
-                    subtract.energy.max shouldBe 5.0
-                    subtract.energy.current shouldBe 5.0
-                }
-            }
+            val subtract = actual - other
+            subtract.shouldBeSubtractedOf(actual, other)
+            subtract.hull.max shouldBe 5.0
+            subtract.hull.current shouldBe 5.0
+            subtract.shield.max shouldBe 5.0
+            subtract.shield.current shouldBe 5.0
+            subtract.energy.max shouldBe 5.0
+            subtract.energy.current shouldBe 5.0
         }
     }
 })

@@ -20,9 +20,12 @@
 
 package dev.realmkit.game.domain.battle.service
 
+import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ZERO
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
 import dev.realmkit.game.domain.battle.context.BattleContextResult
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.service.PlayerService
 import dev.realmkit.game.domain.staticdata.service.StaticDataService
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.service.TargetService
@@ -34,19 +37,19 @@ import org.springframework.stereotype.Service
  */
 @Service
 class BattleService(
+    private val playerService: PlayerService,
     private val targetService: TargetService,
     private val staticDataService: StaticDataService,
 ) {
     /**
-     * ## [onAttack]
-     * the attack block
+     * ## [totalExperience]
+     * calculates the total experience of the [Target] that were defeated
      *
-     * @param attacker the first target
-     * @param defender the second target
-     * @return the attack result
+     * @return the total experience
      */
-    private fun onAttack(attacker: Target, defender: Target): BattleActionAttack =
-        targetService.attack(attacker, defender)
+    private val <T : Target> Set<T>.totalExperience: Long
+        get() = filter { target -> !target.alive }
+            .sumOf { target -> target.stat.progression.experience }
 
     /**
      * ## [battle]
@@ -61,5 +64,48 @@ class BattleService(
         BattleContext(
             properties = staticDataService.battle(),
             onAttack = ::onAttack,
-        ).apply(block).start()
+        ).apply(block)
+            .start()
+            .applyResults()
+
+    /**
+     * ## [onAttack]
+     * the attack block
+     *
+     * @param attacker the first target
+     * @param defender the second target
+     * @return the attack result
+     */
+    private fun onAttack(attacker: Target, defender: Target): BattleActionAttack =
+        targetService.attack(attacker, defender)
+
+    /**
+     * ## [applyResults]
+     * applies the battle results to the [dev.realmkit.game.domain.player.document.Player]
+     *
+     * @return itself
+     */
+    private fun BattleContextResult.applyResults(): BattleContextResult = apply {
+        updateExperience(attackers, defenders.totalExperience)
+        updateExperience(defenders, attackers.totalExperience)
+    }
+
+    /**
+     * ## [updateExperience]
+     * updates the experience of the [Target]
+     *
+     * @param targets the targets to update
+     * @param experienceToAdd the experience to add
+     * @return nothing
+     */
+    private fun updateExperience(targets: Set<Target>, experienceToAdd: Long) {
+        if (experienceToAdd == LONG_ZERO) {
+            return
+        }
+        targets.filterIsInstance<Player>()
+            .onEach { player ->
+                player.stat.progression.experience += experienceToAdd
+                playerService.update(player)
+            }
+    }
 }

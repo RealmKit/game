@@ -18,35 +18,45 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.resource.extension
+package dev.realmkit.hellper.fixture.enemy
 
+import dev.realmkit.game.domain.enemy.document.Enemy
 import dev.realmkit.game.domain.resource.document.Resource
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
+import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.hellper.extension.DEFAULT_FIXTURES_SIZE
+import dev.realmkit.hellper.extension.FakerExtensions.faker
+import dev.realmkit.hellper.fixture.Fixture
 import dev.realmkit.hellper.fixture.resource.fixture
-import dev.realmkit.hellper.fixture.resource.invalid
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.assertions.konform.shouldBeInvalid
-import io.kotest.assertions.konform.shouldBeValid
-import io.kotest.property.checkAll
+import dev.realmkit.hellper.fixture.stat.fixture
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.arbitrary
 
-class ResourceValidatorTest : TestSpec({
-    expect("resource to be valid") {
-        checkAll(Resource.fixture) { resource ->
-            ResourceValidator.validation shouldBeValid resource
+/**
+ * ## [fixture]
+ * creates a [Enemy] with random data
+ */
+val Enemy.Companion.fixture: Arb<Enemy>
+    get() = arbitrary {
+        val id = arbitrary { faker.random.nextUUID() }.bind()
+        val name = arbitrary { faker.superhero.name() }.bind()
+        val stat = Stat.fixture.bind()
+        val resource = Resource.fixture.bind()
+        Fixture {
+            Enemy::id { id }
+            Enemy::name { name }
+            Enemy::stat { stat }
+            Enemy::resource { resource }
         }
     }
 
-    expect("resource to be invalid") {
-        checkAll(Resource.invalid) { resource ->
-            ResourceValidator.validation.shouldBeInvalid(resource) { invalid ->
-                invalid shouldHaveAllErrors listOf(
-                    ".titanium" to "must be positive",
-                    ".crystal" to "must be positive",
-                    ".darkMatter" to "must be positive",
-                    ".antiMatter" to "must be positive",
-                    ".purunhalium" to "must be positive",
-                )
-            }
-        }
+/**
+ * ## [many]
+ * creates a [List] of [Enemy] with random data
+ *
+ * @param size the size of the list
+ * @return [Arb] of [List] of [Enemy]
+ */
+fun Enemy.Companion.many(size: Int = DEFAULT_FIXTURES_SIZE): Arb<List<Enemy>> =
+    arbitrary {
+        MutableList(size) { Enemy.fixture.bind() }
     }
-})
