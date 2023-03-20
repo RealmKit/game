@@ -26,7 +26,6 @@ import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
-import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -35,16 +34,12 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val Stat.Companion.fixture: Arb<Stat>
     get() = arbitrary {
-        val base = StatBase.fixture.bind()
-        val rate = StatRate.fixture.bind()
-        val multiplier = StatMultiplier.fixture.bind()
-        val progression = StatProgression.fixture.bind()
-        Fixture {
-            Stat::base { base }
-            Stat::rate { rate }
-            Stat::multiplier { multiplier }
-            Stat::progression { progression }
-        }
+        Stat(
+            base = StatBase.fixture.bind(),
+            rate = StatRate.fixture.bind(),
+            multiplier = StatMultiplier.fixture.bind(),
+            progression = StatProgression.fixture.bind(),
+        )
     }
 
 /**
@@ -52,16 +47,12 @@ val Stat.Companion.fixture: Arb<Stat>
  */
 val Stat.Companion.invalid: Arb<Stat>
     get() = arbitrary {
-        val base = StatBase.invalid.bind()
-        val rate = StatRate.invalid.bind()
-        val multiplier = StatMultiplier.invalid.bind()
-        val progression = StatProgression.invalid.bind()
-        Fixture {
-            Stat::base { base }
-            Stat::rate { rate }
-            Stat::multiplier { multiplier }
-            Stat::progression { progression }
-        }
+        Stat(
+            base = StatBase.invalid.bind(),
+            rate = StatRate.invalid.bind(),
+            multiplier = StatMultiplier.invalid.bind(),
+            progression = StatProgression.invalid.bind(),
+        )
     }
 
 /**

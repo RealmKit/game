@@ -24,7 +24,6 @@ import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -34,10 +33,10 @@ import io.kotest.property.arbitrary.arbitrary
 val CurrentMax.Companion.fixture: Arb<CurrentMaxDouble>
     get() = arbitrary { rs ->
         val max = rs.positiveDouble()
-        Fixture {
-            CurrentMaxDouble::max { max }
-            CurrentMaxDouble::current { max / 2 }
-        }
+        CurrentMaxDouble(
+            max = max,
+            current = max / 2,
+        )
     }
 
 /**
@@ -46,8 +45,8 @@ val CurrentMax.Companion.fixture: Arb<CurrentMaxDouble>
 val CurrentMax.Companion.invalid: Arb<CurrentMaxDouble>
     get() = arbitrary { rs ->
         val max = rs.negativeDouble()
-        Fixture {
-            CurrentMaxDouble::max { max }
-            CurrentMaxDouble::current { max / 2 }
-        }
+        CurrentMaxDouble(
+            max = max,
+            current = max / 2,
+        )
     }

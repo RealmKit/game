@@ -23,7 +23,6 @@ package dev.realmkit.hellper.fixture.stat
 import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -32,9 +31,9 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val StatMultiplier.Companion.fixture: Arb<StatMultiplier>
     get() = arbitrary { rs ->
-        Fixture {
-            StatMultiplier::critical { rs.positiveDouble() }
-        }
+        StatMultiplier(
+            critical = rs.positiveDouble(),
+        )
     }
 
 /**
@@ -42,7 +41,7 @@ val StatMultiplier.Companion.fixture: Arb<StatMultiplier>
  */
 val StatMultiplier.Companion.invalid: Arb<StatMultiplier>
     get() = arbitrary { rs ->
-        Fixture {
-            StatMultiplier::critical { rs.negativeDouble() }
-        }
+        StatMultiplier(
+            critical = rs.negativeDouble(),
+        )
     }

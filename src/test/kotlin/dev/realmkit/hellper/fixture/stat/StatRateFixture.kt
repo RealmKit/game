@@ -23,7 +23,6 @@ package dev.realmkit.hellper.fixture.stat
 import dev.realmkit.game.domain.stat.document.StatRate
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -32,10 +31,10 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val StatRate.Companion.fixture: Arb<StatRate>
     get() = arbitrary { rs ->
-        Fixture {
-            StatRate::shieldRegeneration { rs.positiveDouble() }
-            StatRate::critical { rs.positiveDouble() }
-        }
+        StatRate(
+            shieldRegeneration = rs.positiveDouble(),
+            critical = rs.positiveDouble(),
+        )
     }
 
 /**
@@ -43,8 +42,8 @@ val StatRate.Companion.fixture: Arb<StatRate>
  */
 val StatRate.Companion.invalid: Arb<StatRate>
     get() = arbitrary { rs ->
-        Fixture {
-            StatRate::shieldRegeneration { rs.negativeDouble() }
-            StatRate::critical { rs.negativeDouble() }
-        }
+        StatRate(
+            shieldRegeneration = rs.negativeDouble(),
+            critical = rs.negativeDouble(),
+        )
     }

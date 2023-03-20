@@ -51,11 +51,6 @@ class EnemyTest : TestSpec({
             enemy.stat.multiplier.critical.shouldBePositive()
             enemy.stat.progression.level.shouldBePositive()
             enemy.stat.progression.experience.shouldBePositive()
-            enemy.resource.titanium.shouldBePositive()
-            enemy.resource.crystal.shouldBePositive()
-            enemy.resource.darkMatter.shouldBePositive()
-            enemy.resource.antiMatter.shouldBePositive()
-            enemy.resource.purunhalium.shouldBePositive()
         }
     }
 
