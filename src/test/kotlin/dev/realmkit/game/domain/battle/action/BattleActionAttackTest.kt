@@ -18,42 +18,33 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.game.domain.battle.action
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
-import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.game.domain.enemy.document.Enemy
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.fixture.enemy.fixture
+import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.assertions.asClue
+import io.kotest.matchers.shouldBe
+import io.kotest.property.checkAll
 
-/**
- * # [Target]
- * the Target interface
- */
-interface Target {
-    /**
-     * ## [id]
-     * the target id
-     */
-    val id: String
-
-    /**
-     * ## [name]
-     * the target name
-     */
-    val name: String
-
-    /**
-     * ## [ship]
-     * the target ship
-     */
-    val ship: Ship
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    @get:JsonIgnore
-    val alive: Boolean
-        get() = ship.stat.base.hull.current > DOUBLE_ZERO
-}
+class BattleActionAttackTest : TestSpec({
+    expect("to create a new BattleActionAttack") {
+        checkAll(Player.fixture, Enemy.fixture) { player, enemy ->
+            BattleActionAttack(
+                attacker = player,
+                defender = enemy,
+                finalDamage = 0.0,
+                toTheShield = true,
+                isCritical = true,
+            ).asClue { action ->
+                action.attacker shouldBe player
+                action.defender shouldBe enemy
+                action.finalDamage shouldBe 0.0
+                action.toTheShield shouldBe true
+                action.isCritical shouldBe true
+            }
+        }
+    }
+})

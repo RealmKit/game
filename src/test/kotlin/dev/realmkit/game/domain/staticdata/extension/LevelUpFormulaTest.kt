@@ -18,42 +18,33 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.target.document
+package dev.realmkit.game.domain.staticdata.extension
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
-import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.shouldBe
 
-/**
- * # [Target]
- * the Target interface
- */
-interface Target {
-    /**
-     * ## [id]
-     * the target id
-     */
-    val id: String
-
-    /**
-     * ## [name]
-     * the target name
-     */
-    val name: String
-
-    /**
-     * ## [ship]
-     * the target ship
-     */
-    val ship: Ship
-
-    /**
-     * ## [alive]
-     * checks if the target is alive
-     *
-     * @see Target
-     */
-    @get:JsonIgnore
-    val alive: Boolean
-        get() = ship.stat.base.hull.current > DOUBLE_ZERO
-}
+class LevelUpFormulaTest : TestSpec({
+    expect("to generate the correct experience points for each level") {
+        listOf(
+            1L to 1L,
+            2L to 8L,
+            3L to 27L,
+            4L to 64L,
+            5L to 125L,
+            6L to 216L,
+            7L to 343L,
+            8L to 512L,
+            9L to 729L,
+            10L to 1_000L,
+            20L to 8_000L,
+            50L to 125_000L,
+            99L to 970_299L,
+            100L to 1_000_000L,
+            101L to 1_030_301L,
+            200L to 8_000_000L,
+            1_000L to 1_000_000_000L,
+        ).forEach {
+            LevelUpFormula(it.first) shouldBe it.second
+        }
+    }
+})

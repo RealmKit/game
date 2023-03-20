@@ -21,38 +21,46 @@
 package dev.realmkit.game.domain.staticdata.property
 
 import dev.realmkit.game.core.extension.MapperExtensions.clone
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
+import dev.realmkit.game.domain.resource.document.Resource
+import dev.realmkit.game.domain.ship.document.Ship
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
  * # [StaticDataProperties]
  * static data values
  *
- * @property initial initial static data values
+ * @property battleDuration the battle duration, in turns
  */
 @ConfigurationProperties(prefix = "app.static.data")
 class StaticDataProperties(
-    private val battle: StaticDataBattle,
-    private val initial: StaticDataValues,
+    private val battleDuration: Long,
+    private val resource: Resource,
+    private val battleWarShipV1: Ship,
 ) {
     /**
-     * ## [battle]
-     * battle static data values
+     * ## [battleDuration]
+     * battle duration, in turns
      *
-     * @see StaticDataBattle
-     *
-     * @return [StaticDataBattle] battle static data values
+     * @return the battle duration, in turns
      */
-    fun battle(): StaticDataBattle = battle.clone()
+    fun battleDuration(): Long =
+        battleDuration
 
     /**
-     * ## [initial]
-     * initial static data values
+     * ## [resource]
+     * initial resource properties
      *
-     * @see StaticDataValues
-     *
-     * @return [StaticDataValues] initial static data values
+     * @return the initial resource properties
      */
-    fun initial(): StaticDataValues = initial.clone()
+    fun resource(): Resource =
+        resource.clone()
+
+    /**
+     * ## [battleWarShipV1]
+     * initial battle war ship v1 properties
+     *
+     * @return the initial battle war ship v1 properties
+     */
+    fun battleWarShipV1(): Ship =
+        battleWarShipV1.clone()
 }

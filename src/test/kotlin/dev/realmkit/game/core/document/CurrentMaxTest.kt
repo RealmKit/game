@@ -18,21 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.core.document
 
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.hellper.fixture.core.fixture
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.assertions.asClue
+import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import io.kotest.property.checkAll
 
-class StaticDataBattleTest : TestSpec({
-    expect("instantiate a StaticDataBattle") {
-        StaticDataBattle(
-            battleDuration = 10,
-            turnDuration = 10,
-        ).shouldNotBeNull().asClue { staticData ->
-            staticData.battleDuration shouldBe 10
-            staticData.turnDuration shouldBe 10
+class CurrentMaxTest : TestSpec({
+    expect("to create a new CurrentMax") {
+        checkAll(CurrentMaxDouble.fixture) { currentMax ->
+            currentMax.shouldNotBeNull()
+            currentMax.max.shouldBePositive()
+            currentMax.current.shouldBePositive()
+            currentMax.max shouldBeGreaterThanOrEqual currentMax.current
         }
     }
 })

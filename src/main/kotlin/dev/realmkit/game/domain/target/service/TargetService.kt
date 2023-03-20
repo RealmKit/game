@@ -40,8 +40,8 @@ class TargetService {
      * get the critical multiplier if it is critical, else returns 1
      */
     private val Target.criticalMultiplier: Double
-        get() = stat.multiplier.critical
-            .takeIf { stat.rate.critical.isHit }
+        get() = ship.stat.multiplier.critical
+            .takeIf { ship.stat.rate.critical.isHit }
             ?: DOUBLE_ONE
 
     /**
@@ -49,7 +49,7 @@ class TargetService {
      * checks if the target has shield greater than 0.0
      */
     private val Target.hasShield: Boolean
-        get() = stat.base.shield.current > DOUBLE_ZERO
+        get() = ship.stat.base.shield.current > DOUBLE_ZERO
 
     /**
      * ## [attack]
@@ -60,21 +60,21 @@ class TargetService {
      * @return the attack result
      */
     fun attack(attacker: Target, defender: Target): BattleActionAttack {
-        val damage = attacker.stat.base.attack
+        val damage = attacker.ship.stat.base.attack
         val criticalMultiplier = attacker.criticalMultiplier
-        val reduction = defender.stat.base.defense
+        val reduction = defender.ship.stat.base.defense
 
         val finalDamage = (damage * criticalMultiplier) - reduction
         val toTheShield = defender.hasShield
 
         if (defender.hasShield) {
-            defender.stat.base.shield.current -= finalDamage
+            defender.ship.stat.base.shield.current -= finalDamage
         } else {
-            defender.stat.base.hull.current -= finalDamage
+            defender.ship.stat.base.hull.current -= finalDamage
         }
 
         if (!defender.hasShield) {
-            defender.stat.base.shield.current = DOUBLE_ZERO
+            defender.ship.stat.base.shield.current = DOUBLE_ZERO
         }
 
         return BattleActionAttack(

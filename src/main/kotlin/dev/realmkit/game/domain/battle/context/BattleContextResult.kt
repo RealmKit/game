@@ -51,7 +51,7 @@ class BattleContextResult {
      * ## [turns]
      * the `turns` counter
      */
-    var turns: Long = 0
+    var turns: Long = 0L
 
     /**
      * ## [start]
@@ -60,7 +60,7 @@ class BattleContextResult {
      * @param attackers the `attackers` set
      * @param defenders the `defenders` set
      */
-    fun start(attackers: MutableSet<Target>, defenders: MutableSet<Target>) {
+    fun start(attackers: Set<Target>, defenders: Set<Target>) {
         this.attackers.addAll(attackers)
         this.defenders.addAll(defenders)
     }

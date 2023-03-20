@@ -29,12 +29,9 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
-import io.kotest.matchers.longs.shouldBePositive
-import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldNotBeBlank
 import io.kotest.property.checkAll
 
 @IntegrationTestContext
@@ -52,27 +49,32 @@ class PlayerServiceTest(
             saved.createdAt.shouldNotBeNull()
             saved.updatedAt.shouldNotBeNull()
             saved.version.shouldNotBeNull()
-            saved.name.shouldNotBeNull()
-            saved.stat.base.hull.current.shouldBePositive()
-            saved.stat.base.hull.max.shouldBePositive()
-            saved.stat.base.shield.current.shouldBeZero()
-            saved.stat.base.shield.max.shouldBeZero()
-            saved.stat.base.energy.current.shouldBePositive()
-            saved.stat.base.energy.max.shouldBePositive()
-            saved.stat.base.attack.shouldBePositive()
-            saved.stat.base.defense.shouldBeZero()
-            saved.stat.base.speed.shouldBePositive()
-            saved.stat.base.aggro.shouldBePositive()
-            saved.stat.rate.shieldRegeneration.shouldBeZero()
-            saved.stat.rate.critical.shouldBeZero()
-            saved.stat.multiplier.critical.shouldBePositive()
-            saved.stat.progression.level.shouldBePositive()
-            saved.stat.progression.experience.shouldBeZero()
-            saved.resource.titanium.shouldBePositive()
-            saved.resource.crystal.shouldBeZero()
-            saved.resource.darkMatter.shouldBeZero()
-            saved.resource.antiMatter.shouldBeZero()
-            saved.resource.purunhalium.shouldBeZero()
+            saved.name.shouldNotBeBlank()
+            saved.ship.name.shouldNotBeBlank()
+            saved.ship.stat.shouldNotBeNull()
+            saved.ship.stat.base.shouldNotBeNull()
+            saved.ship.stat.base.hull.max shouldBe 5.0
+            saved.ship.stat.base.hull.current shouldBe 5.0
+            saved.ship.stat.base.shield.max shouldBe 0.0
+            saved.ship.stat.base.shield.current shouldBe 0.0
+            saved.ship.stat.base.energy.max shouldBe 5.0
+            saved.ship.stat.base.energy.current shouldBe 5.0
+            saved.ship.stat.base.attack shouldBe 1.0
+            saved.ship.stat.base.defense shouldBe 0.0
+            saved.ship.stat.base.speed shouldBe 1.0
+            saved.ship.stat.base.aggro shouldBe 1.0
+            saved.ship.stat.rate.shouldNotBeNull()
+            saved.ship.stat.rate.shieldRegeneration shouldBe 0.0
+            saved.ship.stat.rate.critical shouldBe 1.0
+            saved.ship.stat.multiplier.shouldNotBeNull()
+            saved.ship.stat.multiplier.critical shouldBe 1.0
+            saved.ship.stat.progression.level shouldBe 1L
+            saved.ship.stat.progression.experience shouldBe 0L
+            saved.resource.titanium shouldBe 1_000L
+            saved.resource.crystal shouldBe 0L
+            saved.resource.darkMatter shouldBe 0L
+            saved.resource.antiMatter shouldBe 0L
+            saved.resource.purunhalium shouldBe 0L
         }
     }
 
@@ -88,13 +90,13 @@ class PlayerServiceTest(
     expect("it should level up a Player when updating it") {
         checkAll(Player.fixture) { player ->
             val saved = playerService new player.name
-            saved.stat.progression.level shouldBe 1
-            saved.stat.progression.experience shouldBe 0
+            saved.ship.stat.progression.level shouldBe 1
+            saved.ship.stat.progression.experience shouldBe 0
 
-            saved.stat.progression.experience = 8
+            saved.ship.stat.progression.experience = 8
             playerService update saved
-            saved.stat.progression.level shouldBe 2
-            saved.stat.progression.experience shouldBe 0
+            saved.ship.stat.progression.level shouldBe 2
+            saved.ship.stat.progression.experience shouldBe 0
         }
     }
 

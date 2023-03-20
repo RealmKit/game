@@ -13,99 +13,99 @@
       "type": "java.lang.Boolean"
     },
     {
-      "name": "app.static.data.initial.stat.base.hull.max",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Max Hull Points (hp)."
-    },
-    {
-      "name": "app.static.data.initial.stat.base.shield.max",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Max Shield Points (sp)."
-    },
-    {
-      "name": "app.static.data.initial.stat.base.energy.max",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Max Energy Points (ep)."
-    },
-    {
-      "name": "app.static.data.initial.stat.base.attack",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Attack (attack)."
-    },
-    {
-      "name": "app.static.data.initial.stat.base.defense",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Defense (defense)."
-    },
-    {
-      "name": "app.static.data.initial.stat.base.speed",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Speed (speed)."
-    },
-    {
-      "name": "app.static.data.initial.stat.base.aggro",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Aggro (aggro)."
-    },
-    {
-      "name": "app.static.data.initial.stat.rate.shieldRegeneration",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Shield Regeneration rate."
-    },
-    {
-      "name": "app.static.data.initial.stat.rate.critical",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Critical chance."
-    },
-    {
-      "name": "app.static.data.initial.stat.multiplier.critical",
-      "type": "java.lang.Double",
-      "description": "StaticData Initial Stat: Critical multiplier."
-    },
-    {
-      "name": "app.static.data.initial.stat.progression.level",
-      "type": "java.lang.Long",
-      "description": "StaticData Initial Stat: Level progression."
-    },
-    {
-      "name": "app.static.data.initial.stat.progression.experience",
-      "type": "java.lang.Long",
-      "description": "StaticData Initial Stat: Experience progression."
-    },
-    {
-      "name": "app.static.data.battle.battle-duration",
+      "name": "app.static.data.battle-duration",
       "type": "java.lang.Long",
       "description": "StaticData Battle: Battle Duration (in turns)."
     },
     {
-      "name": "app.static.data.battle.turn-duration",
+      "name": "app.static.data.resource.titanium",
       "type": "java.lang.Long",
-      "description": "StaticData Battle: Turns Duration (in seconds)."
+      "description": "StaticData: WarShip V1.1 Resource: Titanium resources."
     },
     {
-      "name": "app.static.data.initial.resource.titanium",
+      "name": "app.static.data.resource.crystal",
       "type": "java.lang.Long",
-      "description": "StaticData Initial Resource: Titanium resources."
+      "description": "StaticData: WarShip V1.1 Resource: Crystal resources."
     },
     {
-      "name": "app.static.data.initial.resource.crystal",
+      "name": "app.static.data.resource.dark-matter",
       "type": "java.lang.Long",
-      "description": "StaticData Initial Resource: Crystal resources."
+      "description": "StaticData: WarShip V1.1 Resource: DarkMatter resources."
     },
     {
-      "name": "app.static.data.initial.resource.dark-matter",
+      "name": "app.static.data.resource.anti-matter",
       "type": "java.lang.Long",
-      "description": "StaticData Initial Resource: DarkMatter resources."
+      "description": "StaticData: WarShip V1.1 Resource: AntiMatter resources."
     },
     {
-      "name": "app.static.data.initial.resource.anti-matter",
+      "name": "app.static.data.resource.purunhalium",
       "type": "java.lang.Long",
-      "description": "StaticData Initial Resource: AntiMatter resources."
+      "description": "StaticData: WarShip V1.1 Resource: Purunhalium for `cat cosmic entity` resources."
     },
     {
-      "name": "app.static.data.initial.resource.purunhalium",
+      "name": "app.static.data.battle-war-ship-v1.name",
+      "type": "java.lang.String",
+      "description": "StaticData: WarShip V1.1 Name."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.hull.max",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Max Hull Points (hp)."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.shield.max",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Max Shield Points (sp)."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.energy.max",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Max Energy Points (ep)."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.attack",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Attack."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.defense",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Defense."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.speed",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Speed."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.base.aggro",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Aggro."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.rate.shield-regeneration",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Shield Regeneration rate."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.rate.critical",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Critical chance."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.multiplier.critical",
+      "type": "java.lang.Double",
+      "description": "StaticData: WarShip V1.1 Stat: Critical multiplier."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.progression.level",
       "type": "java.lang.Long",
-      "description": "StaticData Initial Resource: Purunhalium for `cat cosmic entity` resources."
+      "description": "StaticData: WarShip V1.1 Stat: Level progression."
+    },
+    {
+      "name": "app.static.data.battle-war-ship-v1.stat.progression.experience",
+      "type": "java.lang.Long",
+      "description": "StaticData: WarShip V1.1 Stat: Experience progression."
     }
   ],
   "hints": []

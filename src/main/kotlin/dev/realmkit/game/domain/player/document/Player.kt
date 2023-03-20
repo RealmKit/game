@@ -22,7 +22,7 @@ package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
 import dev.realmkit.game.domain.resource.document.Resource
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.target.document.Target
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -33,13 +33,13 @@ import org.springframework.data.mongodb.core.mapping.Document
  * @see BaseDocument
  *
  * @property name the player name
- * @property stat the player stat
+ * @property ship the player ship
  * @property resource the player resources
  */
 @Document
 data class Player(
     override val name: String,
-    override val stat: Stat,
+    override val ship: Ship,
     val resource: Resource,
 ) : BaseDocument(), Target {
     companion object

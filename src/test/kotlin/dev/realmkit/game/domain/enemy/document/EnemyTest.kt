@@ -35,29 +35,29 @@ class EnemyTest : TestSpec({
         checkAll(Enemy.fixture) { enemy ->
             enemy.shouldNotBeNull()
             enemy.name.shouldNotBeNull().shouldNotBeEmpty()
-            enemy.stat.shouldNotBeNull()
-            enemy.stat.base.hull.current.shouldBePositive()
-            enemy.stat.base.hull.max.shouldBePositive()
-            enemy.stat.base.shield.current.shouldBePositive()
-            enemy.stat.base.shield.max.shouldBePositive()
-            enemy.stat.base.energy.current.shouldBePositive()
-            enemy.stat.base.energy.max.shouldBePositive()
-            enemy.stat.base.attack.shouldBePositive()
-            enemy.stat.base.defense.shouldBePositive()
-            enemy.stat.base.speed.shouldBePositive()
-            enemy.stat.base.aggro.shouldBePositive()
-            enemy.stat.rate.shieldRegeneration.shouldBePositive()
-            enemy.stat.rate.critical.shouldBePositive()
-            enemy.stat.multiplier.critical.shouldBePositive()
-            enemy.stat.progression.level.shouldBePositive()
-            enemy.stat.progression.experience.shouldBePositive()
+            enemy.ship.stat.shouldNotBeNull()
+            enemy.ship.stat.base.hull.current.shouldBePositive()
+            enemy.ship.stat.base.hull.max.shouldBePositive()
+            enemy.ship.stat.base.shield.current.shouldBePositive()
+            enemy.ship.stat.base.shield.max.shouldBePositive()
+            enemy.ship.stat.base.energy.current.shouldBePositive()
+            enemy.ship.stat.base.energy.max.shouldBePositive()
+            enemy.ship.stat.base.attack.shouldBePositive()
+            enemy.ship.stat.base.defense.shouldBePositive()
+            enemy.ship.stat.base.speed.shouldBePositive()
+            enemy.ship.stat.base.aggro.shouldBePositive()
+            enemy.ship.stat.rate.shieldRegeneration.shouldBePositive()
+            enemy.ship.stat.rate.critical.shouldBePositive()
+            enemy.ship.stat.multiplier.critical.shouldBePositive()
+            enemy.ship.stat.progression.level.shouldBePositive()
+            enemy.ship.stat.progression.experience.shouldBePositive()
         }
     }
 
     expect("Enemy to be alive and dead") {
         checkAll(Enemy.fixture) { enemy ->
             enemy.shouldBeAlive()
-            enemy.stat.base.hull.current = 0.0
+            enemy.ship.stat.base.hull.current = 0.0
             enemy.shouldNotBeAlive()
         }
     }

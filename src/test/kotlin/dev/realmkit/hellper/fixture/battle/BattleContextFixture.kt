@@ -23,7 +23,6 @@ package dev.realmkit.hellper.fixture.battle
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -35,13 +34,10 @@ const val DEFAULT_BATTLE_DURATION: Long = 5L
 val BattleContext.Companion.fixture: Arb<BattleContext>
     get() = arbitrary {
         BattleContext(
-            properties = StaticDataBattle(
-                battleDuration = DEFAULT_BATTLE_DURATION,
-                turnDuration = DEFAULT_BATTLE_DURATION,
-            ),
+            battleDuration = DEFAULT_BATTLE_DURATION,
             onAttack = { attacker, defender ->
-                val finalDamage = attacker.stat.base.attack
-                defender.stat.base.hull.current -= finalDamage
+                val finalDamage = attacker.ship.stat.base.attack
+                defender.ship.stat.base.hull.current -= finalDamage
                 BattleActionAttack(
                     attacker = attacker,
                     defender = defender,

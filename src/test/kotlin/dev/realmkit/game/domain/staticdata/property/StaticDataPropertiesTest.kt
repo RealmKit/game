@@ -23,11 +23,8 @@ package dev.realmkit.game.domain.staticdata.property
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
-import io.kotest.matchers.doubles.shouldBePositive
-import io.kotest.matchers.doubles.shouldBeZero
-import io.kotest.matchers.longs.shouldBePositive
-import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
 @IntegrationTestContext
 class StaticDataPropertiesTest(
@@ -37,44 +34,48 @@ class StaticDataPropertiesTest(
         staticDataProperties.shouldNotBeNull()
     }
 
-    expect("initial to generate the init StaticData values from properties") {
-        staticDataProperties.initial()
+    expect("turnDuration to generate the turnDuration StaticData values from properties") {
+        staticDataProperties.battleDuration()
             .shouldNotBeNull()
-            .asClue { staticData ->
-                staticData.stat.shouldNotBeNull()
-                staticData.stat.base.shouldNotBeNull()
-                staticData.stat.base.hull.current.shouldBePositive()
-                staticData.stat.base.hull.max.shouldBePositive()
-                staticData.stat.base.shield.current.shouldBeZero()
-                staticData.stat.base.shield.max.shouldBeZero()
-                staticData.stat.base.energy.current.shouldBePositive()
-                staticData.stat.base.energy.max.shouldBePositive()
-                staticData.stat.base.attack.shouldBePositive()
-                staticData.stat.base.defense.shouldBeZero()
-                staticData.stat.base.speed.shouldBePositive()
-                staticData.stat.base.aggro.shouldBePositive()
-                staticData.stat.rate.shouldNotBeNull()
-                staticData.stat.rate.shieldRegeneration.shouldBeZero()
-                staticData.stat.rate.critical.shouldBeZero()
-                staticData.stat.multiplier.shouldNotBeNull()
-                staticData.stat.multiplier.critical.shouldBePositive()
-                staticData.stat.progression.shouldNotBeNull()
-                staticData.stat.progression.level.shouldBePositive()
-                staticData.stat.progression.experience.shouldBeZero()
-                staticData.resource.titanium.shouldBePositive()
-                staticData.resource.crystal.shouldBeZero()
-                staticData.resource.darkMatter.shouldBeZero()
-                staticData.resource.antiMatter.shouldBeZero()
-                staticData.resource.purunhalium.shouldBeZero()
+            .shouldBe(10L)
+    }
+
+    expect("resource to generate the resource StaticData values from properties") {
+        staticDataProperties.resource()
+            .shouldNotBeNull()
+            .asClue { resource ->
+                resource.titanium shouldBe 1_000L
+                resource.crystal shouldBe 0L
+                resource.darkMatter shouldBe 0L
+                resource.antiMatter shouldBe 0L
+                resource.purunhalium shouldBe 0L
             }
     }
 
-    expect("battle to generate the battle StaticData values from properties") {
-        staticDataProperties.battle()
+    expect("battleWarShipV1 to generate the battleWarShipV1 StaticData values from properties") {
+        staticDataProperties.battleWarShipV1()
             .shouldNotBeNull()
-            .asClue { staticData ->
-                staticData.battleDuration.shouldBePositive()
-                staticData.turnDuration.shouldBePositive()
+            .asClue { ship ->
+                ship.name shouldBe "WarShip V1.1"
+                ship.stat.shouldNotBeNull()
+                ship.stat.base.shouldNotBeNull()
+                ship.stat.base.hull.max shouldBe 5.0
+                ship.stat.base.hull.current shouldBe 5.0
+                ship.stat.base.shield.max shouldBe 0.0
+                ship.stat.base.shield.current shouldBe 0.0
+                ship.stat.base.energy.max shouldBe 5.0
+                ship.stat.base.energy.current shouldBe 5.0
+                ship.stat.base.attack shouldBe 1.0
+                ship.stat.base.defense shouldBe 0.0
+                ship.stat.base.speed shouldBe 1.0
+                ship.stat.base.aggro shouldBe 1.0
+                ship.stat.rate.shouldNotBeNull()
+                ship.stat.rate.shieldRegeneration shouldBe 0.0
+                ship.stat.rate.critical shouldBe 1.0
+                ship.stat.multiplier.shouldNotBeNull()
+                ship.stat.multiplier.critical shouldBe 1.0
+                ship.stat.progression.level shouldBe 1L
+                ship.stat.progression.experience shouldBe 0L
             }
     }
 })

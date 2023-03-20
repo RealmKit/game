@@ -18,35 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
+package dev.realmkit.game.domain.ship.document
 
-import kotlin.math.pow
-import kotlin.math.roundToLong
+import dev.realmkit.game.domain.stat.document.Stat
 
 /**
- * # [LevelUpFormula]
- * `the level up` formula calculator.
+ * # [Ship]
+ * the Ship document
+ *
+ * @property name the player name
+ * @property stat the player stat
  */
-object LevelUpFormula {
-    /**
-     * ## [POW]
-     * consts for creating the level up formula
-     */
-    private const val POW = 4
-
-    /**
-     * ## [MODIFIER]
-     * consts for creating the level up formula
-     */
-    private const val MODIFIER = 0.3
-
-    /**
-     * ## [invoke]
-     * the required experience to level up
-     *
-     * @param level the current level
-     * @return the required experience to level up
-     */
-    operator fun invoke(level: Long): Long =
-        (level.toDouble().pow(POW) * MODIFIER / (MODIFIER * level)).roundToLong()
+data class Ship(
+    val name: String,
+    val stat: Stat,
+) {
+    companion object
 }

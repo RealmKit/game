@@ -18,34 +18,35 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.staticdata.extension
 
-import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.game.domain.target.service.TargetService
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
-import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.infra.IntegrationTestContext
-import dev.realmkit.hellper.spec.IntegrationTestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import kotlin.math.pow
+import kotlin.math.roundToLong
 
-@IntegrationTestContext
-class GameTest(
-    private val playerService: PlayerService,
-    private val targetService: TargetService,
-) : IntegrationTestSpec({
-    expect("all beans to be inject") {
-        playerService.shouldNotBeNull()
-        targetService.shouldNotBeNull()
-    }
+/**
+ * # [LevelUpFormula]
+ * `the level up` formula calculator.
+ */
+object LevelUpFormula {
+    /**
+     * ## [POW]
+     * consts for creating the level up formula
+     */
+    private const val POW = 4
 
-    expect("the game to run normally") {
-        val player = playerService.new(faker.superhero.name())
-        val enemy = playerService.new(faker.superhero.name())
+    /**
+     * ## [MODIFIER]
+     * consts for creating the level up formula
+     */
+    private const val MODIFIER = 0.3
 
-        enemy.stat.base.hull.current shouldBe 5.0
-
-        targetService.attack(player, enemy)
-        enemy.shouldBeAlive()
-    }
-})
+    /**
+     * ## [invoke]
+     * the required experience to level up
+     *
+     * @param level the current level
+     * @return the required experience to level up
+     */
+    operator fun invoke(level: Long): Long =
+        (level.toDouble().pow(POW) * MODIFIER / (MODIFIER * level)).roundToLong()
+}

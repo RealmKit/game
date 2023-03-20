@@ -49,7 +49,7 @@ class BattleService(
      */
     private val <T : Target> Set<T>.totalExperience: Long
         get() = filter { target -> !target.alive }
-            .sumOf { target -> target.stat.progression.experience }
+            .sumOf { target -> target.ship.stat.progression.experience }
 
     /**
      * ## [battle]
@@ -62,7 +62,7 @@ class BattleService(
      */
     fun battle(block: BattleContext.() -> Unit): BattleContextResult =
         BattleContext(
-            properties = staticDataService.battle(),
+            battleDuration = staticDataService.battleDuration(),
             onAttack = ::onAttack,
         ).apply(block)
             .start()
@@ -104,7 +104,7 @@ class BattleService(
         }
         targets.filterIsInstance<Player>()
             .onEach { player ->
-                player.stat.progression.experience += experienceToAdd
+                player.ship.stat.progression.experience += experienceToAdd
                 playerService.update(player)
             }
     }

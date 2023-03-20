@@ -22,10 +22,12 @@ package dev.realmkit.hellper.fixture.player
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.resource.document.Resource
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.resource.fixture
 import dev.realmkit.hellper.fixture.resource.invalid
+import dev.realmkit.hellper.fixture.ship.fixture
+import dev.realmkit.hellper.fixture.ship.invalid
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
 import io.kotest.property.Arb
@@ -39,7 +41,7 @@ val Player.Companion.fixture: Arb<Player>
     get() = arbitrary {
         Player(
             name = arbitrary { faker.superhero.name() }.bind(),
-            stat = Stat.fixture.bind(),
+            ship = Ship.fixture.bind(),
             resource = Resource.fixture.bind(),
         )
     }
@@ -52,7 +54,7 @@ val Player.Companion.invalid: Arb<Player>
     get() = arbitrary {
         Player(
             name = "",
-            stat = Stat.invalid.bind(),
+            ship = Ship.invalid.bind(),
             resource = Resource.invalid.bind(),
         )
     }

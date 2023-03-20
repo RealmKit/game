@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.enemy.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.target.document.Target
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -30,12 +30,12 @@ import org.springframework.data.mongodb.core.mapping.Document
  * the Enemy document
  *
  * @property name the enemy name
- * @property stat the enemy stat
+ * @property ship the enemy ship
  */
 @Document
 data class Enemy(
     override val name: String,
-    override val stat: Stat,
+    override val ship: Ship,
 ) : BaseDocument(), Target {
     companion object
 }

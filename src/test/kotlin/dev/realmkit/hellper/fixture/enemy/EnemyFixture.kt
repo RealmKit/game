@@ -21,10 +21,11 @@
 package dev.realmkit.hellper.fixture.enemy
 
 import dev.realmkit.game.domain.enemy.document.Enemy
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.hellper.extension.DEFAULT_FIXTURES_SIZE
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.resource.fixture
+import dev.realmkit.hellper.fixture.ship.fixture
 import dev.realmkit.hellper.fixture.stat.fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
@@ -37,7 +38,7 @@ val Enemy.Companion.fixture: Arb<Enemy>
     get() = arbitrary {
         Enemy(
             name = arbitrary { faker.superhero.name() }.bind(),
-            stat = Stat.fixture.bind(),
+            ship = Ship.fixture.bind(),
         )
     }
 

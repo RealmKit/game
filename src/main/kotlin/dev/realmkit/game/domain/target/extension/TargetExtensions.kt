@@ -35,14 +35,14 @@ object TargetExtensions {
      * sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.speed]
      */
     private val sortBySpeed: Comparator<AttackerTargets> =
-        compareBy { target -> -target.first.stat.base.speed }
+        compareBy { target -> -target.first.ship.stat.base.speed }
 
     /**
      * ## [sortByAggro]
      * sort the targets by [dev.realmkit.game.domain.stat.document.StatBase.aggro]
      */
     private val sortByAggro: Comparator<Target> =
-        compareBy { target: Target -> -target.stat.base.aggro }
+        compareBy { target: Target -> -target.ship.stat.base.aggro }
 
     /**
      * ## [hasAlive]

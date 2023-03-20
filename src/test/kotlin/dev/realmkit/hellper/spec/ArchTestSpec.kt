@@ -23,12 +23,14 @@ package dev.realmkit.hellper.spec
 import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.Priority.HIGH
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.priority
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_THROW_GENERIC_EXCEPTIONS
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_FIELD_INJECTION
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JAVA_UTIL_LOGGING
 import com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JODATIME
 import com.tngtech.archunit.library.GeneralCodingRules.testClassesShouldResideInTheSamePackageAsImplementation
+import dev.realmkit.hellper.rules.ArchConditionShouldHaveTestForClass
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
@@ -76,6 +78,15 @@ abstract class ArchTestSpec(body: ArchTestSpec.() -> Unit = {}) : TestSpec() {
     @ArchTest
     val noClassesShouldUseFieldInjectionAnnotation: ArchRule =
         NO_CLASSES_SHOULD_USE_FIELD_INJECTION
+
+    /**
+     * Certify that all Classes have a Test
+     */
+    @ArchTest
+    val allClassShouldHaveTest: ArchRule =
+        classes()
+            .should(ArchConditionShouldHaveTestForClass)
+            .`as`("All classes should have test")
 
     /**
      * Certify that all tests are in the same package as their classes

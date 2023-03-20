@@ -23,7 +23,6 @@ package dev.realmkit.game.domain.battle.context
 import dev.realmkit.game.core.extension.NumberExtensions.repeat
 import dev.realmkit.game.domain.aliases.AttackBlock
 import dev.realmkit.game.domain.aliases.AttackerTargets
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.extension.TargetExtensions.bySpeed
 import dev.realmkit.game.domain.target.extension.TargetExtensions.firstByAggro
@@ -35,11 +34,11 @@ import dev.realmkit.game.domain.target.extension.TargetExtensions.hasAlive
  *
  * @see Target
  *
- * @property properties the battle properties
+ * @property battleDuration the battle duration, in turns
  * @property onAttack the attack block
  */
 class BattleContext(
-    private val properties: StaticDataBattle,
+    private val battleDuration: Long,
     private val onAttack: AttackBlock,
 ) {
     private val battleContextResult: BattleContextResult = BattleContextResult()
@@ -51,7 +50,7 @@ class BattleContext(
      * check if the battle is over or not
      */
     private val battleIsNotOver: Boolean
-        get() = battleContextResult.turns < properties.battleDuration &&
+        get() = battleContextResult.turns < battleDuration &&
                 attackers.hasAlive &&
                 defenders.hasAlive
 
@@ -132,7 +131,7 @@ class BattleContext(
             attackers.versus(defenders).bySpeed.forEach { (target, targets) ->
                 target.takeIf { attacker -> attacker.alive }
                     ?.let { attacker ->
-                        attacker.stat.base.speed.repeat {
+                        attacker.ship.stat.base.speed.repeat {
                             attacker attack targets
                         }
                     }
