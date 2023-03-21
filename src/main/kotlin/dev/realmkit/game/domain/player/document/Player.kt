@@ -24,6 +24,7 @@ import dev.realmkit.game.domain.base.document.BaseDocument
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.target.document.Target
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 
 /**
@@ -38,7 +39,7 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 data class Player(
-    override val name: String,
+    @Indexed override val name: String,
     override val ship: Ship,
     val resource: Resource,
 ) : BaseDocument(), Target {

@@ -22,6 +22,7 @@ package dev.realmkit.game.domain.stat.extension.operator
 
 import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.minus
 import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
+import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plusAssign
 import dev.realmkit.game.domain.stat.document.StatBase
 
 /**
@@ -31,9 +32,7 @@ import dev.realmkit.game.domain.stat.document.StatBase
 object StatBaseOperator {
     /**
      * ## [plus]
-     * [StatBase] `+` operator, sum the properties
-     *
-     * @see [StatBase]
+     * [StatBase] `+` operator
      *
      * @param other the other [StatBase]
      * @return a copy of [StatBase] with the summed properties
@@ -50,10 +49,24 @@ object StatBaseOperator {
         )
 
     /**
-     * ## [minus]
-     * [StatBase] `-` operator, subtract the properties
+     * ## [plus]
+     * [StatBase] `+` operator
      *
-     * @see [StatBase]
+     * @param other the other [StatBase]
+     */
+    operator fun StatBase.plusAssign(other: StatBase) {
+        hull += other.hull
+        shield += other.shield
+        energy += other.energy
+        attack += other.attack
+        defense += other.defense
+        speed += other.speed
+        aggro += other.aggro
+    }
+
+    /**
+     * ## [minus]
+     * [StatBase] `-` operator
      *
      * @param other the other [StatBase]
      * @return a copy of [StatBase] with the subtracted properties

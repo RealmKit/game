@@ -31,9 +31,7 @@ import dev.realmkit.game.domain.stat.document.StatRate
 object StatRateOperator {
     /**
      * ## [plus]
-     * [StatRate] `+` operator, sum the properties
-     *
-     * @see [StatRate]
+     * [StatRate] `+` operator
      *
      * @param other the other [StatRate]
      * @return a copy of [StatRate] with the summed properties
@@ -45,10 +43,20 @@ object StatRateOperator {
         )
 
     /**
-     * ## [minus]
-     * [StatRate] `-` operator, subtract the properties
+     * ## [plus]
+     * [StatRate] `+=` operator
      *
-     * @see [StatRate]
+     * @param other the other [StatRate]
+     * @return a copy of [StatRate] with the summed properties
+     */
+    operator fun StatRate.plusAssign(other: StatRate) {
+        shieldRegeneration += other.shieldRegeneration
+        critical += other.critical
+    }
+
+    /**
+     * ## [minus]
+     * [StatRate] `-` operator
      *
      * @param other the other [StatRate]
      * @return a copy of [StatRate] with the subtracted properties

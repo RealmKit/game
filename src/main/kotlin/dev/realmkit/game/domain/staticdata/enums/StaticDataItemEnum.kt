@@ -26,4 +26,7 @@ package dev.realmkit.game.domain.staticdata.enums
  */
 enum class StaticDataItemEnum {
     CHEAP_RECOVERY_DRONE,
+    ;
+
+    companion object
 }

@@ -18,36 +18,31 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension.operator
+package dev.realmkit.game.domain.item.repository
 
-import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
-import dev.realmkit.game.domain.stat.document.StatProgression
+import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.stereotype.Repository
 
 /**
- * # [StatProgressionOperator]
- * [StatProgression] operators
+ * # [ItemRepository]
+ * the [Item] Mongo Repository interface.
+ * ```kotlin
+ * itemRepository.save( Item() )
+ * ```
+ *
+ * @see MongoRepository
  */
-object StatProgressionOperator {
+@Repository
+interface ItemRepository : MongoRepository<Item, String> {
     /**
-     * ## [plus]
-     * [StatProgression] `+` operator
+     * ## [findAllByOwnerAndType]
+     * returns all items of a specific type
      *
-     * @param other the other [StatProgression]
-     * @return a copy of [StatProgression] with the summed properties
+     * @param owner the owner of the item
+     * @param type the type of the item
+     * @return the list of items
      */
-    operator fun StatProgression.plus(other: StatProgression): StatProgression =
-        copy(
-            experience = experience + other.experience,
-        )
-
-    /**
-     * ## [plusAssign]
-     * [StatProgression] `+=` operator
-     *
-     * @param other the other [StatProgression]
-     * @return a copy of [StatProgression] with the summed properties
-     */
-    operator fun StatProgression.plusAssign(other: StatProgression) {
-        experience += other.experience
-    }
+    fun findAllByOwnerAndType(owner: String, type: StaticDataItemEnum): List<Item>
 }

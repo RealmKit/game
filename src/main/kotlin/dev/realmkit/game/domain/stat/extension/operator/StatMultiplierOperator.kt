@@ -31,9 +31,7 @@ import dev.realmkit.game.domain.stat.document.StatMultiplier
 object StatMultiplierOperator {
     /**
      * ## [plus]
-     * [StatMultiplier] `+` operator, sum the properties
-     *
-     * @see [StatMultiplier]
+     * [StatMultiplier] `+` operator
      *
      * @param other the other [StatMultiplier]
      * @return a copy of [StatMultiplier] with the summed properties
@@ -44,10 +42,19 @@ object StatMultiplierOperator {
         )
 
     /**
-     * ## [minus]
-     * [StatMultiplier] `-` operator, subtract the properties
+     * ## [plusAssign]
+     * [StatMultiplier] `+=` operator
      *
-     * @see [StatMultiplier]
+     * @param other the other [StatMultiplier]
+     * @return a copy of [StatMultiplier] with the summed properties
+     */
+    operator fun StatMultiplier.plusAssign(other: StatMultiplier) {
+        critical += other.critical
+    }
+
+    /**
+     * ## [minus]
+     * [StatMultiplier] `-` operator
      *
      * @param other the other [StatMultiplier]
      * @return a copy of [StatMultiplier] with the subtracted properties
