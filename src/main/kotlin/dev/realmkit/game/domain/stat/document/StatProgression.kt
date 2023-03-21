@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ZERO
+
 /**
  * # [StatProgression]
  * the StatProgression document
@@ -30,8 +32,8 @@ package dev.realmkit.game.domain.stat.document
  * @property experience `the progression` for experience
  */
 data class StatProgression(
-    var level: Long,
-    var experience: Long,
+    var level: Long = LONG_ZERO,
+    var experience: Long = LONG_ZERO,
 ) {
     companion object
 }

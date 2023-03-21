@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.core.extension.validator
 
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.fixture
 import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.invalid
@@ -31,13 +31,13 @@ import io.kotest.property.checkAll
 
 class CurrentMaxValidatorTest : TestSpec({
     expect("currentMax to be valid") {
-        checkAll(CurrentMaxDouble.fixture) { currentMax ->
+        checkAll(CurrentMax.fixture) { currentMax ->
             CurrentMaxValidator.validation shouldBeValid currentMax
         }
     }
 
     expect("currentMax to be invalid") {
-        checkAll(CurrentMaxDouble.invalid) { currentMax ->
+        checkAll(CurrentMax.invalid) { currentMax ->
             CurrentMaxValidator.validation.shouldBeInvalid(currentMax) { invalid ->
                 invalid shouldHaveAllErrors listOf(
                     "" to ".current must be lower than .max",

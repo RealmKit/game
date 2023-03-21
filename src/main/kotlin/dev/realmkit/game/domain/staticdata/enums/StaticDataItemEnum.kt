@@ -18,26 +18,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension.validator
-
-import dev.realmkit.game.core.document.CurrentMax
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import io.konform.validation.Validation
+package dev.realmkit.game.domain.staticdata.enums
 
 /**
- * # [CurrentMaxValidator]
- * [dev.realmkit.game.core.document.CurrentMax] validations
+ * # [StaticDataItemEnum]
+ * the static data item enum
  */
-object CurrentMaxValidator {
-    /**
-     * ## [validation]
-     * [dev.realmkit.game.core.document.CurrentMax] -> [Validation] object
-     */
-    val validation: Validation<CurrentMax> = Validation {
-        CurrentMax::current required {}
-        CurrentMax::max required { positive() }
-        addConstraint(".current must be lower than .max") {
-            it.current <= it.max
-        }
-    }
+enum class StaticDataItemEnum {
+    DRONE_RECOVERY_V1,
 }

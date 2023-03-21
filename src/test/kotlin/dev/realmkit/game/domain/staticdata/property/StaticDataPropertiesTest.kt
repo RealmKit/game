@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.staticdata.property
 
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.DRONE_RECOVERY_V1
 import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
@@ -53,7 +54,7 @@ class StaticDataPropertiesTest(
             }
     }
 
-    expect("battleWarShipV1 to generate the battleWarShipV1 StaticData values from properties") {
+    expect("ships to have BATTLE_WAR_SHIP_V1 ship") {
         staticDataProperties.ships(BATTLE_WAR_SHIP_V1)
             .shouldNotBeNull()
             .asClue { ship ->
@@ -77,6 +78,17 @@ class StaticDataPropertiesTest(
                 ship.stat.multiplier.critical shouldBe 1.0
                 ship.stat.progression.level shouldBe 1L
                 ship.stat.progression.experience shouldBe 0L
+            }
+    }
+
+    expect("items to have DRONE_RECOVERY_V1 item") {
+        staticDataProperties.items(DRONE_RECOVERY_V1)
+            .shouldNotBeNull()
+            .asClue { item ->
+                item.name shouldBe "Drone Recovery V1"
+                item.stat.shouldNotBeNull()
+                item.stat.base.shouldNotBeNull()
+                item.stat.base.hull.current shouldBe 10.0
             }
     }
 })

@@ -18,26 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension.validator
+package dev.realmkit.game.domain.staticdata.enums
 
-import dev.realmkit.game.core.document.CurrentMax
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import io.konform.validation.Validation
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.DRONE_RECOVERY_V1
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldHaveSize
 
-/**
- * # [CurrentMaxValidator]
- * [dev.realmkit.game.core.document.CurrentMax] validations
- */
-object CurrentMaxValidator {
-    /**
-     * ## [validation]
-     * [dev.realmkit.game.core.document.CurrentMax] -> [Validation] object
-     */
-    val validation: Validation<CurrentMax> = Validation {
-        CurrentMax::current required {}
-        CurrentMax::max required { positive() }
-        addConstraint(".current must be lower than .max") {
-            it.current <= it.max
-        }
+class StaticDataItemEnumTest : TestSpec({
+    expect("should have all values") {
+        StaticDataItemEnum.values()
+            .shouldHaveSize(1)
+            .shouldContainExactly(
+                DRONE_RECOVERY_V1,
+            )
     }
-}
+})

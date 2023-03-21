@@ -20,9 +20,9 @@
 
 package dev.realmkit.game.core.extension.operator
 
+import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.minus
 import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSubtractedOf
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSumOf
 import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.fixture
@@ -31,22 +31,22 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
 class CurrentMaxOperatorTest : TestSpec({
-    expect("to SUM two CurrentMaxDouble") {
-        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+    expect("to SUM two CurrentMax") {
+        checkAll(CurrentMax.fixture, CurrentMax.fixture) { actual, other ->
             val sum = actual + other
             sum.shouldBeSumOf(actual, other)
         }
     }
 
-    expect("to SUBTRACT two CurrentMaxDouble") {
-        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+    expect("to SUBTRACT two CurrentMax") {
+        checkAll(CurrentMax.fixture, CurrentMax.fixture) { actual, other ->
             val subtract = actual - other
             subtract.shouldBeSubtractedOf(actual, other)
         }
     }
 
-    expect("to SUBTRACT two CurrentMaxDouble, with max > current") {
-        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+    expect("to SUBTRACT two CurrentMax, with max > current") {
+        checkAll(CurrentMax.fixture, CurrentMax.fixture) { actual, other ->
             actual.max = 10.0
             actual.current = 1.0
             other.max = 5.0
@@ -58,8 +58,8 @@ class CurrentMaxOperatorTest : TestSpec({
         }
     }
 
-    expect("to SUBTRACT two CurrentMaxDouble, with max < current") {
-        checkAll(CurrentMaxDouble.fixture, CurrentMaxDouble.fixture) { actual, other ->
+    expect("to SUBTRACT two CurrentMax, with max < current") {
+        checkAll(CurrentMax.fixture, CurrentMax.fixture) { actual, other ->
             actual.max = 10.0
             actual.current = 10.0
             other.max = 5.0

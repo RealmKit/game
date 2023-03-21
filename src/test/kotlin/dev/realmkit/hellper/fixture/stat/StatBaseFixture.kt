@@ -20,7 +20,7 @@
 
 package dev.realmkit.hellper.fixture.stat
 
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
@@ -41,9 +41,9 @@ object StatBaseFixture {
     val StatBase.Companion.fixture: Arb<StatBase>
         get() = arbitrary { rs ->
             StatBase(
-                hull = CurrentMaxDouble.fixture.bind(),
-                shield = CurrentMaxDouble.fixture.bind(),
-                energy = CurrentMaxDouble.fixture.bind(),
+                hull = CurrentMax.fixture.bind(),
+                shield = CurrentMax.fixture.bind(),
+                energy = CurrentMax.fixture.bind(),
                 attack = rs.positiveDouble(),
                 defense = rs.positiveDouble(),
                 speed = rs.positiveDouble(),
@@ -58,9 +58,9 @@ object StatBaseFixture {
     val StatBase.Companion.invalid: Arb<StatBase>
         get() = arbitrary { rs ->
             StatBase(
-                hull = CurrentMaxDouble.invalid.bind(),
-                shield = CurrentMaxDouble.invalid.bind(),
-                energy = CurrentMaxDouble.invalid.bind(),
+                hull = CurrentMax.invalid.bind(),
+                shield = CurrentMax.invalid.bind(),
+                energy = CurrentMax.invalid.bind(),
                 attack = rs.negativeDouble(),
                 defense = rs.negativeDouble(),
                 speed = rs.negativeDouble(),

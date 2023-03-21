@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
+
 /**
  * # [StatMultiplier]
  * the StatMultiplier document
@@ -29,7 +31,7 @@ package dev.realmkit.game.domain.stat.document
  * @property critical `the multiplier` for critical hit damage
  */
 data class StatMultiplier(
-    var critical: Double,
+    var critical: Double = DOUBLE_ZERO,
 ) {
     companion object
 }

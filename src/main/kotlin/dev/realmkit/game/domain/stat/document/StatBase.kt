@@ -20,7 +20,8 @@
 
 package dev.realmkit.game.domain.stat.document
 
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.game.core.document.CurrentMax
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
 
 /**
  * # [StatBase]
@@ -37,13 +38,13 @@ import dev.realmkit.game.domain.aliases.CurrentMaxDouble
  * @property aggro `the base` aggro attribute (aggro)
  */
 data class StatBase(
-    var hull: CurrentMaxDouble,
-    var shield: CurrentMaxDouble,
-    var energy: CurrentMaxDouble,
-    var attack: Double,
-    var defense: Double,
-    var speed: Double,
-    var aggro: Double,
+    val hull: CurrentMax = CurrentMax(max = DOUBLE_ZERO, current = DOUBLE_ZERO),
+    val shield: CurrentMax = CurrentMax(max = DOUBLE_ZERO, current = DOUBLE_ZERO),
+    val energy: CurrentMax = CurrentMax(max = DOUBLE_ZERO, current = DOUBLE_ZERO),
+    var attack: Double = DOUBLE_ZERO,
+    var defense: Double = DOUBLE_ZERO,
+    var speed: Double = DOUBLE_ZERO,
+    var aggro: Double = DOUBLE_ZERO,
 ) {
     companion object
 }

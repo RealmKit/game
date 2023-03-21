@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.core.document
 
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
+
 /**
  * # [CurrentMax]
  * the `current max` document
@@ -27,9 +29,9 @@ package dev.realmkit.game.core.document
  * @property max `the max` value
  * @property current `the current` value
  */
-data class CurrentMax<T : Number>(
-    var max: T,
-    var current: T = max,
+data class CurrentMax(
+    var max: Double = DOUBLE_ZERO,
+    var current: Double = max,
 ) {
     companion object
 }

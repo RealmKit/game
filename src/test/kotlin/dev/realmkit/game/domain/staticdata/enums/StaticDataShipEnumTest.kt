@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.staticdata.enums
 
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
@@ -29,7 +30,7 @@ class StaticDataShipEnumTest : TestSpec({
         StaticDataShipEnum.values()
             .shouldHaveSize(1)
             .shouldContainExactly(
-                StaticDataShipEnum.BATTLE_WAR_SHIP_V1,
+                BATTLE_WAR_SHIP_V1,
             )
     }
 })
