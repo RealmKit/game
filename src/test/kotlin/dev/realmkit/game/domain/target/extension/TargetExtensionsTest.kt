@@ -25,8 +25,8 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.target.extension.TargetExtensions.bySpeed
 import dev.realmkit.game.domain.target.extension.TargetExtensions.firstByAggro
 import dev.realmkit.game.domain.target.extension.TargetExtensions.hasAlive
-import dev.realmkit.hellper.fixture.player.fixture
-import dev.realmkit.hellper.fixture.player.invalid
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue

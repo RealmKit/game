@@ -23,7 +23,7 @@ package dev.realmkit.game.domain.stat.extension.operator
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.extension.operator.StatProgressionOperator.plus
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSumOf
-import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.fixture.stat.StatProgressionFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.property.checkAll
 

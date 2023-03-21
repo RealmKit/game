@@ -18,42 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.ship
+package dev.realmkit.game.domain.item.document
 
-import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
-import dev.realmkit.hellper.fixture.stat.StatFixture.invalid
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
 
 /**
- * # [ShipFixture]
- * contains all the [Ship] fixtures
+ * # [Item]
+ * An [Item] is a consumable object that can be used by the [Stat] holder
+ *
+ * @property name the item name
+ * @property stat the item stat
  */
-object ShipFixture {
-    /**
-     * ## [fixture]
-     * creates a [Ship] with random data
-     */
-    val Ship.Companion.fixture: Arb<Ship>
-        get() = arbitrary {
-            Ship(
-                name = arbitrary { faker.space.nasaSpaceCraft() }.bind(),
-                stat = Stat.fixture.bind(),
-            )
-        }
-
-    /**
-     * ## [invalid]
-     * creates a [Ship] with random invalid data
-     */
-    val Ship.Companion.invalid: Arb<Ship>
-        get() = arbitrary {
-            Ship(
-                name = "",
-                stat = Stat.invalid.bind(),
-            )
-        }
+data class Item(
+    val name: String,
+    val stat: Stat,
+) {
+    companion object
 }

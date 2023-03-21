@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.stat.document
 
-import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.fixture.stat.StatProgressionFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull

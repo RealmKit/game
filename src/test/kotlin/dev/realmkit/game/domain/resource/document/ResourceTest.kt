@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.resource.document
 
-import dev.realmkit.hellper.fixture.resource.fixture
+import dev.realmkit.hellper.fixture.resource.ResourceFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.longs.shouldBePositive
 import io.kotest.matchers.nulls.shouldNotBeNull

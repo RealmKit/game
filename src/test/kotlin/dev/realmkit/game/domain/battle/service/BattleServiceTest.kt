@@ -26,9 +26,9 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
-import dev.realmkit.hellper.fixture.enemy.fixture
-import dev.realmkit.hellper.fixture.player.fixture
-import dev.realmkit.hellper.fixture.stat.prepareToWinBattle
+import dev.realmkit.hellper.fixture.enemy.EnemyFixture.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatFixture.prepareToWinBattle
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.withClue

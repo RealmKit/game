@@ -24,39 +24,47 @@ import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.core.fixture
-import dev.realmkit.hellper.fixture.core.invalid
+import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.fixture
+import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * Creates a [StatBase] with random data
+ * # [StatBaseFixture]
+ * contains all the [StatBase] fixtures
  */
-val StatBase.Companion.fixture: Arb<StatBase>
-    get() = arbitrary { rs ->
-        StatBase(
-            hull = CurrentMaxDouble.fixture.bind(),
-            shield = CurrentMaxDouble.fixture.bind(),
-            energy = CurrentMaxDouble.fixture.bind(),
-            attack = rs.positiveDouble(),
-            defense = rs.positiveDouble(),
-            speed = rs.positiveDouble(),
-            aggro = rs.positiveDouble(),
-        )
-    }
+object StatBaseFixture {
+    /**
+     * ## [fixture]
+     * creates a [StatBase] with random data
+     */
+    val StatBase.Companion.fixture: Arb<StatBase>
+        get() = arbitrary { rs ->
+            StatBase(
+                hull = CurrentMaxDouble.fixture.bind(),
+                shield = CurrentMaxDouble.fixture.bind(),
+                energy = CurrentMaxDouble.fixture.bind(),
+                attack = rs.positiveDouble(),
+                defense = rs.positiveDouble(),
+                speed = rs.positiveDouble(),
+                aggro = rs.positiveDouble(),
+            )
+        }
 
-/**
- * Creates a [StatBase] with random invalid data
- */
-val StatBase.Companion.invalid: Arb<StatBase>
-    get() = arbitrary { rs ->
-        StatBase(
-            hull = CurrentMaxDouble.invalid.bind(),
-            shield = CurrentMaxDouble.invalid.bind(),
-            energy = CurrentMaxDouble.invalid.bind(),
-            attack = rs.negativeDouble(),
-            defense = rs.negativeDouble(),
-            speed = rs.negativeDouble(),
-            aggro = rs.negativeDouble(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [StatBase] with random invalid data
+     */
+    val StatBase.Companion.invalid: Arb<StatBase>
+        get() = arbitrary { rs ->
+            StatBase(
+                hull = CurrentMaxDouble.invalid.bind(),
+                shield = CurrentMaxDouble.invalid.bind(),
+                energy = CurrentMaxDouble.invalid.bind(),
+                attack = rs.negativeDouble(),
+                defense = rs.negativeDouble(),
+                speed = rs.negativeDouble(),
+                aggro = rs.negativeDouble(),
+            )
+        }
+}

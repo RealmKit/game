@@ -52,11 +52,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 /**
- * how long should be the list of fixtures
- */
-const val DEFAULT_FIXTURES_SIZE = 10
-
-/**
  * # [Violation]
  * violation pair for [ValidationError.dataPath] to [ValidationError.message]
  */
@@ -66,6 +61,11 @@ typealias Violation = Pair<String, String>
  * # [AssertionExtensions]
  */
 object AssertionExtensions {
+    /**
+     * how long should be the list of fixtures
+     */
+    const val DEFAULT_FIXTURES_SIZE = 10
+
     /**
      * ## [shouldHaveAllErrors]
      *

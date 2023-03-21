@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.stat.service
 
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull

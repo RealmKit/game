@@ -25,7 +25,7 @@ import dev.realmkit.game.domain.stat.extension.operator.StatRateOperator.minus
 import dev.realmkit.game.domain.stat.extension.operator.StatRateOperator.plus
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSubtractedOf
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSumOf
-import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.fixture.stat.StatRateFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.property.checkAll
 

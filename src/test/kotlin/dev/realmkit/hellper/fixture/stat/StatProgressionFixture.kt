@@ -27,23 +27,31 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * Creates a [StatProgression] with random data
+ * # [StatProgressionFixture]
+ * contains all the [StatProgression] fixtures
  */
-val StatProgression.Companion.fixture: Arb<StatProgression>
-    get() = arbitrary { rs ->
-        StatProgression(
-            level = rs.positiveLong(),
-            experience = rs.positiveLong(),
-        )
-    }
+object StatProgressionFixture {
+    /**
+     * ## [fixture]
+     * creates a [StatProgression] with random data
+     */
+    val StatProgression.Companion.fixture: Arb<StatProgression>
+        get() = arbitrary { rs ->
+            StatProgression(
+                level = rs.positiveLong(),
+                experience = rs.positiveLong(),
+            )
+        }
 
-/**
- * Creates a [StatProgression] with random invalid data
- */
-val StatProgression.Companion.invalid: Arb<StatProgression>
-    get() = arbitrary { rs ->
-        StatProgression(
-            level = rs.negativeLong(),
-            experience = rs.negativeLong(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [StatProgression] with random invalid data
+     */
+    val StatProgression.Companion.invalid: Arb<StatProgression>
+        get() = arbitrary { rs ->
+            StatProgression(
+                level = rs.negativeLong(),
+                experience = rs.negativeLong(),
+            )
+        }
+}

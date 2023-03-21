@@ -22,8 +22,8 @@ package dev.realmkit.game.domain.ship.validator
 
 import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.ship.fixture
-import dev.realmkit.hellper.fixture.ship.invalid
+import dev.realmkit.hellper.fixture.ship.ShipFixture.fixture
+import dev.realmkit.hellper.fixture.ship.ShipFixture.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid

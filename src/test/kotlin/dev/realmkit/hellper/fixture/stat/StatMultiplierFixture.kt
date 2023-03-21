@@ -27,21 +27,29 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * Creates a [StatMultiplier] with random data
+ * # [StatMultiplierFixture]
+ * contains all the [StatMultiplier] fixtures
  */
-val StatMultiplier.Companion.fixture: Arb<StatMultiplier>
-    get() = arbitrary { rs ->
-        StatMultiplier(
-            critical = rs.positiveDouble(),
-        )
-    }
+object StatMultiplierFixture {
+    /**
+     * ## [fixture]
+     * creates a [StatMultiplier] with random data
+     */
+    val StatMultiplier.Companion.fixture: Arb<StatMultiplier>
+        get() = arbitrary { rs ->
+            StatMultiplier(
+                critical = rs.positiveDouble(),
+            )
+        }
 
-/**
- * Creates a [StatMultiplier] with random invalid data
- */
-val StatMultiplier.Companion.invalid: Arb<StatMultiplier>
-    get() = arbitrary { rs ->
-        StatMultiplier(
-            critical = rs.negativeDouble(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [StatMultiplier] with random invalid data
+     */
+    val StatMultiplier.Companion.invalid: Arb<StatMultiplier>
+        get() = arbitrary { rs ->
+            StatMultiplier(
+                critical = rs.negativeDouble(),
+            )
+        }
+}

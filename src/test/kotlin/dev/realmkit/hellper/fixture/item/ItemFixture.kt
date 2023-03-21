@@ -18,9 +18,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.ship
+package dev.realmkit.hellper.fixture.item
 
-import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.game.domain.item.document.Item
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
@@ -29,29 +29,29 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * # [ShipFixture]
- * contains all the [Ship] fixtures
+ * # [ItemFixture]
+ * contains all the [Item] fixtures
  */
-object ShipFixture {
+object ItemFixture {
     /**
      * ## [fixture]
-     * creates a [Ship] with random data
+     * creates a [Item] with random data
      */
-    val Ship.Companion.fixture: Arb<Ship>
+    val Item.Companion.fixture: Arb<Item>
         get() = arbitrary {
-            Ship(
-                name = arbitrary { faker.space.nasaSpaceCraft() }.bind(),
+            Item(
+                name = arbitrary { faker.zelda.items() }.bind(),
                 stat = Stat.fixture.bind(),
             )
         }
 
     /**
      * ## [invalid]
-     * creates a [Ship] with random invalid data
+     * creates a [Item] with random invalid data
      */
-    val Ship.Companion.invalid: Arb<Ship>
+    val Item.Companion.invalid: Arb<Item>
         get() = arbitrary {
-            Ship(
+            Item(
                 name = "",
                 stat = Stat.invalid.bind(),
             )

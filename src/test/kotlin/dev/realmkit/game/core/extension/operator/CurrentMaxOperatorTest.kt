@@ -25,7 +25,7 @@ import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSubtractedOf
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeSumOf
-import dev.realmkit.hellper.fixture.core.fixture
+import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll

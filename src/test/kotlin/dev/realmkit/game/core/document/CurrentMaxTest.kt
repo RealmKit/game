@@ -21,7 +21,7 @@
 package dev.realmkit.game.core.document
 
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
-import dev.realmkit.hellper.fixture.core.fixture
+import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.doubles.shouldBePositive

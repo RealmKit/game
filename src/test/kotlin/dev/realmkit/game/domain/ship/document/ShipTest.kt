@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.ship.document
 
-import dev.realmkit.hellper.fixture.ship.fixture
+import dev.realmkit.hellper.fixture.ship.ShipFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive

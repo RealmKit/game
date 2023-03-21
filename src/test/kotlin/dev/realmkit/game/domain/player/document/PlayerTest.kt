@@ -22,7 +22,7 @@ package dev.realmkit.game.domain.player.document
 
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
-import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive

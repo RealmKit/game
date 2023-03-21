@@ -28,7 +28,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * # [Player]
- * the Player document
+ * A [Player] will be able to have [Ship], [Resource] and also be [Target]
  *
  * @see BaseDocument
  *

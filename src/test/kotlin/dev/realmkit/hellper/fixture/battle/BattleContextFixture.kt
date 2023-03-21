@@ -22,29 +22,39 @@ package dev.realmkit.hellper.fixture.battle
 
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
-import dev.realmkit.game.domain.player.document.Player
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
-const val DEFAULT_BATTLE_DURATION: Long = 5L
-
 /**
- * Creates a [Player] with random data
+ * # [BattleContextFixture]
+ * contains all the fixtures for [BattleContext]
  */
-val BattleContext.Companion.fixture: Arb<BattleContext>
-    get() = arbitrary {
-        BattleContext(
-            battleDuration = DEFAULT_BATTLE_DURATION,
-            onAttack = { attacker, defender ->
-                val finalDamage = attacker.ship.stat.base.attack
-                defender.ship.stat.base.hull.current -= finalDamage
-                BattleActionAttack(
-                    attacker = attacker,
-                    defender = defender,
-                    finalDamage = finalDamage,
-                    toTheShield = false,
-                    isCritical = false,
-                )
-            },
-        )
-    }
+object BattleContextFixture {
+    /**
+     * ## [DEFAULT_BATTLE_DURATION]
+     * the default battle duration
+     */
+    const val DEFAULT_BATTLE_DURATION: Long = 5L
+
+    /**
+     * ## [fixture]
+     * creates a [BattleContext] with random data
+     */
+    val BattleContext.Companion.fixture: Arb<BattleContext>
+        get() = arbitrary {
+            BattleContext(
+                battleDuration = DEFAULT_BATTLE_DURATION,
+                onAttack = { attacker, defender ->
+                    val finalDamage = attacker.ship.stat.base.attack
+                    defender.ship.stat.base.hull.current -= finalDamage
+                    BattleActionAttack(
+                        attacker = attacker,
+                        defender = defender,
+                        finalDamage = finalDamage,
+                        toTheShield = false,
+                        isCritical = false,
+                    )
+                },
+            )
+        }
+}

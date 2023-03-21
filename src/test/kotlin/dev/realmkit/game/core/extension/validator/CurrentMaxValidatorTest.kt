@@ -22,8 +22,8 @@ package dev.realmkit.game.core.extension.validator
 
 import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.core.fixture
-import dev.realmkit.hellper.fixture.core.invalid
+import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.fixture
+import dev.realmkit.hellper.fixture.core.CurrentMaxFixture.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid

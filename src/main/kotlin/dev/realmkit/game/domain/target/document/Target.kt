@@ -26,7 +26,7 @@ import dev.realmkit.game.domain.ship.document.Ship
 
 /**
  * # [Target]
- * the Target interface
+ * A [Target] is an entity that can attack or be attacked
  */
 interface Target {
     /**

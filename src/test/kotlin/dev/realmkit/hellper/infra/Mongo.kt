@@ -20,31 +20,21 @@
 
 package dev.realmkit.hellper.infra
 
-import com.mongodb.client.MongoClients
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.testcontainers.containers.MongoDBContainer
 
+/**
+ * # [Mongo]
+ * Wraps the [MongoDB][MongoTemplate] container
+ */
 object Mongo {
     private const val MONGO_DOCKER_IMAGE = "mongo:latest"
-    private const val MONGO_DATABASE_NAME = "test"
     private val container by lazy {
         MongoDBContainer(MONGO_DOCKER_IMAGE).apply {
             start()
         }
     }
-    private val mongoTemplate by lazy {
-        MongoTemplate(MongoClients.create(container.replicaSetUrl), MONGO_DATABASE_NAME)
-    }
-
-    /**
-     * Clears the [MongoDB][MongoTemplate] collections
-     *
-     * @return nothing
-     * @see MongoTemplate
-     */
-    fun clear() =
-        container.takeIf { container.isRunning }?.run { mongoTemplate.db.drop() }
 
     /**
      * Clears the [MongoDB][MongoTemplate] collections

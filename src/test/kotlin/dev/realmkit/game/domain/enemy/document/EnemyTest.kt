@@ -22,7 +22,7 @@ package dev.realmkit.game.domain.enemy.document
 
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
-import dev.realmkit.hellper.fixture.enemy.fixture
+import dev.realmkit.hellper.fixture.enemy.EnemyFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.doubles.shouldBePositive
 import io.kotest.matchers.longs.shouldBePositive
@@ -31,7 +31,7 @@ import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.property.checkAll
 
 class EnemyTest : TestSpec({
-    expect("to create a new plain Enemy") {
+    expect("to create a new Enemy") {
         checkAll(Enemy.fixture) { enemy ->
             enemy.shouldNotBeNull()
             enemy.name.shouldNotBeNull().shouldNotBeEmpty()
