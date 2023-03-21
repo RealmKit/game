@@ -18,21 +18,20 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.domain.ship.document
 
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.assertions.asClue
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import dev.realmkit.game.domain.stat.document.Stat
 
-class StaticDataBattleTest : TestSpec({
-    expect("instantiate a StaticDataBattle") {
-        StaticDataBattle(
-            battleDuration = 10,
-            turnDuration = 10,
-        ).shouldNotBeNull().asClue { staticData ->
-            staticData.battleDuration shouldBe 10
-            staticData.turnDuration shouldBe 10
-        }
-    }
-})
+/**
+ * # [Ship]
+ * the Ship document
+ *
+ * @property name the player name
+ * @property stat the player stat
+ */
+data class Ship(
+    val name: String,
+    val stat: Stat,
+) {
+    companion object
+}

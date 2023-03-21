@@ -20,14 +20,14 @@
 
 package dev.realmkit.game.domain.staticdata.service
 
-import dev.realmkit.game.domain.staticdata.document.StaticDataBattle
-import dev.realmkit.game.domain.staticdata.document.StaticDataValues
+import dev.realmkit.game.domain.resource.document.Resource
+import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
 
 /**
  * # [StaticDataService]
- * the [StaticDataValues] service.
+ * the [StaticDataProperties] service.
  *
  * @see Service
  *
@@ -38,24 +38,29 @@ class StaticDataService(
     private val staticData: StaticDataProperties,
 ) {
     /**
-     * ## [initial]
-     * [StaticDataValues] initial value from properties
+     * ## [battleDuration]
+     * battle duration, in turns
      *
-     * @see StaticDataValues
-     *
-     * @return StaticDataStat initial properties
+     * @return the battle duration, in turns
      */
-    fun initial(): StaticDataValues =
-        staticData.initial()
+    fun battleDuration(): Long =
+        staticData.battleDuration()
 
     /**
-     * ## [battle
-     * [StaticDataBattle] value from properties
+     * ## [resource]
+     * initial resource properties
      *
-     * @see StaticDataBattle
-     *
-     * @return StaticDataBattle properties
+     * @return the initial resource properties
      */
-    fun battle(): StaticDataBattle =
-        staticData.battle()
+    fun resource(): Resource =
+        staticData.resource()
+
+    /**
+     * ## [battleWarShipV1]
+     * initial battle war ship v1 properties
+     *
+     * @return the initial battle war ship v1 properties
+     */
+    fun battleWarShipV1(): Ship =
+        staticData.battleWarShipV1()
 }

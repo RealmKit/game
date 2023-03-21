@@ -18,15 +18,35 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.domain.staticdata.extension
+
+import kotlin.math.pow
+import kotlin.math.roundToLong
 
 /**
- * # [StaticDataBattle]
- *
- * @property battleDuration the battle duration, in turns
- * @property turnDuration the turn duration, in seconds
+ * # [LevelUpFormula]
+ * `the level up` formula calculator.
  */
-data class StaticDataBattle(
-    val battleDuration: Long,
-    val turnDuration: Long,
-)
+object LevelUpFormula {
+    /**
+     * ## [POW]
+     * consts for creating the level up formula
+     */
+    private const val POW = 4
+
+    /**
+     * ## [MODIFIER]
+     * consts for creating the level up formula
+     */
+    private const val MODIFIER = 0.3
+
+    /**
+     * ## [invoke]
+     * the required experience to level up
+     *
+     * @param level the current level
+     * @return the required experience to level up
+     */
+    operator fun invoke(level: Long): Long =
+        (level.toDouble().pow(POW) * MODIFIER / (MODIFIER * level)).roundToLong()
+}

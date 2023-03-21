@@ -46,7 +46,7 @@ class BattleContextTest : TestSpec({
             Enemy.fixture,
             BattleContext.fixture,
         ) { player, enemy, context ->
-            player.stat.prepareToWinBattle()
+            player.ship.stat.prepareToWinBattle()
 
             context.apply { player against enemy }
                 .start()
@@ -55,7 +55,7 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
                         defender shouldBe enemy
-                        finalDamage shouldBe player.stat.base.attack
+                        finalDamage shouldBe player.ship.stat.base.attack
                         toTheShield.shouldBeFalse()
                         isCritical.shouldBeFalse()
                     }
@@ -72,8 +72,8 @@ class BattleContextTest : TestSpec({
             Enemy.fixture,
             BattleContext.fixture,
         ) { player, enemy, context ->
-            enemy.stat.base.attack = 100.0
-            enemy.stat.base.speed = 1.0
+            enemy.ship.stat.base.attack = 100.0
+            enemy.ship.stat.base.speed = 1.0
 
             context.apply { player against enemy }
                 .start()
@@ -82,7 +82,7 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttack> {
                         attacker shouldBe enemy
                         defender shouldBe player
-                        finalDamage shouldBe enemy.stat.base.attack
+                        finalDamage shouldBe enemy.ship.stat.base.attack
                         toTheShield.shouldBeFalse()
                         isCritical.shouldBeFalse()
                     }
@@ -99,8 +99,8 @@ class BattleContextTest : TestSpec({
             Enemy.fixture,
             BattleContext.fixture,
         ) { player, enemy, context ->
-            player.stat.base.speed = 0.0
-            enemy.stat.base.speed = 0.0
+            player.ship.stat.base.speed = 0.0
+            enemy.ship.stat.base.speed = 0.0
 
             context.apply { player against enemy }
                 .start()
@@ -122,8 +122,8 @@ class BattleContextTest : TestSpec({
             Enemy.many(),
             BattleContext.fixture,
         ) { player, enemies, context ->
-            player.stat.prepareToWinBattle()
-            enemies.onEach { enemy -> enemy.stat.base.speed = 0.0 }
+            player.ship.stat.prepareToWinBattle()
+            enemies.onEach { enemy -> enemy.ship.stat.base.speed = 0.0 }
 
             context.apply { player against enemies }
                 .start()
@@ -146,10 +146,10 @@ class BattleContextTest : TestSpec({
             Enemy.fixture,
             BattleContext.fixture,
         ) { player, enemy1, enemy2, enemy3, context ->
-            player.stat.prepareToWinBattle()
-            enemy1.stat.base.aggro = 1.0
-            enemy2.stat.base.aggro = 2.0
-            enemy3.stat.base.aggro = 3.0
+            player.ship.stat.prepareToWinBattle()
+            enemy1.ship.stat.base.aggro = 1.0
+            enemy2.ship.stat.base.aggro = 2.0
+            enemy3.ship.stat.base.aggro = 3.0
 
             context.apply { player against listOf(enemy1, enemy2, enemy3) }
                 .start()
@@ -158,7 +158,7 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
                         defender shouldBe enemy3
-                        finalDamage shouldBe player.stat.base.attack
+                        finalDamage shouldBe player.ship.stat.base.attack
                         toTheShield.shouldBeFalse()
                         isCritical.shouldBeFalse()
                     }
@@ -166,7 +166,7 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
                         defender shouldBe enemy2
-                        finalDamage shouldBe player.stat.base.attack
+                        finalDamage shouldBe player.ship.stat.base.attack
                         toTheShield.shouldBeFalse()
                         isCritical.shouldBeFalse()
                     }
@@ -174,7 +174,7 @@ class BattleContextTest : TestSpec({
                     onAction<BattleActionAttack> {
                         attacker shouldBe player
                         defender shouldBe enemy1
-                        finalDamage shouldBe player.stat.base.attack
+                        finalDamage shouldBe player.ship.stat.base.attack
                         toTheShield.shouldBeFalse()
                         isCritical.shouldBeFalse()
                     }

@@ -22,11 +22,12 @@ package dev.realmkit.hellper.fixture.player
 
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.resource.document.Resource
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.Fixture
 import dev.realmkit.hellper.fixture.resource.fixture
 import dev.realmkit.hellper.fixture.resource.invalid
+import dev.realmkit.hellper.fixture.ship.fixture
+import dev.realmkit.hellper.fixture.ship.invalid
 import dev.realmkit.hellper.fixture.stat.fixture
 import dev.realmkit.hellper.fixture.stat.invalid
 import io.kotest.property.Arb
@@ -38,16 +39,11 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val Player.Companion.fixture: Arb<Player>
     get() = arbitrary {
-        val id = arbitrary { faker.random.nextUUID() }.bind()
-        val name = arbitrary { faker.superhero.name() }.bind()
-        val stat = Stat.fixture.bind()
-        val resource = Resource.fixture.bind()
-        Fixture {
-            Player::id { id }
-            Player::name { name }
-            Player::stat { stat }
-            Player::resource { resource }
-        }
+        Player(
+            name = arbitrary { faker.superhero.name() }.bind(),
+            ship = Ship.fixture.bind(),
+            resource = Resource.fixture.bind(),
+        )
     }
 
 /**
@@ -56,11 +52,9 @@ val Player.Companion.fixture: Arb<Player>
  */
 val Player.Companion.invalid: Arb<Player>
     get() = arbitrary {
-        val stat = Stat.invalid.bind()
-        val resource = Resource.invalid.bind()
-        Fixture {
-            Player::name { "" }
-            Player::stat { stat }
-            Player::resource { resource }
-        }
+        Player(
+            name = "",
+            ship = Ship.invalid.bind(),
+            resource = Resource.invalid.bind(),
+        )
     }

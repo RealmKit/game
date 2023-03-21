@@ -35,8 +35,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * @see SpringBootApplication
  */
 @SpringBootApplication(scanBasePackages = ["dev.realmkit.game"])
-@EnableMongoRepositories("dev.realmkit.game.domain")
 @EnableMongoAuditing
+@EnableMongoRepositories("dev.realmkit.game.domain")
 @EnableConfigurationProperties(StaticDataProperties::class)
 @ConfigurationPropertiesScan
 class GameServiceApplication

@@ -18,29 +18,23 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture
+package dev.realmkit.game.core.document
 
-/**
- * # [Fixture]
- * Creates an object with random data.
- *
- * ```kotlin
- * val player = Fixture {
- *      Player::name { faker.superhero::name }
- *      Player::stat { Stat.fixture }
- * }
- * ```
- */
-interface Fixture {
-    companion object {
-        /**
-         * Creates the [Fixture] object.
-         *
-         * @param init the init block
-         * @return the random data object
-         */
-        inline operator fun <reified T : Any> invoke(
-            init: FixtureBuilder<T>.() -> Unit = {},
-        ): T = FixtureBuilder(type = T::class).apply(init).build()
+import dev.realmkit.game.domain.aliases.CurrentMaxDouble
+import dev.realmkit.hellper.fixture.core.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.doubles.shouldBePositive
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.property.checkAll
+
+class CurrentMaxTest : TestSpec({
+    expect("to create a new CurrentMax") {
+        checkAll(CurrentMaxDouble.fixture) { currentMax ->
+            currentMax.shouldNotBeNull()
+            currentMax.max.shouldBePositive()
+            currentMax.current.shouldBePositive()
+            currentMax.max shouldBeGreaterThanOrEqual currentMax.current
+        }
     }
-}
+})

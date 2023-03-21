@@ -18,30 +18,10 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.hellper.fixture.stat
+package dev.realmkit.game.domain.base.extension
 
-import dev.realmkit.game.domain.stat.document.StatMultiplier
-import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
-import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
+import dev.realmkit.hellper.spec.TestSpec
 
-/**
- * Creates a [StatMultiplier] with random data
- */
-val StatMultiplier.Companion.fixture: Arb<StatMultiplier>
-    get() = arbitrary { rs ->
-        StatMultiplier(
-            critical = rs.positiveDouble(),
-        )
-    }
-
-/**
- * Creates a [StatMultiplier] with random invalid data
- */
-val StatMultiplier.Companion.invalid: Arb<StatMultiplier>
-    get() = arbitrary { rs ->
-        StatMultiplier(
-            critical = rs.negativeDouble(),
-        )
-    }
+class MongoRepositoryExtensionsTest : TestSpec({
+    expect("nothing") {}
+})

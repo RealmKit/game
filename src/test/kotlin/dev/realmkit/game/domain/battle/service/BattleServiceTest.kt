@@ -49,7 +49,7 @@ class BattleServiceTest(
             Player.fixture,
             Enemy.fixture,
         ) { player, enemy ->
-            player.stat.prepareToWinBattle()
+            player.ship.stat.prepareToWinBattle()
             playerRepository persist player
 
             battleService.battle { player against enemy }
@@ -65,7 +65,7 @@ class BattleServiceTest(
             Enemy.fixture,
             Enemy.fixture,
         ) { player, enemy1, enemy2 ->
-            player.stat.prepareToWinBattle()
+            player.ship.stat.prepareToWinBattle()
             playerRepository persist player
 
             battleService.battle { player against listOf(enemy1, enemy2) }
@@ -82,8 +82,8 @@ class BattleServiceTest(
             Player.fixture,
             Enemy.fixture,
         ) { player1, player2, enemy ->
-            player1.stat.prepareToWinBattle()
-            player2.stat.prepareToWinBattle()
+            player1.ship.stat.prepareToWinBattle()
+            player2.ship.stat.prepareToWinBattle()
             playerRepository persist player1
             playerRepository persist player2
 
@@ -102,12 +102,12 @@ class BattleServiceTest(
             Enemy.fixture,
             Enemy.fixture,
         ) { player1, player2, enemy1, enemy2 ->
-            player1.stat.prepareToWinBattle()
-            player2.stat.prepareToWinBattle()
+            player1.ship.stat.prepareToWinBattle()
+            player2.ship.stat.prepareToWinBattle()
             playerRepository persist player1
             playerRepository persist player2
-            enemy1.stat.base.speed = 1.0
-            enemy2.stat.base.speed = 0.5
+            enemy1.ship.stat.base.speed = 1.0
+            enemy2.ship.stat.base.speed = 0.5
 
             battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
 
@@ -125,10 +125,10 @@ class BattleServiceTest(
             Enemy.fixture,
             Enemy.fixture,
         ) { player1, player2, enemy1, enemy2 ->
-            player1.stat.base.speed = 1.0
-            player2.stat.base.speed = 0.5
-            enemy1.stat.prepareToWinBattle()
-            enemy2.stat.prepareToWinBattle()
+            player1.ship.stat.base.speed = 1.0
+            player2.ship.stat.base.speed = 0.5
+            enemy1.ship.stat.prepareToWinBattle()
+            enemy2.ship.stat.prepareToWinBattle()
 
             battleService.battle { listOf(player1, player2) against listOf(enemy1, enemy2) }
 
@@ -144,8 +144,8 @@ class BattleServiceTest(
             Player.fixture,
             Enemy.fixture,
         ) { player, enemy ->
-            player.stat.base.attack = 0.0
-            enemy.stat.base.attack = 0.0
+            player.ship.stat.base.attack = 0.0
+            enemy.ship.stat.base.attack = 0.0
 
             battleService.battle { player against enemy }
 

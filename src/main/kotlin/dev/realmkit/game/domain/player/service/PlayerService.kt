@@ -62,13 +62,11 @@ class PlayerService(
      */
     @Throws(ValidationException::class)
     infix fun new(name: String): Player =
-        staticDataService.initial().let { initial ->
-            this persist Player(
-                name = name,
-                stat = initial.stat,
-                resource = initial.resource,
-            )
-        }
+        this persist Player(
+            name = name,
+            ship = staticDataService.battleWarShipV1(),
+            resource = staticDataService.resource(),
+        )
 
     /**
      * ## [update]
@@ -88,7 +86,7 @@ class PlayerService(
     @Throws(ValidationException::class, NotFoundException::class)
     infix fun update(player: Player): Player =
         find(player.id).let {
-            statService levelUp player.stat
+            statService levelUp player.ship.stat
             playerRepository persist player
         }
 

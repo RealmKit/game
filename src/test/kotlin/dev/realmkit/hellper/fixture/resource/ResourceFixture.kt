@@ -24,7 +24,6 @@ import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeLong
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveLong
-import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -33,13 +32,13 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val Resource.Companion.fixture: Arb<Resource>
     get() = arbitrary { rs ->
-        Fixture {
-            Resource::titanium { rs.positiveLong() }
-            Resource::crystal { rs.positiveLong() }
-            Resource::darkMatter { rs.positiveLong() }
-            Resource::antiMatter { rs.positiveLong() }
-            Resource::purunhalium { rs.positiveLong() }
-        }
+        Resource(
+            titanium = rs.positiveLong(),
+            crystal = rs.positiveLong(),
+            darkMatter = rs.positiveLong(),
+            antiMatter = rs.positiveLong(),
+            purunhalium = rs.positiveLong(),
+        )
     }
 
 /**
@@ -47,11 +46,11 @@ val Resource.Companion.fixture: Arb<Resource>
  */
 val Resource.Companion.invalid: Arb<Resource>
     get() = arbitrary { rs ->
-        Fixture {
-            Resource::titanium { rs.negativeLong() }
-            Resource::crystal { rs.negativeLong() }
-            Resource::darkMatter { rs.negativeLong() }
-            Resource::antiMatter { rs.negativeLong() }
-            Resource::purunhalium { rs.negativeLong() }
-        }
+        Resource(
+            titanium = rs.negativeLong(),
+            crystal = rs.negativeLong(),
+            darkMatter = rs.negativeLong(),
+            antiMatter = rs.negativeLong(),
+            purunhalium = rs.negativeLong(),
+        )
     }

@@ -18,19 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.document
+package dev.realmkit.game.domain.ship.validator
 
-import dev.realmkit.game.domain.resource.document.Resource
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.core.extension.ValidationExtensions.notBlank
+import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.game.domain.stat.extension.validator.StatValidator
+import io.konform.validation.Validation
 
 /**
- * # [StaticDataValues]
- * the StaticDataValues properties
- *
- * @property stat the stat value from properties
- * @property resource
+ * # [ShipValidator]
+ * [Ship] validations
  */
-data class StaticDataValues(
-    val stat: Stat,
-    val resource: Resource,
-)
+object ShipValidator {
+    /**
+     * ## [validation]
+     * [Ship] -> [Validation] object
+     */
+    val validation: Validation<Ship> = Validation {
+        Ship::name required { notBlank() }
+        Ship::stat required { run(StatValidator.validation) }
+    }
+}

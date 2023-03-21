@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.stat.service
 
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.game.domain.staticdata.property.LevelUpFormula
+import dev.realmkit.game.domain.staticdata.extension.LevelUpFormula
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 

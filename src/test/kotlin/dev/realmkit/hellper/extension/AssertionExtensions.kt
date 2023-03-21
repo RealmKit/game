@@ -109,8 +109,8 @@ object AssertionExtensions {
      */
     fun Target.shouldBeAlive(): Target = asClue {
         withClue("alive") { alive.shouldBeTrue() }
-        withClue(".stat.base.shield.current") { stat.base.shield.current.shouldBeGreaterThanOrEqual(DOUBLE_ZERO) }
-        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBePositive() }
+        withClue(".ship.stat.base.shield.current") { ship.stat.base.shield.current.shouldBeGreaterThanOrEqual(DOUBLE_ZERO) }
+        withClue(".ship.stat.base.hull.current") { ship.stat.base.hull.current.shouldBePositive() }
         this
     }
 
@@ -124,7 +124,7 @@ object AssertionExtensions {
      */
     fun Target.shouldNotBeAlive(): Target = asClue {
         withClue("alive") { alive.shouldBeFalse() }
-        withClue(".stat.base.hull.current") { stat.base.hull.current.shouldBeLessThanOrEqual(DOUBLE_ZERO) }
+        withClue(".ship.stat.base.hull.current") { ship.stat.base.hull.current.shouldBeLessThanOrEqual(DOUBLE_ZERO) }
         this
     }
 

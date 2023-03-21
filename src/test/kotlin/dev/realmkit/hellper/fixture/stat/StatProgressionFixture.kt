@@ -23,7 +23,6 @@ package dev.realmkit.hellper.fixture.stat
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeLong
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveLong
-import dev.realmkit.hellper.fixture.Fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -32,10 +31,10 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val StatProgression.Companion.fixture: Arb<StatProgression>
     get() = arbitrary { rs ->
-        Fixture {
-            StatProgression::level { rs.positiveLong() }
-            StatProgression::experience { rs.positiveLong() }
-        }
+        StatProgression(
+            level = rs.positiveLong(),
+            experience = rs.positiveLong(),
+        )
     }
 
 /**
@@ -43,8 +42,8 @@ val StatProgression.Companion.fixture: Arb<StatProgression>
  */
 val StatProgression.Companion.invalid: Arb<StatProgression>
     get() = arbitrary { rs ->
-        Fixture {
-            StatProgression::level { rs.negativeLong() }
-            StatProgression::experience { rs.negativeLong() }
-        }
+        StatProgression(
+            level = rs.negativeLong(),
+            experience = rs.negativeLong(),
+        )
     }

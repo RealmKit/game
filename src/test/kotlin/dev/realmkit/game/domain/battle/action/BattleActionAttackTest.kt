@@ -18,34 +18,33 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.app
+package dev.realmkit.game.domain.battle.action
 
-import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.game.domain.target.service.TargetService
-import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
-import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.infra.IntegrationTestContext
-import dev.realmkit.hellper.spec.IntegrationTestSpec
-import io.kotest.matchers.nulls.shouldNotBeNull
+import dev.realmkit.game.domain.enemy.document.Enemy
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.hellper.fixture.enemy.fixture
+import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.assertions.asClue
 import io.kotest.matchers.shouldBe
+import io.kotest.property.checkAll
 
-@IntegrationTestContext
-class GameTest(
-    private val playerService: PlayerService,
-    private val targetService: TargetService,
-) : IntegrationTestSpec({
-    expect("all beans to be inject") {
-        playerService.shouldNotBeNull()
-        targetService.shouldNotBeNull()
-    }
-
-    expect("the game to run normally") {
-        val player = playerService.new(faker.superhero.name())
-        val enemy = playerService.new(faker.superhero.name())
-
-        enemy.stat.base.hull.current shouldBe 5.0
-
-        targetService.attack(player, enemy)
-        enemy.shouldBeAlive()
+class BattleActionAttackTest : TestSpec({
+    expect("to create a new BattleActionAttack") {
+        checkAll(Player.fixture, Enemy.fixture) { player, enemy ->
+            BattleActionAttack(
+                attacker = player,
+                defender = enemy,
+                finalDamage = 0.0,
+                toTheShield = true,
+                isCritical = true,
+            ).asClue { action ->
+                action.attacker shouldBe player
+                action.defender shouldBe enemy
+                action.finalDamage shouldBe 0.0
+                action.toTheShield shouldBe true
+                action.isCritical shouldBe true
+            }
+        }
     }
 })

@@ -22,7 +22,7 @@ package dev.realmkit.game.domain.target.document
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
-import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.ship.document.Ship
 
 /**
  * # [Target]
@@ -42,10 +42,10 @@ interface Target {
     val name: String
 
     /**
-     * ## [stat]
-     * the target stat
+     * ## [ship]
+     * the target ship
      */
-    val stat: Stat
+    val ship: Ship
 
     /**
      * ## [alive]
@@ -55,5 +55,5 @@ interface Target {
      */
     @get:JsonIgnore
     val alive: Boolean
-        get() = stat.base.hull.current > DOUBLE_ZERO
+        get() = ship.stat.base.hull.current > DOUBLE_ZERO
 }

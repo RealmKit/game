@@ -24,7 +24,6 @@ import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.hellper.extension.RandomSourceExtensions.negativeDouble
 import dev.realmkit.hellper.extension.RandomSourceExtensions.positiveDouble
-import dev.realmkit.hellper.fixture.Fixture
 import dev.realmkit.hellper.fixture.core.fixture
 import dev.realmkit.hellper.fixture.core.invalid
 import io.kotest.property.Arb
@@ -35,18 +34,15 @@ import io.kotest.property.arbitrary.arbitrary
  */
 val StatBase.Companion.fixture: Arb<StatBase>
     get() = arbitrary { rs ->
-        val hull = CurrentMaxDouble.fixture.bind()
-        val shield = CurrentMaxDouble.fixture.bind()
-        val energy = CurrentMaxDouble.fixture.bind()
-        Fixture {
-            StatBase::hull { hull }
-            StatBase::shield { shield }
-            StatBase::energy { energy }
-            StatBase::attack { rs.positiveDouble() }
-            StatBase::defense { rs.positiveDouble() }
-            StatBase::speed { rs.positiveDouble() }
-            StatBase::aggro { rs.positiveDouble() }
-        }
+        StatBase(
+            hull = CurrentMaxDouble.fixture.bind(),
+            shield = CurrentMaxDouble.fixture.bind(),
+            energy = CurrentMaxDouble.fixture.bind(),
+            attack = rs.positiveDouble(),
+            defense = rs.positiveDouble(),
+            speed = rs.positiveDouble(),
+            aggro = rs.positiveDouble(),
+        )
     }
 
 /**
@@ -54,16 +50,13 @@ val StatBase.Companion.fixture: Arb<StatBase>
  */
 val StatBase.Companion.invalid: Arb<StatBase>
     get() = arbitrary { rs ->
-        val hull = CurrentMaxDouble.invalid.bind()
-        val shield = CurrentMaxDouble.invalid.bind()
-        val energy = CurrentMaxDouble.invalid.bind()
-        Fixture {
-            StatBase::hull { hull }
-            StatBase::shield { shield }
-            StatBase::energy { energy }
-            StatBase::attack { rs.negativeDouble() }
-            StatBase::defense { rs.negativeDouble() }
-            StatBase::speed { rs.negativeDouble() }
-            StatBase::aggro { rs.negativeDouble() }
-        }
+        StatBase(
+            hull = CurrentMaxDouble.invalid.bind(),
+            shield = CurrentMaxDouble.invalid.bind(),
+            energy = CurrentMaxDouble.invalid.bind(),
+            attack = rs.negativeDouble(),
+            defense = rs.negativeDouble(),
+            speed = rs.negativeDouble(),
+            aggro = rs.negativeDouble(),
+        )
     }

@@ -31,26 +31,26 @@ import io.kotest.matchers.string.shouldNotBeEmpty
 import io.kotest.property.checkAll
 
 class PlayerTest : TestSpec({
-    expect("to create a new plain Player") {
+    expect("to create a new Player") {
         checkAll(Player.fixture) { player ->
             player.shouldNotBeNull()
             player.name.shouldNotBeNull().shouldNotBeEmpty()
-            player.stat.shouldNotBeNull()
-            player.stat.base.hull.current.shouldBePositive()
-            player.stat.base.hull.max.shouldBePositive()
-            player.stat.base.shield.current.shouldBePositive()
-            player.stat.base.shield.max.shouldBePositive()
-            player.stat.base.energy.current.shouldBePositive()
-            player.stat.base.energy.max.shouldBePositive()
-            player.stat.base.attack.shouldBePositive()
-            player.stat.base.defense.shouldBePositive()
-            player.stat.base.speed.shouldBePositive()
-            player.stat.base.aggro.shouldBePositive()
-            player.stat.rate.shieldRegeneration.shouldBePositive()
-            player.stat.rate.critical.shouldBePositive()
-            player.stat.multiplier.critical.shouldBePositive()
-            player.stat.progression.level.shouldBePositive()
-            player.stat.progression.experience.shouldBePositive()
+            player.ship.stat.shouldNotBeNull()
+            player.ship.stat.base.hull.current.shouldBePositive()
+            player.ship.stat.base.hull.max.shouldBePositive()
+            player.ship.stat.base.shield.current.shouldBePositive()
+            player.ship.stat.base.shield.max.shouldBePositive()
+            player.ship.stat.base.energy.current.shouldBePositive()
+            player.ship.stat.base.energy.max.shouldBePositive()
+            player.ship.stat.base.attack.shouldBePositive()
+            player.ship.stat.base.defense.shouldBePositive()
+            player.ship.stat.base.speed.shouldBePositive()
+            player.ship.stat.base.aggro.shouldBePositive()
+            player.ship.stat.rate.shieldRegeneration.shouldBePositive()
+            player.ship.stat.rate.critical.shouldBePositive()
+            player.ship.stat.multiplier.critical.shouldBePositive()
+            player.ship.stat.progression.level.shouldBePositive()
+            player.ship.stat.progression.experience.shouldBePositive()
             player.resource.titanium.shouldBePositive()
             player.resource.crystal.shouldBePositive()
             player.resource.darkMatter.shouldBePositive()
@@ -62,7 +62,7 @@ class PlayerTest : TestSpec({
     expect("Player to be alive and dead") {
         checkAll(Player.fixture) { player ->
             player.shouldBeAlive()
-            player.stat.base.hull.current = 0.0
+            player.ship.stat.base.hull.current = 0.0
             player.shouldNotBeAlive()
         }
     }

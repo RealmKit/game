@@ -21,17 +21,15 @@
 package dev.realmkit.game.core.extension
 
 import dev.realmkit.game.core.extension.MapperExtensions.clone
+import dev.realmkit.game.core.extension.MapperExtensions.mapper
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
-data class Dummy(val test: String)
-
 class MapperExtensionsTest : TestSpec({
-    expect(".clone() to deep clone a data class") {
-        val original = Dummy("test")
-        val clone = original.clone()
+    expect(".clone() to deep clone a class") {
+        val clone = testCase.name.clone()
         clone.shouldNotBeNull()
-        clone.test shouldBe original.test
+        mapper.writeValueAsString(clone) shouldBe mapper.writeValueAsString(testCase.name)
     }
 })
