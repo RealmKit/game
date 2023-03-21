@@ -23,6 +23,7 @@ package dev.realmkit.game.domain.staticdata.property
 import dev.realmkit.game.core.extension.MapperExtensions.clone
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
@@ -30,12 +31,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  * static data values
  *
  * @property battleDuration the battle duration, in turns
+ * @property resource the initial resource properties
+ * @property ships the ship based on the name property
  */
 @ConfigurationProperties(prefix = "app.static.data")
 class StaticDataProperties(
     private val battleDuration: Long,
     private val resource: Resource,
-    private val battleWarShipV1: Ship,
+    private val ships: Map<StaticDataShipEnum, Ship>,
 ) {
     /**
      * ## [battleDuration]
@@ -56,11 +59,12 @@ class StaticDataProperties(
         resource.clone()
 
     /**
-     * ## [battleWarShipV1]
-     * initial battle war ship v1 properties
+     * ## [ships]
+     * initial ship value properties
      *
-     * @return the initial battle war ship v1 properties
+     * @param ship the ship name
+     * @return the ship based on the name property
      */
-    fun battleWarShipV1(): Ship =
-        battleWarShipV1.clone()
+    fun ships(ship: StaticDataShipEnum): Ship =
+        ships[ship]!!.clone()
 }

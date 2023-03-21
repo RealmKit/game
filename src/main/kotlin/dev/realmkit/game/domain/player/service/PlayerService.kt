@@ -27,6 +27,7 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.game.domain.stat.service.StatService
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.game.domain.staticdata.service.StaticDataService
 import io.konform.validation.Validation
 import org.springframework.stereotype.Service
@@ -64,7 +65,7 @@ class PlayerService(
     infix fun new(name: String): Player =
         this persist Player(
             name = name,
-            ship = staticDataService.battleWarShipV1(),
+            ship = staticDataService.ships(BATTLE_WAR_SHIP_V1),
             resource = staticDataService.resource(),
         )
 

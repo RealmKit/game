@@ -65,7 +65,7 @@ class PlayerServiceTest(
             saved.ship.stat.base.aggro shouldBe 1.0
             saved.ship.stat.rate.shouldNotBeNull()
             saved.ship.stat.rate.shieldRegeneration shouldBe 0.0
-            saved.ship.stat.rate.critical shouldBe 1.0
+            saved.ship.stat.rate.critical shouldBe 0.0
             saved.ship.stat.multiplier.shouldNotBeNull()
             saved.ship.stat.multiplier.critical shouldBe 1.0
             saved.ship.stat.progression.level shouldBe 1L

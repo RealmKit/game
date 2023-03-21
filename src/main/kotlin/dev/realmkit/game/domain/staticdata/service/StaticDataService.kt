@@ -22,6 +22,7 @@ package dev.realmkit.game.domain.staticdata.service
 
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
 
@@ -56,11 +57,12 @@ class StaticDataService(
         staticData.resource()
 
     /**
-     * ## [battleWarShipV1]
-     * initial battle war ship v1 properties
+     * ## [ships]
+     * initial ship value properties
      *
-     * @return the initial battle war ship v1 properties
+     * @param ship the ship name
+     * @return the ship based on the name property
      */
-    fun battleWarShipV1(): Ship =
-        staticData.battleWarShipV1()
+    fun ships(ship: StaticDataShipEnum): Ship =
+        staticData.ships(ship)
 }

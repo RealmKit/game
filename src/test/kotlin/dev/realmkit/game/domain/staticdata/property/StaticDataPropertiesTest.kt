@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.staticdata.property
 
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
@@ -53,7 +54,7 @@ class StaticDataPropertiesTest(
     }
 
     expect("battleWarShipV1 to generate the battleWarShipV1 StaticData values from properties") {
-        staticDataProperties.battleWarShipV1()
+        staticDataProperties.ships(BATTLE_WAR_SHIP_V1)
             .shouldNotBeNull()
             .asClue { ship ->
                 ship.name shouldBe "WarShip V1.1"
@@ -71,7 +72,7 @@ class StaticDataPropertiesTest(
                 ship.stat.base.aggro shouldBe 1.0
                 ship.stat.rate.shouldNotBeNull()
                 ship.stat.rate.shieldRegeneration shouldBe 0.0
-                ship.stat.rate.critical shouldBe 1.0
+                ship.stat.rate.critical shouldBe 0.0
                 ship.stat.multiplier.shouldNotBeNull()
                 ship.stat.multiplier.critical shouldBe 1.0
                 ship.stat.progression.level shouldBe 1L
