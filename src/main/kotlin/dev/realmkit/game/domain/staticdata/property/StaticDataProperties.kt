@@ -32,26 +32,25 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  * # [StaticDataProperties]
  * static data values
  *
- * @property battleDuration the battle duration, in turns
+ * @property config the static data config values
  * @property resource the initial resource properties
  * @property ships the ships static data values
  * @property items the item static data values
  */
 @ConfigurationProperties(prefix = "app.static.data")
 class StaticDataProperties(
-    private val battleDuration: Long,
+    private val config: StaticDataConfig,
     private val resource: Resource,
     private val ships: Map<StaticDataShipEnum, Ship>,
     private val items: Map<StaticDataItemEnum, Item>,
 ) {
     /**
-     * ## [battleDuration]
-     * battle duration, in turns
+     * ## [config]
+     * static data config values
      *
-     * @return the battle duration, in turns
+     * @return the static data config values
      */
-    fun battleDuration(): Long =
-        battleDuration
+    fun config(): StaticDataConfig = config
 
     /**
      * ## [resource]

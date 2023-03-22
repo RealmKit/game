@@ -29,6 +29,8 @@ import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.doubles.shouldBeZero
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeBlank
@@ -55,26 +57,27 @@ class PlayerServiceTest(
             saved.ship.stat.base.shouldNotBeNull()
             saved.ship.stat.base.hull.max shouldBe 5.0
             saved.ship.stat.base.hull.current shouldBe 5.0
-            saved.ship.stat.base.shield.max shouldBe 0.0
-            saved.ship.stat.base.shield.current shouldBe 0.0
+            saved.ship.stat.base.shield.max.shouldBeZero()
+            saved.ship.stat.base.shield.current.shouldBeZero()
             saved.ship.stat.base.energy.max shouldBe 5.0
             saved.ship.stat.base.energy.current shouldBe 5.0
             saved.ship.stat.base.attack shouldBe 1.0
-            saved.ship.stat.base.defense shouldBe 0.0
+            saved.ship.stat.base.defense.shouldBeZero()
             saved.ship.stat.base.speed shouldBe 1.0
             saved.ship.stat.base.aggro shouldBe 1.0
             saved.ship.stat.rate.shouldNotBeNull()
-            saved.ship.stat.rate.shieldRegeneration shouldBe 0.0
-            saved.ship.stat.rate.critical shouldBe 0.0
+            saved.ship.stat.rate.shieldRegeneration.shouldBeZero()
+            saved.ship.stat.rate.critical.shouldBeZero()
             saved.ship.stat.multiplier.shouldNotBeNull()
             saved.ship.stat.multiplier.critical shouldBe 1.0
-            saved.ship.stat.progression.level shouldBe 1L
-            saved.ship.stat.progression.experience shouldBe 0L
-            saved.resource.titanium shouldBe 1_000L
-            saved.resource.crystal shouldBe 0L
-            saved.resource.darkMatter shouldBe 0L
-            saved.resource.antiMatter shouldBe 0L
-            saved.resource.purunhalium shouldBe 0L
+            saved.ship.stat.progression.level shouldBe 1
+            saved.ship.stat.progression.experience.shouldBeZero()
+            saved.ship.stat.progression.points.shouldBeZero()
+            saved.resource.titanium shouldBe 1_000
+            saved.resource.crystal.shouldBeZero()
+            saved.resource.darkMatter.shouldBeZero()
+            saved.resource.antiMatter.shouldBeZero()
+            saved.resource.purunhalium.shouldBeZero()
         }
     }
 
@@ -91,12 +94,14 @@ class PlayerServiceTest(
         checkAll(Player.fixture) { player ->
             val saved = playerService new player.name
             saved.ship.stat.progression.level shouldBe 1
-            saved.ship.stat.progression.experience shouldBe 0
+            saved.ship.stat.progression.experience.shouldBeZero()
+            saved.ship.stat.progression.points.shouldBeZero()
 
             saved.ship.stat.progression.experience = 8
             playerService update saved
             saved.ship.stat.progression.level shouldBe 2
-            saved.ship.stat.progression.experience shouldBe 0
+            saved.ship.stat.progression.experience.shouldBeZero()
+            saved.ship.stat.progression.points shouldBe 5
         }
     }
 

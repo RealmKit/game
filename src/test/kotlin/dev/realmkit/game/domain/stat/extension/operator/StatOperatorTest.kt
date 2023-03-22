@@ -67,6 +67,7 @@ class StatOperatorTest : TestSpec({
             subtract.base.energy.current shouldBe 1.0
             subtract.progression.level shouldBe actual.progression.level
             subtract.progression.experience shouldBe actual.progression.experience
+            subtract.progression.points shouldBe actual.progression.points
         }
     }
 
@@ -92,6 +93,7 @@ class StatOperatorTest : TestSpec({
             subtract.base.energy.current shouldBe 5.0
             subtract.progression.level shouldBe actual.progression.level
             subtract.progression.experience shouldBe actual.progression.experience
+            subtract.progression.points shouldBe actual.progression.points
         }
     }
 })

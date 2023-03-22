@@ -257,6 +257,7 @@ object AssertionExtensions {
     fun StatProgression.shouldBeSumOf(actual: StatProgression, other: StatProgression): StatProgression = asClue {
         level shouldBe actual.level
         experience shouldBe actual.experience + other.experience
+        points shouldBe actual.points
         this
     }
 

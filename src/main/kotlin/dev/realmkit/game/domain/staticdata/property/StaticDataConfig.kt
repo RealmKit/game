@@ -18,24 +18,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.stat.extension.validator
-
-import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.stat.document.StatProgression
-import io.konform.validation.Validation
+package dev.realmkit.game.domain.staticdata.property
 
 /**
- * # [StatProgressionValidator]
- * [StatProgression] validations
+ * # [StaticDataConfig]
+ * static data config values
+ *
+ * @property battleDuration the battle duration, in turns
+ * @property turnDuration the turn duration, in seconds
+ * @property pointsPerLevel the points gained per level
  */
-object StatProgressionValidator {
-    /**
-     * ## [validation]
-     * [StatProgression] -> [Validation] object
-     */
-    val validation: Validation<StatProgression> = Validation {
-        StatProgression::level required { positive() }
-        StatProgression::experience required { positive() }
-        StatProgression::points required { positive() }
-    }
-}
+data class StaticDataConfig(
+    val battleDuration: Long,
+    val turnDuration: Long,
+    val pointsPerLevel: Long,
+)

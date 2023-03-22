@@ -40,6 +40,7 @@ object StatProgressionFixture {
             StatProgression(
                 level = rs.positiveLong(),
                 experience = rs.positiveLong(),
+                points = rs.positiveLong(),
             )
         }
 
@@ -52,6 +53,7 @@ object StatProgressionFixture {
             StatProgression(
                 level = rs.negativeLong(),
                 experience = rs.negativeLong(),
+                points = rs.negativeLong(),
             )
         }
 }

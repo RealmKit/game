@@ -56,6 +56,7 @@ class ShipValidatorTest : TestSpec({
                     ".stat.multiplier.critical" to "must be positive",
                     ".stat.progression.level" to "must be positive",
                     ".stat.progression.experience" to "must be positive",
+                    ".stat.progression.points" to "must be positive",
                 )
             }
         }

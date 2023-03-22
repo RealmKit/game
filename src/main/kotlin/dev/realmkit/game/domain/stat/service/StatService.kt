@@ -22,6 +22,7 @@ package dev.realmkit.game.domain.stat.service
 
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.staticdata.extension.LevelUpFormula
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
@@ -32,7 +33,9 @@ import java.util.concurrent.ConcurrentHashMap
  * @see Service
  */
 @Service
-class StatService {
+class StatService(
+    private val staticDataProperties: StaticDataProperties,
+) {
     /**
      * ## [experienceTable]
      * the `experience to level up` table
@@ -61,6 +64,7 @@ class StatService {
         while (stat.progression.experience >= stat.experienceRequiredToLevelUp) {
             stat.progression.experience -= stat.experienceRequiredToLevelUp
             stat.progression.level++
+            stat.progression.points += staticDataProperties.config().pointsPerLevel
         }
         return stat
     }

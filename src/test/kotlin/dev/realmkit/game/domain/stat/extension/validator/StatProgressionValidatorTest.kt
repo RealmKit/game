@@ -42,6 +42,7 @@ class StatProgressionValidatorTest : TestSpec({
                 invalid shouldHaveAllErrors listOf(
                     ".level" to "must be positive",
                     ".experience" to "must be positive",
+                    ".points" to "must be positive",
                 )
             }
         }

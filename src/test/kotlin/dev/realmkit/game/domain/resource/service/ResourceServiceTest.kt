@@ -23,6 +23,7 @@ package dev.realmkit.game.domain.resource.service
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
@@ -38,11 +39,11 @@ class ResourceServiceTest(
         resourceService.resource
             .shouldNotBeNull()
             .asClue { resource ->
-                resource.titanium shouldBe 1_000L
-                resource.crystal shouldBe 0L
-                resource.darkMatter shouldBe 0L
-                resource.antiMatter shouldBe 0L
-                resource.purunhalium shouldBe 0L
+                resource.titanium shouldBe 1_000
+                resource.crystal.shouldBeZero()
+                resource.darkMatter.shouldBeZero()
+                resource.antiMatter.shouldBeZero()
+                resource.purunhalium.shouldBeZero()
             }
     }
 })

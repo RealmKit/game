@@ -1,14 +1,10 @@
 {
   "properties": [
     {
-      "name": "app.static.data.battle-duration",
-      "type": "java.lang.Long",
-      "description": "StaticData: Battle Duration, in turns."
-    },
-    {
-      "name": "app.static.data.turn-duration",
-      "type": "java.lang.Long",
-      "description": "StaticData: Turn Duration, in seconds."
+      "name": "app.static.data.config",
+      "type": "dev.realmkit.game.domain.staticdata.property.StaticDataConfig",
+      "sourceType": "dev.realmkit.game.domain.staticdata.property.StaticDataConfig",
+      "description": "StaticData: Game Config."
     },
     {
       "name": "app.static.data.resource",

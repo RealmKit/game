@@ -26,6 +26,7 @@ import dev.realmkit.hellper.fixture.enemy.EnemyFixture.fixture
 import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.asClue
+import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
@@ -41,7 +42,7 @@ class BattleActionAttackTest : TestSpec({
             ).asClue { action ->
                 action.attacker shouldBe player
                 action.defender shouldBe enemy
-                action.finalDamage shouldBe 0.0
+                action.finalDamage.shouldBeZero()
                 action.toTheShield shouldBe true
                 action.isCritical shouldBe true
             }

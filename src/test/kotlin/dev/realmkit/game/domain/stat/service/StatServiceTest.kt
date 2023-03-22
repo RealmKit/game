@@ -24,6 +24,7 @@ import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
@@ -38,12 +39,14 @@ class StatServiceTest(
 
     expect("to not level up a Stat") {
         checkAll(Stat.fixture) { stat ->
-            stat.progression.level = 1L
-            stat.progression.experience = 0L
+            stat.progression.level = 1
+            stat.progression.experience = 0
+            stat.progression.points = 0
 
             statService levelUp stat
-            stat.progression.level shouldBe 1L
-            stat.progression.experience shouldBe 0L
+            stat.progression.level shouldBe 1
+            stat.progression.experience.shouldBeZero()
+            stat.progression.points.shouldBeZero()
         }
     }
 
@@ -51,10 +54,12 @@ class StatServiceTest(
         checkAll(Stat.fixture) { stat ->
             stat.progression.level = 1
             stat.progression.experience = 8
+            stat.progression.points = 0
 
             statService levelUp stat
             stat.progression.level shouldBe 2
-            stat.progression.experience shouldBe 0
+            stat.progression.experience.shouldBeZero()
+            stat.progression.points shouldBe 5
         }
     }
 
@@ -62,26 +67,31 @@ class StatServiceTest(
         checkAll(Stat.fixture) { stat ->
             stat.progression.level = 1
             stat.progression.experience = 8
+            stat.progression.points = 0
 
             statService levelUp stat
             stat.progression.level shouldBe 2
-            stat.progression.experience shouldBe 0
+            stat.progression.experience.shouldBeZero()
+            stat.progression.points shouldBe 5
             stat.progression.experience = 27
 
             statService levelUp stat
             stat.progression.level shouldBe 3
-            stat.progression.experience shouldBe 0
+            stat.progression.experience.shouldBeZero()
+            stat.progression.points shouldBe 10
         }
     }
 
     expect("to level up a Stat from level 1 to level 100") {
         checkAll(Stat.fixture) { stat ->
-            stat.progression.level = 1L
-            stat.progression.experience = 25_502_500L
+            stat.progression.level = 1
+            stat.progression.experience = 25_502_500
+            stat.progression.points = 0
 
             statService levelUp stat
-            stat.progression.level shouldBe 100L
-            stat.progression.experience shouldBe 1L
+            stat.progression.level shouldBe 100
+            stat.progression.experience shouldBe 1
+            stat.progression.points shouldBe 495
         }
     }
 })
