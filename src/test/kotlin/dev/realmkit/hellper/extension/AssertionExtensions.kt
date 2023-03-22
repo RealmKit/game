@@ -50,8 +50,6 @@ import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.kotest.property.Exhaustive
-import io.kotest.property.exhaustive.exhaustive
 
 /**
  * # [Violation]
@@ -352,13 +350,4 @@ object AssertionExtensions {
         current shouldNotBeGreaterThan max
         this
     }
-
-    /**
-     * ## [exhaustive]
-     * generate an [Exhaustive] for the given [Enum]
-     *
-     * @return the [Exhaustive] for the given [Enum]
-     */
-    inline fun <reified E : Enum<E>> exhaustive(): Exhaustive<E> =
-        enumValues<E>().toList().exhaustive()
 }

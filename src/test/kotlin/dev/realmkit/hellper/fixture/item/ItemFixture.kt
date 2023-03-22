@@ -23,12 +23,12 @@ package dev.realmkit.hellper.fixture.item
 import dev.realmkit.game.domain.item.document.Item
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
-import dev.realmkit.hellper.extension.AssertionExtensions.exhaustive
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
 import dev.realmkit.hellper.fixture.stat.StatFixture.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.arbitrary.enum
 
 /**
  * # [ItemFixture]
@@ -42,7 +42,7 @@ object ItemFixture {
     val Item.Companion.fixture: Arb<Item>
         get() = arbitrary {
             Item(
-                type = exhaustive<StaticDataItemEnum>().toArb().bind(),
+                type = Arb.enum<StaticDataItemEnum>().bind(),
                 owner = arbitrary { faker.random.nextUUID() }.bind(),
                 name = arbitrary { faker.zelda.items() }.bind(),
                 stat = Stat.fixture.bind(),
@@ -56,7 +56,7 @@ object ItemFixture {
     val Item.Companion.invalid: Arb<Item>
         get() = arbitrary {
             Item(
-                type = exhaustive<StaticDataItemEnum>().toArb().bind(),
+                type = Arb.enum<StaticDataItemEnum>().bind(),
                 owner = "",
                 name = "",
                 stat = Stat.invalid.bind(),

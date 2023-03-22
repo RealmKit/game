@@ -25,7 +25,6 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
 import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
-import dev.realmkit.hellper.extension.AssertionExtensions.exhaustive
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
@@ -35,6 +34,8 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeBlank
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.enum
 import io.kotest.property.checkAll
 
 @IntegrationTestContext
@@ -47,7 +48,7 @@ class ItemServiceTest(
     }
 
     expect("to persist items from StaticDataItemEnum") {
-        checkAll(exhaustive<StaticDataItemEnum>(), Player.fixture) { enum, player ->
+        checkAll(Arb.enum<StaticDataItemEnum>(), Player.fixture) { enum, player ->
             player.id = faker.random.nextUUID()
             itemService.new(player to enum)
                 .shouldNotBeNull()
@@ -65,7 +66,7 @@ class ItemServiceTest(
     }
 
     expect("to get items from StaticDataItemEnum") {
-        checkAll(exhaustive<StaticDataItemEnum>()) { enum ->
+        checkAll(Arb.enum<StaticDataItemEnum>()) { enum ->
             itemService[enum]
                 .shouldNotBeNull()
                 .asClue { item ->
@@ -91,7 +92,7 @@ class ItemServiceTest(
     }
 
     expect("Player to use all Items") {
-        checkAll(exhaustive<StaticDataItemEnum>(), Player.fixture) { enum, player ->
+        checkAll(Arb.enum<StaticDataItemEnum>(), Player.fixture) { enum, player ->
             playerRepository persist player
 
             itemService.new(player to enum)

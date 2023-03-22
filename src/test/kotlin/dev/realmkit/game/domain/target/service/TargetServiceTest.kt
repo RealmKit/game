@@ -40,6 +40,8 @@ class TargetServiceTest(
 
     expect("to not hit a when negative damage") {
         checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            collect(player.ship.type)
+
             player.ship.stat.base.attack = -1.0
 
             targetService.attack(player, enemy)
@@ -49,6 +51,8 @@ class TargetServiceTest(
 
     expect("to not hit a critical attack, enemy should be alive") {
         checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            collect(player.ship.type)
+
             player.ship.stat.rate.critical = 0.0
             enemy.ship.stat.base.defense = 10.0
 
@@ -59,6 +63,8 @@ class TargetServiceTest(
 
     expect("to hit a critical attack, enemy should be alive") {
         checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            collect(player.ship.type)
+
             player.ship.stat.rate.critical = 1.0
             player.ship.stat.multiplier.critical = 2.0
             enemy.ship.stat.base.defense = 10.0
@@ -70,6 +76,8 @@ class TargetServiceTest(
 
     expect("to hit a critical attack, enemy should not be alive") {
         checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            collect(player.ship.type)
+
             player.ship.stat.rate.critical = 1.0
             player.ship.stat.multiplier.critical = 2.0
 
@@ -80,6 +88,8 @@ class TargetServiceTest(
 
     expect("to not damage a not alive Target") {
         checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            collect(player.ship.type)
+
             enemy.ship.stat.base.hull.current = 0.0
             enemy.shouldNotBeAlive()
 
@@ -90,6 +100,8 @@ class TargetServiceTest(
 
     expect("Player to attack Enemy until it is not alive") {
         checkAll(Player.fixture, Player.fixture) { player, enemy ->
+            collect(player.ship.type)
+
             player.ship.stat.base.attack = 100.0
             player.ship.stat.rate.critical = 1.0
             player.ship.stat.multiplier.critical = 1.0

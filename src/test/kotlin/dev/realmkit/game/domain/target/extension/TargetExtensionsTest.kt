@@ -44,24 +44,32 @@ class TargetExtensionsTest : TestSpec({
 
     expect("to have several alive Target") {
         checkAll(Player.fixture, Player.fixture) { player1, player2 ->
+            collect(player1.ship.type)
+
             listOf(player1, player2).hasAlive.shouldBeTrue()
         }
     }
 
     expect("to have just one alive Target") {
         checkAll(Player.fixture, Player.invalid) { player1, player2 ->
+            collect(player1.ship.type)
+
             listOf(player1, player2).hasAlive.shouldBeTrue()
         }
     }
 
     expect("to have no alive Target") {
         checkAll(Player.invalid, Player.invalid) { player1, player2 ->
+            collect(player1.ship.type)
+
             listOf(player1, player2).hasAlive.shouldBeFalse()
         }
     }
 
     expect(".bySpeed") {
         checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
+            collect(player1.ship.type)
+
             listOf<AttackerTargets>(
                 player2 to emptySet(),
                 player3 to emptySet(),
@@ -77,6 +85,8 @@ class TargetExtensionsTest : TestSpec({
 
     expect(".firstByAggro to return the first Target") {
         checkAll(Player.fixture, Player.invalid, Player.invalid) { player1, player2, player3 ->
+            collect(player1.ship.type)
+
             listOf(
                 player2,
                 player3,
