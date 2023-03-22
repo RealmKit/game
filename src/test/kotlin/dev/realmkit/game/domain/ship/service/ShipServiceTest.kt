@@ -18,9 +18,8 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.property
+package dev.realmkit.game.domain.ship.service
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
 import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
@@ -29,33 +28,15 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 @IntegrationTestContext
-class StaticDataPropertiesTest(
-    private val staticDataProperties: StaticDataProperties,
+class ShipServiceTest(
+    private val shipService: ShipService,
 ) : IntegrationTestSpec({
     expect("all beans to be inject") {
-        staticDataProperties.shouldNotBeNull()
+        shipService.shouldNotBeNull()
     }
 
-    expect("turnDuration to generate the turnDuration StaticData values from properties") {
-        staticDataProperties.battleDuration()
-            .shouldNotBeNull()
-            .shouldBe(10L)
-    }
-
-    expect("resource to generate the resource StaticData values from properties") {
-        staticDataProperties.resource()
-            .shouldNotBeNull()
-            .asClue { resource ->
-                resource.titanium shouldBe 1_000L
-                resource.crystal shouldBe 0L
-                resource.darkMatter shouldBe 0L
-                resource.antiMatter shouldBe 0L
-                resource.purunhalium shouldBe 0L
-            }
-    }
-
-    expect("ships to have BATTLE_WAR_SHIP_V1 ship") {
-        staticDataProperties.ships(BATTLE_WAR_SHIP_V1)
+    expect("battleWarShipV1 to generate the battleWarShipV1 StaticData values from properties") {
+        shipService[BATTLE_WAR_SHIP_V1]
             .shouldNotBeNull()
             .asClue { ship ->
                 ship.name shouldBe "WarShip V1.1"
@@ -78,17 +59,6 @@ class StaticDataPropertiesTest(
                 ship.stat.multiplier.critical shouldBe 1.0
                 ship.stat.progression.level shouldBe 1L
                 ship.stat.progression.experience shouldBe 0L
-            }
-    }
-
-    expect("items to have CHEAP_RECOVERY_DRONE item") {
-        staticDataProperties.items(CHEAP_RECOVERY_DRONE)
-            .shouldNotBeNull()
-            .asClue { item ->
-                item.name shouldBe "Cheap Recovery Drone"
-                item.stat.shouldNotBeNull()
-                item.stat.base.shouldNotBeNull()
-                item.stat.base.hull.current shouldBe 10.0
             }
     }
 })

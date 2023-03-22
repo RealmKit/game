@@ -18,12 +18,32 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.enums
+package dev.realmkit.game.domain.ship.service
+
+import dev.realmkit.game.domain.ship.document.Ship
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
+import org.springframework.stereotype.Service
 
 /**
- * # [StaticDataItemEnum]
- * the static data item enum
+ * # [ShipService]
+ * the ship service
+ *
+ * @see Ship
+ *
+ * @param staticData the static data properties
  */
-enum class StaticDataItemEnum {
-    CHEAP_RECOVERY_DRONE,
+@Service
+class ShipService(
+    private val staticData: StaticDataProperties,
+) {
+    /**
+     * ## [ship]
+     * returns a copy of the ship from the static data
+     *
+     * @param ship the ship to get
+     * @return the ship
+     */
+    operator fun get(ship: StaticDataShipEnum): Ship =
+        staticData.ships(ship)
 }

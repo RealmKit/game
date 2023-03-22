@@ -20,7 +20,7 @@
 
 package dev.realmkit.game.domain.staticdata.enums
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.DRONE_RECOVERY_V1
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
@@ -30,7 +30,7 @@ class StaticDataItemEnumTest : TestSpec({
         StaticDataItemEnum.values()
             .shouldHaveSize(1)
             .shouldContainExactly(
-                DRONE_RECOVERY_V1,
+                CHEAP_RECOVERY_DRONE,
             )
     }
 })

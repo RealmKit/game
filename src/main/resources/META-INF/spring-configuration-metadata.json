@@ -1,52 +1,32 @@
 {
-  "groups": [
-    {
-      "name": "app.static.data.resource",
-      "type": "dev.realmkit.game.domain.resource.document.Resource",
-      "sourceType": "dev.realmkit.game.domain.resource.document.Resource",
-      "description": "StaticData: Initial Resources."
-    },
-    {
-      "name": "app.static.data.ships",
-      "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
-      "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
-      "description": "StaticData: Available Ships."
-    },
-    {
-      "name": "app.static.data.items",
-      "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
-      "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
-      "description": "StaticData: Available Items."
-    }
-  ],
   "properties": [
     {
       "name": "app.static.data.battle-duration",
       "type": "java.lang.Long",
-      "description": "StaticData: Battle Duration (in turns)."
+      "description": "StaticData: Battle Duration, in turns."
     },
     {
       "name": "app.static.data.turn-duration",
       "type": "java.lang.Long",
-      "description": "StaticData: Turn Duration (in seconds)."
+      "description": "StaticData: Turn Duration, in seconds."
     },
     {
       "name": "app.static.data.resource",
       "type": "dev.realmkit.game.domain.resource.document.Resource",
       "sourceType": "dev.realmkit.game.domain.resource.document.Resource",
-      "description": "StaticData: Initial Resources."
+      "description": "StaticData: Initial Resource."
     },
     {
       "name": "app.static.data.ships",
       "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
       "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
-      "description": "StaticData: Available Ships."
+      "description": "StaticData: Ships."
     },
     {
       "name": "app.static.data.items",
       "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
       "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
-      "description": "StaticData: Available Items."
+      "description": "StaticData: Items."
     }
   ]
 }

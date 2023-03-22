@@ -18,12 +18,31 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.enums
+package dev.realmkit.game.domain.item.service
 
-/**
- * # [StaticDataItemEnum]
- * the static data item enum
- */
-enum class StaticDataItemEnum {
-    CHEAP_RECOVERY_DRONE,
-}
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
+import dev.realmkit.hellper.infra.IntegrationTestContext
+import dev.realmkit.hellper.spec.IntegrationTestSpec
+import io.kotest.assertions.asClue
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+
+@IntegrationTestContext
+class ItemServiceTest(
+    private val itemService: ItemService,
+) : IntegrationTestSpec({
+    expect("all beans to be inject") {
+        itemService.shouldNotBeNull()
+    }
+
+    expect("battleWarItemV1 to generate the battleWarItemV1 StaticData values from properties") {
+        itemService[CHEAP_RECOVERY_DRONE]
+            .shouldNotBeNull()
+            .asClue { item ->
+                item.name shouldBe "Cheap Recovery Drone"
+                item.stat.shouldNotBeNull()
+                item.stat.base.shouldNotBeNull()
+                item.stat.base.hull.current shouldBe 10.0
+            }
+    }
+})
