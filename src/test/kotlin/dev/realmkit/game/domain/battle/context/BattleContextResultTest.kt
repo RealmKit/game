@@ -29,6 +29,7 @@ import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -42,17 +43,17 @@ class BattleContextResultTest : TestSpec({
             context.attackers.shouldNotBeNull().shouldBeEmpty()
             context.defenders.shouldNotBeNull().shouldBeEmpty()
             context.logsPerTurn.shouldNotBeNull().shouldBeEmpty()
-            context.turns shouldBe 0L
+            context.turns.shouldBeZero()
         }
     }
 
     expect("should register a new turn") {
         val context = BattleContextResult()
-        context.turns shouldBe 0L
+        context.turns.shouldBeZero()
         context.logsPerTurn.shouldBeEmpty()
 
         context.registerTurn()
-        context.turns shouldBe 1L
+        context.turns shouldBe 1
         context.logsPerTurn.shouldHaveSize(1)
     }
 
@@ -70,7 +71,7 @@ class BattleContextResultTest : TestSpec({
                 ),
             )
 
-            context.turns shouldBe 1L
+            context.turns shouldBe 1
             context.logsPerTurn.shouldHaveSize(1)
             context.logsPerTurn[1]!!
                 .shouldNotBeNull().shouldHaveSize(1)

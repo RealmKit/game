@@ -18,15 +18,24 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.enums
+package dev.realmkit.game.core.exception
 
-/**
- * # [StaticDataItemEnum]
- * the static data item enum
- */
-enum class StaticDataItemEnum {
-    CHEAP_RECOVERY_DRONE,
-    ;
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.assertions.asClue
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 
-    companion object
-}
+class NotEnoughPointsExceptionTest : TestSpec({
+    expect("throw a NotEnoughPointsException") {
+        shouldThrow<NotEnoughPointsException> {
+            throw NotEnoughPointsException(
+                available = 1,
+                points = 2,
+            )
+        }.shouldNotBeNull().asClue { exception ->
+            exception.available shouldBe 1
+            exception.points shouldBe 2
+        }
+    }
+})

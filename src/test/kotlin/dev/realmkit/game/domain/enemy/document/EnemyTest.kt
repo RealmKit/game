@@ -51,6 +51,7 @@ class EnemyTest : TestSpec({
             enemy.ship.stat.multiplier.critical.shouldBePositive()
             enemy.ship.stat.progression.level.shouldBePositive()
             enemy.ship.stat.progression.experience.shouldBePositive()
+            enemy.ship.stat.progression.points.shouldBePositive()
         }
     }
 

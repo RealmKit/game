@@ -21,11 +21,12 @@
 package dev.realmkit.game.core.extension
 
 import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.doubles.shouldBeZero
 import io.kotest.matchers.shouldBe
 
 class ConstantExtensionsTest : TestSpec({
     expect("ZERO to be 0.0") {
-        ConstantExtensions.DOUBLE_ZERO shouldBe 0.0
+        ConstantExtensions.DOUBLE_ZERO.shouldBeZero()
     }
 
     expect("ONE to be 1.0") {

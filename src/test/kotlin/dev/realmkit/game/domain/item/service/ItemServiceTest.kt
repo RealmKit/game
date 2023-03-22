@@ -23,10 +23,10 @@ package dev.realmkit.game.domain.item.service
 import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum.CHEAP_RECOVERY_DRONE
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.repository.PlayerRepository
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
@@ -51,9 +51,9 @@ class ItemServiceTest(
     }
 
     expect("to persist items from StaticDataItemEnum") {
-        checkAll(Arb.enum<StaticDataItemEnum>(), Player.fixture) { enum, player ->
+        checkAll(Arb.enum<ItemTypeEnum>(), Player.fixture) { enum, player ->
             player.id = faker.random.nextUUID()
-            itemService.new(player to enum)
+            itemService.new(player = player, type = enum)
                 .shouldNotBeNull()
                 .asClue { item ->
                     item.id.shouldNotBeNull()
@@ -69,7 +69,7 @@ class ItemServiceTest(
     }
 
     expect("to get items from StaticDataItemEnum") {
-        checkAll(Arb.enum<StaticDataItemEnum>()) { enum ->
+        checkAll(Arb.enum<ItemTypeEnum>()) { enum ->
             itemService[enum]
                 .shouldNotBeNull()
                 .asClue { item ->
@@ -87,8 +87,8 @@ class ItemServiceTest(
             player.ship.stat.base.hull.current = 0.0
             playerRepository persist player
 
-            itemService.new(player to CHEAP_RECOVERY_DRONE)
-            itemService.use(player to CHEAP_RECOVERY_DRONE)
+            itemService.new(player = player, type = CHEAP_RECOVERY_DRONE)
+            itemService.use(player = player, type = CHEAP_RECOVERY_DRONE)
 
             player.ship.stat.base.hull.current shouldBe 9.0
         }
@@ -98,7 +98,7 @@ class ItemServiceTest(
         checkAll(Player.fixture) { player ->
             shouldThrow<NotFoundException> {
                 player.id = faker.random.nextUUID()
-                itemService.use(player to CHEAP_RECOVERY_DRONE)
+                itemService.use(player = player, type = CHEAP_RECOVERY_DRONE)
             }.shouldNotBeNull().asClue { exception ->
                 exception.clazz shouldBe Item::class
                 exception.value shouldBe "Player ${player.id} does not have any CHEAP_RECOVERY_DRONE"
@@ -107,11 +107,11 @@ class ItemServiceTest(
     }
 
     expect("Player to use all Items") {
-        checkAll(Arb.enum<StaticDataItemEnum>(), Player.fixture) { enum, player ->
+        checkAll(Arb.enum<ItemTypeEnum>(), Player.fixture) { enum, player ->
             playerRepository persist player
 
-            itemService.new(player to enum)
-            itemService.use(player to enum)
+            itemService.new(player = player, type = enum)
+            itemService.use(player = player, type = enum)
         }
     }
 })

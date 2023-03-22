@@ -20,10 +20,12 @@
 
 package dev.realmkit.game.domain.ship.service
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.matchers.doubles.shouldBeZero
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
@@ -44,21 +46,22 @@ class ShipServiceTest(
                 ship.stat.base.shouldNotBeNull()
                 ship.stat.base.hull.max shouldBe 5.0
                 ship.stat.base.hull.current shouldBe 5.0
-                ship.stat.base.shield.max shouldBe 0.0
-                ship.stat.base.shield.current shouldBe 0.0
+                ship.stat.base.shield.max.shouldBeZero()
+                ship.stat.base.shield.current.shouldBeZero()
                 ship.stat.base.energy.max shouldBe 5.0
                 ship.stat.base.energy.current shouldBe 5.0
                 ship.stat.base.attack shouldBe 1.0
-                ship.stat.base.defense shouldBe 0.0
+                ship.stat.base.defense.shouldBeZero()
                 ship.stat.base.speed shouldBe 1.0
                 ship.stat.base.aggro shouldBe 1.0
                 ship.stat.rate.shouldNotBeNull()
-                ship.stat.rate.shieldRegeneration shouldBe 0.0
-                ship.stat.rate.critical shouldBe 0.0
+                ship.stat.rate.shieldRegeneration.shouldBeZero()
+                ship.stat.rate.critical.shouldBeZero()
                 ship.stat.multiplier.shouldNotBeNull()
                 ship.stat.multiplier.critical shouldBe 1.0
-                ship.stat.progression.level shouldBe 1L
-                ship.stat.progression.experience shouldBe 0L
+                ship.stat.progression.level shouldBe 1
+                ship.stat.progression.experience.shouldBeZero()
+                ship.stat.progression.points.shouldBeZero()
             }
     }
 })

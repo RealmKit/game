@@ -18,19 +18,16 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.enums
+package dev.realmkit.game.core.exception
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.collections.shouldContainExactly
-import io.kotest.matchers.collections.shouldHaveSize
-
-class StaticDataShipEnumTest : TestSpec({
-    expect("should have all values") {
-        StaticDataShipEnum.values()
-            .shouldHaveSize(1)
-            .shouldContainExactly(
-                BATTLE_WAR_SHIP_V1,
-            )
-    }
-})
+/**
+ * # [NotEnoughPointsException]
+ * exception not having enough points
+ *
+ * @property available the available points
+ * @property points the buying points
+ */
+class NotEnoughPointsException(
+    val available: Long,
+    val points: Long,
+) : Exception()

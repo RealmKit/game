@@ -51,6 +51,7 @@ class PlayerTest : TestSpec({
             player.ship.stat.multiplier.critical.shouldBePositive()
             player.ship.stat.progression.level.shouldBePositive()
             player.ship.stat.progression.experience.shouldBePositive()
+            player.ship.stat.progression.points.shouldBePositive()
             player.resource.titanium.shouldBePositive()
             player.resource.crystal.shouldBePositive()
             player.resource.darkMatter.shouldBePositive()

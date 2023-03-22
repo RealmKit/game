@@ -36,5 +36,6 @@ object StatProgressionValidator {
     val validation: Validation<StatProgression> = Validation {
         StatProgression::level required { positive() }
         StatProgression::experience required { positive() }
+        StatProgression::points required { positive() }
     }
 }

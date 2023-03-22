@@ -18,12 +18,19 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.enums
+package dev.realmkit.game.domain.ship.enums
 
-/**
- * # [StaticDataShipEnum]
- * the static data ship enum
- */
-enum class StaticDataShipEnum {
-    BATTLE_WAR_SHIP_V1,
-}
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.BATTLE_WAR_SHIP_V1
+import dev.realmkit.hellper.spec.TestSpec
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldHaveSize
+
+class ShipTypeEnumTest : TestSpec({
+    expect("should have all values") {
+        ShipTypeEnum.values()
+            .shouldHaveSize(1)
+            .shouldContainExactly(
+                BATTLE_WAR_SHIP_V1,
+            )
+    }
+})

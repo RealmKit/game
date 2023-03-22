@@ -55,6 +55,7 @@ class StatValidatorTest : TestSpec({
                     ".multiplier.critical" to "must be positive",
                     ".progression.level" to "must be positive",
                     ".progression.experience" to "must be positive",
+                    ".progression.points" to "must be positive",
                 )
             }
         }

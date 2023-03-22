@@ -18,31 +18,40 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.item.repository
+package dev.realmkit.game.domain.stat.extension.formula
 
-import dev.realmkit.game.domain.item.document.Item
-import dev.realmkit.game.domain.item.enums.ItemTypeEnum
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import dev.realmkit.game.domain.aliases.StatTypeFormula
 
 /**
- * # [ItemRepository]
- * the [Item] Mongo Repository interface.
- * ```kotlin
- * itemRepository.save( Item() )
- * ```
- *
- * @see MongoRepository
+ * # [StatTypeEnumFormula]
+ * the stat type enum formula
  */
-@Repository
-interface ItemRepository : MongoRepository<Item, String> {
+object StatTypeEnumFormula {
+    private const val BY_FIVE = 5.0
+    private const val BY_TEN = 10.0
+    private const val BY_HUNDRED = 100.0
+
     /**
-     * ## [findAllByOwnerAndType]
-     * returns all items of a specific type
-     *
-     * @param owner the owner of the item
-     * @param type the type of the item
-     * @return the list of items
+     * ## [sumOnly]
+     * the `sum` formula (+)
      */
-    fun findAllByOwnerAndType(owner: String, type: ItemTypeEnum): List<Item>
+    val sumOnly: StatTypeFormula = { points -> points.toDouble() }
+
+    /**
+     * ## [multiplyByFive]
+     * the `multiple by five` formula (x10)
+     */
+    val multiplyByFive: StatTypeFormula = { points -> points * BY_FIVE }
+
+    /**
+     * ## [multiplyByTen]
+     * the `multiple by ten` formula (x5)
+     */
+    val multiplyByTen: StatTypeFormula = { points -> points * BY_TEN }
+
+    /**
+     * ## [divideByHundred]
+     * the `divide by hundred` formula (1%)
+     */
+    val divideByHundred: StatTypeFormula = { points -> points / BY_HUNDRED }
 }

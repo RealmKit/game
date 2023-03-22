@@ -62,7 +62,7 @@ class BattleService(
      */
     fun battle(block: BattleContext.() -> Unit): BattleContextResult =
         BattleContext(
-            battleDuration = staticDataProperties.battleDuration(),
+            config = staticDataProperties.config(),
             onAttack = ::onAttack,
         ).apply(block)
             .start()

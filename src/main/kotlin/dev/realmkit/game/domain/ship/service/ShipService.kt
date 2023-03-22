@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.ship.service
 
 import dev.realmkit.game.domain.ship.document.Ship
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
 
@@ -44,6 +44,6 @@ class ShipService(
      * @param ship the ship to get
      * @return the ship
      */
-    operator fun get(ship: StaticDataShipEnum): Ship =
+    operator fun get(ship: ShipTypeEnum): Ship =
         staticData.ships(ship)
 }

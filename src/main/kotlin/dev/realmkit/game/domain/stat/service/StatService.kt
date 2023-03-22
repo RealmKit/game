@@ -20,8 +20,11 @@
 
 package dev.realmkit.game.domain.stat.service
 
+import dev.realmkit.game.core.exception.NotEnoughPointsException
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.stat.enums.StatTypeEnum
 import dev.realmkit.game.domain.staticdata.extension.LevelUpFormula
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
@@ -32,7 +35,9 @@ import java.util.concurrent.ConcurrentHashMap
  * @see Service
  */
 @Service
-class StatService {
+class StatService(
+    private val staticDataProperties: StaticDataProperties,
+) {
     /**
      * ## [experienceTable]
      * the `experience to level up` table
@@ -57,11 +62,35 @@ class StatService {
      * @param stat the stat to level up
      * @return the leveled stat
      */
-    infix fun levelUp(stat: Stat): Stat {
-        while (stat.progression.experience >= stat.experienceRequiredToLevelUp) {
-            stat.progression.experience -= stat.experienceRequiredToLevelUp
-            stat.progression.level++
+    infix fun levelUp(stat: Stat): Stat = stat.apply {
+        while (progression.experience >= experienceRequiredToLevelUp) {
+            progression.experience -= experienceRequiredToLevelUp
+            progression.level++
+            progression.points += staticDataProperties.config().pointsPerLevel
         }
-        return stat
+    }
+
+    /**
+     * ## [buy]
+     * buy points for a [Stat] attribute
+     *
+     * @param stat the stat to buy points for
+     * @param type the type of the stat to buy points for
+     * @param points the number of points to buy
+     * @return the stat with the bought points
+     * @throws NotEnoughPointsException if the stat does not have enough points to buy
+     */
+    @Throws(NotEnoughPointsException::class)
+    fun buy(
+        stat: Stat,
+        type: StatTypeEnum,
+        points: Long,
+    ): Stat = stat.apply {
+        if (progression.points < points) {
+            throw NotEnoughPointsException(available = progression.points, points = points)
+        }
+
+        type.buy(this, points)
+        progression.points -= points
     }
 }

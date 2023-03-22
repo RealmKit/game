@@ -32,6 +32,7 @@ class StatProgressionTest : TestSpec({
             progression.shouldNotBeNull()
             progression.level.shouldBePositive()
             progression.experience.shouldBePositive()
+            progression.points.shouldBePositive()
         }
     }
 })

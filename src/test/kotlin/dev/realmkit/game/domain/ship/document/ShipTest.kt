@@ -48,6 +48,7 @@ class ShipTest : TestSpec({
             ship.stat.multiplier.critical.shouldBePositive()
             ship.stat.progression.level.shouldBePositive()
             ship.stat.progression.experience.shouldBePositive()
+            ship.stat.progression.points.shouldBePositive()
         }
     }
 })

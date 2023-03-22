@@ -28,7 +28,7 @@ import dev.realmkit.hellper.extension.AssertionExtensions.onTurn
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldBeAlive
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveTurns
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldNotBeAlive
-import dev.realmkit.hellper.fixture.battle.BattleContextFixture.DEFAULT_BATTLE_DURATION
+import dev.realmkit.hellper.fixture.battle.BattleContextFixture.DEFAULT_CONFIG
 import dev.realmkit.hellper.fixture.battle.BattleContextFixture.fixture
 import dev.realmkit.hellper.fixture.enemy.EnemyFixture.fixture
 import dev.realmkit.hellper.fixture.enemy.EnemyFixture.many
@@ -104,7 +104,7 @@ class BattleContextTest : TestSpec({
 
             context.apply { player against enemy }
                 .start()
-                .shouldHaveTurns(DEFAULT_BATTLE_DURATION)
+                .shouldHaveTurns(DEFAULT_CONFIG)
                 .onTurn(turn = 1, actions = 0)
                 .onTurn(turn = 2, actions = 0)
                 .onTurn(turn = 3, actions = 0)
@@ -127,7 +127,7 @@ class BattleContextTest : TestSpec({
 
             context.apply { player against enemies }
                 .start()
-                .shouldHaveTurns(DEFAULT_BATTLE_DURATION)
+                .shouldHaveTurns(DEFAULT_CONFIG)
                 .onTurn(turn = 1, actions = 1) { onAction<BattleActionAttack>() }
                 .onTurn(turn = 2, actions = 1) { onAction<BattleActionAttack>() }
                 .onTurn(turn = 3, actions = 1) { onAction<BattleActionAttack>() }

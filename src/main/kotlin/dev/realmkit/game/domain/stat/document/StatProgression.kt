@@ -30,10 +30,12 @@ import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ZERO
  *
  * @property level `the progression` for level
  * @property experience `the progression` for experience
+ * @property points `the progression` for points to distribute on stats
  */
 data class StatProgression(
     var level: Long = LONG_ZERO,
     var experience: Long = LONG_ZERO,
+    var points: Long = LONG_ZERO,
 ) {
     companion object
 }

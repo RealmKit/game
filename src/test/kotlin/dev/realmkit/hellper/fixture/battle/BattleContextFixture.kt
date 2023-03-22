@@ -22,6 +22,7 @@ package dev.realmkit.hellper.fixture.battle
 
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.battle.context.BattleContext
+import dev.realmkit.game.domain.staticdata.property.StaticDataConfig
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
@@ -31,10 +32,10 @@ import io.kotest.property.arbitrary.arbitrary
  */
 object BattleContextFixture {
     /**
-     * ## [DEFAULT_BATTLE_DURATION]
+     * ## [DEFAULT_CONFIG]
      * the default battle duration
      */
-    const val DEFAULT_BATTLE_DURATION: Long = 5L
+    const val DEFAULT_CONFIG: Long = 5L
 
     /**
      * ## [fixture]
@@ -43,7 +44,11 @@ object BattleContextFixture {
     val BattleContext.Companion.fixture: Arb<BattleContext>
         get() = arbitrary {
             BattleContext(
-                battleDuration = DEFAULT_BATTLE_DURATION,
+                config = StaticDataConfig(
+                    battleDuration = DEFAULT_CONFIG,
+                    turnDuration = DEFAULT_CONFIG,
+                    pointsPerLevel = DEFAULT_CONFIG,
+                ),
                 onAttack = { attacker, defender ->
                     val finalDamage = attacker.ship.stat.base.attack
                     defender.ship.stat.base.hull.current -= finalDamage

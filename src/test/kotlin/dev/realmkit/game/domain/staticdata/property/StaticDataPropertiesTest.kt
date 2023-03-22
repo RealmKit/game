@@ -20,11 +20,12 @@
 
 package dev.realmkit.game.domain.staticdata.property
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.matchers.longs.shouldBeZero
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -42,25 +43,29 @@ class StaticDataPropertiesTest(
     }
 
     expect("turnDuration to generate the turnDuration StaticData values from properties") {
-        staticDataProperties.battleDuration()
+        staticDataProperties.config()
             .shouldNotBeNull()
-            .shouldBe(10L)
+            .asClue { config ->
+                config.battleDuration shouldBe 10
+                config.turnDuration shouldBe 10
+                config.pointsPerLevel shouldBe 5
+            }
     }
 
     expect("resource to generate the resource StaticData values from properties") {
         staticDataProperties.resource()
             .shouldNotBeNull()
             .asClue { resource ->
-                resource.titanium shouldBe 1_000L
-                resource.crystal shouldBe 0L
-                resource.darkMatter shouldBe 0L
-                resource.antiMatter shouldBe 0L
-                resource.purunhalium shouldBe 0L
+                resource.titanium shouldBe 1_000
+                resource.crystal.shouldBeZero()
+                resource.darkMatter.shouldBeZero()
+                resource.antiMatter.shouldBeZero()
+                resource.purunhalium.shouldBeZero()
             }
     }
 
     expect("to get items from StaticDataShipEnum") {
-        checkAll(Arb.enum<StaticDataShipEnum>()) { enum ->
+        checkAll(Arb.enum<ShipTypeEnum>()) { enum ->
             staticDataProperties.ships(enum)
                 .shouldNotBeNull()
                 .asClue { item ->
@@ -71,7 +76,7 @@ class StaticDataPropertiesTest(
     }
 
     expect("to get items from StaticDataItemEnum") {
-        checkAll(Arb.enum<StaticDataItemEnum>()) { enum ->
+        checkAll(Arb.enum<ItemTypeEnum>()) { enum ->
             staticDataProperties.items(enum)
                 .shouldNotBeNull()
                 .asClue { item ->

@@ -22,36 +22,35 @@ package dev.realmkit.game.domain.staticdata.property
 
 import dev.realmkit.game.core.extension.MapperExtensions.clone
 import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.ship.document.Ship
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
  * # [StaticDataProperties]
  * static data values
  *
- * @property battleDuration the battle duration, in turns
+ * @property config the static data config values
  * @property resource the initial resource properties
  * @property ships the ships static data values
  * @property items the item static data values
  */
 @ConfigurationProperties(prefix = "app.static.data")
 class StaticDataProperties(
-    private val battleDuration: Long,
+    private val config: StaticDataConfig,
     private val resource: Resource,
-    private val ships: Map<StaticDataShipEnum, Ship>,
-    private val items: Map<StaticDataItemEnum, Item>,
+    private val ships: Map<ShipTypeEnum, Ship>,
+    private val items: Map<ItemTypeEnum, Item>,
 ) {
     /**
-     * ## [battleDuration]
-     * battle duration, in turns
+     * ## [config]
+     * static data config values
      *
-     * @return the battle duration, in turns
+     * @return the static data config values
      */
-    fun battleDuration(): Long =
-        battleDuration
+    fun config(): StaticDataConfig = config
 
     /**
      * ## [resource]
@@ -69,7 +68,7 @@ class StaticDataProperties(
      * @param ship the ship name
      * @return the [Ship] based on the name property
      */
-    fun ships(ship: StaticDataShipEnum): Ship =
+    fun ships(ship: ShipTypeEnum): Ship =
         ships[ship]!!.clone()
 
     /**
@@ -79,6 +78,6 @@ class StaticDataProperties(
      * @param item the item name
      * @return the [Item] based on the name property
      */
-    fun items(item: StaticDataItemEnum): Item =
+    fun items(item: ItemTypeEnum): Item =
         items[item]!!.clone()
 }

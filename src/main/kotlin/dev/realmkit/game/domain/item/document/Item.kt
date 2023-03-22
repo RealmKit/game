@@ -21,8 +21,8 @@
 package dev.realmkit.game.domain.item.document
 
 import dev.realmkit.game.domain.base.document.BaseDocument
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
 import dev.realmkit.game.domain.stat.document.Stat
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -37,7 +37,7 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 data class Item(
-    @Indexed val type: StaticDataItemEnum,
+    @Indexed val type: ItemTypeEnum,
     @Indexed var owner: String? = null,
     val name: String,
     val stat: Stat,
