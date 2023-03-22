@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.item.service
 
+import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.item.document.Item
@@ -84,11 +85,14 @@ class ItemService(
      *
      * @param pair the pair of owner and item to use
      * @return the item
+     * @throws ValidationException if [Player] has [Validation] issues after applying the [Item] stat
      */
-    infix fun use(pair: Pair<Player, StaticDataItemEnum>): Item? =
+    @Throws(ValidationException::class)
+    infix fun use(pair: Pair<Player, StaticDataItemEnum>): Item =
         itemRepository.findAllByOwnerAndType(pair.first.id, pair.second)
-            .firstOrNull()
-            ?.also { item ->
+            .ifEmpty { throw NotFoundException(Item::class, "Player ${pair.first.id} does not have any ${pair.second}") }
+            .first()
+            .also { item ->
                 pair.first.ship.stat += item.stat
                 playerService update pair.first
             }

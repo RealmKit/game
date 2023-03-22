@@ -20,7 +20,9 @@
 
 package dev.realmkit.game.domain.item.service
 
+import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
+import dev.realmkit.game.domain.item.document.Item
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
@@ -30,6 +32,7 @@ import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -88,6 +91,18 @@ class ItemServiceTest(
             itemService.use(player to CHEAP_RECOVERY_DRONE)
 
             player.ship.stat.base.hull.current shouldBe 9.0
+        }
+    }
+
+    expect("Player to not use an nonexistent Item") {
+        checkAll(Player.fixture) { player ->
+            shouldThrow<NotFoundException> {
+                player.id = faker.random.nextUUID()
+                itemService.use(player to CHEAP_RECOVERY_DRONE)
+            }.shouldNotBeNull().asClue { exception ->
+                exception.clazz shouldBe Item::class
+                exception.value shouldBe "Player ${player.id} does not have any CHEAP_RECOVERY_DRONE"
+            }
         }
     }
 
