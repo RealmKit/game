@@ -26,7 +26,7 @@ import dev.realmkit.game.domain.battle.context.BattleContext
 import dev.realmkit.game.domain.battle.context.BattleContextResult
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.service.PlayerService
-import dev.realmkit.game.domain.staticdata.service.StaticDataService
+import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import dev.realmkit.game.domain.target.document.Target
 import dev.realmkit.game.domain.target.service.TargetService
 import org.springframework.stereotype.Service
@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service
 class BattleService(
     private val playerService: PlayerService,
     private val targetService: TargetService,
-    private val staticDataService: StaticDataService,
+    private val staticDataProperties: StaticDataProperties,
 ) {
     /**
      * ## [totalExperience]
@@ -62,7 +62,7 @@ class BattleService(
      */
     fun battle(block: BattleContext.() -> Unit): BattleContextResult =
         BattleContext(
-            battleDuration = staticDataService.battleDuration(),
+            battleDuration = staticDataProperties.battleDuration(),
             onAttack = ::onAttack,
         ).apply(block)
             .start()

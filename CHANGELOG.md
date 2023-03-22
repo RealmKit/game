@@ -9,6 +9,10 @@ ___
 
 ## 2.0 - ?
 
+> #### System: `Player`
+>
+> >
+
 > #### System: `Guild`
 >
 > > A `Guild` is a group of `Player` that can interact with each other.
@@ -30,20 +34,21 @@ ___
 > ### [System: StaticData](src/main/kotlin/dev/realmkit/game/domain/staticdata)
 >
 > > Loads data from properties files
+> - [x] [StaticDataProperties](src/main/kotlin/dev/realmkit/game/domain/staticdata/property/StaticDataProperties.kt)
 
 > ### [System: Player](src/main/kotlin/dev/realmkit/game/domain/player)
 >
 > > A `Player` will be able to have multiples `Ships` and equip one at a time when at the `Hangar`.
-> - [X] create a new [Player](src/main/kotlin/dev/realmkit/game/domain/player/document/Player.kt)
-> - [X] gain `.experience` after defeating a [Target](src/main/kotlin/dev/realmkit/game/domain/target/document/Target.kt)
-> - [X] `.levelUp()` when reaching a certain amount of `.experience`
+> - [x] create a new [Player](src/main/kotlin/dev/realmkit/game/domain/player/document/Player.kt)
+> - [x] gain `.experience` after defeating a [Target](src/main/kotlin/dev/realmkit/game/domain/target/document/Target.kt)
+> - [x] `.levelUp()` when reaching a certain amount of `.experience`
 > - [ ] level up [Stat](src/main/kotlin/dev/realmkit/game/domain/stat/document/Stat.kt) progression logic
 > - [ ] equip `Ship`
 
 > #### System: `Ship`
 >
 > > A `Ship` is a `Target` that can be equipped by the `Player`, it acts as the "character" of the `Player`.
-> - [ ] create an initial `Ship` when creating a [Player](src/main/kotlin/dev/realmkit/game/domain/player/document/Player.kt)
+> - [x] create an initial `Ship` when creating a [Player](src/main/kotlin/dev/realmkit/game/domain/player/document/Player.kt)
 > - [ ] upgrade `Ship`
 
 > #### System: `Upgrades`
@@ -66,15 +71,15 @@ ___
 > > Could be used to generate `Enemy` for `Battle`, during `Travel`,
 > > for `Quest`, `Dungeon`, `Boss` or `Word Boss`.
 > - [ ] `Encounters`
-> - [ ] [Enemy](src/main/kotlin/dev/realmkit/game/domain/enemy/document/Enemy.kt)
+> - [x] [Enemy](src/main/kotlin/dev/realmkit/game/domain/enemy/document/Enemy.kt)
 > - [ ] `Enemy` generation
 
 > #### [System: Target](src/main/kotlin/dev/realmkit/game/domain/target)
 >
 > > A `Target` is an entity that can attack or be attacked by another `Target`.
 > - [x] [Target](src/main/kotlin/dev/realmkit/game/domain/target/document/Target.kt)
-> - [X] [Stat](src/main/kotlin/dev/realmkit/game/domain/stat/document/Stat.kt)
-> - [X] `.attack()`
+> - [x] [Stat](src/main/kotlin/dev/realmkit/game/domain/stat/document/Stat.kt)
+> - [x] `.attack()`
 > - [ ] `Loot` is the `Cargo` (`Items` and/or [Resource](src/main/kotlin/dev/realmkit/game/domain/resource/document/Resource.kt)) dropped by a [Target](src/main/kotlin/dev/realmkit/game/domain/target/document/Target.kt) after being
     defeated.
 > - [ ] `.aggro` to be a weighted value that determines the chance of a [Target](src/main/kotlin/dev/realmkit/game/domain/target/document/Target.kt) to be attacked by

@@ -28,29 +28,37 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * Creates a [StatMultiplier] with random data
+ * # [ResourceFixture]
+ * contains all the [Resource] fixtures
  */
-val Resource.Companion.fixture: Arb<Resource>
-    get() = arbitrary { rs ->
-        Resource(
-            titanium = rs.positiveLong(),
-            crystal = rs.positiveLong(),
-            darkMatter = rs.positiveLong(),
-            antiMatter = rs.positiveLong(),
-            purunhalium = rs.positiveLong(),
-        )
-    }
+object ResourceFixture {
+    /**
+     * ## [fixture]
+     * creates a [StatMultiplier] with random data
+     */
+    val Resource.Companion.fixture: Arb<Resource>
+        get() = arbitrary { rs ->
+            Resource(
+                titanium = rs.positiveLong(),
+                crystal = rs.positiveLong(),
+                darkMatter = rs.positiveLong(),
+                antiMatter = rs.positiveLong(),
+                purunhalium = rs.positiveLong(),
+            )
+        }
 
-/**
- * Creates a [StatMultiplier] with random invalid data
- */
-val Resource.Companion.invalid: Arb<Resource>
-    get() = arbitrary { rs ->
-        Resource(
-            titanium = rs.negativeLong(),
-            crystal = rs.negativeLong(),
-            darkMatter = rs.negativeLong(),
-            antiMatter = rs.negativeLong(),
-            purunhalium = rs.negativeLong(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [StatMultiplier] with random invalid data
+     */
+    val Resource.Companion.invalid: Arb<Resource>
+        get() = arbitrary { rs ->
+            Resource(
+                titanium = rs.negativeLong(),
+                crystal = rs.negativeLong(),
+                darkMatter = rs.negativeLong(),
+                antiMatter = rs.negativeLong(),
+                purunhalium = rs.negativeLong(),
+            )
+        }
+}

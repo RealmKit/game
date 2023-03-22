@@ -27,23 +27,31 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * Creates a [StatRate] with random data
+ * # [StatRateFixture]
+ * contains all the [StatRate] fixtures
  */
-val StatRate.Companion.fixture: Arb<StatRate>
-    get() = arbitrary { rs ->
-        StatRate(
-            shieldRegeneration = rs.positiveDouble(),
-            critical = rs.positiveDouble(),
-        )
-    }
+object StatRateFixture {
+    /**
+     * ## [fixture]
+     * creates a [StatRate] with random data
+     */
+    val StatRate.Companion.fixture: Arb<StatRate>
+        get() = arbitrary { rs ->
+            StatRate(
+                shieldRegeneration = rs.positiveDouble(),
+                critical = rs.positiveDouble(),
+            )
+        }
 
-/**
- * Creates a [StatRate] with random invalid data
- */
-val StatRate.Companion.invalid: Arb<StatRate>
-    get() = arbitrary { rs ->
-        StatRate(
-            shieldRegeneration = rs.negativeDouble(),
-            critical = rs.negativeDouble(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [StatRate] with random invalid data
+     */
+    val StatRate.Companion.invalid: Arb<StatRate>
+        get() = arbitrary { rs ->
+            StatRate(
+                shieldRegeneration = rs.negativeDouble(),
+                critical = rs.negativeDouble(),
+            )
+        }
+}

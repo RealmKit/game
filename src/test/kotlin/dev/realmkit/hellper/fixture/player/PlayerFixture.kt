@@ -24,37 +24,41 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.resource.fixture
-import dev.realmkit.hellper.fixture.resource.invalid
-import dev.realmkit.hellper.fixture.ship.fixture
-import dev.realmkit.hellper.fixture.ship.invalid
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
+import dev.realmkit.hellper.fixture.resource.ResourceFixture.fixture
+import dev.realmkit.hellper.fixture.resource.ResourceFixture.invalid
+import dev.realmkit.hellper.fixture.ship.ShipFixture.fixture
+import dev.realmkit.hellper.fixture.ship.ShipFixture.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * ## [fixture]
- * creates a [Player] with random data
+ * # [PlayerFixture]
+ * contains all the [Player] fixtures
  */
-val Player.Companion.fixture: Arb<Player>
-    get() = arbitrary {
-        Player(
-            name = arbitrary { faker.superhero.name() }.bind(),
-            ship = Ship.fixture.bind(),
-            resource = Resource.fixture.bind(),
-        )
-    }
+object PlayerFixture {
+    /**
+     * ## [fixture]
+     * creates a [Player] with random data
+     */
+    val Player.Companion.fixture: Arb<Player>
+        get() = arbitrary {
+            Player(
+                name = arbitrary { faker.superhero.name() }.bind(),
+                ship = Ship.fixture.bind(),
+                resource = Resource.fixture.bind(),
+            )
+        }
 
-/**
- * ## [invalid]
- * creates a [Player] with random invalid data
- */
-val Player.Companion.invalid: Arb<Player>
-    get() = arbitrary {
-        Player(
-            name = "",
-            ship = Ship.invalid.bind(),
-            resource = Resource.invalid.bind(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [Player] with random invalid data
+     */
+    val Player.Companion.invalid: Arb<Player>
+        get() = arbitrary {
+            Player(
+                name = "",
+                ship = Ship.invalid.bind(),
+                resource = Resource.invalid.bind(),
+            )
+        }
+}

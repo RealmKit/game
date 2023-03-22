@@ -24,7 +24,7 @@ import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
@@ -65,7 +65,7 @@ class PlayerServiceTest(
             saved.ship.stat.base.aggro shouldBe 1.0
             saved.ship.stat.rate.shouldNotBeNull()
             saved.ship.stat.rate.shieldRegeneration shouldBe 0.0
-            saved.ship.stat.rate.critical shouldBe 1.0
+            saved.ship.stat.rate.critical shouldBe 0.0
             saved.ship.stat.multiplier.shouldNotBeNull()
             saved.ship.stat.multiplier.critical shouldBe 1.0
             saved.ship.stat.progression.level shouldBe 1L

@@ -18,49 +18,28 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.service
+package dev.realmkit.game.domain.resource.service
 
 import dev.realmkit.game.domain.resource.document.Resource
-import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import org.springframework.stereotype.Service
 
 /**
- * # [StaticDataService]
- * the [StaticDataProperties] service.
+ * # [ResourceService]
+ * the resource service
  *
- * @see Service
+ * @see Resource
  *
- * @property staticData the stat static data properties values
+ * @param staticData the static data properties
  */
 @Service
-class StaticDataService(
+data class ResourceService(
     private val staticData: StaticDataProperties,
 ) {
     /**
-     * ## [battleDuration]
-     * battle duration, in turns
-     *
-     * @return the battle duration, in turns
-     */
-    fun battleDuration(): Long =
-        staticData.battleDuration()
-
-    /**
      * ## [resource]
-     * initial resource properties
-     *
-     * @return the initial resource properties
+     * returns a copy of the resource from the static data
      */
-    fun resource(): Resource =
-        staticData.resource()
-
-    /**
-     * ## [battleWarShipV1]
-     * initial battle war ship v1 properties
-     *
-     * @return the initial battle war ship v1 properties
-     */
-    fun battleWarShipV1(): Ship =
-        staticData.battleWarShipV1()
+    val resource: Resource
+        get() = staticData.resource()
 }

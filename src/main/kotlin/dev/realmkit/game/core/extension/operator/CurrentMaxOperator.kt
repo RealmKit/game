@@ -20,8 +20,8 @@
 
 package dev.realmkit.game.core.extension.operator
 
+import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 
 /**
  * # [CurrentMaxOperator]
@@ -30,30 +30,30 @@ import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 object CurrentMaxOperator {
     /**
      * ## [plus]
-     * [CurrentMaxDouble] `+` operator, sum the `max` only
+     * [CurrentMax] `+` operator, sum the `max` only
      *
-     * @see [CurrentMaxDouble]
+     * @see [CurrentMax]
      *
-     * @param other the other [CurrentMaxDouble]
-     * @return a copy of [CurrentMaxDouble] with the summed properties
+     * @param other the other [CurrentMax]
+     * @return a copy of [CurrentMax] with the summed properties
      */
-    operator fun CurrentMaxDouble.plus(other: CurrentMaxDouble): CurrentMaxDouble =
+    operator fun CurrentMax.plus(other: CurrentMax): CurrentMax =
         copy(
             max = max + other.max,
         )
 
     /**
      * ## [minus]
-     * [CurrentMaxDouble] `-` operator, subtract the `max`
+     * [CurrentMax] `-` operator, subtract the `max`
      * and if `current` is greater than the new `max`
      * set the `current` to the new `max`
      *
-     * @see [CurrentMaxDouble]
+     * @see [CurrentMax]
      *
-     * @param other the other [CurrentMaxDouble]
-     * @return a copy of [CurrentMaxDouble] with the subtracted properties
+     * @param other the other [CurrentMax]
+     * @return a copy of [CurrentMax] with the subtracted properties
      */
-    operator fun CurrentMaxDouble.minus(other: CurrentMaxDouble): CurrentMaxDouble =
+    operator fun CurrentMax.minus(other: CurrentMax): CurrentMax =
         copy(
             max = max - other.max,
         ).apply {

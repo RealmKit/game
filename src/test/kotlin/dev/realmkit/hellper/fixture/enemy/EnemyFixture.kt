@@ -22,34 +22,38 @@ package dev.realmkit.hellper.fixture.enemy
 
 import dev.realmkit.game.domain.enemy.document.Enemy
 import dev.realmkit.game.domain.ship.document.Ship
-import dev.realmkit.hellper.extension.DEFAULT_FIXTURES_SIZE
+import dev.realmkit.hellper.extension.AssertionExtensions.DEFAULT_FIXTURES_SIZE
 import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.resource.fixture
-import dev.realmkit.hellper.fixture.ship.fixture
-import dev.realmkit.hellper.fixture.stat.fixture
+import dev.realmkit.hellper.fixture.ship.ShipFixture.fixture
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * ## [fixture]
- * creates a [Enemy] with random data
+ * ## [EnemyFixture]
+ * contains all the fixtures for [Enemy]
  */
-val Enemy.Companion.fixture: Arb<Enemy>
-    get() = arbitrary {
-        Enemy(
-            name = arbitrary { faker.superhero.name() }.bind(),
-            ship = Ship.fixture.bind(),
-        )
-    }
+object EnemyFixture {
+    /**
+     * ## [fixture]
+     * creates a [Enemy] with random data
+     */
+    val Enemy.Companion.fixture: Arb<Enemy>
+        get() = arbitrary {
+            Enemy(
+                name = arbitrary { faker.superhero.name() }.bind(),
+                ship = Ship.fixture.bind(),
+            )
+        }
 
-/**
- * ## [many]
- * creates a [List] of [Enemy] with random data
- *
- * @param size the size of the list
- * @return [Arb] of [List] of [Enemy]
- */
-fun Enemy.Companion.many(size: Int = DEFAULT_FIXTURES_SIZE): Arb<List<Enemy>> =
-    arbitrary {
-        MutableList(size) { Enemy.fixture.bind() }
-    }
+    /**
+     * ## [many]
+     * creates a [List] of [Enemy] with random data
+     *
+     * @param size the size of the list
+     * @return [Arb] of [List] of [Enemy]
+     */
+    fun Enemy.Companion.many(size: Int = DEFAULT_FIXTURES_SIZE): Arb<List<Enemy>> =
+        arbitrary {
+            MutableList(size) { Enemy.fixture.bind() }
+        }
+}

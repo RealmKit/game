@@ -23,8 +23,8 @@ package dev.realmkit.game.domain.battle.context
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.enemy.document.Enemy
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.hellper.fixture.enemy.fixture
-import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.enemy.EnemyFixture.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.asClue
 import io.kotest.matchers.collections.shouldBeEmpty

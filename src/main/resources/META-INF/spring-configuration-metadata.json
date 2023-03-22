@@ -1,112 +1,32 @@
 {
-  "groups": [
-    {
-      "name": "app.static.data",
-      "description": "StaticData properties",
-      "type": "dev.realmkit.game.domain.staticdata.property.StaticDataProperties",
-      "sourceType": "dev.realmkit.game.domain.staticdata.property.StaticDataProperties"
-    }
-  ],
   "properties": [
-    {
-      "name": "spring.devtools.add-properties",
-      "type": "java.lang.Boolean"
-    },
     {
       "name": "app.static.data.battle-duration",
       "type": "java.lang.Long",
-      "description": "StaticData Battle: Battle Duration (in turns)."
+      "description": "StaticData: Battle Duration, in turns."
     },
     {
-      "name": "app.static.data.resource.titanium",
+      "name": "app.static.data.turn-duration",
       "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Resource: Titanium resources."
+      "description": "StaticData: Turn Duration, in seconds."
     },
     {
-      "name": "app.static.data.resource.crystal",
-      "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Resource: Crystal resources."
+      "name": "app.static.data.resource",
+      "type": "dev.realmkit.game.domain.resource.document.Resource",
+      "sourceType": "dev.realmkit.game.domain.resource.document.Resource",
+      "description": "StaticData: Initial Resource."
     },
     {
-      "name": "app.static.data.resource.dark-matter",
-      "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Resource: DarkMatter resources."
+      "name": "app.static.data.ships",
+      "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
+      "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
+      "description": "StaticData: Ships."
     },
     {
-      "name": "app.static.data.resource.anti-matter",
-      "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Resource: AntiMatter resources."
-    },
-    {
-      "name": "app.static.data.resource.purunhalium",
-      "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Resource: Purunhalium for `cat cosmic entity` resources."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.name",
-      "type": "java.lang.String",
-      "description": "StaticData: WarShip V1.1 Name."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.hull.max",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Max Hull Points (hp)."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.shield.max",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Max Shield Points (sp)."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.energy.max",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Max Energy Points (ep)."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.attack",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Attack."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.defense",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Defense."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.speed",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Speed."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.base.aggro",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Aggro."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.rate.shield-regeneration",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Shield Regeneration rate."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.rate.critical",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Critical chance."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.multiplier.critical",
-      "type": "java.lang.Double",
-      "description": "StaticData: WarShip V1.1 Stat: Critical multiplier."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.progression.level",
-      "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Stat: Level progression."
-    },
-    {
-      "name": "app.static.data.battle-war-ship-v1.stat.progression.experience",
-      "type": "java.lang.Long",
-      "description": "StaticData: WarShip V1.1 Stat: Experience progression."
+      "name": "app.static.data.items",
+      "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
+      "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
+      "description": "StaticData: Items."
     }
-  ],
-  "hints": []
+  ]
 }

@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.domain.stat.document
 
+import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
+
 /**
  * # [StatRate]
  * the StatRate document
@@ -30,8 +32,8 @@ package dev.realmkit.game.domain.stat.document
  * @property critical `the rate` of critical hit chance
  */
 data class StatRate(
-    var shieldRegeneration: Double,
-    var critical: Double,
+    var shieldRegeneration: Double = DOUBLE_ZERO,
+    var critical: Double = DOUBLE_ZERO,
 ) {
     companion object
 }

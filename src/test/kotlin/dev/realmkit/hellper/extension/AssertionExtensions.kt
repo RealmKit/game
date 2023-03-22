@@ -20,8 +20,8 @@
 
 package dev.realmkit.hellper.extension
 
+import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.core.extension.ConstantExtensions.DOUBLE_ZERO
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import dev.realmkit.game.domain.battle.action.BattleAction
 import dev.realmkit.game.domain.battle.context.BattleContextResult
 import dev.realmkit.game.domain.stat.document.Stat
@@ -52,11 +52,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 /**
- * how long should be the list of fixtures
- */
-const val DEFAULT_FIXTURES_SIZE = 10
-
-/**
  * # [Violation]
  * violation pair for [ValidationError.dataPath] to [ValidationError.message]
  */
@@ -66,6 +61,11 @@ typealias Violation = Pair<String, String>
  * # [AssertionExtensions]
  */
 object AssertionExtensions {
+    /**
+     * how long should be the list of fixtures
+     */
+    const val DEFAULT_FIXTURES_SIZE = 10
+
     /**
      * ## [shouldHaveAllErrors]
      *
@@ -262,13 +262,13 @@ object AssertionExtensions {
 
     /**
      * ## [shouldBeSumOf]
-     * check if the [CurrentMaxDouble] is the result of adding the [other] to [actual]
+     * check if the [CurrentMax] is the result of adding the [other] to [actual]
      *
-     * @param actual the [CurrentMaxDouble] to add to
-     * @param other the [CurrentMaxDouble] to add
-     * @return the [CurrentMaxDouble] being validated
+     * @param actual the [CurrentMax] to add to
+     * @param other the [CurrentMax] to add
+     * @return the [CurrentMax] being validated
      */
-    fun CurrentMaxDouble.shouldBeSumOf(actual: CurrentMaxDouble, other: CurrentMaxDouble): CurrentMaxDouble = asClue {
+    fun CurrentMax.shouldBeSumOf(actual: CurrentMax, other: CurrentMax): CurrentMax = asClue {
         max shouldBe actual.max + other.max
         current shouldBe actual.current
         this
@@ -338,13 +338,13 @@ object AssertionExtensions {
 
     /**
      * ## [shouldBeSubtractedOf]
-     * check if the [CurrentMaxDouble] is the result of subtracting the [other] from [actual]
+     * check if the [CurrentMax] is the result of subtracting the [other] from [actual]
      *
-     * @param actual the [CurrentMaxDouble] to subtract from
-     * @param other the [CurrentMaxDouble] to subtract
-     * @return the [CurrentMaxDouble] being validated
+     * @param actual the [CurrentMax] to subtract from
+     * @param other the [CurrentMax] to subtract
+     * @return the [CurrentMax] being validated
      */
-    fun CurrentMaxDouble.shouldBeSubtractedOf(actual: CurrentMaxDouble, other: CurrentMaxDouble): CurrentMaxDouble = asClue {
+    fun CurrentMax.shouldBeSubtractedOf(actual: CurrentMax, other: CurrentMax): CurrentMax = asClue {
         max shouldBe if (actual.max - other.max > DOUBLE_ZERO) actual.max - other.max else DOUBLE_ZERO
         max shouldNotBeLessThan DOUBLE_ZERO
         current shouldNotBeGreaterThan max

@@ -23,35 +23,37 @@ package dev.realmkit.hellper.fixture.ship
 import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.hellper.extension.FakerExtensions.faker
-import dev.realmkit.hellper.fixture.player.fixture
-import dev.realmkit.hellper.fixture.player.invalid
-import dev.realmkit.hellper.fixture.resource.fixture
-import dev.realmkit.hellper.fixture.resource.invalid
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
+import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatFixture.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * ## [fixture]
- * creates a [Ship] with random data
+ * # [ShipFixture]
+ * contains all the [Ship] fixtures
  */
-val Ship.Companion.fixture: Arb<Ship>
-    get() = arbitrary {
-        Ship(
-            name = arbitrary { faker.space.nasaSpaceCraft() }.bind(),
-            stat = Stat.fixture.bind(),
-        )
-    }
+object ShipFixture {
+    /**
+     * ## [fixture]
+     * creates a [Ship] with random data
+     */
+    val Ship.Companion.fixture: Arb<Ship>
+        get() = arbitrary {
+            Ship(
+                name = arbitrary { faker.space.nasaSpaceCraft() }.bind(),
+                stat = Stat.fixture.bind(),
+            )
+        }
 
-/**
- * ## [invalid]
- * creates a [Ship] with random invalid data
- */
-val Ship.Companion.invalid: Arb<Ship>
-    get() = arbitrary {
-        Ship(
-            name = "",
-            stat = Stat.invalid.bind(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [Ship] with random invalid data
+     */
+    val Ship.Companion.invalid: Arb<Ship>
+        get() = arbitrary {
+            Ship(
+                name = "",
+                stat = Stat.invalid.bind(),
+            )
+        }
+}

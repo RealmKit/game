@@ -18,7 +18,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.service
+package dev.realmkit.game.domain.resource.service
 
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
@@ -27,21 +27,15 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 @IntegrationTestContext
-class StaticDataServiceTest(
-    private val staticDataService: StaticDataService,
+class ResourceServiceTest(
+    private val resourceService: ResourceService,
 ) : IntegrationTestSpec({
     expect("all beans to be inject") {
-        staticDataService.shouldNotBeNull()
-    }
-
-    expect("turnDuration to generate the turnDuration StaticData values from properties") {
-        staticDataService.battleDuration()
-            .shouldNotBeNull()
-            .shouldBe(10L)
+        resourceService.shouldNotBeNull()
     }
 
     expect("resource to generate the resource StaticData values from properties") {
-        staticDataService.resource()
+        resourceService.resource
             .shouldNotBeNull()
             .asClue { resource ->
                 resource.titanium shouldBe 1_000L
@@ -49,33 +43,6 @@ class StaticDataServiceTest(
                 resource.darkMatter shouldBe 0L
                 resource.antiMatter shouldBe 0L
                 resource.purunhalium shouldBe 0L
-            }
-    }
-
-    expect("battleWarShipV1 to generate the battleWarShipV1 StaticData values from properties") {
-        staticDataService.battleWarShipV1()
-            .shouldNotBeNull()
-            .asClue { ship ->
-                ship.name shouldBe "WarShip V1.1"
-                ship.stat.shouldNotBeNull()
-                ship.stat.base.shouldNotBeNull()
-                ship.stat.base.hull.max shouldBe 5.0
-                ship.stat.base.hull.current shouldBe 5.0
-                ship.stat.base.shield.max shouldBe 0.0
-                ship.stat.base.shield.current shouldBe 0.0
-                ship.stat.base.energy.max shouldBe 5.0
-                ship.stat.base.energy.current shouldBe 5.0
-                ship.stat.base.attack shouldBe 1.0
-                ship.stat.base.defense shouldBe 0.0
-                ship.stat.base.speed shouldBe 1.0
-                ship.stat.base.aggro shouldBe 1.0
-                ship.stat.rate.shouldNotBeNull()
-                ship.stat.rate.shieldRegeneration shouldBe 0.0
-                ship.stat.rate.critical shouldBe 1.0
-                ship.stat.multiplier.shouldNotBeNull()
-                ship.stat.multiplier.critical shouldBe 1.0
-                ship.stat.progression.level shouldBe 1L
-                ship.stat.progression.experience shouldBe 0L
             }
     }
 })

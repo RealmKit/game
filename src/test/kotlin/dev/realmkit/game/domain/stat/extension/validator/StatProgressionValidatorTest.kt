@@ -22,8 +22,8 @@ package dev.realmkit.game.domain.stat.extension.validator
 
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.stat.fixture
-import dev.realmkit.hellper.fixture.stat.invalid
+import dev.realmkit.hellper.fixture.stat.StatProgressionFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatProgressionFixture.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid

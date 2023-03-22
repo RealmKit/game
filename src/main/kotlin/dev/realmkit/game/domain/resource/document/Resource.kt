@@ -20,6 +20,8 @@
 
 package dev.realmkit.game.domain.resource.document
 
+import dev.realmkit.game.core.extension.ConstantExtensions.LONG_ZERO
+
 /**
  * # [Resource]
  * the Resource document
@@ -31,11 +33,11 @@ package dev.realmkit.game.domain.resource.document
  * @property purunhalium `the resource` purunhalium for `cat cosmic entity`
  */
 data class Resource(
-    var titanium: Long,
-    var crystal: Long,
-    var darkMatter: Long,
-    var antiMatter: Long,
-    var purunhalium: Long,
+    var titanium: Long = LONG_ZERO,
+    var crystal: Long = LONG_ZERO,
+    var darkMatter: Long = LONG_ZERO,
+    var antiMatter: Long = LONG_ZERO,
+    var purunhalium: Long = LONG_ZERO,
 ) {
     companion object
 }

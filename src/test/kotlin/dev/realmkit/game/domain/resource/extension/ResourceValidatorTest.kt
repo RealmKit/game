@@ -22,8 +22,8 @@ package dev.realmkit.game.domain.resource.extension
 
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.resource.fixture
-import dev.realmkit.hellper.fixture.resource.invalid
+import dev.realmkit.hellper.fixture.resource.ResourceFixture.fixture
+import dev.realmkit.hellper.fixture.resource.ResourceFixture.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid

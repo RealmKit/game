@@ -20,8 +20,8 @@
 
 package dev.realmkit.game.core.extension.validator
 
+import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.core.extension.ValidationExtensions.positive
-import dev.realmkit.game.domain.aliases.CurrentMaxDouble
 import io.konform.validation.Validation
 
 /**
@@ -33,9 +33,9 @@ object CurrentMaxValidator {
      * ## [validation]
      * [dev.realmkit.game.core.document.CurrentMax] -> [Validation] object
      */
-    val validation: Validation<CurrentMaxDouble> = Validation {
-        CurrentMaxDouble::current required {}
-        CurrentMaxDouble::max required { positive() }
+    val validation: Validation<CurrentMax> = Validation {
+        CurrentMax::current required {}
+        CurrentMax::max required { positive() }
         addConstraint(".current must be lower than .max") {
             it.current <= it.max
         }

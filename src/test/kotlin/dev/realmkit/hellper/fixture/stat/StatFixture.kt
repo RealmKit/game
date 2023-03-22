@@ -26,48 +26,64 @@ import dev.realmkit.game.domain.stat.document.StatBase
 import dev.realmkit.game.domain.stat.document.StatMultiplier
 import dev.realmkit.game.domain.stat.document.StatProgression
 import dev.realmkit.game.domain.stat.document.StatRate
+import dev.realmkit.hellper.fixture.stat.StatBaseFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatBaseFixture.invalid
+import dev.realmkit.hellper.fixture.stat.StatMultiplierFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatMultiplierFixture.invalid
+import dev.realmkit.hellper.fixture.stat.StatProgressionFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatProgressionFixture.invalid
+import dev.realmkit.hellper.fixture.stat.StatRateFixture.fixture
+import dev.realmkit.hellper.fixture.stat.StatRateFixture.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 
 /**
- * Creates a [Stat] with random data
+ * # [StatFixture]
+ * contains all the [Stat] fixtures
  */
-val Stat.Companion.fixture: Arb<Stat>
-    get() = arbitrary {
-        Stat(
-            base = StatBase.fixture.bind(),
-            rate = StatRate.fixture.bind(),
-            multiplier = StatMultiplier.fixture.bind(),
-            progression = StatProgression.fixture.bind(),
-        )
-    }
+object StatFixture {
+    /**
+     * ## [fixture]
+     * creates a [Stat] with random data
+     */
+    val Stat.Companion.fixture: Arb<Stat>
+        get() = arbitrary {
+            Stat(
+                base = StatBase.fixture.bind(),
+                rate = StatRate.fixture.bind(),
+                multiplier = StatMultiplier.fixture.bind(),
+                progression = StatProgression.fixture.bind(),
+            )
+        }
 
-/**
- * Creates a [Stat] with random invalid data
- */
-val Stat.Companion.invalid: Arb<Stat>
-    get() = arbitrary {
-        Stat(
-            base = StatBase.invalid.bind(),
-            rate = StatRate.invalid.bind(),
-            multiplier = StatMultiplier.invalid.bind(),
-            progression = StatProgression.invalid.bind(),
-        )
-    }
+    /**
+     * ## [invalid]
+     * creates a [Stat] with random invalid data
+     */
+    val Stat.Companion.invalid: Arb<Stat>
+        get() = arbitrary {
+            Stat(
+                base = StatBase.invalid.bind(),
+                rate = StatRate.invalid.bind(),
+                multiplier = StatMultiplier.invalid.bind(),
+                progression = StatProgression.invalid.bind(),
+            )
+        }
 
-/**
- * ## [prepareToWinBattle]
- * sets the stats to be very high
- */
-fun Stat.prepareToWinBattle() {
-    base.hull.max = Double.MAX_VALUE
-    base.hull.current = Double.MAX_VALUE
-    base.shield.max = Double.MAX_VALUE
-    base.shield.current = Double.MAX_VALUE
-    base.attack = Double.MAX_VALUE
-    base.defense = Double.MAX_VALUE
-    base.speed = ConstantExtensions.DOUBLE_ONE
-    multiplier.critical = ConstantExtensions.DOUBLE_ONE
-    progression.level = ConstantExtensions.LONG_ONE
-    progression.experience = ConstantExtensions.LONG_ZERO
+    /**
+     * ## [prepareToWinBattle]
+     * sets the stats to be very high
+     */
+    fun Stat.prepareToWinBattle() {
+        base.hull.max = Double.MAX_VALUE
+        base.hull.current = Double.MAX_VALUE
+        base.shield.max = Double.MAX_VALUE
+        base.shield.current = Double.MAX_VALUE
+        base.attack = Double.MAX_VALUE
+        base.defense = Double.MAX_VALUE
+        base.speed = ConstantExtensions.DOUBLE_ONE
+        multiplier.critical = ConstantExtensions.DOUBLE_ONE
+        progression.level = ConstantExtensions.LONG_ONE
+        progression.experience = ConstantExtensions.LONG_ZERO
+    }
 }

@@ -24,8 +24,8 @@ import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
-import dev.realmkit.hellper.fixture.player.fixture
-import dev.realmkit.hellper.fixture.player.invalid
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.invalid
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.assertions.konform.shouldBeInvalid
 import io.kotest.assertions.konform.shouldBeValid

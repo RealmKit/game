@@ -20,16 +20,9 @@
 
 package dev.realmkit.game.domain.aliases
 
-import dev.realmkit.game.core.document.CurrentMax
 import dev.realmkit.game.domain.battle.action.BattleAction
 import dev.realmkit.game.domain.battle.action.BattleActionAttack
 import dev.realmkit.game.domain.target.document.Target
-
-/**
- * # [CurrentMaxDouble]
- * the `current max` [Double] alias
- */
-typealias CurrentMaxDouble = CurrentMax<Double>
 
 /**
  * # [AttackBlock]

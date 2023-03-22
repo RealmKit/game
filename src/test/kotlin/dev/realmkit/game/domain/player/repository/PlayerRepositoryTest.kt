@@ -21,7 +21,7 @@
 package dev.realmkit.game.domain.player.repository
 
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.hellper.fixture.player.fixture
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue

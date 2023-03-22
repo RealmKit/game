@@ -27,7 +27,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * # [Enemy]
- * the Enemy document
+ * An [Enemy] is a [Target] that can be attacked by anyone to gain [experience][dev.realmkit.game.domain.stat.document.StatProgression.experience] and `Loot`
  *
  * @property name the enemy name
  * @property ship the enemy ship
