@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.stat.enums
 
+import dev.realmkit.game.domain.aliases.StatTypeBlock
 import dev.realmkit.game.domain.aliases.StatTypeFormula
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.extension.formula.StatTypeEnumFormula.divideByHundred
@@ -35,36 +36,28 @@ import dev.realmkit.game.domain.stat.extension.formula.StatTypeEnumFormula.sumOn
  */
 enum class StatTypeEnum(
     private val formula: StatTypeFormula,
+    private val block: StatTypeBlock,
 ) {
-    STAT_BASE_HULL(multiplyByTen),
-    STAT_BASE_SHIELD(multiplyByFive),
-    STAT_BASE_ENERGY(multiplyByFive),
-    STAT_BASE_ATTACK(sumOnly),
-    STAT_BASE_DEFENSE(sumOnly),
-    STAT_BASE_SPEED(sumOnly),
-    STAT_BASE_AGGRO(sumOnly),
-    STAT_RATE_SHIELD_REGENERATION(divideByHundred),
-    STAT_RATE_CRITICAL(divideByHundred),
-    STAT_MULTIPLIER_CRITICAL(divideByHundred),
+    STAT_BASE_HULL(multiplyByTen, { points -> base.hull.max += points }),
+    STAT_BASE_SHIELD(multiplyByFive, { points -> base.shield.max += points }),
+    STAT_BASE_ENERGY(multiplyByFive, { points -> base.energy.max += points }),
+    STAT_BASE_ATTACK(sumOnly, { points -> base.attack += points }),
+    STAT_BASE_DEFENSE(sumOnly, { points -> base.defense += points }),
+    STAT_BASE_SPEED(sumOnly, { points -> base.speed += points }),
+    STAT_BASE_AGGRO(sumOnly, { points -> base.aggro += points }),
+    STAT_RATE_SHIELD_REGENERATION(divideByHundred, { points -> rate.shieldRegeneration += points }),
+    STAT_RATE_CRITICAL(divideByHundred, { points -> rate.critical += points }),
+    STAT_MULTIPLIER_CRITICAL(divideByHundred, { points -> multiplier.critical += points }),
     ;
 
     /**
-     * @param stat
-     * @param points
+     * ## [buy]
+     * buy points based on the type
+     *
+     * @param stat the stat
+     * @param points the points to buy
+     * @return the stat itself
      */
-    fun buy(stat: Stat, points: Long) {
-        val calculated = formula(points)
-        when (this) {
-            STAT_BASE_HULL -> stat.base.hull.max += calculated
-            STAT_BASE_SHIELD -> stat.base.shield.max += calculated
-            STAT_BASE_ENERGY -> stat.base.energy.max += calculated
-            STAT_BASE_ATTACK -> stat.base.attack += calculated
-            STAT_BASE_DEFENSE -> stat.base.defense += calculated
-            STAT_BASE_SPEED -> stat.base.speed += calculated
-            STAT_BASE_AGGRO -> stat.base.aggro += calculated
-            STAT_RATE_SHIELD_REGENERATION -> stat.rate.shieldRegeneration += calculated
-            STAT_RATE_CRITICAL -> stat.rate.critical += calculated
-            STAT_MULTIPLIER_CRITICAL -> stat.multiplier.critical += calculated
-        }
-    }
+    fun buy(stat: Stat, points: Long): Stat =
+        stat.apply { block(formula(points)) }
 }
