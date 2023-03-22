@@ -21,15 +21,19 @@
 package dev.realmkit.game.domain.ship.document
 
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import org.springframework.data.mongodb.core.index.Indexed
 
 /**
  * # [Ship]
  * the Ship document
  *
- * @property name the player name
- * @property stat the player stat
+ * @property type the ship type enum
+ * @property name the ship name
+ * @property stat the ship stat
  */
 data class Ship(
+    @Indexed val type: StaticDataShipEnum,
     val name: String,
     val stat: Stat,
 ) {

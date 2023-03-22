@@ -30,10 +30,10 @@ package dev.realmkit.game.domain.stat.document
  * @property progression `the stat` progression attributes
  */
 data class Stat(
-    var base: StatBase = StatBase(),
-    var rate: StatRate = StatRate(),
-    var multiplier: StatMultiplier = StatMultiplier(),
-    var progression: StatProgression = StatProgression(),
+    val base: StatBase = StatBase(),
+    val rate: StatRate = StatRate(),
+    val multiplier: StatMultiplier = StatMultiplier(),
+    val progression: StatProgression = StatProgression(),
 ) {
     companion object
 }

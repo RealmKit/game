@@ -32,8 +32,6 @@ object CurrentMaxOperator {
      * ## [plus]
      * [CurrentMax] `+` operator, sum the `max` only
      *
-     * @see [CurrentMax]
-     *
      * @param other the other [CurrentMax]
      * @return a copy of [CurrentMax] with the summed properties
      */
@@ -43,12 +41,24 @@ object CurrentMaxOperator {
         )
 
     /**
+     * ## [plusAssign]
+     * [CurrentMax] `+=` operator
+     *
+     * @param other the other [CurrentMax]
+     */
+    operator fun CurrentMax.plusAssign(other: CurrentMax) {
+        max += other.max
+        current += other.current
+        if (current > max) {
+            current = max
+        }
+    }
+
+    /**
      * ## [minus]
      * [CurrentMax] `-` operator, subtract the `max`
      * and if `current` is greater than the new `max`
      * set the `current` to the new `max`
-     *
-     * @see [CurrentMax]
      *
      * @param other the other [CurrentMax]
      * @return a copy of [CurrentMax] with the subtracted properties

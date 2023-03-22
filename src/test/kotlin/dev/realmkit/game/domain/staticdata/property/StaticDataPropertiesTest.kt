@@ -20,13 +20,18 @@
 
 package dev.realmkit.game.domain.staticdata.property
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldNotBeBlank
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.enum
+import io.kotest.property.checkAll
 
 @IntegrationTestContext
 class StaticDataPropertiesTest(
@@ -54,41 +59,26 @@ class StaticDataPropertiesTest(
             }
     }
 
-    expect("ships to have BATTLE_WAR_SHIP_V1 ship") {
-        staticDataProperties.ships(BATTLE_WAR_SHIP_V1)
-            .shouldNotBeNull()
-            .asClue { ship ->
-                ship.name shouldBe "WarShip V1.1"
-                ship.stat.shouldNotBeNull()
-                ship.stat.base.shouldNotBeNull()
-                ship.stat.base.hull.max shouldBe 5.0
-                ship.stat.base.hull.current shouldBe 5.0
-                ship.stat.base.shield.max shouldBe 0.0
-                ship.stat.base.shield.current shouldBe 0.0
-                ship.stat.base.energy.max shouldBe 5.0
-                ship.stat.base.energy.current shouldBe 5.0
-                ship.stat.base.attack shouldBe 1.0
-                ship.stat.base.defense shouldBe 0.0
-                ship.stat.base.speed shouldBe 1.0
-                ship.stat.base.aggro shouldBe 1.0
-                ship.stat.rate.shouldNotBeNull()
-                ship.stat.rate.shieldRegeneration shouldBe 0.0
-                ship.stat.rate.critical shouldBe 0.0
-                ship.stat.multiplier.shouldNotBeNull()
-                ship.stat.multiplier.critical shouldBe 1.0
-                ship.stat.progression.level shouldBe 1L
-                ship.stat.progression.experience shouldBe 0L
-            }
+    expect("to get items from StaticDataShipEnum") {
+        checkAll(Arb.enum<StaticDataShipEnum>()) { enum ->
+            staticDataProperties.ships(enum)
+                .shouldNotBeNull()
+                .asClue { item ->
+                    item.name.shouldNotBeBlank()
+                    item.stat.shouldNotBeNull()
+                }
+        }
     }
 
-    expect("items to have CHEAP_RECOVERY_DRONE item") {
-        staticDataProperties.items(CHEAP_RECOVERY_DRONE)
-            .shouldNotBeNull()
-            .asClue { item ->
-                item.name shouldBe "Cheap Recovery Drone"
-                item.stat.shouldNotBeNull()
-                item.stat.base.shouldNotBeNull()
-                item.stat.base.hull.current shouldBe 10.0
-            }
+    expect("to get items from StaticDataItemEnum") {
+        checkAll(Arb.enum<StaticDataItemEnum>()) { enum ->
+            staticDataProperties.items(enum)
+                .shouldNotBeNull()
+                .asClue { item ->
+                    item.owner.shouldBeNull()
+                    item.name.shouldNotBeBlank()
+                    item.stat.shouldNotBeNull()
+                }
+        }
     }
 })

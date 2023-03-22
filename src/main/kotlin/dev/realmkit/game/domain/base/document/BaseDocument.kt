@@ -20,6 +20,7 @@
 
 package dev.realmkit.game.domain.base.document
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate
@@ -48,23 +49,27 @@ open class BaseDocument {
      * document ID property
      */
     @Id
+    @JsonIgnore
     lateinit var id: String
 
     /**
      * document creation time
      */
     @CreatedDate
+    @JsonIgnore
     lateinit var createdAt: Instant
 
     /**
      * document update time
      */
     @LastModifiedDate
+    @JsonIgnore
     lateinit var updatedAt: Instant
 
     /**
      * document version
      */
     @Version
+    @JsonIgnore
     lateinit var version: String
 }

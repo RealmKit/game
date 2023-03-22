@@ -48,9 +48,9 @@ class PlayerValidatorTest : TestSpec({
     }
 
     expect("to throw a ValidationException when validating a Player") {
-        checkAll(Player.fixture) { player ->
+        checkAll(Player.invalid) { player ->
             shouldThrow<ValidationException> {
-                player.copy(name = "") validated { null }
+                player validated { null }
             }.shouldNotBeNull()
                 .invalid.shouldNotBeNull()
                 .errors.shouldNotBeNull().shouldNotBeEmpty()

@@ -25,11 +25,17 @@ import dev.realmkit.game.core.extension.operator.CurrentMaxOperator.plus
 import dev.realmkit.game.domain.stat.document.Stat
 import dev.realmkit.game.domain.stat.extension.operator.StatBaseOperator.minus
 import dev.realmkit.game.domain.stat.extension.operator.StatBaseOperator.plus
+import dev.realmkit.game.domain.stat.extension.operator.StatBaseOperator.plusAssign
 import dev.realmkit.game.domain.stat.extension.operator.StatMultiplierOperator.minus
 import dev.realmkit.game.domain.stat.extension.operator.StatMultiplierOperator.plus
+import dev.realmkit.game.domain.stat.extension.operator.StatMultiplierOperator.plusAssign
+import dev.realmkit.game.domain.stat.extension.operator.StatOperator.plus
+import dev.realmkit.game.domain.stat.extension.operator.StatOperator.plusAssign
 import dev.realmkit.game.domain.stat.extension.operator.StatProgressionOperator.plus
+import dev.realmkit.game.domain.stat.extension.operator.StatProgressionOperator.plusAssign
 import dev.realmkit.game.domain.stat.extension.operator.StatRateOperator.minus
 import dev.realmkit.game.domain.stat.extension.operator.StatRateOperator.plus
+import dev.realmkit.game.domain.stat.extension.operator.StatRateOperator.plusAssign
 
 /**
  * # [StatOperator]
@@ -38,9 +44,7 @@ import dev.realmkit.game.domain.stat.extension.operator.StatRateOperator.plus
 object StatOperator {
     /**
      * ## [plus]
-     * [Stat] `+` operator, sum the properties
-     *
-     * @see [Stat]
+     * [Stat] `+` operator
      *
      * @param other the other [Stat]
      * @return a copy of [Stat] with the summed properties
@@ -54,10 +58,21 @@ object StatOperator {
         )
 
     /**
-     * ## [minus]
-     * [Stat] `-` operator, subtract the properties
+     * ## [plusAssign]
+     * [Stat] `+=` operator
      *
-     * @see [Stat]
+     * @param other the other [Stat]
+     */
+    operator fun Stat.plusAssign(other: Stat) {
+        base += other.base
+        rate += other.rate
+        multiplier += other.multiplier
+        progression += other.progression
+    }
+
+    /**
+     * ## [minus]
+     * [Stat] `-` operator
      *
      * @param other the other [Stat]
      * @return a copy of [Stat] with the subtracted properties

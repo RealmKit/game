@@ -22,11 +22,13 @@ package dev.realmkit.hellper.fixture.ship
 
 import dev.realmkit.game.domain.ship.document.Ship
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
 import dev.realmkit.hellper.extension.FakerExtensions.faker
 import dev.realmkit.hellper.fixture.stat.StatFixture.fixture
 import dev.realmkit.hellper.fixture.stat.StatFixture.invalid
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.arbitrary.enum
 
 /**
  * # [ShipFixture]
@@ -40,6 +42,7 @@ object ShipFixture {
     val Ship.Companion.fixture: Arb<Ship>
         get() = arbitrary {
             Ship(
+                type = Arb.enum<StaticDataShipEnum>().bind(),
                 name = arbitrary { faker.space.nasaSpaceCraft() }.bind(),
                 stat = Stat.fixture.bind(),
             )
@@ -52,6 +55,7 @@ object ShipFixture {
     val Ship.Companion.invalid: Arb<Ship>
         get() = arbitrary {
             Ship(
+                type = Arb.enum<StaticDataShipEnum>().bind(),
                 name = "",
                 stat = Stat.invalid.bind(),
             )

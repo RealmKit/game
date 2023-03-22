@@ -20,29 +20,98 @@
 
 package dev.realmkit.game.domain.item.service
 
+import dev.realmkit.game.core.exception.NotFoundException
+import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
+import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.player.document.Player
+import dev.realmkit.game.domain.player.repository.PlayerRepository
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
 import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
+import dev.realmkit.hellper.extension.FakerExtensions.faker
+import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldNotBeBlank
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.enum
+import io.kotest.property.checkAll
 
 @IntegrationTestContext
 class ItemServiceTest(
     private val itemService: ItemService,
+    private val playerRepository: PlayerRepository,
 ) : IntegrationTestSpec({
     expect("all beans to be inject") {
         itemService.shouldNotBeNull()
     }
 
-    expect("battleWarItemV1 to generate the battleWarItemV1 StaticData values from properties") {
-        itemService[CHEAP_RECOVERY_DRONE]
-            .shouldNotBeNull()
-            .asClue { item ->
-                item.name shouldBe "Cheap Recovery Drone"
-                item.stat.shouldNotBeNull()
-                item.stat.base.shouldNotBeNull()
-                item.stat.base.hull.current shouldBe 10.0
+    expect("to persist items from StaticDataItemEnum") {
+        checkAll(Arb.enum<StaticDataItemEnum>(), Player.fixture) { enum, player ->
+            player.id = faker.random.nextUUID()
+            itemService.new(player to enum)
+                .shouldNotBeNull()
+                .asClue { item ->
+                    item.id.shouldNotBeNull()
+                    item.createdAt.shouldNotBeNull()
+                    item.updatedAt.shouldNotBeNull()
+                    item.version.shouldNotBeNull()
+                    item.owner shouldBe player.id
+                    item.name.shouldNotBeBlank()
+                    item.stat.shouldNotBeNull()
+                    item.stat.base.shouldNotBeNull()
+                }
+        }
+    }
+
+    expect("to get items from StaticDataItemEnum") {
+        checkAll(Arb.enum<StaticDataItemEnum>()) { enum ->
+            itemService[enum]
+                .shouldNotBeNull()
+                .asClue { item ->
+                    item.owner.shouldBeNull()
+                    item.name.shouldNotBeBlank()
+                    item.stat.shouldNotBeNull()
+                    item.stat.base.shouldNotBeNull()
+                }
+        }
+    }
+
+    expect("Player to use an Item to recovery Hull") {
+        checkAll(Player.fixture) { player ->
+            player.ship.stat.base.hull.max = 9.0
+            player.ship.stat.base.hull.current = 0.0
+            playerRepository persist player
+
+            itemService.new(player to CHEAP_RECOVERY_DRONE)
+            itemService.use(player to CHEAP_RECOVERY_DRONE)
+
+            player.ship.stat.base.hull.current shouldBe 9.0
+        }
+    }
+
+    expect("Player to not use an nonexistent Item") {
+        checkAll(Player.fixture) { player ->
+            shouldThrow<NotFoundException> {
+                player.id = faker.random.nextUUID()
+                itemService.use(player to CHEAP_RECOVERY_DRONE)
+            }.shouldNotBeNull().asClue { exception ->
+                exception.clazz shouldBe Item::class
+                exception.value shouldBe "Player ${player.id} does not have any CHEAP_RECOVERY_DRONE"
             }
+        }
+    }
+
+    expect("Player to use all Items") {
+        checkAll(Arb.enum<StaticDataItemEnum>(), Player.fixture) { enum, player ->
+            playerRepository persist player
+
+            itemService.new(player to enum)
+            itemService.use(player to enum)
+        }
     }
 })

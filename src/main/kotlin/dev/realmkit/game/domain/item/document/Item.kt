@@ -20,18 +20,27 @@
 
 package dev.realmkit.game.domain.item.document
 
+import dev.realmkit.game.domain.base.document.BaseDocument
 import dev.realmkit.game.domain.stat.document.Stat
+import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
+import org.springframework.data.mongodb.core.index.Indexed
+import org.springframework.data.mongodb.core.mapping.Document
 
 /**
  * # [Item]
  * An [Item] is a consumable object that can be used by the [Stat] holder
  *
+ * @property type the item type enum
+ * @property owner the item owner id
  * @property name the item name
  * @property stat the item stat
  */
+@Document
 data class Item(
+    @Indexed val type: StaticDataItemEnum,
+    @Indexed var owner: String? = null,
     val name: String,
     val stat: Stat,
-) {
+) : BaseDocument() {
     companion object
 }
