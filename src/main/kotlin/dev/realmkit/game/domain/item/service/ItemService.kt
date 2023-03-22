@@ -24,14 +24,13 @@ import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
 import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
 import dev.realmkit.game.domain.item.extension.ItemValidator.validated
 import dev.realmkit.game.domain.item.repository.ItemRepository
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.service.PlayerService
 import dev.realmkit.game.domain.stat.extension.operator.StatOperator.plusAssign
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
-import dev.realmkit.game.domain.target.document.Target
 import io.konform.validation.Validation
 import org.springframework.stereotype.Service
 
@@ -52,59 +51,61 @@ class ItemService(
     /**
      * ## [get]
      * returns a copy of the item from the static data
+     * ```kotlin
+     * val newItem = itemService[CHEAP_RECOVERY_DRONE]
+     * ```
      *
      * @param item the item to get
      * @return the item
      */
-    operator fun get(item: StaticDataItemEnum): Item =
+    operator fun get(item: ItemTypeEnum): Item =
         staticData.items(item)
 
     /**
      * ## [new]
      * creates a new [Item] and persists it to DB, if valid
      * ```kotlin
-     * itemService new (player to CHEAP_RECOVERY_DRONE)
+     * val persistedItem = itemService.new(player=player, type=CHEAP_RECOVERY_DRONE)
      * ```
      *
-     * @see Item
-     *
-     * @param pair the pair of owner and item to create
+     * @param player the player to create the item for
+     * @param type the item type to create
      * @return the validated persisted document
      * @throws ValidationException if [Item] has [Validation] issues
      */
     @Throws(ValidationException::class)
-    infix fun new(pair: Pair<Target, StaticDataItemEnum>): Item =
-        this persist get(pair.second)
-            .apply { owner = pair.first.id }
+    fun new(player: Player, type: ItemTypeEnum): Item =
+        this persist get(type)
+            .apply { owner = player.id }
 
     /**
      * ## [use]
      * uses an [Item] from the DB, if exists
+     * ```kotlin
+     * val usedItem = itemService.use(player=player, type=CHEAP_RECOVERY_DRONE)
+     * ```
      *
-     * @see Item
-     *
-     * @param pair the pair of owner and item to use
+     * @param player the player to use the item
+     * @param type the item type to use
      * @return the item
      * @throws ValidationException if [Player] has [Validation] issues after applying the [Item] stat
      */
     @Throws(ValidationException::class)
-    infix fun use(pair: Pair<Player, StaticDataItemEnum>): Item =
-        itemRepository.findAllByOwnerAndType(pair.first.id, pair.second)
-            .ifEmpty { throw NotFoundException(Item::class, "Player ${pair.first.id} does not have any ${pair.second}") }
+    fun use(player: Player, type: ItemTypeEnum): Item =
+        itemRepository.findAllByOwnerAndType(player.id, type)
+            .ifEmpty { throw NotFoundException(Item::class, "Player ${player.id} does not have any $type") }
             .first()
             .also { item ->
-                pair.first.ship.stat += item.stat
-                playerService update pair.first
+                player.ship.stat += item.stat
+                playerService update player
             }
 
     /**
      * ## [persist]
      * validate and persists a [Item] to DB, if valid.
      * ```kotlin
-     * itemService persist item
+     * val persisted = itemService persist item
      * ```
-     *
-     * @see Item
      *
      * @param request the item to persist
      * @return the validated persisted document

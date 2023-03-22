@@ -14,14 +14,14 @@
     },
     {
       "name": "app.static.data.ships",
-      "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
-      "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum, dev.realmkit.game.domain.ship.document.Ship>",
+      "type": "java.util.Map<dev.realmkit.game.domain.ship.enums.ShipTypeEnum, dev.realmkit.game.domain.ship.document.Ship>",
+      "sourceType": "java.util.Map<dev.realmkit.game.domain.ship.enums.ShipTypeEnum, dev.realmkit.game.domain.ship.document.Ship>",
       "description": "StaticData: Ships."
     },
     {
       "name": "app.static.data.items",
-      "type": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
-      "sourceType": "java.util.Map<dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum, dev.realmkit.game.domain.item.document.Item>",
+      "type": "java.util.Map<dev.realmkit.game.domain.item.enums.ItemTypeEnum, dev.realmkit.game.domain.item.document.Item>",
+      "sourceType": "java.util.Map<dev.realmkit.game.domain.item.enums.ItemTypeEnum, dev.realmkit.game.domain.item.document.Item>",
       "description": "StaticData: Items."
     }
   ]

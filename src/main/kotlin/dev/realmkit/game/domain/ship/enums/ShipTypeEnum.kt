@@ -18,31 +18,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.item.repository
-
-import dev.realmkit.game.domain.item.document.Item
-import dev.realmkit.game.domain.item.enums.ItemTypeEnum
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+package dev.realmkit.game.domain.ship.enums
 
 /**
- * # [ItemRepository]
- * the [Item] Mongo Repository interface.
- * ```kotlin
- * itemRepository.save( Item() )
- * ```
- *
- * @see MongoRepository
+ * # [ShipTypeEnum]
+ * the ship type enum
  */
-@Repository
-interface ItemRepository : MongoRepository<Item, String> {
-    /**
-     * ## [findAllByOwnerAndType]
-     * returns all items of a specific type
-     *
-     * @param owner the owner of the item
-     * @param type the type of the item
-     * @return the list of items
-     */
-    fun findAllByOwnerAndType(owner: String, type: ItemTypeEnum): List<Item>
+enum class ShipTypeEnum {
+    BATTLE_WAR_SHIP_V1,
 }

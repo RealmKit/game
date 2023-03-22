@@ -20,8 +20,8 @@
 
 package dev.realmkit.game.domain.staticdata.property
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum
 import dev.realmkit.hellper.infra.IntegrationTestContext
 import dev.realmkit.hellper.spec.IntegrationTestSpec
 import io.kotest.assertions.asClue
@@ -65,7 +65,7 @@ class StaticDataPropertiesTest(
     }
 
     expect("to get items from StaticDataShipEnum") {
-        checkAll(Arb.enum<StaticDataShipEnum>()) { enum ->
+        checkAll(Arb.enum<ShipTypeEnum>()) { enum ->
             staticDataProperties.ships(enum)
                 .shouldNotBeNull()
                 .asClue { item ->
@@ -76,7 +76,7 @@ class StaticDataPropertiesTest(
     }
 
     expect("to get items from StaticDataItemEnum") {
-        checkAll(Arb.enum<StaticDataItemEnum>()) { enum ->
+        checkAll(Arb.enum<ItemTypeEnum>()) { enum ->
             staticDataProperties.items(enum)
                 .shouldNotBeNull()
                 .asClue { item ->

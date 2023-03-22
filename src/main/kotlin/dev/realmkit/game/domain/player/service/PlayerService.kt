@@ -27,9 +27,9 @@ import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
 import dev.realmkit.game.domain.resource.service.ResourceService
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.BATTLE_WAR_SHIP_V1
 import dev.realmkit.game.domain.ship.service.ShipService
 import dev.realmkit.game.domain.stat.service.StatService
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum.BATTLE_WAR_SHIP_V1
 import io.konform.validation.Validation
 import org.springframework.stereotype.Service
 

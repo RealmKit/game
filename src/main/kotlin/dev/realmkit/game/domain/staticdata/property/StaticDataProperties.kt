@@ -22,10 +22,10 @@ package dev.realmkit.game.domain.staticdata.property
 
 import dev.realmkit.game.core.extension.MapperExtensions.clone
 import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
 import dev.realmkit.game.domain.resource.document.Resource
 import dev.realmkit.game.domain.ship.document.Ship
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum
-import dev.realmkit.game.domain.staticdata.enums.StaticDataShipEnum
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
@@ -41,8 +41,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 class StaticDataProperties(
     private val config: StaticDataConfig,
     private val resource: Resource,
-    private val ships: Map<StaticDataShipEnum, Ship>,
-    private val items: Map<StaticDataItemEnum, Item>,
+    private val ships: Map<ShipTypeEnum, Ship>,
+    private val items: Map<ItemTypeEnum, Item>,
 ) {
     /**
      * ## [config]
@@ -68,7 +68,7 @@ class StaticDataProperties(
      * @param ship the ship name
      * @return the [Ship] based on the name property
      */
-    fun ships(ship: StaticDataShipEnum): Ship =
+    fun ships(ship: ShipTypeEnum): Ship =
         ships[ship]!!.clone()
 
     /**
@@ -78,6 +78,6 @@ class StaticDataProperties(
      * @param item the item name
      * @return the [Item] based on the name property
      */
-    fun items(item: StaticDataItemEnum): Item =
+    fun items(item: ItemTypeEnum): Item =
         items[item]!!.clone()
 }

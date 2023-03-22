@@ -18,16 +18,16 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.domain.staticdata.enums
+package dev.realmkit.game.domain.item.enums
 
-import dev.realmkit.game.domain.staticdata.enums.StaticDataItemEnum.CHEAP_RECOVERY_DRONE
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum.CHEAP_RECOVERY_DRONE
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 
-class StaticDataItemEnumTest : TestSpec({
+class ItemTypeEnumTest : TestSpec({
     expect("should have all values") {
-        StaticDataItemEnum.values()
+        ItemTypeEnum.values()
             .shouldHaveSize(1)
             .shouldContainExactly(
                 CHEAP_RECOVERY_DRONE,

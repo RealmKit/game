@@ -41,3 +41,9 @@ typealias AttackerTargets = Pair<Target, Set<Target>>
  * the `logs per turn` alias
  */
 typealias LogsPerTurn = MutableMap<Long, LinkedHashSet<BattleAction>>
+
+/**
+ * # [StatTypeFormula]
+ * the `stat type formula` alias
+ */
+typealias StatTypeFormula = (Long) -> Double
