@@ -102,19 +102,20 @@ class ItemServiceTest(
                 itemService.use(player = player, type = CHEAP_RECOVERY_DRONE)
             }.asClue { exception ->
                 exception.clazz shouldBe Item::class
-                exception.value shouldBe "Player ${player.id} does not have any CHEAP_RECOVERY_DRONE"
+                exception.value shouldBe CHEAP_RECOVERY_DRONE
             }
         }
     }
 
     expect("Player to not use an nonexistent Item") {
         checkAll(Player.fixture) { player ->
+            player.id = faker.random.nextUUID()
+
             shouldThrow<NotFoundException> {
-                player.id = faker.random.nextUUID()
                 itemService.use(player = player, type = CHEAP_RECOVERY_DRONE)
             }.shouldNotBeNull().asClue { exception ->
                 exception.clazz shouldBe Item::class
-                exception.value shouldBe "Player ${player.id} does not have any CHEAP_RECOVERY_DRONE"
+                exception.value shouldBe CHEAP_RECOVERY_DRONE
             }
         }
     }
@@ -124,6 +125,19 @@ class ItemServiceTest(
             player.id = faker.random.nextUUID()
             itemService.new(player = player, type = enum)
             itemService.use(player = player, type = enum)
+        }
+    }
+
+    expect("Player should not use all Items") {
+        checkAll(Arb.enum<ItemTypeEnum>(), Player.fixture) { enum, player ->
+            player.id = faker.random.nextUUID()
+
+            shouldThrow<NotFoundException> {
+                itemService.use(player = player, type = enum)
+            }.shouldNotBeNull().asClue { exception ->
+                exception.clazz shouldBe Item::class
+                exception.value shouldBe enum
+            }
         }
     }
 })

@@ -91,7 +91,7 @@ class ItemService(
     @Throws(ValidationException::class)
     fun use(player: Player, type: ItemTypeEnum): Item =
         itemRepository.findAllByOwnerAndType(player.id, type)
-            .ifEmpty { throw NotFoundException(Item::class, "Player ${player.id} does not have any $type") }
+            .ifEmpty { throw NotFoundException(Item::class, type) }
             .first()
             .also { item ->
                 player.ship.stat += item.stat

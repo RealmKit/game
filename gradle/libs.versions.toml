@@ -14,6 +14,7 @@ spring-dependency = "1.1.0"
 test-archunit = "1.0.1"
 test-faker = "1.14.0"
 test-kotest = "5.5.5"
+test-kotest-arb = "2.1.2"
 test-kotest-konform = "1.0.1"
 test-kotest-spring = "1.1.2"
 test-testcontainers = "1.17.6"
@@ -42,6 +43,7 @@ spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" 
 test-archunit-core = { module = "com.tngtech.archunit:archunit", version.ref = "test-archunit" }
 test-archunit-junit5 = { module = "com.tngtech.archunit:archunit-junit5", version.ref = "test-archunit" }
 test-faker = { module = "io.github.serpro69:kotlin-faker", version.ref = "test-faker" }
+test-kotest-arb = { module = "io.kotest.extensions:kotest-property-arbs", version.ref = "test-kotest-arb" }
 test-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "test-kotest" }
 test-kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "test-kotest" }
 test-kotest-konform = { module = "io.kotest.extensions:kotest-assertions-konform", version.ref = "test-kotest-konform" }
@@ -81,6 +83,7 @@ test-archunit = [
     "test-archunit-junit5",
 ]
 test-kotest = [
+    "test-kotest-arb",
     "test-kotest-assertions",
     "test-kotest-junit",
     "test-kotest-konform",

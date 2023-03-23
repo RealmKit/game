@@ -23,6 +23,9 @@ package dev.realmkit.game.domain.player.service
 import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
 import dev.realmkit.game.domain.base.extension.MongoRepositoryExtensions.persist
+import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum
+import dev.realmkit.game.domain.item.service.ItemService
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.game.domain.player.extension.PlayerValidator.validated
 import dev.realmkit.game.domain.player.repository.PlayerRepository
@@ -41,6 +44,7 @@ import org.springframework.stereotype.Service
  *
  * @property playerRepository the player repository bean
  * @property shipService the ship service
+ * @property itemService the item service
  * @property resourceService the resource service
  * @property statService the stat service
  */
@@ -48,6 +52,7 @@ import org.springframework.stereotype.Service
 class PlayerService(
     private val playerRepository: PlayerRepository,
     private val shipService: ShipService,
+    private val itemService: ItemService,
     private val resourceService: ResourceService,
     private val statService: StatService,
 ) {
@@ -55,7 +60,7 @@ class PlayerService(
      * ## [new]
      * creates a new [Player] and persists it to DB, if valid
      * ```kotlin
-     * playerService new "Player Number 1"
+     * val newPlayer: Player = playerService new "Player Number 1"
      * ```
      *
      * @see Player
@@ -77,7 +82,7 @@ class PlayerService(
      * updates a [Player] to DB, if valid
      * also level up it, if possible
      * ```kotlin
-     * playerService update player
+     * val updated: Player = playerService update player
      * ```
      *
      * @see Player
@@ -89,37 +94,75 @@ class PlayerService(
      */
     @Throws(ValidationException::class, NotFoundException::class)
     infix fun update(player: Player): Player =
-        find(player.id).let {
+        find(player.id) {
             statService levelUp player.ship.stat
             playerRepository persist player
+        }
+
+    /**
+     * ## [receive]
+     * receives a new [Item] in [Player] inventory
+     * ```kotlin
+     * val updated: Player = playerService.receive(player = player, item = CHEAP_RECOVERY_DRONE)
+     * ```
+     *
+     * @param player the player to receive the item
+     * @param item the `item type` to add in [Player] inventory
+     * @return the validated persisted document
+     * @throws ValidationException if [Item] has [Validation] issues
+     * @throws NotFoundException if [Player.id] not found
+     */
+    @Throws(ValidationException::class, NotFoundException::class)
+    fun receive(player: Player, item: ItemTypeEnum): Item =
+        find(player.id) {
+            itemService.new(this, item)
+        }
+
+    /**
+     * ## [use]
+     * uses a [Item] from [Player] inventory, if available
+     * ```kotlin
+     * val updated: Player = playerService.use(player = player, item = CHEAP_RECOVERY_DRONE)
+     * ```
+     *
+     * @param player the player to use the item
+     * @param item the `item type` to use from [Player] inventory
+     * @return the validated persisted document
+     * @throws ValidationException if [Player] has [Validation] issues
+     * @throws NotFoundException if [Player.id] not found
+     * @throws NotFoundException if [Item] not found on [Player] inventory
+     */
+    @Throws(ValidationException::class, NotFoundException::class)
+    fun use(player: Player, item: ItemTypeEnum): Player =
+        find(player.id) {
+            itemService.use(this, item)
+            update(this)
         }
 
     /**
      * ## [find]
      * finds a [Player] by id, if exists, else throws [NotFoundException]
      * ```kotlin
-     * playerService find "player-id"
+     * val find: Player = playerService find "player-id"
      * ```
      *
-     * @see Player
-     *
      * @param id the player id
+     * @param block the block to execute with the found player
      * @return the found player
      * @throws NotFoundException if [Player] not found
      */
     @Throws(NotFoundException::class)
-    private infix fun find(id: String): Player =
+    private fun <R> find(id: String, block: Player.() -> R): R =
         playerRepository.findById(id)
             .orElseThrow { NotFoundException(Player::class, id) }
+            .let { player -> player.block() }
 
     /**
      * ## [persist]
      * validate and persists a [Player] to DB, if valid.
      * ```kotlin
-     * playerService persist player
+     * val persisted: Player = playerService persist player
      * ```
-     *
-     * @see Player
      *
      * @param request the player to persist
      * @return the validated persisted document

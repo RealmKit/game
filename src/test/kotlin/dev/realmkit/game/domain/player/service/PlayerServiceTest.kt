@@ -22,6 +22,8 @@ package dev.realmkit.game.domain.player.service
 
 import dev.realmkit.game.core.exception.NotFoundException
 import dev.realmkit.game.core.exception.ValidationException
+import dev.realmkit.game.domain.item.document.Item
+import dev.realmkit.game.domain.item.enums.ItemTypeEnum.CHEAP_RECOVERY_DRONE
 import dev.realmkit.game.domain.player.document.Player
 import dev.realmkit.hellper.extension.AssertionExtensions.shouldHaveAllErrors
 import dev.realmkit.hellper.fixture.player.PlayerFixture.fixture
@@ -108,11 +110,77 @@ class PlayerServiceTest(
     expect("to thrown a NotFoundException when updating a non existing Player") {
         checkAll(Player.fixture) { player ->
             player.id = "non-existing-id"
+
             shouldThrow<NotFoundException> {
                 playerService update player
             }.shouldNotBeNull().asClue { exception ->
                 exception.clazz shouldBe Player::class
                 exception.value shouldBe player.id
+            }
+        }
+    }
+
+    expect("Player to receive and use an Item: CHEAP_RECOVERY_DRONE") {
+        checkAll(Player.fixture) { player ->
+            val saved = playerService.new(player.name)
+
+            saved.ship.stat.base.hull.max = 100.0
+            playerService update saved
+
+            playerService.receive(player = saved, item = CHEAP_RECOVERY_DRONE)
+            playerService.use(player = saved, item = CHEAP_RECOVERY_DRONE)
+                .shouldNotBeNull()
+                .asClue { updated ->
+                    updated.ship.stat.base.hull.current shouldBe 15.0
+                }
+        }
+    }
+
+    expect("non existing Player should not be able to use an Item") {
+        checkAll(Player.fixture) { player ->
+            player.id = "non-existing-id"
+
+            shouldThrow<NotFoundException> {
+                playerService.use(player = player, item = CHEAP_RECOVERY_DRONE)
+            }.asClue { exception ->
+                exception.clazz shouldBe Player::class
+                exception.value shouldBe player.id
+            }
+        }
+    }
+
+    expect("Player should not be able to use a non existing Item") {
+        checkAll(Player.fixture) { player ->
+            val saved = playerService.new(player.name)
+
+            shouldThrow<NotFoundException> {
+                playerService.use(player = saved, item = CHEAP_RECOVERY_DRONE)
+            }.asClue { exception ->
+                exception.clazz shouldBe Item::class
+                exception.value shouldBe CHEAP_RECOVERY_DRONE
+            }
+        }
+    }
+
+    expect("Player should not be able to use Item without having it in inventory") {
+        checkAll(Player.fixture) { player ->
+            val saved = playerService.new(player.name)
+
+            saved.ship.stat.base.hull.max = 100.0
+            playerService update saved
+
+            playerService.receive(player = saved, item = CHEAP_RECOVERY_DRONE)
+            playerService.use(player = saved, item = CHEAP_RECOVERY_DRONE)
+                .shouldNotBeNull()
+                .asClue { updated ->
+                    updated.ship.stat.base.hull.current shouldBe 15.0
+                }
+
+            shouldThrow<NotFoundException> {
+                playerService.use(player = saved, item = CHEAP_RECOVERY_DRONE)
+            }.asClue { exception ->
+                exception.clazz shouldBe Item::class
+                exception.value shouldBe CHEAP_RECOVERY_DRONE
             }
         }
     }
