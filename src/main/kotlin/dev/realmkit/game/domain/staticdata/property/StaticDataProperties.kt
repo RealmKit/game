@@ -34,15 +34,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  *
  * @property config the static data config values
  * @property resource the initial resource properties
- * @property ships the ships static data values
  * @property items the item static data values
+ * @property ships the ships static data values
  */
 @ConfigurationProperties(prefix = "app.static.data")
 class StaticDataProperties(
     private val config: StaticDataConfig,
     private val resource: Resource,
-    private val ships: Map<ShipTypeEnum, Ship>,
     private val items: Map<ItemTypeEnum, Item>,
+    private val ships: Map<ShipTypeEnum, Ship>,
 ) {
     /**
      * ## [config]

@@ -26,4 +26,7 @@ package dev.realmkit.game.domain.ship.enums
  */
 enum class ShipTypeEnum {
     BATTLE_WAR_SHIP_V1,
+    ALIEN_CRUISER,
+    ROGUE_DRONE,
+    ;
 }

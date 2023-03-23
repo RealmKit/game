@@ -102,6 +102,11 @@ detekt {
     config = files("$rootDir/detekt-config.yml")
 }
 
+kover {
+    xmlReport { onCheck.set(true) }
+    verify { onCheck.set(true) }
+}
+
 // Tasks
 tasks {
     // Compile
@@ -125,6 +130,7 @@ tasks {
     // Default Tasks
     check {
         dependsOn(
+            clean,
             detekt,
             spotlessCheck,
             test,

@@ -18,20 +18,30 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.enemy.enums
 
-import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.doubles.shouldBeZero
-import io.kotest.matchers.longs.shouldBeZero
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.ALIEN_CRUISER
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.ROGUE_DRONE
 
-class ConstantExtensionsTest : TestSpec({
-    expect("object should be defined and values to be ok") {
-        ConstantExtensions.shouldNotBeNull()
-        ConstantExtensions.DOUBLE_ZERO.shouldBeZero()
-        ConstantExtensions.DOUBLE_ONE shouldBe 1.0
-        ConstantExtensions.LONG_ZERO.shouldBeZero()
-        ConstantExtensions.LONG_ONE shouldBe 1
-    }
-})
+private const val SOLO = 1
+private const val VERY_TINY_FLEET = 3
+private const val TINY_FLEET = 5
+
+/**
+ * # [EnemyTypeEnum]
+ * the ship type enum
+ * @property enemies
+ */
+enum class EnemyTypeEnum(
+    vararg val enemies: Pair<Int, ShipTypeEnum>,
+) {
+    ONE_ALIEN_CRUISER(
+        SOLO to ALIEN_CRUISER,
+    ),
+    FLEET_OF_ALIEN_CRUISERS_WITH_DRONES(
+        VERY_TINY_FLEET to ALIEN_CRUISER,
+        TINY_FLEET to ROGUE_DRONE,
+    ),
+    ;
+}

@@ -18,20 +18,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dev.realmkit.game.core.extension
+package dev.realmkit.game.domain.enemy.enums
 
+import dev.realmkit.game.domain.enemy.enums.EnemyTypeEnum.FLEET_OF_ALIEN_CRUISERS_WITH_DRONES
+import dev.realmkit.game.domain.enemy.enums.EnemyTypeEnum.ONE_ALIEN_CRUISER
 import dev.realmkit.hellper.spec.TestSpec
-import io.kotest.matchers.doubles.shouldBeZero
-import io.kotest.matchers.longs.shouldBeZero
-import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldHaveSize
 
-class ConstantExtensionsTest : TestSpec({
-    expect("object should be defined and values to be ok") {
-        ConstantExtensions.shouldNotBeNull()
-        ConstantExtensions.DOUBLE_ZERO.shouldBeZero()
-        ConstantExtensions.DOUBLE_ONE shouldBe 1.0
-        ConstantExtensions.LONG_ZERO.shouldBeZero()
-        ConstantExtensions.LONG_ONE shouldBe 1
+class EnemyTypeEnumTest : TestSpec({
+    expect("should have all values") {
+        EnemyTypeEnum.values()
+            .shouldHaveSize(2)
+            .shouldContainExactly(
+                ONE_ALIEN_CRUISER,
+                FLEET_OF_ALIEN_CRUISERS_WITH_DRONES,
+            )
     }
 })

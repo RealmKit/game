@@ -20,7 +20,9 @@
 
 package dev.realmkit.game.domain.ship.enums
 
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.ALIEN_CRUISER
 import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.BATTLE_WAR_SHIP_V1
+import dev.realmkit.game.domain.ship.enums.ShipTypeEnum.ROGUE_DRONE
 import dev.realmkit.hellper.spec.TestSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
@@ -28,9 +30,11 @@ import io.kotest.matchers.collections.shouldHaveSize
 class ShipTypeEnumTest : TestSpec({
     expect("should have all values") {
         ShipTypeEnum.values()
-            .shouldHaveSize(1)
+            .shouldHaveSize(3)
             .shouldContainExactly(
                 BATTLE_WAR_SHIP_V1,
+                ALIEN_CRUISER,
+                ROGUE_DRONE,
             )
     }
 })
