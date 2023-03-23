@@ -31,6 +31,11 @@ ___
 
 ___
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/b40444b75bde2fa8edb1/maintainability)](https://codeclimate.com/github/RealmKit/game/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b40444b75bde2fa8edb1/test_coverage)](https://codeclimate.com/github/RealmKit/game/test_coverage)
+
+---
+
 [![codecov](https://codecov.io/gh/RealmKit/game/branch/main/graph/badge.svg?token=ZCUJHALKDL)](https://codecov.io/gh/RealmKit/game)
 
 <a href="https://codecov.io/gh/RealmKit/game" >
