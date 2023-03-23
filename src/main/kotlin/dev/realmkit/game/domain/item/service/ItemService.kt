@@ -28,7 +28,6 @@ import dev.realmkit.game.domain.item.enums.ItemTypeEnum
 import dev.realmkit.game.domain.item.extension.ItemValidator.validated
 import dev.realmkit.game.domain.item.repository.ItemRepository
 import dev.realmkit.game.domain.player.document.Player
-import dev.realmkit.game.domain.player.service.PlayerService
 import dev.realmkit.game.domain.stat.extension.operator.StatOperator.plusAssign
 import dev.realmkit.game.domain.staticdata.property.StaticDataProperties
 import io.konform.validation.Validation
@@ -44,7 +43,6 @@ import org.springframework.stereotype.Service
  */
 @Service
 class ItemService(
-    private val playerService: PlayerService,
     private val itemRepository: ItemRepository,
     private val staticData: StaticDataProperties,
 ) {
@@ -97,7 +95,7 @@ class ItemService(
             .first()
             .also { item ->
                 player.ship.stat += item.stat
-                playerService update player
+                itemRepository.delete(item)
             }
 
     /**
