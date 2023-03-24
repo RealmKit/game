@@ -32,7 +32,6 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlinx.kover)
     // Code Quality
-    jacoco
     alias(libs.plugins.quality.versions)
     alias(libs.plugins.quality.catalog)
     alias(libs.plugins.quality.spotless)
@@ -103,8 +102,17 @@ detekt {
 }
 
 kover {
-    xmlReport { onCheck.set(true) }
-    verify { onCheck.set(true) }
+    useKoverTool("1.0.709")
+    koverReport {
+        xml { onCheck = true }
+        html { onCheck = true }
+        verify { onCheck = true }
+        filters {
+            excludes {
+                annotatedBy("*SpringBootApplication")
+            }
+        }
+    }
 }
 
 // Tasks
@@ -138,17 +146,5 @@ tasks {
         finalizedBy(
             dependencyUpdates,
         )
-    }
-
-    test {
-        finalizedBy(
-            jacocoTestReport,
-        )
-    }
-
-    jacocoTestReport {
-        reports {
-            xml.required.set(true)
-        }
     }
 }

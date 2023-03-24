@@ -81,6 +81,8 @@ jobs:
       #      UPLOAD RESULT
       - name: 'Codecov Upload Coverage'
         uses: codecov/codecov-action@v3
+        with:
+          file: ${{ github.workspace }}/build/reports/kover/report.xml
 
       #      CODE CLIMATE
       - name: 'CodeClimate Upload Coverage'
@@ -89,9 +91,9 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/kotlin"
         with:
-          coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          coverageLocations: ${{ github.workspace }}/build/reports/kover/report.xml:jacoco
 
       - name: 'Detekt Upload Sarif'
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: build/reports/detekt/detekt.sarif
+          sarif_file: ${{ github.workspace }}/build/reports/detekt/detekt.sarif
