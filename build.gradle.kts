@@ -44,6 +44,14 @@ plugins {
     alias(libs.plugins.kotlin.spring)
 }
 
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+        }
+    }
+}
+
 // Repositories
 repositories {
     mavenCentral()
