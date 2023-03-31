@@ -19,3 +19,10 @@
  */
 
 rootProject.name = "game-service"
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}

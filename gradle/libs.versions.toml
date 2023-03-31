@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.8.20-RC2"
+kotlin = "1.8.20"
 kotlin-logging = "4.0.0-beta-2"
 kotlinx-coroutines = "1.7.0-Beta"
 kotlinx-kover = "0.7.0-ALPHA"
@@ -15,10 +15,10 @@ test-archunit = "1.0.1"
 test-faker = "1.14.0"
 test-kotest = "5.5.5"
 test-kotest-arb = "2.1.2"
-test-kotest-konform = "1.0.1"
+test-kotest-konform = "1.0.2"
 test-kotest-spring = "1.1.2"
 test-testcontainers = "1.17.6"
-validation-jackson = "2.15.0-rc1"
+validation-jackson = "2.15.0-rc2"
 validation-konform = "0.4.0"
 
 [libraries]
