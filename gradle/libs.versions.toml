@@ -17,7 +17,7 @@ test-kotest = "5.5.5"
 test-kotest-arb = "2.1.2"
 test-kotest-konform = "1.0.1"
 test-kotest-spring = "1.1.2"
-test-testcontainers = "1.17.6"
+test-testcontainers = "1.18.0"
 validation-jackson = "2.15.0-rc1"
 validation-konform = "0.4.0"
 
