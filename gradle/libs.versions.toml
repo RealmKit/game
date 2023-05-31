@@ -18,7 +18,7 @@ test-kotest-arb = "2.1.2"
 test-kotest-konform = "1.0.2"
 test-kotest-spring = "1.1.2"
 test-testcontainers = "1.18.0"
-validation-jackson = "2.15.0-rc3"
+validation-jackson = "2.15.2"
 validation-konform = "0.4.0"
 
 [libraries]
