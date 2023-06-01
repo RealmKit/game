@@ -102,11 +102,13 @@ detekt {
 }
 
 kover {
-    useKoverTool("1.0.709")
+    useJacoco()
     koverReport {
-        xml { onCheck = true }
-        html { onCheck = true }
-        verify { onCheck = true }
+        defaults {
+            xml { onCheck = true }
+            html { onCheck = true }
+            verify { onCheck = true }
+        }
         filters {
             excludes {
                 annotatedBy("*SpringBootApplication")

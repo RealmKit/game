@@ -3,7 +3,7 @@
   enabled: true
   configuration:
     domainName: dev.realmkit
-    kotlinVersion: 1.8.20-Beta
+    kotlinVersion: 1.9.0-Beta
     srcDirectories: main
     testDirs: test, itest, archTest
 - name: LONG_LINE
